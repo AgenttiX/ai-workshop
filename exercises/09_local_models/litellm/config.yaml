@@ -1,0 +1,21 @@
+# LiteLLM proxy configuration: expose a local OpenAI-compatible server (llama.cpp, LM Studio, Ollama)
+# under the model name that Claude Code asks for.
+# Run: litellm --config exercises/09_local_models/litellm/config.yaml --port 4000
+model_list:
+  - model_name: local-model
+    litellm_params:
+      model: openai/local
+      api_base: http://localhost:8080/v1
+      api_key: none
+  # Claude Code may also request these names for its background tasks; route them to the same model.
+  - model_name: claude-haiku-4-5-20251001
+    litellm_params:
+      model: openai/local
+      api_base: http://localhost:8080/v1
+      api_key: none
+
+litellm_settings:
+  drop_params: true
+
+general_settings:
+  master_key: local

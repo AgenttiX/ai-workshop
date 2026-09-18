@@ -1,0 +1,1006 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+
+		<title>Kumpula AI workshop for scientists 2026</title>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/monokai.min.css" integrity="sha512-z8wQkuDRFwCBfoj7KOiu1MECaRVoXx6rZQWL21x0BsVVH7JkqCp1Otf39qve6CrCycOOL5o9vgfII5Smds23rg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/theme/sky.min.css" integrity="sha512-gLymIttr2gq642OBM4g7Oab3Bx3J1XB1TSbP5DZqcXaDWULMmSHHHkXFdRsx4lMFmt9705mNRozs1qeSvOAJpw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<style>
+			:root h2 {
+				--r-heading-text-transform: none;
+				font-family: var(--r-main-font);
+			}
+			.slide-number {
+				font-size: 0.7em !important;
+				margin-bottom: 8px;
+				margin-right: 8px;
+			}
+			.slides {
+				font-size: 0.9em;
+			}
+			.slides h1 {
+				font-size: 2em;
+			}
+			.reveal .slides section {
+				text-align: left;
+			}
+			.reveal .slides section.center-slide {
+				text-align: center;
+			}
+			.small {
+				font-size: 0.7em;
+			}
+			.todo {
+				border: 1px solid red;
+				color: red;
+				padding: 0 0.3em;
+			}
+			.two-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 1.5em;
+				align-items: start;
+			}
+			.callout {
+				border-left: 6px solid #3b8bd0;
+				background: rgba(59, 139, 208, 0.08);
+				padding: 0.4em 0.8em;
+				margin: 0.6em 0;
+			}
+			.reveal table {
+				font-size: 0.85em;
+			}
+			.reveal table th, .reveal table td {
+				padding: 0.2em 0.6em;
+			}
+			.reveal pre {
+				width: 100%;
+				font-size: 0.7em;
+			}
+			.reveal code {
+				font-size: 0.9em;
+			}
+			.reveal .divider h1 {
+				font-size: 2.4em;
+			}
+			.reveal .divider p {
+				color: #555;
+			}
+			.reveal ul {
+				line-height: 1.4;
+			}
+			.reveal ul li ul li {
+				font-size: 85%;
+			}
+			.reveal .schedule td:first-child {
+				white-space: nowrap;
+			}
+			.loop {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				font-size: 1.1em;
+				margin: 0.8em 0;
+			}
+			.loop .step {
+				border: 3px solid #3b8bd0;
+				border-radius: 12px;
+				padding: 0.4em 0.9em;
+				background: white;
+			}
+			.loop .arrow {
+				font-size: 1.5em;
+				color: #3b8bd0;
+			}
+			.harness {
+				border: 3px dashed #3b8bd0;
+				border-radius: 16px;
+				padding: 0.6em 1em;
+				margin: 0.5em 0;
+			}
+			.harness .model {
+				border: 3px solid #d0653b;
+				border-radius: 12px;
+				padding: 0.3em 0.8em;
+				background: white;
+				display: inline-block;
+			}
+		</style>
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js" integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/math/math.min.js" integrity="sha512-tdpe8NdPiaypY/eUgKqr/aL5y0tLiFEde/joBsD4bfjyB8yNuGsReuN/D+XDcGbHQ8/xbDbJ0mqkfGdh2JxCAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js" integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script defer id="revealjs" src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.js" integrity="sha512-lRYVCjdH7dCPCzqLL6eBn78p6WGK5pZxgYBgzTQfWlfX7yiZFLt/qHOMSETHUIz2aZIU/KbjwYHiMsmrcVgJnA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+<!-- ============================================================ TITLE -->
+<section class="center-slide">
+	<h1>AI workshop for scientists</h1>
+	<p>How AI is <em>actually</em> used effectively in research in 2026</p>
+	<p>
+		Aaron Haarti, Antti Hippeläinen &amp; Mika Mäki<br>
+		Doctoral researchers, Department of Physics, University of Helsinki
+	</p>
+	<p>
+		Kumpula Campus, <span class="todo">November 2026</span>
+	</p>
+	<p class="small">
+		<a href="https://github.com/AgenttiX/ai-workshop">github.com/AgenttiX/ai-workshop</a> &mdash;
+		slides, exercises and these speaker notes (press <code>S</code>)
+	</p>
+	<aside class="notes">
+		Welcome. Three PhD students, no affiliations with AI companies, we learned this out of our own interest.
+		Everything is in the repository; the slides have speaker notes, so you can revisit what we said.
+	</aside>
+</section>
+
+<!-- ============================================================ PRACTICALITIES -->
+<section>
+	<section>
+		<h2>Practicalities</h2>
+		<ul>
+			<li>2 h foundations + 15 min break + 2 h advanced. Laptops out.</li>
+			<li>Questions: interrupt us, or post in
+				<a href="https://cftgroup.chat/main/channels/ai-workshop">Mattermost</a>.
+				<strong>There are no stupid questions.</strong> If you're lost, three others are too.</li>
+			<li>Everything here is practice. Philosophy, ethics and the future of science: coffee break and afterwards.
+				We'll gladly join.</li>
+			<li>A warning: some of what we show may feel threatening to how we work as scientists.
+				That's a legitimate reaction. Let's talk about it at the break.</li>
+			<li>Materials: <a href="https://github.com/AgenttiX/ai-workshop">github.com/AgenttiX/ai-workshop</a></li>
+		</ul>
+		<aside class="notes">
+			Keep this to two minutes. Mention the existential-crisis warning explicitly and with a smile.
+			Point at the QR code on the poster.
+		</aside>
+	</section>
+	<section>
+		<h2>Schedule</h2>
+		<div class="two-col">
+			<div>
+				<h3>Session 1: Foundations</h3>
+				<table class="schedule">
+					<tr><td>0:05</td><td>The state of AI in 2026, chat vs. harness, caveats</td></tr>
+					<tr><td>0:40</td><td>Setup check (exercise 00)</td></tr>
+					<tr><td>0:50</td><td>Live demo: Claude Code fundamentals</td></tr>
+					<tr><td>1:25</td><td>Hands-on: exercises 01&ndash;03</td></tr>
+					<tr><td>1:50</td><td>Q&amp;A and recap</td></tr>
+				</table>
+			</div>
+			<div>
+				<h3>Session 2: Advanced</h3>
+				<table class="schedule">
+					<tr><td>0:05</td><td>Extending the harness: skills, hooks, agents, MCP</td></tr>
+					<tr><td>0:35</td><td>Making your project AI-ready</td></tr>
+					<tr><td>0:55</td><td>Hands-on: exercises 04&ndash;10</td></tr>
+					<tr><td>1:20</td><td>Showcases: research loop, HPC, local models</td></tr>
+					<tr><td>1:55</td><td>Wrap-up</td></tr>
+				</table>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>What you'll be able to do afterwards</h2>
+		<ol>
+			<li>Explain what changed in AI in 2024&ndash;2026 and why a <em>harness</em> beats a chat window by an order of magnitude</li>
+			<li>Run Claude Code on a real repository: give a task, review the diff, manage permissions</li>
+			<li>Write an <code>AGENTS.md</code> for your project and manage the context window deliberately</li>
+			<li>Extend the harness with skills, hooks, subagents and MCP servers</li>
+			<li>Make your research code "AI-ready" with tests, lint, types and CI, so that the agent catches its own mistakes</li>
+			<li>Judge when <em>not</em> to use AI, and how to use it without losing your own understanding</li>
+		</ol>
+	</section>
+</section>
+
+<!-- ============================================================ PART 1: STATE OF AI -->
+<section>
+	<section class="divider center-slide">
+		<h1>The state of AI in 2026</h1>
+		<p>What changed, and why it matters for how you work</p>
+		<aside class="notes">Hippe, ~15 min. For those who haven't followed the last 2–3 years: facts first.</aside>
+	</section>
+	<section>
+		<h2>A short timeline</h2>
+		<table>
+			<tr><td>2022</td><td>ChatGPT: chat with a language model</td></tr>
+			<tr><td>2023</td><td>GPT-4, Claude 2: useful for text and code snippets. You paste, it answers.</td></tr>
+			<tr><td>2024</td><td>Tool use, 100k&ndash;200k token contexts, first coding agents (Cursor, Claude Code preview)</td></tr>
+			<tr><td>2025</td><td>Reasoning models. Claude Code, Codex, Copilot agent mode. Tasks of an hour without supervision.</td></tr>
+			<tr><td>2026</td><td>Claude 5 family, 1M-token contexts, multi-agent harnesses, days-long autonomous research tasks</td></tr>
+		</table>
+		<p class="callout">
+			The step that most scientists have missed: from <strong>chat</strong> to <strong>agents with access to your files and tools</strong>.
+		</p>
+		<aside class="notes">
+			Most people in the room stopped updating their mental model at "chat window" in 2023. That model is now wrong.
+		</aside>
+	</section>
+	<section>
+		<h2>The one plot to remember: task horizon</h2>
+		<div class="two-col">
+			<div>
+				<p class="todo">TODO: insert the latest METR task-horizon figure (length of tasks completed at 50 % success vs. release date)</p>
+			</div>
+			<div>
+				<ul>
+					<li>The length of a task an AI can complete on its own has been <strong>doubling every ~4&ndash;7 months</strong></li>
+					<li>2023: minutes. 2025: an hour. 2026: a working day or more.</li>
+					<li>Extrapolation is dangerous. But the trend hasn't bent yet.</li>
+				</ul>
+			</div>
+		</div>
+		<p class="small">Source: METR, <em>Measuring AI ability to complete long tasks</em>, and later updates.</p>
+		<aside class="notes">
+			This is the plot that answers "is it just hype": it's a measured trend over years.
+			Update the number and the figure the week before the workshop.
+		</aside>
+	</section>
+	<section>
+		<h2>Models today</h2>
+		<ul>
+			<li><strong>Cloud frontier models:</strong> Claude 5 (Fable 5.1, Opus 5, Sonnet 5), Haiku 4.5;
+				OpenAI's and Google's frontier models</li>
+			<li><strong>Open-weight models</strong> you can run yourself: Gemma 4, Qwen 3.8, and larger ones
+				(Kimi, DeepSeek) that need a server &mdash; roughly 1&ndash;2 years behind the frontier</li>
+			<li><strong>Context windows</strong> of up to ~1M tokens: your whole code base, or a paper's LaTeX
+				plus the analysis, in one session</li>
+			<li><strong>Reasoning:</strong> the model "thinks" before answering; you can trade time for quality</li>
+			<li><strong>Tools:</strong> the model can call functions &mdash; read a file, run a command, search the web</li>
+		</ul>
+		<aside class="notes">
+			Don't spend long here. The point is: several capable providers, plus open models as a real alternative
+			(Mika's showcase).
+		</aside>
+	</section>
+	<section>
+		<h2>Science is not done in a chat window</h2>
+		<ul>
+			<li><span class="todo">TODO: the Navier&ndash;Stokes result &mdash; citation and one sentence on how it was done</span></li>
+			<li>The pattern in the recent results: not a person asking a chatbot, but
+				<strong>agents</strong> running for hours or days &mdash; deriving, coding, checking, iterating</li>
+			<li>The same pattern scaled down is what you'll use today: an agent that reads your code, runs your tests
+				and fixes its own errors</li>
+			<li><span class="todo">TODO: 1&ndash;2 examples closer to home (physics / Kumpula)</span></li>
+		</ul>
+		<aside class="notes">
+			"Navier–Stokes was not proven by asking a chatbot" — this is the hook from the kickoff meeting.
+			Get the reference right; this audience will check.
+		</aside>
+	</section>
+	<section>
+		<h2>Chat vs. harness</h2>
+		<div class="two-col">
+			<div>
+				<h3>Chat</h3>
+				<ul>
+					<li>You copy code and errors in, you copy answers out</li>
+					<li>The model sees only what you paste</li>
+					<li>It cannot check anything</li>
+					<li>You are the loop</li>
+				</ul>
+			</div>
+			<div>
+				<h3>Harness</h3>
+				<ul>
+					<li>The model reads your files, runs your commands, edits, tests</li>
+					<li>It sees the actual code, data and errors</li>
+					<li>It verifies its own work with your tools</li>
+					<li>The loop runs itself; you review and steer</li>
+				</ul>
+			</div>
+		</div>
+		<p class="callout">
+			Order-of-magnitude difference in what you can get done &mdash; and in what can go wrong. Hence this workshop.
+		</p>
+	</section>
+	<section>
+		<h2>What is a harness?</h2>
+		<div class="harness">
+			<p><strong>Harness</strong> (Claude Code, Codex, Copilot, Cursor, OpenCode, &hellip;)</p>
+			<p style="text-align: center;"><span class="model">Model</span> &nbsp;+&nbsp; tools &nbsp;+&nbsp; context management &nbsp;+&nbsp; permission loop</p>
+			<ul>
+				<li><strong>Tools:</strong> read/edit files, run shell commands, search, web, MCP servers, subagents</li>
+				<li><strong>Context management:</strong> what goes into the model's window: <code>AGENTS.md</code>, files, tool output, memory, compaction</li>
+				<li><strong>Permission loop:</strong> the agent proposes an action, you (or your rules) approve it</li>
+			</ul>
+		</div>
+		<div class="loop">
+			<span class="step">read</span><span class="arrow">&rarr;</span>
+			<span class="step">think</span><span class="arrow">&rarr;</span>
+			<span class="step">act</span><span class="arrow">&rarr;</span>
+			<span class="step">verify</span><span class="arrow">&circlearrowleft;</span>
+		</div>
+		<aside class="notes">
+			The model is the same one you get in the chat app. The harness is what makes it an agent.
+			The loop diagram comes back in the demo: every tool call is one turn of this loop.
+		</aside>
+	</section>
+	<section>
+		<h2>Why file access and context matter</h2>
+		<ul>
+			<li>The model knows <strong>only what's in its context window</strong>: no memory between sessions unless the harness provides it</li>
+			<li>File access means the context is filled with the <em>truth</em>: your code, your data, the actual error message</li>
+			<li>Context is finite and degrades when full: the harness (and you) decide what goes in
+				<ul>
+					<li><code>AGENTS.md</code>: the standing instructions, read every session</li>
+					<li>Tool outputs: what it read and ran</li>
+					<li>Compaction: summarizing the history when the window fills up</li>
+				</ul>
+			</li>
+			<li>Rule of thumb: <strong>one task per session</strong>, clear when switching</li>
+		</ul>
+	</section>
+	<section>
+		<h2>The landscape</h2>
+		<table>
+			<tr><th>Harness</th><th>Provider</th><th>Where it runs</th><th>Notes</th></tr>
+			<tr><td>Claude Code</td><td>Anthropic</td><td>terminal, VS Code, JetBrains, web</td><td>Used today. Skills, hooks, agents, MCP</td></tr>
+			<tr><td>Codex</td><td>OpenAI</td><td>terminal, IDE, cloud</td><td>Similar concepts</td></tr>
+			<tr><td>GitHub Copilot</td><td>GitHub / Microsoft</td><td>VS Code, cloud</td><td>Free with the Student Developer Pack &mdash; our backup</td></tr>
+			<tr><td>Cursor, Antigravity</td><td>Cursor, Google</td><td>own IDE</td><td>IDE-first</td></tr>
+			<tr><td>OpenCode</td><td>open source</td><td>terminal</td><td>Any model, incl. local</td></tr>
+			<tr><td>Chat products</td><td>Claude.ai Projects, ChatGPT</td><td>browser</td><td>Good for text; no file access to your machine</td></tr>
+		</table>
+		<p class="callout">
+			Cloud sandboxes exist (Claude Code on the web, Codex cloud), but a harness on <strong>your own machine</strong>,
+			with your data and your tools, is more capable. That's what we use.
+		</p>
+		<aside class="notes">
+			Mention the cloud options first, then say local is better — as agreed in the meeting.
+			Why Claude Code for the exercises: best agentic results in our experience, VS Code integration,
+			the Team plan for scientists, and the concepts transfer to the others.
+		</aside>
+	</section>
+</section>
+
+<!-- ============================================================ PART 1B: CAVEATS -->
+<section>
+	<section class="divider center-slide">
+		<h1>Honest caveats</h1>
+		<p>How to use AI without being used by it</p>
+		<aside class="notes">Mika, ~10 min including Q&A. Showing the downsides is what gives us credibility.</aside>
+	</section>
+	<section>
+		<h2>It still makes things up &mdash; now at scale</h2>
+		<ul>
+			<li><strong>Hallucination:</strong> confident, plausible, wrong. Citations that don't exist, APIs that don't exist,
+				physics that's off by a factor of 2</li>
+			<li><strong>Sycophancy:</strong> it tends to agree with you. Ask for critique explicitly, or let a second agent review</li>
+			<li><strong>The remedy is not trust but verification built into the workflow:</strong>
+				tests, type checks, cross-checks against known results &mdash; things the agent can run itself</li>
+			<li>Session 2 is about exactly this: making your project a place where the agent's mistakes get caught
+				before they reach you</li>
+		</ul>
+		<aside class="notes">
+			The blackbody exercise later is a hallucination-shaped bug: an exponent of 4 instead of 5. A test catches it in a second.
+		</aside>
+	</section>
+	<section>
+		<h2>Security and privacy</h2>
+		<ul>
+			<li>An agent with shell access is <strong>a user on your machine</strong>. It can delete, upload, install.</li>
+			<li>Permission modes: ask for everything, allow-list the safe commands, "auto" for sandboxed work only</li>
+			<li>Never paste secrets, tokens or personal data into a prompt. Check your provider's data policy and the
+				university's guidelines</li>
+			<li><strong>Prompt injection:</strong> a web page, a PDF, a paper abstract can contain instructions for the agent.
+				Untrusted input + write access = a bad day</li>
+			<li>Version control everything. An agent on the only copy of your thesis is a gamble</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Cost, limits, and your own understanding</h2>
+		<ul>
+			<li><strong>Cost:</strong> subscriptions have usage quotas; agents burn tokens fast. Local models are the free-but-slower fallback</li>
+			<li><strong>Skill atrophy:</strong> "How do I keep understanding the physics when the AI writes the code?"
+				<ul>
+					<li>Let it do the mechanical parts. <em>Read</em> everything before it goes into a paper.</li>
+					<li>Ask it to explain. Ask it to teach. Make it show the derivation.</li>
+					<li>Decide deliberately what you want to keep doing by hand</li>
+				</ul>
+			</li>
+			<li><strong>Incentives:</strong> if this is an order of magnitude, "AI or perish" is coming. We don't have an answer.
+				We have a coffee break.</li>
+			<li><strong>Which provider?</strong> Ethical, legal and practical considerations differ. Know them; make a choice; revisit it</li>
+		</ul>
+		<aside class="notes">
+			One slide only for the philosophy. Invite the discussion to the break. Then: questions, 5 minutes.
+		</aside>
+	</section>
+	<section class="center-slide">
+		<h2>Questions so far?</h2>
+		<p>5 minutes. The setup check comes next.</p>
+	</section>
+</section>
+
+<!-- ============================================================ SETUP -->
+<section>
+	<h2>Exercise 00: setup check (10 min)</h2>
+	<div class="two-col">
+		<div>
+			<ol>
+				<li>Open the repository in VS Code, activate the virtualenv</li>
+				<li><pre><code class="language-bash" data-trim>python -m workshop.check</code></pre>
+					Fix everything marked <code>FAIL</code>; <code>MISS</code> for <code>claude</code> is fine with the VS Code extension</li>
+				<li>Start Claude Code and log in</li>
+				<li>Ask: <em>"What is this repository about, and how do I run its tests?"</em></li>
+			</ol>
+		</div>
+		<div>
+			<p>Where the organizers are: walking around. Raise a hand.</p>
+			<p class="callout">
+				No access to a paid model? Options: follow along; GitHub Copilot with the Student Developer Pack; a local model (exercise 09).
+			</p>
+			<p>Unfixable now? Pair up with your neighbour. The break is for debugging.</p>
+		</div>
+	</div>
+	<aside class="notes">
+		All three organizers circulate. Keep to 10 minutes; whatever isn't fixed gets fixed at the break.
+	</aside>
+</section>
+
+<!-- ============================================================ PART 2: FUNDAMENTALS DEMO -->
+<section>
+	<section class="divider center-slide">
+		<h1>Claude Code fundamentals</h1>
+		<p>Live demo: exercise 01, with the concepts as they come up</p>
+		<aside class="notes">
+			Mika, 35 min. VS Code extension on the projector, large font. Switch to the terminal once to show it's the same thing.
+			Fallback: solutions/01_fix_the_bug.
+		</aside>
+	</section>
+	<section>
+		<h2>The demo plan</h2>
+		<table>
+			<tr><th>min</th><th>What we do</th><th>What it shows</th></tr>
+			<tr><td>0</td><td><code>pytest exercises/01_fix_the_bug</code> &rarr; a test fails</td><td>A physics bug, not a syntax error</td></tr>
+			<tr><td>3</td><td>"Find the bug, fix it, run the tests"</td><td>File access; the read&ndash;think&ndash;act&ndash;verify loop; permission prompts</td></tr>
+			<tr><td>8</td><td>Review the diff. "Explain what was wrong"</td><td>You review; it explains</td></tr>
+			<tr><td>12</td><td>Plan mode: "add a Stefan&ndash;Boltzmann test"</td><td>Propose first, act after approval</td></tr>
+			<tr><td>16</td><td><code>/context</code>, <code>/cost</code>, <code>/compact</code>, <code>/clear</code></td><td>Context management</td></tr>
+			<tr><td>20</td><td><code>AGENTS.md</code>; <code>/init</code> on the pendulum lab</td><td>Standing instructions</td></tr>
+			<tr><td>25</td><td>Permissions: prompts, <code>settings.json</code>, auto mode</td><td>Control</td></tr>
+			<tr><td>29</td><td>"Commit this with a good message"</td><td>AI + Git</td></tr>
+		</table>
+	</section>
+	<section>
+		<h2>The task</h2>
+		<p>Planck's law, and a test based on Wien's displacement law:</p>
+		<pre><code class="language-python" data-trim data-line-numbers="4-6">
+def spectral_radiance(wavelength, temperature):
+    """B_λ(λ, T), the spectral radiance of a black body per unit wavelength."""
+    x = H * C / (wavelength * K_B * temperature)
+    with np.errstate(over="ignore"):
+        return 2 * H * C**2 / wavelength**4 / np.expm1(x)
+		</code></pre>
+		<p>\( B_\lambda(\lambda, T) = \frac{2 h c^2}{\lambda^5} \frac{1}{e^{hc / (\lambda k_B T)} - 1} \qquad \lambda_\text{max} T = b = 2.898 \times 10^{-3}\ \text{m K} \)</p>
+		<aside class="notes">
+			Don't reveal the bug on the slide during the demo: this slide is for the notes/PDF. Show it after the fix.
+		</aside>
+	</section>
+	<section>
+		<h2>The loop, made visible</h2>
+		<div class="loop">
+			<span class="step">read the test &amp; code</span><span class="arrow">&rarr;</span>
+			<span class="step">reason</span><span class="arrow">&rarr;</span>
+			<span class="step">edit</span><span class="arrow">&rarr;</span>
+			<span class="step">run pytest</span><span class="arrow">&circlearrowleft;</span>
+		</div>
+		<ul>
+			<li>Every tool call is a permission decision: read (usually free), edit (you review), run (you approve)</li>
+			<li>If the tests pass, it stops. If not, it goes around again. <strong>It's verifying itself with your tools.</strong></li>
+			<li>Watch for: did it read before editing? Did it run the tests, or just claim success?</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Four things you control</h2>
+		<div class="two-col">
+			<div>
+				<h3>1. The task</h3>
+				<ul>
+					<li>Specific, verifiable, small enough to review</li>
+					<li>Say what "done" means: "and run the tests"</li>
+					<li>Plan mode for anything non-trivial</li>
+				</ul>
+				<h3>2. The context</h3>
+				<ul>
+					<li><code>AGENTS.md</code> / <code>CLAUDE.md</code>: standing instructions</li>
+					<li><code>/context</code> to see, <code>/compact</code> to shrink, <code>/clear</code> to reset</li>
+					<li>One task per session</li>
+				</ul>
+			</div>
+			<div>
+				<h3>3. The permissions</h3>
+				<ul>
+					<li>Default: ask. Allow-list the safe commands in <code>.claude/settings.json</code></li>
+					<li>Auto mode only in a sandbox or a throwaway repo</li>
+				</ul>
+				<h3>4. The verification</h3>
+				<ul>
+					<li>Tests, linters, type checkers: the agent's feedback signal</li>
+					<li>Git: every change reviewable and reversible</li>
+					<li>You read the diff. Always.</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2><code>AGENTS.md</code>: the file the agent reads every session</h2>
+		<div class="two-col">
+			<div>
+				<pre><code class="language-markdown" data-trim>
+# AGENTS.md
+
+## Commands
+- Run tests: `pytest`
+- Lint: `ruff check`
+- Type check: `pyrefly check`
+
+## Project structure
+- `exercises/`: starters, deliberately imperfect
+- `solutions/`: reference solutions, tested in CI
+
+## Code style
+- Python 3.12 type hints, Sphinx docstrings
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li><strong>Put in:</strong> commands, structure, conventions, what not to touch, where the docs are</li>
+					<li><strong>Leave out:</strong> anything it can read from the code. It costs context on every session</li>
+					<li><code>/init</code> writes a draft. The valuable part is what only you know</li>
+					<li><code>AGENTS.md</code> is the tool-agnostic name; <code>CLAUDE.md</code> containing <code>@AGENTS.md</code> points Claude Code to it</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>Permissions</h2>
+		<pre><code class="language-json" data-trim>
+{
+  "permissions": {
+    "allow": [
+      "Bash(pytest:*)",
+      "Bash(ruff check:*)",
+      "Bash(pyrefly check:*)",
+      "Bash(git status:*)"
+    ]
+  }
+}
+		</code></pre>
+		<ul>
+			<li><code>.claude/settings.json</code> in the repository (shared with the group) or <code>~/.claude/settings.json</code> (personal)</li>
+			<li>Safe to allow: tests, linters, read-only git. Keep the prompt for: installs, network, deletion, <code>git push</code></li>
+			<li>Modes: default (ask) &rarr; accept edits &rarr; plan (read-only) &rarr; auto (sandboxed, for the brave)</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Hands-on 1 (25 min)</h2>
+		<ul>
+			<li><strong>Exercise 01:</strong> fix the bug &mdash; the demo, on your own machine, with your own prompts</li>
+			<li><strong>Exercise 02:</strong> write an <code>AGENTS.md</code> for the pendulum lab with <code>/init</code>, then fix what it missed</li>
+			<li><strong>Exercise 03 (bonus):</strong> make the agent learn PTtools from its source and compute a gravitational wave spectrum</li>
+		</ul>
+		<p class="callout">
+			Read <code>exercises/README.md</code>. Use your own words. Read every diff. Raise a hand.
+		</p>
+		<aside class="notes">Circulate. The common failure: people accept edits without reading. Point it out kindly.</aside>
+	</section>
+	<section>
+		<h2>Recap of session 1</h2>
+		<ul>
+			<li>A harness = model + tools + context management + permission loop. That's the step from chat to agent.</li>
+			<li>The loop: read &rarr; think &rarr; act &rarr; verify. Your tools are its feedback.</li>
+			<li>You control the task, the context, the permissions and the verification.</li>
+			<li><code>AGENTS.md</code> is your standing brief. Keep it short and true.</li>
+		</ul>
+		<p><strong>Session 2:</strong> make it yours &mdash; skills, hooks, agents, MCP &mdash; and make your project a place where the agent's mistakes get caught.</p>
+		<h3>Questions?</h3>
+	</section>
+</section>
+
+<!-- ============================================================ BREAK -->
+<section class="center-slide">
+	<h1>Break: 15 min</h1>
+	<p>Coffee. Setup problems: find an organizer. Philosophy: find another participant (or an organizer).</p>
+</section>
+
+<!-- ============================================================ PART 3: EXTENDING THE HARNESS -->
+<section>
+	<section class="divider center-slide">
+		<h1>Extending the harness</h1>
+		<p>Skills, hooks, subagents, MCP, and when to use which</p>
+		<aside class="notes">
+			Hippe, 30 min, based on claude-loadout. Each concept: 1 slide + a 3-minute live mini-demo in the workshop repo.
+		</aside>
+	</section>
+	<section>
+		<h2>Pick the mechanism</h2>
+		<table>
+			<tr><th>I want to&hellip;</th><th>Use</th></tr>
+			<tr><td>Persist a permanent rule</td><td><strong><code>AGENTS.md</code></strong> (project) or <code>~/.claude/CLAUDE.md</code> (global)</td></tr>
+			<tr><td>Teach a workflow that applies when relevant (needs judgement)</td><td><strong>Skill</strong> (<code>.claude/skills/&lt;name&gt;/SKILL.md</code>)</td></tr>
+			<tr><td>Automate something deterministic on every tool event</td><td><strong>Hook</strong> (<code>settings.json</code> &rarr; shell command)</td></tr>
+			<tr><td>Spin up an isolated specialist with its own context</td><td><strong>Subagent</strong> (<code>.claude/agents/&lt;name&gt;.md</code>)</td></tr>
+			<tr><td>Connect an external tool or data source</td><td><strong>MCP server</strong></td></tr>
+			<tr><td>Run several sessions on the same repo</td><td><strong>Git worktrees</strong></td></tr>
+			<tr><td>Run without a human in the loop (scripts, CI)</td><td><strong>Headless mode</strong> (<code>claude -p</code>)</td></tr>
+		</table>
+		<p class="small">Adapted from Hippe's <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a> guide.</p>
+	</section>
+	<section>
+		<h2>Skills: instructions loaded when relevant</h2>
+		<div class="two-col">
+			<div>
+				<pre><code class="language-markdown" data-trim>
+---
+name: plot-style
+description: The plotting conventions of the
+  workshop. Use whenever creating, editing or
+  saving a Matplotlib figure.
+---
+
+1. Call `workshop.plotting.apply_style()` first.
+2. Save with `save_fig(fig, name)`, not `fig.savefig()`.
+3. Label every axis with the unit: `Length (m)`.
+4. Log scale for > 2 orders of magnitude.
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>The <code>description</code> decides <em>when</em> it fires; the body says <em>what</em> to do</li>
+					<li>Unlike <code>AGENTS.md</code>, it costs context only when used</li>
+					<li>Can ship scripts and reference files alongside</li>
+					<li>Invoke explicitly with <code>/plot-style</code></li>
+					<li>Examples from the loadout: <code>physics-review</code>, <code>test-driven-development</code>, <code>academic-paper-reviewer</code></li>
+				</ul>
+				<p class="callout">Demo: "plot the period of a pendulum vs. length" &mdash; without mentioning the style.</p>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>Hooks: deterministic, the model can't skip them</h2>
+		<div class="two-col">
+			<div>
+				<pre><code class="language-bash" data-trim>
+#!/usr/bin/env bash
+# PostToolUse: lint the edited file
+FILE=$(python3 -c 'import json,sys;
+  print(json.load(sys.stdin)["tool_input"]["file_path"])')
+[[ "$FILE" == *.py ]] || exit 0
+if ! OUT=$(ruff check "$FILE" 2>&1); then
+  echo "$OUT" >&2
+  exit 2   # 2 = block and tell the agent
+fi
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>Events: <code>PreToolUse</code>, <code>PostToolUse</code>, <code>Stop</code>, <code>SessionStart</code>, notifications, &hellip;</li>
+					<li>The hook gets the tool call as JSON on stdin; exit code 2 feeds stderr back to the agent</li>
+					<li>Use for: formatting, linting, secret scanning, notifications, "don't stop until the tests pass"</li>
+					<li>The <em>Stop</em> hook is how Hippe's research loop keeps the agent going (showcase)</li>
+				</ul>
+				<p class="callout">Demo: ask for sloppy code with unused imports &rarr; the hook complains &rarr; the agent fixes it unasked.</p>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>Subagents: specialists with their own context</h2>
+		<div class="two-col">
+			<div>
+				<pre><code class="language-markdown" data-trim>
+---
+name: physics-reviewer
+description: Reviews scientific Python code for
+  physics and numerical correctness. Use after
+  changing code that implements equations.
+tools: Read, Grep, Glob, Bash
+model: sonnet
+---
+You are a careful physicist reviewing code.
+Check units, equations, limits, error
+propagation, numerics and tests. Report:
+verdict, findings (most serious first),
+missing tests. Do not praise the code.
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>Fresh context per agent: the noise of reading 40 files stays out of your main session</li>
+					<li>Parallel: several reviewers, several explorations at once</li>
+					<li>Restricted tools and a cheaper model where appropriate</li>
+					<li>Built-in: <code>Explore</code>, <code>Plan</code>, general-purpose. Custom: yours</li>
+					<li>Cost: each starts from zero. Use for "long investigation, short report"</li>
+				</ul>
+				<p class="callout">Demo: review the exercise 04 solution with the physics reviewer and a general reviewer, in parallel.</p>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>MCP: the standard plug for tools and data</h2>
+		<div class="two-col">
+			<div>
+				<pre><code class="language-bash" data-trim>
+claude mcp list
+claude mcp add arxiv -- uvx arxiv-mcp-server
+claude mcp add --scope project zotero -- zotero-mcp
+				</code></pre>
+				<p>Then, in a session:</p>
+				<p><em>"Find the abstract of arXiv:1909.10040 and summarize the sound shell model."</em></p>
+			</div>
+			<div>
+				<ul>
+					<li>Model Context Protocol: a server exposes tools; the agent decides when to call them</li>
+					<li>Servers exist for arXiv, Zotero, GitHub, databases, Slack, lab instruments, your wiki, &hellip;</li>
+					<li><strong>Trust:</strong> the server runs on your machine and its output enters the context.
+						Prompt injection through a paper abstract is a real thing</li>
+					<li><code>--scope project</code> writes <code>.mcp.json</code>: the whole group shares it</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>Beyond the IDE: worktrees, headless, CI, plugins</h2>
+		<ul>
+			<li><strong>Git worktrees:</strong> several sessions on the same repository, each on its own branch and directory.
+				Claude Code can create them for you (<code>claude --worktree</code>)</li>
+			<li><strong>Headless:</strong> <code>claude -p "summarize the failing tests"</code> in a script, a cron job, a pipeline</li>
+			<li><strong>CI:</strong> Claude Code as a GitHub Action: review PRs, fix failing builds, triage issues</li>
+			<li><strong>Plugins and marketplaces:</strong> skills, agents and hooks bundled and shared.
+				Hippe's <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a> is one <code>install.sh</code> away</li>
+			<li><strong><code>/insights</code>:</strong> what have I been asking for repeatedly? &rarr; turn it into a skill</li>
+		</ul>
+		<p class="callout">Don't write everything yourself. Start from a community loadout and edit it to your taste.</p>
+	</section>
+</section>
+
+<!-- ============================================================ PART 4: AI-READY -->
+<section>
+	<section class="divider center-slide">
+		<h1>Making your project AI-ready</h1>
+		<p>So that the agent fixes its own mistakes before you see them</p>
+		<aside class="notes">Mika, 20 min. Based on the unit testing &amp; CI/CD lecture. Demo: exercise 04.</aside>
+	</section>
+	<section>
+		<h2>The agent needs a feedback signal</h2>
+		<ul>
+			<li>Without tools, an agent can only <em>believe</em> its code works. With tools, it can <em>check</em>.</li>
+			<li>Everything you'd do for reproducible research code helps twice as much now:</li>
+		</ul>
+		<table>
+			<tr><th>Pillar</th><th>Tool</th><th>What it gives the agent</th></tr>
+			<tr><td>Unit tests</td><td><code>pytest</code></td><td>"Does the physics still hold?" Regression tests from current output + literature values</td></tr>
+			<tr><td>Linting</td><td><code>ruff</code></td><td>Style and bug patterns, in milliseconds</td></tr>
+			<tr><td>Type checking</td><td><code>pyrefly</code></td><td>Wrong shapes, units-as-types and arguments across the whole code base</td></tr>
+			<tr><td>CI</td><td>GitHub Actions</td><td>The same checks on every push, including the agent's</td></tr>
+			<tr><td>Packaging &amp; README</td><td><code>pyproject.toml</code></td><td>The agent can install and run the project from the instructions alone</td></tr>
+		</table>
+		<aside class="notes">
+			The thesis of this block: tests, lint, types and CI are the agent's senses. A project without them is an agent working blind.
+		</aside>
+	</section>
+	<section>
+		<h2>Demo: exercise 04</h2>
+		<div class="two-col">
+			<div>
+				<p><code>fitting.py</code>: works, probably. No tests, no types, no docstrings, and:</p>
+				<pre><code class="language-python" data-trim>
+import numpy as np
+import os
+from math import *
+
+def weighted_linear_fit(x, y, sigma=None, result={}):
+    ...
+def chi_squared(x, y, sigma, slope, intercept):
+    try:
+        return np.sum(((y - (slope*x + intercept)) / sigma)**2)
+    except:
+        return None
+				</code></pre>
+			</div>
+			<div>
+				<p>The prompt:</p>
+				<p class="callout"><em>"Add type hints, docstrings and unit tests. Then run ruff check, pyrefly check and pytest and fix everything they report. Repeat until all are clean."</em></p>
+				<ul>
+					<li>Watch the loop: run &rarr; read the error &rarr; fix &rarr; re-run</li>
+					<li>Then read the tests: do they test <em>physics</em>? An exact line recovered, &chi;&sup2; of a perfect fit = 0, <em>g</em> &asymp; 9.8 from the pendulum data</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>Steal this configuration</h2>
+		<div class="two-col">
+			<div>
+				<p><code>pyproject.toml</code></p>
+				<pre><code class="language-toml" data-trim>
+[tool.ruff]
+line-length = 120
+[tool.ruff.lint]
+select = ["B", "D", "E", "F", "I", "N", "NPY",
+          "PL", "PT", "RUF", "SIM", "UP"]
+
+[tool.pyrefly]
+project-includes = ["workshop", "tests"]
+
+[tool.pytest.ini_options]
+addopts = ["--cov", "--cov-report=term-missing"]
+testpaths = ["tests"]
+				</code></pre>
+			</div>
+			<div>
+				<p><code>.github/workflows/ci.yml</code></p>
+				<pre><code class="language-yaml" data-trim>
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - run: ruff check
+      - run: pyrefly check
+      - run: pytest
+				</code></pre>
+			</div>
+		</div>
+		<p class="small">
+			Full versions in this repository and in <a href="https://github.com/CFT-HY/pttools">PTtools</a>.
+			Slides on the why and how: <a href="https://github.com/CFT-HY/unit-testing-ci-cd">unit-testing-ci-cd</a>.
+		</p>
+		<p class="callout">And list the commands in <code>AGENTS.md</code>, so the agent knows to run them.</p>
+	</section>
+	<section>
+		<h2>Hands-on 2 (25 min): choose your path</h2>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li><strong>04</strong> AI-ready code: the demo on your machine</li>
+					<li><strong>05</strong> A skill: <code>plot-style</code></li>
+					<li><strong>06</strong> A hook: <code>ruff</code> on every edit</li>
+					<li><strong>07</strong> A subagent: the physics reviewer</li>
+					<li><strong>08</strong> MCP: arXiv or Zotero (optional)</li>
+					<li><strong>09</strong> Local models (optional, advanced)</li>
+				</ul>
+			</div>
+			<div>
+				<p><strong>10: your own project.</strong> The checklist:</p>
+				<ol>
+					<li>Git first</li>
+					<li><code>/init</code>, then fix the draft</li>
+					<li>Permissions allow-list</li>
+					<li>A feedback signal: regression tests, ruff</li>
+					<li>A small real task; review; commit</li>
+					<li>A small real <em>research</em> task</li>
+				</ol>
+				<p class="callout">This is what we're here for. Ask us to look at your project with you.</p>
+			</div>
+		</div>
+	</section>
+</section>
+
+<!-- ============================================================ SHOWCASES -->
+<section>
+	<section class="divider center-slide">
+		<h1>Showcases</h1>
+		<p>Three complete workflows, ~11 min each</p>
+		<aside class="notes">Each organizer has a screen recording as a fallback. Keep the time; one question each.</aside>
+	</section>
+	<section>
+		<h2>Hippe: the research loop</h2>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li>One orchestrator session; subagents for literature, derivation, code, review</li>
+					<li>The <strong>Ralph loop</strong>: a <code>Stop</code> hook that feeds the same prompt back until the completion promise is true
+						&mdash; "an infinite for loop until the task is done"</li>
+					<li>The <code>academic-pipeline</code> skill: research &rarr; write &rarr; integrity check &rarr; review &rarr; revise</li>
+					<li>Style inferred from old files: the agent writes like you</li>
+				</ul>
+			</div>
+			<div>
+				<pre><code class="language-bash" data-trim>
+# .claude/ralph-loop.local.md
+---
+iteration: 3
+max_iterations: 20
+completion_promise: "FIGURE 2 REPRODUCED"
+---
+Reproduce figure 2 of arXiv:XXXX.XXXXX with our
+code, matching the style of fig/*.py. Run the
+tests. Output the promise only when it is true.
+				</code></pre>
+				<p class="todo">TODO (Hippe): pick the demo task; record a fallback</p>
+			</div>
+		</div>
+		<p class="small">Everything in <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a>. Also: vibe-coded hobby projects like <a href="https://github.com/ahippelainen/vote_for_lunch_online">vote_for_lunch_online</a>.</p>
+	</section>
+	<section>
+		<h2>Aaron: the supercomputer and the editor</h2>
+		<ul>
+			<li>Claude Code on the laptop &rarr; SSH to the cluster &rarr; write the batch script &rarr; <code>sbatch</code> &rarr; watch <code>squeue</code> &rarr; fetch the results &rarr; plot</li>
+			<li>Why the permission allow-list matters here: <code>ssh</code>, <code>squeue</code>, <code>scp</code> are safe to allow; <code>scancel</code> and <code>rm</code> are not</li>
+			<li>The editor as an AI-configured tool: a Doom Emacs configuration written by Claude</li>
+			<li>A combined workflow: what an agent looks like when it spans your laptop, the cluster and your tools</li>
+		</ul>
+		<p class="todo">TODO (Aaron): cluster, a job that finishes in &lt; 2 min, fallback recording</p>
+	</section>
+	<section>
+		<h2>Mika: local models</h2>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li><strong>Why:</strong> privacy, no rate limits, offline, cost. <strong>Cost:</strong> capability and speed</li>
+					<li><strong>Hardware reality:</strong> laptop &rarr; small Gemma 4 / Qwen 3.8 variants;
+						workstation GPU (Radeon VII, 16 GB) &rarr; Gemma 4 26B-A4B with llama.cpp;
+						Kimi-class &rarr; a server</li>
+					<li><strong>The stack:</strong> llama.cpp in Docker &rarr; LiteLLM proxy &rarr; Open WebUI;
+						Claude Code with <code>ANTHROPIC_BASE_URL</code> pointing at the proxy</li>
+					<li>Android: Conduit</li>
+				</ul>
+			</div>
+			<div>
+				<pre><code class="language-bash" data-trim>
+docker compose up -d llama-cpp
+litellm --config litellm/config.yaml --port 4000
+export ANTHROPIC_BASE_URL=http://localhost:4000
+export ANTHROPIC_AUTH_TOKEN=local
+claude
+				</code></pre>
+				<p class="callout">Demo: exercise 01 again, with a local model. Compare time and quality. Fans on.</p>
+			</div>
+		</div>
+		<p class="small">Configs in <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a>; instructions in exercise 09.</p>
+	</section>
+</section>
+
+<!-- ============================================================ WRAP-UP -->
+<section>
+	<section>
+		<h2>Resources</h2>
+		<ul>
+			<li>This workshop: <a href="https://github.com/AgenttiX/ai-workshop">github.com/AgenttiX/ai-workshop</a> &mdash; slides, exercises, solutions, configs to steal</li>
+			<li>Claude Code documentation: <a href="https://code.claude.com/docs">code.claude.com/docs</a></li>
+			<li><a href="https://support.claude.com/en/articles/16634237-claude-team-plan-for-scientists">Claude Team plan for scientists</a>:
+				a PI files the application, up to 25 people per application. Talk to your group leader today.</li>
+			<li><a href="https://education.github.com/pack">GitHub Student Developer Pack</a>: Copilot for free; apply early, it takes time</li>
+			<li>Hippe's <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a>, Mika's <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a> and
+				<a href="https://github.com/CFT-HY/unit-testing-ci-cd">unit testing &amp; CI/CD lecture</a></li>
+			<li>Coordination and questions after today: <a href="https://cftgroup.chat/main/channels/ai-workshop">Mattermost</a></li>
+		</ul>
+	</section>
+	<section class="center-slide">
+		<h1>Thank you!</h1>
+		<p>Feedback: <span class="todo">QR code / link to the form</span></p>
+		<p>Study credits: <span class="todo">what to submit to the doctoral programme</span></p>
+		<p>The coffee is still warm. Let's argue about the future of science now.</p>
+	</section>
+</section>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			revealjs.addEventListener("load", () => {
+				Reveal.initialize({
+					// Add the current slide number to the URL after a #
+					hash: true,
+					// Learn about plugins: https://revealjs.com/plugins/
+					plugins: [ RevealHighlight, RevealMath.MathJax3, RevealNotes ],
+					// Show both current slide number and total number of slides
+					slideNumber: "c/t",
+					width: 1920,
+					height: 1080,
+				});
+			});
+		</script>
+	</body>
+</html>

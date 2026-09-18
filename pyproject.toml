@@ -1,0 +1,163 @@
+[build-system]
+requires = [
+    "setuptools >= 80",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kumpula-ai-workshop"
+version = "0.1.0"
+description = "Kumpula AI workshop for scientists 2026: slides and exercises"
+readme = "README.md"
+# When updating these, also update CITATION.cff.
+authors = [
+    {name = "Aaron Haarti"},
+    {name = "Antti Hippeläinen"},
+    {name = "Mika Mäki", email = "mika.x.maki@helsinki.fi"}
+]
+classifiers = [
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Typing :: Typed"
+]
+# The exact versions used in the workshop are pinned in requirements.txt.
+dependencies = [
+    "matplotlib >= 3.11",
+    "numpy >= 2.4",
+    "pttools-gw >= 0.10.0",
+    "scipy >= 1.17"
+]
+requires-python = ">= 3.12"
+
+[project.optional-dependencies]
+dev = [
+    "pyrefly",
+    "pytest",
+    "pytest-cov",
+    "ruff"
+]
+
+[project.urls]
+Repository = "https://github.com/AgenttiX/ai-workshop"
+
+[tool.setuptools.packages.find]
+include = ["workshop*"]
+
+[tool.coverage.run]
+branch = true
+source = ["solutions", "workshop"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:"
+]
+show_missing = true
+
+[tool.pyrefly]
+project-includes = [
+    "exercises",
+    "solutions",
+    "tests",
+    "workshop"
+]
+project-excludes = [
+    # This exercise is deliberately untyped and messy. Check it explicitly with
+    # "pyrefly check exercises/04_ai_ready/fitting.py" when doing the exercise.
+    "exercises/04_ai_ready",
+    "**/__pycache__/**",
+    "**/*venv/**",
+    "**/.[!/.]*"
+]
+# The exercise and solution directories are not packages, so each of them is its own import root.
+search-path = [
+    ".",
+    "exercises/01_fix_the_bug",
+    "exercises/02_agents_md/pendulum_lab",
+    "exercises/03_pttools",
+    "solutions/01_fix_the_bug",
+    "solutions/03_pttools",
+    "solutions/04_ai_ready"
+]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--cov",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+    "--durations=10",
+    "--durations-min=1.0"
+]
+# The exercise directories are not tested here, as their starters are deliberately broken.
+# Run the tests of an exercise with e.g. "pytest exercises/01_fix_the_bug".
+testpaths = [
+    "solutions",
+    "tests"
+]
+# Makes the workshop package importable without installing it.
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = [
+    "dev",
+    # Copied from https://github.com/AgenttiX/phd-presentations and not maintained here.
+    "render.py",
+    # This exercise is deliberately untyped and messy. Lint it explicitly with
+    # "ruff check exercises/04_ai_ready/fitting.py" when doing the exercise.
+    "exercises/04_ai_ready",
+    "render"
+]
+
+[tool.ruff.lint]
+select = [
+    "A",     # flake8-builtins
+    "ARG",   # flake8-unused-arguments
+    "B",     # flake8-bugbear
+    "BLE",   # flake8-blind-except
+    "C4",    # flake8-comprehensions
+    "D",     # pydocstyle
+    "E",     # pycodestyle errors
+    "F",     # Pyflakes
+    "I",     # isort
+    "N",     # pep8-naming
+    "NPY",   # NumPy-specific rules
+    "PERF",  # Perflint
+    "PIE",   # flake8-pie
+    "PL",    # Pylint
+    "PT",    # flake8-pytest-style
+    "RET",   # flake8-return
+    "RUF",   # Ruff-specific rules
+    "SIM",   # flake8-simplify
+    "TID",   # flake8-tidy-imports
+    "UP",    # pyupgrade
+    "W"      # pycodestyle warnings
+]
+ignore = [
+    "D203",     # incorrect-blank-line-before-class (conflicts with D211)
+    "D213",     # multi-line-summary-second-line (conflicts with D212)
+    "PLR0913",  # too-many-arguments
+    "PLR0917"   # too-many-positional-arguments
+]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+# The modules of the exercises are imported by their tests as top-level modules.
+known-first-party = ["blackbody", "fitting", "spectrum", "workshop"]
+
+[tool.ruff.lint.pep8-naming]
+# Physics symbols
+extend-ignore-names = ["B", "L", "T", "g", "h", "k_B"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/test_*.py" = [
+    "D",         # Docstrings are optional in tests
+    "PLR2004"    # magic-value-comparison
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"

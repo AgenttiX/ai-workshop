@@ -19,10 +19,28 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - [Antti "Hippe" Hippeläinen](https://github.com/ahippelainen): PhD student in holography
 - [Mika Mäki](https://github.com/AgenttiX): PhD student in first-order cosmological phase transitions
 
+## Commands
+- Install dependencies: `pip install -r requirements.txt` (use the virtualenv at `./venv`)
+- Check the environment: `python -m workshop.check`
+- Run tests: `pytest` (runs `tests/` and `solutions/`; run the tests of an exercise with e.g. `pytest exercises/01_fix_the_bug`)
+- Lint: `ruff check`
+- Type checking: `pyrefly check`
+- Render the slides to a PDF: `./render.py slides.html`
+
 ## Project structure
 - `./dev/` contains temporary files (Markdown etc.) that are not tracked in Git.
+- `./exercises/` contains the exercises for the participants, one directory per exercise with a `README.md`.
+  The starters are deliberately imperfect (e.g. `01_fix_the_bug` has a physics bug and `04_ai_ready` has lint errors),
+  so their tests are not run by the default `pytest`, and `04_ai_ready` is excluded from the linter and type checker.
 - `./plan/` contains documents for planning the workshop.
-- `./slides.html` is the reveal.js presentations slides.
+- `./slides.html` is the reveal.js presentation slides. Speaker notes are in `<aside class="notes">` elements.
+- `./solutions/` contains the reference solutions of the exercises. These are tested in CI.
+- `./tests/` contains the tests of the `workshop` package.
+- `./workshop/` is a small Python package with helpers shared by the exercises (environment check, plotting style, data generation).
+
+## Code style
+- Python 3.12 type hints everywhere except in the deliberately messy exercise starters.
+- Sphinx-style docstrings. The code is read by workshop participants, so prefer clarity over cleverness.
 
 ## Commands for developing the examples
 - Run Python tests: `pytest`
@@ -45,5 +63,5 @@ If you need them, you may `git clone` them there.
 - Vibe-coded projects
   - [Bubble simulation](https://github.com/AgenttiX/bubble-simulation):
     lattice simulation of a first-order phase transition by Mika
-  - [Manifolder](https://github.com/AgenttiX/manifolder): Calabi-Yau manifold plotter Mika
+  - [Manifolder](https://github.com/AgenttiX/manifolder): Calabi-Yau manifold plotter by Mika
   - [vote_for_lunch_online](https://github.com/ahippelainen/vote_for_lunch_online): restaurant voting app by Hippe
