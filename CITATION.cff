@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "When referring to this workshop or repository, please cite it as below."
+authors:
+- family-names: "Haarti"
+  given-names: "Aaron"
+  orcid: "https://orcid.org/0009-0008-0339-972X"
+- family-names: "Hippeläinen"
+  given-names: "Antti"
+  orcid: "https://orcid.org/0000-0002-6129-6568"
+- family-names: "Mäki"
+  given-names: "Mika"
+  orcid: "https://orcid.org/0000-0001-8162-7101"
+title: "Kumpula AI workshop for scientists 2026"
+# version: 1.0.0
+# doi: 10.1234/name.1234567
+# Todo: set the workshop date here.
+# date-released: 2026-XX-XX
+url: "https://github.com/AgenttiX/ai-workshop"
