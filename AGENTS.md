@@ -5,12 +5,14 @@ This repository is for organizing an AI workshop for scientists
 at the Kumpula Campus of the University of Helsinki in autumn 2026.
 
 ## Workshop description
+- Participants: BSc, MSc and PhD students and researchers of the Faculty of Science (voluntary participation)
 - Structure: 2 h session + 15 min break + 2 h session
 - Language: English
 - Coordination: [Mattermost](https://cftgroup.chat/main/channels/ai-workshop)
 - Exercise platform: Claude Code with Claude Team plan for scientists
   - Backup option for those without Claude: GitHub Copilot with GitHub Student Developer Pack
 - Primary IDE: Visual Studio Code and VSCodium
+- Programming language for exercises: Python 3.12
 
 ## Workshop organizers
 - [Aaron Haarti](https://github.com/haaaaron): PhD student in computational field theory
@@ -21,6 +23,11 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - `./dev/` contains temporary files (Markdown etc.) that are not tracked in Git.
 - `./plan/` contains documents for planning the workshop.
 - `./slides.html` is the reveal.js presentations slides.
+
+## Commands for developing the examples
+- Run Python tests: `pytest`
+- Lint: `ruff check`
+- Type checking: `pyrefly check`
 
 ## General instructions
 - When producing a long response, also output it as a Markdown file in `./dev/`.
