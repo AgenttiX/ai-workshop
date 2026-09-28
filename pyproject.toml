@@ -78,6 +78,7 @@ show_missing = true
 [tool.pyrefly]
 project-includes = [
     "exercises",
+    "figures",
     "solutions",
     "tests",
     "workshop"

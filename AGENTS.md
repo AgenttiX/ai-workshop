@@ -12,7 +12,7 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - Exercise platform: Claude Code with Claude Team plan for scientists
   - Backup option for those without Claude: GitHub Copilot with GitHub Student Developer Pack
 - Primary IDE: Visual Studio Code and VSCodium
-- Programming language for exercises: Python 3.12
+- Programming language for exercises: Python 3.12 or newer
 
 ## Workshop organizers
 - [Aaron Haarti](https://github.com/haaaaron): PhD student in computational field theory
@@ -26,14 +26,19 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - Lint: `ruff check`
 - Type checking: `pyrefly check`
 - Render the slides to a PDF: `./render.py slides.html`
+- Copy the setup scripts to the slides: `./setup/sync_slides.py`
 
 ## Project structure
 - `./dev/` contains temporary files (Markdown etc.) that are not tracked in Git.
+- `./figures/` contains the figures of the slides, and the data and Plotly scripts for the plots made by us
+  (requirements in `figures/requirements.txt`).
 - `./exercises/` contains the exercises for the participants, one directory per exercise with a `README.md`.
   The starters are deliberately imperfect (e.g. `01_fix_the_bug` has a physics bug and `04_ai_ready` has lint errors),
   so their tests are not run by the default `pytest`, and `04_ai_ready` is excluded from the linter and type checker.
 - `./plan/` contains documents for planning the workshop.
 - `./poster/` contains the A3 poster (`poster.svg`, Inkscape-compatible); `preview.sh` renders it to `poster/build/`.
+- `./setup/` contains the setup commands of the slides for each operating system. These are the source of truth:
+  edit them and run `./setup/sync_slides.py`, not the code blocks in `slides.html`. Tested in CI by `.github/workflows/setup.yml`.
 - `./slides.html` is the reveal.js presentation slides. Speaker notes are in `<aside class="notes">` elements.
 - `./solutions/` contains the reference solutions of the exercises, each with a `README.md` explaining what happened.
   The code is tested in CI.
@@ -45,7 +50,7 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
   Define every term at first use, and give commands for Linux (primary), native Windows (PowerShell) and macOS.
 
 ## Code style
-- Python 3.12 type hints everywhere except in the deliberately messy exercise starters.
+- Type hints that work on Python 3.12 and newer everywhere except in the deliberately messy exercise starters.
 - Sphinx-style docstrings. The code is read by workshop participants, so prefer clarity over cleverness.
 
 ## Commands for developing the examples

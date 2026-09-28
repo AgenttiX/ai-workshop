@@ -1,0 +1,114 @@
+# Run the setup scripts of the slides (./setup/) on fresh runners, as a participant would.
+# The scripts clone the repository from GitHub, but here they get the commit being tested instead.
+name: Setup scripts
+on:
+  push:
+    paths:
+      - ".github/workflows/setup.yml"
+      - "setup/**"
+      - "pyproject.toml"
+      - "requirements.txt"
+      - "workshop/**"
+  pull_request:
+    paths:
+      - ".github/workflows/setup.yml"
+      - "setup/**"
+      - "pyproject.toml"
+      - "requirements.txt"
+      - "workshop/**"
+  # The installers and packages the scripts download change without us touching the repository
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  REPO_URL: https://github.com/AgenttiX/ai-workshop.git
+jobs:
+  ubuntu:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-26.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Clone this commit instead of the main branch
+        run: git config --global url."$GITHUB_WORKSPACE".insteadOf "$REPO_URL"
+      - name: Answer yes to apt, as a participant would
+        run: echo 'APT::Get::Assume-Yes "true";' | sudo tee /etc/apt/apt.conf.d/90assume-yes
+      - name: Run the setup script
+        working-directory: ${{ runner.temp }}
+        run: bash -eo pipefail "$GITHUB_WORKSPACE/setup/ubuntu.sh"
+      - name: Check the installed tools
+        working-directory: ${{ runner.temp }}/ai-workshop
+        run: |
+          export PATH="$HOME/.local/bin:/snap/bin:$PATH"
+          venv/bin/python --version
+          claude --version
+          code --version
+
+  macos:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Clone this commit instead of the main branch
+        run: git config --global url."$GITHUB_WORKSPACE".insteadOf "$REPO_URL"
+      - name: Run the setup script
+        working-directory: ${{ runner.temp }}
+        run: bash -eo pipefail "$GITHUB_WORKSPACE/setup/macos.sh"
+      - name: Check the installed tools
+        working-directory: ${{ runner.temp }}/ai-workshop
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          venv/bin/python --version | grep "Python 3.14"
+          claude --version
+          code --version
+
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Clone this commit instead of the main branch
+        run: git config --global url."$($env:GITHUB_WORKSPACE -replace '\\', '/')".insteadOf "$env:REPO_URL"
+      # Windows 11 comes with WinGet, but the Windows Server runners don't
+      - name: Install WinGet
+        run: |
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          Install-Module -Name Microsoft.WinGet.Client -Repository PSGallery -Force
+          Repair-WinGetPackageManager -AllUsers -Latest -Force
+          Add-Content -Path $env:GITHUB_PATH -Value "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+      # A participant accepts these at the first prompt, which the CI can't answer
+      - name: Accept the terms of the WinGet source
+        run: winget list --accept-source-agreements --disable-interactivity | Out-Null
+      - name: Run the setup script
+        working-directory: ${{ runner.temp }}
+        run: . "$env:GITHUB_WORKSPACE\setup\windows.ps1"
+      # The script runs in one PowerShell session. A participant reopens PowerShell to get the new PATH.
+      - name: Check the installed tools
+        working-directory: ${{ runner.temp }}\ai-workshop
+        run: |
+          $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
+          foreach ($id in "Python.Python.3.14", "Git.Git", "Microsoft.VisualStudioCode") {
+            winget list --id $id --exact --disable-interactivity
+            if ($LASTEXITCODE -ne 0) { throw "WinGet did not install $id" }
+          }
+          $version = .\venv\Scripts\python.exe --version
+          if ($version -notlike "Python 3.14*") { throw "The virtualenv has $version instead of Python 3.14" }
+          claude --version
+          code --version

@@ -64,7 +64,16 @@
 				font-size: 0.7em;
 			}
 			.reveal code {
+				font-family: "JetBrains Mono", "Fira Code", "DejaVu Sans Mono", Menlo, Consolas, monospace;
 				font-size: 0.9em;
+			}
+			/* Inline code: a tinted box so that it stands out from the regular text */
+			.reveal :not(pre) > code {
+				background: rgba(0, 0, 0, 0.07);
+				border: 1px solid rgba(0, 0, 0, 0.12);
+				border-radius: 0.25em;
+				padding: 0 0.25em;
+				font-size: 0.85em;
 			}
 			.reveal pre.tall code {
 				max-height: 720px;
@@ -284,22 +293,27 @@
 	</section>
 	<section>
 		<h2>The one plot to remember: task horizon</h2>
-		<img src="img/metr_time_horizon.svg" alt="METR: length of software tasks that different LLMs can complete 50 % of the time, vs. release date" style="display: block; margin: 0 auto; height: 500px;">
+		<iframe src="figures/time_horizon.html" title="The length of tasks that AI models complete with 50 % success vs. their release date, on a logarithmic scale"
+			style="display: block; margin: 0 auto; width: 1040px; height: 480px; border: 0;"></iframe>
 		<ul style="font-size: 0.85em;">
 			<li>How long a task (measured by how long it takes a human expert) an AI completes on its own with 50&nbsp;% success.
 				<strong>Doubling every ~4 months</strong> since 2023. Note the logarithmic scale</li>
-			<li>2023: minutes. 2025: an hour or two. Spring 2026: ~12 h, and the best models are beyond what the benchmark can measure</li>
+			<li>2023: minutes. 2025: an hour or two. 2026: ~12 h, and the best models are beyond what the benchmark can measure reliably</li>
 			<li>Extrapolation is dangerous. But the trend hasn't bent yet.</li>
 		</ul>
-		<p class="small">Figure: METR, <a href="https://metr.org/time-horizons/"><em>Task-completion time horizons of frontier AI models</em></a>
-			(updated May 2026); T. Kwa et al., <a href="https://arxiv.org/abs/2503.14499"><em>Measuring AI ability to complete long tasks</em></a>,
-			arXiv:2503.14499.</p>
+		<p class="small">Our plot of METR's data: <a href="https://metr.org/time-horizons/">time horizons</a> (May 2026),
+			<a href="https://metr.org/blog/2026-06-26-gpt-5-6-sol/">GPT-5.6 Sol</a> (June 2026).
+			T. Kwa et al., <a href="https://arxiv.org/abs/2503.14499"><em>Measuring AI ability to complete long tasks</em></a>, arXiv:2503.14499.</p>
 		<aside class="notes">
 			This is the plot that answers "is it just hype": it's a measured trend over years.
-			The tasks are software tasks; the y-axis is the time a human expert needs, not the time the AI needs.
+			The plot is interactive: hover over a point for its values, drag to zoom, double-click to reset. The tasks are software tasks; the y-axis is the time a human expert needs, not the time the AI needs.
 			Doubling time 129 days (95 % CI 104&ndash;158) from 2023 on, in the Time Horizon 1.1 data.
 			Claude Opus 4.6 ~12 h; Claude Mythos Preview ~17 h but above what the task suite can reliably measure.
-			Update the figure the week before the workshop: re-extract the SVG of the D3 chart at metr.org/time-horizons.
+			GPT-5.6 Sol: ~11 h (95 % CI 5&ndash;40 h), but it tried to cheat on some tasks, and METR says the number isn't robust
+			(counting the cheating as success would give &gt; 270 h). Hence the separate marker.
+			The Navier&ndash;Stokes run can't be put on this plot: 88 h of 10 000 agents is wall-clock time, not a task length measured against humans.
+			Update the week before the workshop: new data points to figures/additional_results.yaml, then python figures/plot_time_horizon.py.
+			METR's own chart is in figures/metr_time_horizon.svg.
 		</aside>
 	</section>
 	<section>
@@ -507,15 +521,15 @@
 	<section>
 		<h2>Setting up: what you need</h2>
 		<ul>
-			<li><strong>Python 3.12</strong> and <strong>Git</strong></li>
+			<li><strong>Python 3.12 or newer</strong> and <strong>Git</strong></li>
 			<li><strong>An IDE:</strong> <a href="https://code.visualstudio.com/">VS Code</a> or
 				<a href="https://vscodium.com/">VSCodium</a> (the same without Microsoft's telemetry),
 				with the <em>Python</em> and <em>Claude Code</em> extensions</li>
 			<li><strong>Claude Code</strong> and a Claude account &mdash; or GitHub Copilot as the backup</li>
 			<li><strong>This repository</strong>, with its own virtualenv and packages</li>
 		</ul>
-		<p>The next two slides have the commands for <strong>Ubuntu 24.04</strong> and <strong>Windows 11</strong>.
-			macOS: the Ubuntu commands work after installing Python 3.12 and Git with <a href="https://brew.sh/">Homebrew</a>.</p>
+		<p>The next three slides have the commands for <strong>Ubuntu 24.04&rarr;</strong>, <strong>macOS</strong>
+			and <strong>Windows 11</strong>.</p>
 		<p class="callout">Ideally you did this before coming. If not, now is the time &mdash; and if something fails,
 			paste the error to an AI chat or raise a hand.</p>
 		<aside class="notes">
@@ -524,13 +538,13 @@
 		</aside>
 	</section>
 	<section>
-		<h2>Setup on Ubuntu 24.04</h2>
+		<h2>Setup on Ubuntu 24.04&rarr;</h2>
 		<div class="two-col">
 			<div>
-				<pre class="tall"><code class="language-bash" data-trim>
-# Python 3.12 is Ubuntu 24.04's own Python
+				<pre class="tall"><code class="language-bash" data-trim data-source-file="setup/ubuntu.sh">
+# Ubuntu 24.04 comes with Python 3.12 and 26.04 with 3.14
 sudo apt update
-sudo apt install git python3 python3-venv python3-pip
+sudo apt install git python3 python3-pip python3-venv
 sudo snap install code --classic   # or: codium
 
 # Claude Code command-line tool
@@ -558,20 +572,51 @@ python -m workshop.check
 		</div>
 	</section>
 	<section>
+		<h2>Setup on macOS</h2>
+		<div class="two-col">
+			<div>
+				<pre class="tall"><code class="language-bash" data-trim data-source-file="setup/macos.sh">
+# After installing Homebrew from brew.sh
+brew install git python@3.14
+brew install --cask visual-studio-code   # or: vscodium
+
+# Claude Code command-line tool
+curl -fsSL https://claude.ai/install.sh | bash
+
+# The workshop repository and its packages
+git clone https://github.com/AgenttiX/ai-workshop.git
+cd ai-workshop
+python3.14 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python -m workshop.check
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>Run these in <em>Terminal</em> (<code>Cmd+Space</code> &rarr; "Terminal"), one line at a time</li>
+					<li><a href="https://brew.sh/">Homebrew</a> is the package manager of macOS.
+						Run the <em>"Next steps"</em> its installer prints at the end</li>
+					<li>Use <code>python3.14</code>: the <code>python3</code> of macOS is older</li>
+					<li><code>source venv/bin/activate</code> is needed in every new terminal</li>
+					<li>The <code>Ctrl</code> shortcuts of VS Code are <code>Cmd</code> on macOS</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section>
 		<h2>Setup on Windows 11</h2>
 		<div class="two-col">
 			<div>
-				<pre class="tall"><code class="language-powershell" data-trim>
+				<pre class="tall"><code class="language-powershell" data-trim data-source-file="setup/windows.ps1">
 # In PowerShell
-winget install Python.Python.3.12
-winget install Git.Git
-winget install Microsoft.VisualStudioCode
+winget install Python.Python.3.14 Git.Git Microsoft.VisualStudioCode
 # Close and reopen PowerShell, then:
 irm https://claude.ai/install.ps1 | iex
 
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
-py -3.12 -m venv venv
+py -3.14 -m venv venv
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -797,7 +842,7 @@ python -m workshop.check
 - `solutions/`: reference solutions, tested in CI
 
 ## Code style
-- Python 3.12 type hints, Sphinx docstrings
+- Type hints for Python 3.12 and newer, Sphinx docstrings
 				</code></pre>
 			</div>
 			<div>
@@ -1106,11 +1151,13 @@ testpaths = ["tests"]
 				<pre><code class="language-yaml" data-trim>
 jobs:
   test:
+    strategy:
+      matrix: {python-version: ["3.12", "3.14"]}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
-        with: {python-version: "3.12"}
+        with: {python-version: "${{ matrix.python-version }}"}
       - run: pip install -r requirements.txt
       - run: ruff check
       - run: pyrefly check

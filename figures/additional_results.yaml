@@ -1,0 +1,19 @@
+# Time horizons that are not (yet) in METR's benchmark_results_1_1.yaml.
+# The format follows benchmark_results_1_1.yaml: the horizon lengths are in minutes.
+results:
+  gpt_5_6_sol:
+    name: GPT-5.6 Sol
+    benchmark_name: METR-Horizon-v1.1
+    metrics:
+      p50_horizon_length:
+        # "If we follow our standard methodology of marking cheating attempts as failures, we arrive at a
+        # 50%-Time Horizon point estimate of around 11.3hrs (95% CI: 5hrs - 40hrs)."
+        # METR does not consider this a robust measurement.
+        ci_high: 2400.0
+        ci_low: 300.0
+        estimate: 678.0
+    # Limited preview to trusted partners, analogous to METR's date for Claude Mythos Preview (early).
+    # The public release was on 2026-07-09.
+    release_date: 2026-06-26
+    robust: false
+    source: https://metr.org/blog/2026-06-26-gpt-5-6-sol/

@@ -27,6 +27,9 @@ That's a skill we'll use all day. You can also email us.
 
 The instructions are written for **Linux**, **Windows** and **macOS**. Follow the parts for your system.
 
+Prefer to install everything with a few commands? The scripts in [`setup/`](./setup/) do the same
+for Ubuntu 24.04 and newer, macOS (with Homebrew) and Windows 11 (with winget). They're also on the setup slides.
+
 ### What you'll install, and why
 | What | Why |
 |---|---|
