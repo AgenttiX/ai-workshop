@@ -32,8 +32,8 @@ jobs:
           pip install -r figures/requirements.txt
       - name: Environment check
         run: python -m workshop.check
-      - name: Check that the slides have the current setup scripts
-        run: python setup/sync_slides.py --check
+      - name: Check that the README has the current setup scripts
+        run: python setup/sync_readme.py --check
       - name: Lint
         run: ruff check
       - name: Type check

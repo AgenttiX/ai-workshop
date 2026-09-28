@@ -27,14 +27,75 @@ That's a skill we'll use all day. You can also email us.
 
 The instructions are written for **Linux**, **Windows** and **macOS**. Follow the parts for your system.
 
-Prefer to install everything with a few commands? The scripts in [`setup/`](./setup/) do the same
-for Ubuntu 24.04 and newer, macOS (with Homebrew) and Windows 11 (with winget). They're also on the setup slides.
+<details>
+<summary><b>Already comfortable with the terminal? The quick setup</b></summary>
+
+These commands do steps 1, 3 and 5 below, and install the Claude Code command-line tool.
+Run them one line at a time. After them, do steps 2, 4 and 6.
+They are tested on fresh machines in CI (the files are in [`setup/`](./setup/)).
+
+**Ubuntu 24.04 and newer**
+<!-- source: setup/ubuntu.sh -->
+```bash
+# Ubuntu 24.04 comes with Python 3.12 and 26.04 with 3.14
+sudo apt update
+sudo apt install git python3 python3-pip python3-venv
+sudo snap install code --classic   # or: codium
+
+# Claude Code command-line tool
+curl -fsSL https://claude.ai/install.sh | bash
+
+# The workshop repository and its packages
+git clone https://github.com/AgenttiX/ai-workshop.git
+cd ai-workshop
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python -m workshop.check
+```
+
+**macOS** with [Homebrew](https://brew.sh/). Run the *"Next steps"* that the Homebrew installer prints at the end.
+<!-- source: setup/macos.sh -->
+```bash
+# After installing Homebrew from brew.sh
+brew install git python@3.14
+brew install --cask visual-studio-code   # or: vscodium
+
+# Claude Code command-line tool
+curl -fsSL https://claude.ai/install.sh | bash
+
+# The workshop repository and its packages
+git clone https://github.com/AgenttiX/ai-workshop.git
+cd ai-workshop
+python3.14 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python -m workshop.check
+```
+
+**Windows 11** in PowerShell
+<!-- source: setup/windows.ps1 -->
+```powershell
+# In PowerShell
+winget install Python.Python.3.14 Git.Git Microsoft.VisualStudioCode
+# Close and reopen PowerShell, then:
+irm https://claude.ai/install.ps1 | iex
+
+git clone https://github.com/AgenttiX/ai-workshop.git
+cd ai-workshop
+py -3.14 -m venv venv
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -m workshop.check
+```
+</details>
 
 ### What you'll install, and why
 | What | Why |
 |---|---|
 | **VS Code** | A code editor: a program for writing and running code. It has a built-in terminal and the Claude Code extension. [VSCodium](https://vscodium.com/) works too. |
-| **Python 3.12** | The programming language of the exercises. |
+| **Python 3.12 or later** | The programming language of the exercises. |
 | **Git** | Version control: it records every change to your files so that you can see and undo them. It's also how you download the workshop materials. |
 | **Claude Code** | The AI agent we use. It runs inside VS Code as an extension. |
 | **A Claude account** | Claude Code needs a paid Claude plan: Pro, Max or Team. The free plan doesn't include Claude Code. See [step 4](#step-4-a-claude-account). |
@@ -56,16 +117,16 @@ Once VS Code is installed, you can also use its built-in terminal: menu **Termin
 <details open>
 <summary><b>Linux (Ubuntu or Debian)</b></summary>
 
-1. Install Python 3.12, its virtual-environment module and Git.
+1. Install Python, its virtual-environment module and Git.
    `sudo` runs the command as an administrator and asks for your password.
    Nothing appears on the screen while you type the password; that's normal.
    ```bash
    sudo apt update
-   sudo apt install python3.12 python3.12-venv git
+   sudo apt install python3 python3-venv git
    ```
-   Ubuntu 24.04 comes with Python 3.12. On older releases, `python3.12` may not be available from `apt`;
+   Ubuntu 24.04 comes with Python 3.12 and newer releases with a later one. On older releases, `python3` is older than 3.12;
    contact us in that case.
-   On Fedora, use `sudo dnf install python3.12 git`.
+   On Fedora, use `sudo dnf install python3 git`.
 2. Install VS Code: download the `.deb` file from [code.visualstudio.com](https://code.visualstudio.com/)
    and install it with
    ```bash
@@ -74,10 +135,11 @@ Once VS Code is installed, you can also use its built-in terminal: menu **Termin
    (or with `sudo snap install code --classic`).
 3. Check that everything works. Each command should print a version number:
    ```bash
-   python3.12 --version
+   python3 --version
    git --version
    code --version
    ```
+   Python should be 3.12 or later.
 </details>
 
 <details>
@@ -97,11 +159,11 @@ Once VS Code is installed, you can also use its built-in terminal: menu **Termin
 4. **Close all PowerShell windows and open a new one**, so that it finds the new programs.
    Then check that everything works. Each command should print a version number:
    ```powershell
-   py -3.12 --version
+   py -3 --version
    git --version
    code --version
    ```
-   `py` is the Python launcher for Windows; `py -3.12` means "Python 3.12".
+   `py` is the Python launcher for Windows; `py -3` means "the newest Python 3 installed".
    Use it instead of `python` until the virtual environment is set up in step 5.
 
 If you already use [winget](https://learn.microsoft.com/windows/package-manager/winget/), you can install the same
@@ -122,7 +184,7 @@ three programs with `winget install Python.Python.3.12`, `winget install Git.Git
    **Shell Command: Install 'code' command in PATH** and press Enter.
 4. Check that everything works. Each command should print a version number:
    ```bash
-   python3.12 --version
+   python3 --version
    git --version
    code --version
    ```
@@ -173,8 +235,8 @@ The workshop's check script creates it for you. In the terminal, inside the `ai-
 
 | System | Command |
 |---|---|
-| Linux, macOS | `python3.12 -m workshop.check` |
-| Windows | `py -3.12 -m workshop.check` |
+| Linux, macOS | `python3 -m workshop.check` |
+| Windows | `py -3 -m workshop.check` |
 
 It asks whether to create the virtual environment. Press Enter to answer yes. It then installs the packages the
 exercises need (this takes several minutes) and checks your setup. It should end with
@@ -217,13 +279,13 @@ When something fails, the error message usually says why. Paste it into any AI c
 
 | Problem | Fix |
 |---|---|
-| Linux: `python3.12: command not found` | `sudo apt install python3.12 python3.12-venv`. On older Ubuntu releases it may not exist; contact us. |
-| Linux: `ensurepip is not available` or "The virtual environment was not created successfully" | `sudo apt install python3.12-venv`, then run the check again. |
+| Linux: `python3: command not found` | `sudo apt install python3 python3-venv`. On older Ubuntu releases it's older than 3.12; contact us. |
+| Linux: `ensurepip is not available` or "The virtual environment was not created successfully" | `sudo apt install python3-venv`, then run the check again. |
 | Windows: `py` is not recognized | Close and reopen PowerShell. If that doesn't help, run the Python installer again and make sure the py launcher is included. |
-| Windows: typing `python` opens the Microsoft Store | Use `py -3.12` instead, or activate the virtual environment first. |
+| Windows: typing `python` opens the Microsoft Store | Use `py -3` instead, or activate the virtual environment first. |
 | Windows: "running scripts is disabled on this system" | `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`, then activate again. |
 | `git` or `code` is not recognized / not found | Close and reopen the terminal (or VS Code) after installing. On macOS, see step 1 for the `code` command. |
-| The check says `FAIL` for a package | Run the check again with `--setup` added, e.g. `python3.12 -m workshop.check --setup`. |
+| The check says `FAIL` for a package | Run the check again with `--setup` added, e.g. `python3 -m workshop.check --setup`. |
 | The terminal in VS Code doesn't show `(venv)` | Select the interpreter (step 6), then open a new terminal. Or activate it by hand (step 5). |
 | You can't install programs on a university-managed laptop | Tell us well before the workshop. The Python and VS Code installers above work without administrator rights. |
 | Claude Code says that your plan doesn't include it | The free Claude plan doesn't include Claude Code; see [step 4](#step-4-a-claude-account). |

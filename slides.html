@@ -75,9 +75,6 @@
 				padding: 0 0.25em;
 				font-size: 0.85em;
 			}
-			.reveal pre.tall code {
-				max-height: 720px;
-			}
 			.reveal .divider h1 {
 				font-size: 2.4em;
 			}
@@ -519,122 +516,20 @@
 <!-- ============================================================ SETUP -->
 <section>
 	<section>
-		<h2>Setting up: what you need</h2>
-		<ul>
-			<li><strong>Python 3.12 or newer</strong> and <strong>Git</strong></li>
-			<li><strong>An IDE:</strong> <a href="https://code.visualstudio.com/">VS Code</a> or
-				<a href="https://vscodium.com/">VSCodium</a> (the same without Microsoft's telemetry),
-				with the <em>Python</em> and <em>Claude Code</em> extensions</li>
-			<li><strong>Claude Code</strong> and a Claude account &mdash; or GitHub Copilot as the backup</li>
-			<li><strong>This repository</strong>, with its own virtualenv and packages</li>
-		</ul>
-		<p>The next three slides have the commands for <strong>Ubuntu 24.04&rarr;</strong>, <strong>macOS</strong>
-			and <strong>Windows 11</strong>.</p>
-		<p class="callout">Ideally you did this before coming. If not, now is the time &mdash; and if something fails,
-			paste the error to an AI chat or raise a hand.</p>
+		<h2>Exercise 00: setup check (10 min)</h2>
+		<p>You set up your laptop at home with the guide in the <strong>README</strong> (the front page of the repository):</p>
+		<ol>
+			<li>VS Code with the <em>Python</em> and <em>Claude Code</em> extensions (<em>extension</em> = an add-on to VS Code)</li>
+			<li>Python 3.12 or later and Git</li>
+			<li>The workshop downloaded with <code>git clone</code></li>
+			<li>The check script, which created the <em>virtual environment</em></li>
+		</ol>
+		<p class="def"><strong>Virtual environment (venv):</strong> a folder with its own Python and packages, separate from the rest
+			of your computer. The workshop's lives in <code>ai-workshop/venv</code>.</p>
+		<p>Didn't manage? Raise a hand now. After a word on IDEs, the next two slides are the check.</p>
 		<aside class="notes">
-			These slides are mainly a reference for the PDF / repo. In the room, show them only briefly and
-			go to exercise 00.
+			All three organizers circulate. Keep to 10 minutes; whatever isn't fixed gets fixed at lunch.
 		</aside>
-	</section>
-	<section>
-		<h2>Setup on Ubuntu 24.04&rarr;</h2>
-		<div class="two-col">
-			<div>
-				<pre class="tall"><code class="language-bash" data-trim data-source-file="setup/ubuntu.sh">
-# Ubuntu 24.04 comes with Python 3.12 and 26.04 with 3.14
-sudo apt update
-sudo apt install git python3 python3-pip python3-venv
-sudo snap install code --classic   # or: codium
-
-# Claude Code command-line tool
-curl -fsSL https://claude.ai/install.sh | bash
-
-# The workshop repository and its packages
-git clone https://github.com/AgenttiX/ai-workshop.git
-cd ai-workshop
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python -m workshop.check
-				</code></pre>
-			</div>
-			<div>
-				<ul>
-					<li>Run these in a terminal (<code>Ctrl+Alt+T</code>), one line at a time</li>
-					<li><code>sudo apt</code> installs system packages; <code>pip</code> installs Python packages into the virtualenv</li>
-					<li><code>source venv/bin/activate</code> is needed in every new terminal.
-						The prompt then starts with <code>(venv)</code></li>
-					<li>Tell Git who you are, once:
-						<code>git config --global user.name "Your Name"</code> and <code>user.email</code></li>
-				</ul>
-			</div>
-		</div>
-	</section>
-	<section>
-		<h2>Setup on macOS</h2>
-		<div class="two-col">
-			<div>
-				<pre class="tall"><code class="language-bash" data-trim data-source-file="setup/macos.sh">
-# After installing Homebrew from brew.sh
-brew install git python@3.14
-brew install --cask visual-studio-code   # or: vscodium
-
-# Claude Code command-line tool
-curl -fsSL https://claude.ai/install.sh | bash
-
-# The workshop repository and its packages
-git clone https://github.com/AgenttiX/ai-workshop.git
-cd ai-workshop
-python3.14 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python -m workshop.check
-				</code></pre>
-			</div>
-			<div>
-				<ul>
-					<li>Run these in <em>Terminal</em> (<code>Cmd+Space</code> &rarr; "Terminal"), one line at a time</li>
-					<li><a href="https://brew.sh/">Homebrew</a> is the package manager of macOS.
-						Run the <em>"Next steps"</em> its installer prints at the end</li>
-					<li>Use <code>python3.14</code>: the <code>python3</code> of macOS is older</li>
-					<li><code>source venv/bin/activate</code> is needed in every new terminal</li>
-					<li>The <code>Ctrl</code> shortcuts of VS Code are <code>Cmd</code> on macOS</li>
-				</ul>
-			</div>
-		</div>
-	</section>
-	<section>
-		<h2>Setup on Windows 11</h2>
-		<div class="two-col">
-			<div>
-				<pre class="tall"><code class="language-powershell" data-trim data-source-file="setup/windows.ps1">
-# In PowerShell
-winget install Python.Python.3.14 Git.Git Microsoft.VisualStudioCode
-# Close and reopen PowerShell, then:
-irm https://claude.ai/install.ps1 | iex
-
-git clone https://github.com/AgenttiX/ai-workshop.git
-cd ai-workshop
-py -3.14 -m venv venv
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-.\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python -m workshop.check
-				</code></pre>
-			</div>
-			<div>
-				<ul>
-					<li>Open PowerShell from the Start menu. <code>winget</code> is Windows' own package manager</li>
-					<li>Installing Python from <a href="https://www.python.org/downloads/">python.org</a> works too:
-						tick <em>"Add python.exe to PATH"</em></li>
-					<li>Claude Code needs Git for Windows: it runs its commands in Git Bash</li>
-					<li><code>Set-ExecutionPolicy</code> is needed only once: it allows the activation script to run</li>
-					<li>Alternative: <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a>
-						(<code>wsl --install -d Ubuntu-24.04</code>) and the Ubuntu instructions</li>
-				</ul>
-			</div>
-		</div>
 	</section>
 	<section>
 		<h2>Why do I need an IDE?</h2>
@@ -668,22 +563,6 @@ python -m workshop.check
 		</aside>
 	</section>
 	<section>
-		<h2>Exercise 00: setup check (10 min)</h2>
-		<p>You set up your laptop at home with the guide in the <strong>README</strong> (the front page of the repository):</p>
-		<ol>
-			<li>VS Code with the <em>Python</em> and <em>Claude Code</em> extensions (<em>extension</em> = an add-on to VS Code)</li>
-			<li>Python 3.12 and Git</li>
-			<li>The workshop downloaded with <code>git clone</code></li>
-			<li>The check script, which created the <em>virtual environment</em></li>
-		</ol>
-		<p class="def"><strong>Virtual environment (venv):</strong> a folder with its own Python and packages, separate from the rest
-			of your computer. The workshop's lives in <code>ai-workshop/venv</code>.</p>
-		<p>Didn't manage? Raise a hand now. The next two slides are the check.</p>
-		<aside class="notes">
-			All three organizers circulate. Keep to 10 minutes; whatever isn't fixed gets fixed at lunch.
-		</aside>
-	</section>
-	<section>
 		<h2>Setup check 1/2: the Python environment</h2>
 		<div class="two-col">
 			<div>
@@ -700,8 +579,8 @@ python -m workshop.check
 			<div>
 				<p>No <code>venv</code> yet? The check script creates it:</p>
 				<table>
-					<tr><td>Linux, macOS</td><td><code>python3.12 -m workshop.check</code></td></tr>
-					<tr><td>Windows</td><td><code>py -3.12 -m workshop.check</code></td></tr>
+					<tr><td>Linux, macOS</td><td><code>python3 -m workshop.check</code></td></tr>
+					<tr><td>Windows</td><td><code>py -3 -m workshop.check</code></td></tr>
 				</table>
 				<p>No <code>(venv)</code> in the prompt? Activate it:</p>
 				<table>

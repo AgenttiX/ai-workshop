@@ -2,8 +2,8 @@
 
 Run in the root directory of the repository::
 
-    python3.12 -m workshop.check    # Linux and macOS
-    py -3.12 -m workshop.check      # Windows
+    python3 -m workshop.check    # Linux and macOS
+    py -3 -m workshop.check      # Windows
 
 If you run it outside a virtual environment, it offers to create one in ``venv/``,
 installs the requirements into it, runs the checks there and tells you how to activate it.
@@ -152,7 +152,7 @@ def set_up_venv(force: bool) -> int | None:
     if not python.exists():
         if not check_python().ok:
             print(check_python())
-            print("Please install Python 3.12 (see README.md) and run this script with it.")
+            print("Please install Python 3.12 or later (see README.md) and run this script with it.")
             return 1
         print("A virtual environment is a folder with its own Python and packages, separate from the rest of")
         print("your computer. The workshop uses one in the folder venv/.")

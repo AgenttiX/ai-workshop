@@ -20,13 +20,13 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - [Mika Mäki](https://github.com/AgenttiX): PhD student in first-order cosmological phase transitions
 
 ## Commands
-- Set up the virtualenv at `./venv` and check the environment: `python3.12 -m workshop.check` (Windows: `py -3.12 -m workshop.check`).
+- Set up the virtualenv at `./venv` and check the environment: `python3 -m workshop.check` (Windows: `py -3 -m workshop.check`).
   It creates the venv and installs `requirements.txt` if needed.
 - Run tests: `pytest` (runs `tests/` and `solutions/`; run the tests of an exercise with e.g. `pytest exercises/01_fix_the_bug`)
 - Lint: `ruff check`
 - Type checking: `pyrefly check`
 - Render the slides to a PDF: `./render.py slides.html`
-- Copy the setup scripts to the slides: `./setup/sync_slides.py`
+- Copy the setup scripts to the README: `./setup/sync_readme.py`
 
 ## Project structure
 - `./dev/` contains temporary files (Markdown etc.) that are not tracked in Git.
@@ -37,8 +37,8 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
   so their tests are not run by the default `pytest`, and `04_ai_ready` is excluded from the linter and type checker.
 - `./plan/` contains documents for planning the workshop.
 - `./poster/` contains the A3 poster (`poster.svg`, Inkscape-compatible); `preview.sh` renders it to `poster/build/`.
-- `./setup/` contains the setup commands of the slides for each operating system. These are the source of truth:
-  edit them and run `./setup/sync_slides.py`, not the code blocks in `slides.html`. Tested in CI by `.github/workflows/setup.yml`.
+- `./setup/` contains the quick-setup commands of the README for each operating system. These are the source of truth:
+  edit them and run `./setup/sync_readme.py`, not the code blocks in `README.md`. Tested in CI by `.github/workflows/setup.yml`.
 - `./slides.html` is the reveal.js presentation slides. Speaker notes are in `<aside class="notes">` elements.
 - `./solutions/` contains the reference solutions of the exercises, each with a `README.md` explaining what happened.
   The code is tested in CI.

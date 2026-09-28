@@ -49,7 +49,7 @@ The library is installed in the virtual environment, so the agent can read its s
 
 | System | Location |
 |---|---|
-| Linux, macOS | `venv/lib/python3.12/site-packages/pttools/` |
+| Linux, macOS | `venv/lib/python3.*/site-packages/pttools/` |
 | Windows | `venv\Lib\site-packages\pttools\` |
 
 Good behaviour looks like: searching for `class Spectrum`, reading the `__init__` docstrings of `Bubble` and `Spectrum`,

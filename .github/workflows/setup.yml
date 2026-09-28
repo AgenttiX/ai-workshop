@@ -1,4 +1,4 @@
-# Run the setup scripts of the slides (./setup/) on fresh runners, as a participant would.
+# Run the setup scripts of the README (./setup/) on fresh runners, as a participant would.
 # The scripts clone the repository from GitHub, but here they get the commit being tested instead.
 name: Setup scripts
 on:
