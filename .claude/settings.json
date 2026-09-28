@@ -12,5 +12,9 @@
       "Bash(ruff check:*)",
       "Bash(ruff format:*)"
     ]
+  },
+  "enabledPlugins": {
+    "claude-security@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true
   }
 }
