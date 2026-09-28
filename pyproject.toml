@@ -10,16 +10,33 @@ name = "kumpula-ai-workshop"
 version = "0.1.0"
 description = "Kumpula AI workshop for scientists 2026: slides and exercises"
 readme = "README.md"
+# license = "TODO"
+# license-files = ["LICENSE"]
+keywords = [
+    "agent",
+    "AI",
+    "harness",
+    "LLM",
+    "workshop"
+]
 # When updating these, also update CITATION.cff.
 authors = [
-    {name = "Aaron Haarti"},
-    {name = "Antti Hippeläinen"},
+    {name = "Aaron Haarti", email = "aaron.haarti@helsinki.fi"},
+    {name = "Antti Hippeläinen", email = "antti.hippelainen@helsinki.fi"},
     {name = "Mika Mäki", email = "mika.x.maki@helsinki.fi"}
 ]
 classifiers = [
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
+    "Operating System :: MacOS",
+    "Operating System :: OS Independent",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Windows",
+    "Programming Language :: Python",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Physics",
     "Typing :: Typed"
 ]
