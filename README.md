@@ -11,7 +11,7 @@ University of Helsinki by
 - **Who:** students and researchers of the Faculty of Science. No experience needed; advanced topics are included too.
 - **Language:** English. **Bring your laptop**, set up as described below.
 - **Study credit:** 1 ECTS for students (preliminary, to be confirmed).
-- **Contact:** aaron.haarti@helsinki.fi, antti.hippelainen@helsinki.fi, mika.maki@helsinki.fi, joonas.nattila@helsinki.fi
+- **Contact:** aaron.haarti@helsinki.fi, antti.hippelainen@helsinki.fi, mika.x.maki@helsinki.fi, joonas.nattila@helsinki.fi
 - Slides: [`slides.html`](./slides.html) (open it in a browser; press `S` for the speaker notes, `F` for full screen)
 
 **Contents:** [Setup](#set-up-your-laptop-before-the-workshop) ·
