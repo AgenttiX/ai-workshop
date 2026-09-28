@@ -18,11 +18,14 @@ in the style of [METR's chart](https://metr.org/time-horizons/), with newer data
 To regenerate the figure:
 ```bash
 pip install -r figures/requirements.txt
-python figures/plot_time_horizon.py
+python figures/plot_time_horizon.py --hide-legend
 ```
+The slides use the version without the legend, where the trend line is labeled directly and the non-robust result is gray.
+Leave out `--hide-legend` to show the legend.
 Open `time_horizon.html` in a browser: hover over a point to see its values, drag to zoom and double-click to reset.
 The page loads Plotly from its CDN and the Open Sans font of the slides from Google Fonts, so it needs an internet connection.
-In the slides, it's shown in an `<iframe>`.
+In the slides, it's shown in an `<iframe>` with `data-src`, so that reveal.js loads it only when its slide is shown:
+Plotly can't measure its text in a hidden iframe, which would break the legend and the labels.
 
 ## `metr_time_horizon.svg`
 METR's own chart, extracted from the D3 chart of <https://metr.org/time-horizons/> (updated 2026-05-08) on 2026-09-28,

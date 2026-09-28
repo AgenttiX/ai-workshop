@@ -29,6 +29,9 @@ RELIABLE_LIMIT = 16 * 60
 TREND_START = datetime.date(2023, 1, 1)
 #: The trend line is drawn until this date
 TREND_END = datetime.date(2026, 12, 31)
+#: The plotted range of the x-axis
+X_MIN = datetime.date(2018, 12, 1)
+X_MAX = datetime.date(2027, 4, 1)
 
 #: The font of the reveal.js "sky" theme of the slides
 FONT = "Open Sans"
@@ -37,7 +40,7 @@ FONT_SIZE = 18
 
 COLOR_SOTA = "#2e7d32"
 COLOR_OTHER = "#a5d6a7"
-COLOR_NOT_ROBUST = "#e65100"
+COLOR_NOT_ROBUST = "#888888"
 COLOR_TEXT = "#333333"
 COLOR_GRID = "#e5e5e5"
 
@@ -88,8 +91,20 @@ LABELS: dict[str, str] = {
 
 #: Label positions that differ from the default (left of the marker): (xanchor, xshift, yshift) in pixels
 LABEL_POSITIONS: dict[str, tuple[str, int, int]] = {
+    "davinci_002": ("left", 10, -10),
     "claude_mythos_preview_early_inspect": ("left", 10, 18),
     "gpt_5_6_sol": ("left", 12, -10),
+}
+
+#: Example tasks and how long they take a human expert (minutes), shown along the y-axis as in METR's chart.
+#: From the 50 % chart of https://metr.org/assets/js/time-horizon-chart.js
+EXAMPLE_TASKS: dict[float, str] = {
+    12 * 60: "Optimally reduce the size of a language model",
+    4 * 60: "Train adversarially robust image model",
+    0.82 * 60: "Train classifier",
+    0.17 * 60: "Find fact on web",
+    0.03 * 60: "Count words in passage",
+    0.00417 * 60: "Answer question",
 }
 
 #: Tick positions of the y-axis (minutes) and their labels
@@ -225,20 +240,37 @@ def scatter(results: list[Result], name: str, color: str, symbol: str = "circle"
         hovertemplate="<b>%{customdata[0]}</b><br>"
         "Released %{x|%-d %b %Y}<br>"
         "50 % time horizon: %{customdata[1]}<br>"
-        "95 % CI: %{customdata[2]} &ndash; %{customdata[3]}"
+        "95 % CI: %{customdata[2]} \u2013 %{customdata[3]}"
         "<extra></extra>",
     )
 
 
-def make_figure(results: list[Result], doubling_time: float, intercept: float) -> go.Figure:
+def make_figure(results: list[Result], doubling_time: float, intercept: float, show_legend: bool = True) -> go.Figure:
     """Create the figure.
 
     :param results: all the results
     :param doubling_time: doubling time of the trend (days)
     :param intercept: base-2 logarithm of the trend at day 0 (minutes)
+    :param show_legend: whether to show the legend.
+        Without it, the trend line is labeled directly, and the gray color marks the non-robust results.
     :return: the figure
     """
     fig = go.Figure()
+
+    # Example tasks along the y-axis, with short ticks
+    for minutes, task in EXAMPLE_TASKS.items():
+        fig.add_shape(
+            type="line", xref="paper", x0=0, x1=0.008, y0=minutes, y1=minutes, line={"color": "#999999", "width": 1}
+        )
+        fig.add_annotation(
+            xref="paper",
+            x=0.01,
+            y=np.log10(minutes),
+            xanchor="left",
+            text=task,
+            showarrow=False,
+            font={"size": FONT_SIZE - 4, "color": "#777777"},
+        )
 
     # The region that the task suite cannot measure reliably.
     # Note that annotations on a logarithmic axis are positioned with the base-10 logarithm, but shapes are not.
@@ -252,6 +284,7 @@ def make_figure(results: list[Result], doubling_time: float, intercept: float) -
     )
 
     # Trend line
+    trend_name = f"Fit to 2023\u20132026: doubling every {doubling_time:.0f} days"
     trend_days = np.array([TREND_START.toordinal(), TREND_END.toordinal()], dtype=float)
     fig.add_trace(
         go.Scatter(
@@ -259,11 +292,24 @@ def make_figure(results: list[Result], doubling_time: float, intercept: float) -
             y=2 ** (intercept + trend_days / doubling_time),
             mode="lines",
             line={"color": COLOR_SOTA, "dash": "dash", "width": 2},
-            # Plotly measures the width of this legend entry slightly too small, so it gets some padding.
-            name=f"Trend since 2023: doubling every {doubling_time:.0f} days&nbsp;&nbsp;",
+            name=trend_name,
             hoverinfo="skip",
         )
     )
+    if not show_legend:
+        # Label the trend line itself, below the line
+        label_date = datetime.date(2024, 7, 1)
+        fig.add_annotation(
+            x=label_date,
+            y=np.log10(2 ** (intercept + label_date.toordinal() / doubling_time)),
+            text=trend_name.replace(": ", ":<br>"),
+            showarrow=False,
+            xanchor="left",
+            yanchor="top",
+            xshift=10,
+            yshift=-10,
+            font={"size": FONT_SIZE - 4, "color": COLOR_SOTA},
+        )
 
     fig.add_trace(scatter([r for r in results if r.robust and r.is_sota], "State of the art at release", COLOR_SOTA))
     fig.add_trace(scatter([r for r in results if r.robust and not r.is_sota], "Other models", COLOR_OTHER))
@@ -298,12 +344,15 @@ def make_figure(results: list[Result], doubling_time: float, intercept: float) -
         font={"family": f"{FONT}, sans-serif", "size": FONT_SIZE, "color": COLOR_TEXT},
         plot_bgcolor="white",
         paper_bgcolor="white",
-        legend={"x": 0.01, "y": 0.62, "xanchor": "left", "bgcolor": "rgba(255, 255, 255, 0.8)"},
+        showlegend=show_legend,
+        # In the lower right corner, which has no data
+        legend={"x": 0.99, "y": 0.03, "xanchor": "right", "yanchor": "bottom", "bgcolor": "rgba(255, 255, 255, 0.8)",
+                "font": {"size": FONT_SIZE - 2}},
         hoverlabel={"font": {"family": f"{FONT}, sans-serif", "size": FONT_SIZE - 2}},
     )
     fig.update_xaxes(
-        title="Model release date",
-        range=[datetime.date(2018, 12, 1), datetime.date(2027, 4, 1)],
+        title="LLM release date",
+        range=[X_MIN, X_MAX],
         dtick="M12",
         tickformat="%Y",
         showgrid=True,
@@ -359,7 +408,8 @@ def write_html(fig: go.Figure, path: Path) -> None:
         ':ital,wght@0,400;0,700;1,400&display=swap">\n'
         "<style>html, body { height: 100%; margin: 0; overflow: hidden; }</style>\n"
     )
-    # Plotly measures the text when drawing, so the figure is redrawn once the font has loaded.
+    # Plotly measures the text when drawing it, so the figure is redrawn once the font has loaded.
+    # (In the slides, the iframe must also be loaded only when it's visible, which is why it uses data-src.)
     redraw = (
         "<script>document.fonts.ready.then(() => { const plot = document.getElementById('time-horizon'); "
         "Plotly.newPlot(plot, plot.data, plot.layout, plot._context); });</script>\n"
@@ -372,13 +422,15 @@ def main() -> None:
     """Create the figure and save it as an HTML file."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--output", type=Path, default=OUTPUT, help="the HTML file to write")
+    parser.add_argument("--hide-legend", action="store_true", help="hide the legend and label the lines instead")
     args = parser.parse_args()
 
     results = load_results(METR_DATA) + load_results(ADDITIONAL_DATA)
     doubling_time, intercept = fit_doubling_time(results)
     print(f"Doubling time since {TREND_START}: {doubling_time:.1f} days")
 
-    fig = make_figure(sorted(results, key=lambda result: result.release_date), doubling_time, intercept)
+    results.sort(key=lambda result: result.release_date)
+    fig = make_figure(results, doubling_time, intercept, show_legend=not args.hide_legend)
     write_html(fig, args.output)
     print(f"Saved {args.output}")
 

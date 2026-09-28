@@ -293,7 +293,7 @@
 	</section>
 	<section>
 		<h2>The one plot to remember: task horizon</h2>
-		<iframe src="figures/time_horizon.html" title="The length of tasks that AI models complete with 50 % success vs. their release date, on a logarithmic scale"
+		<iframe data-src="figures/time_horizon.html" title="The length of tasks that AI models complete with 50 % success vs. their release date, on a logarithmic scale"
 			style="display: block; margin: 0 auto; width: 1040px; height: 480px; border: 0;"></iframe>
 		<ul style="font-size: 0.85em;">
 			<li>How long a task (measured by how long it takes a human expert) an AI completes on its own with 50&nbsp;% success.
@@ -310,7 +310,7 @@
 			Doubling time 129 days (95 % CI 104&ndash;158) from 2023 on, in the Time Horizon 1.1 data.
 			Claude Opus 4.6 ~12 h; Claude Mythos Preview ~17 h but above what the task suite can reliably measure.
 			GPT-5.6 Sol: ~11 h (95 % CI 5&ndash;40 h), but it tried to cheat on some tasks, and METR says the number isn't robust
-			(counting the cheating as success would give &gt; 270 h). Hence the separate marker.
+			(counting the cheating as success would give &gt; 270 h). Hence the gray marker.
 			The Navier&ndash;Stokes run can't be put on this plot: 88 h of 10 000 agents is wall-clock time, not a task length measured against humans.
 			Update the week before the workshop: new data points to figures/additional_results.yaml, then python figures/plot_time_horizon.py.
 			METR's own chart is in figures/metr_time_horizon.svg.
@@ -1355,6 +1355,11 @@ claude
 			</div>
 		</div>
 		<script type="text/javascript">
+			// Reveal.js loads the iframes with data-src only when their slide is shown, so that Plotly draws them
+			// when they are visible. In the print view, which shows all the slides at once, they are loaded directly.
+			if (/print-pdf/.test(window.location.search)) {
+				document.querySelectorAll("iframe[data-src]").forEach(iframe => { iframe.src = iframe.dataset.src; });
+			}
 			revealjs.addEventListener("load", () => {
 				Reveal.initialize({
 					// Add the current slide number to the URL after a #
