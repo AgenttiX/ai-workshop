@@ -11,8 +11,13 @@ dev
 htmlcov
 render
 venv
-# Outputs of the exercises
+# Outputs of the exercises. The scripts save figures into fig/ of the current directory.
+/fig/
 exercises/**/fig/
 exercises/**/results/
 solutions/**/fig/
 solutions/**/results/
+# Poster previews and the Firefox profile used to render them
+poster/build/
+# Private venv of the Inkscape MCP server
+poster/.venv/
