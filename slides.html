@@ -66,6 +66,9 @@
 			.reveal code {
 				font-size: 0.9em;
 			}
+			.reveal pre.tall code {
+				max-height: 720px;
+			}
 			.reveal .divider h1 {
 				font-size: 2.4em;
 			}
@@ -95,7 +98,9 @@
 				background: white;
 			}
 			.loop .arrow {
-				font-size: 1.5em;
+				font-size: 2.6em;
+				font-weight: bold;
+				line-height: 1;
 				color: #3b8bd0;
 			}
 			.harness {
@@ -166,6 +171,7 @@
 			<li>Questions: interrupt us, or post in
 				<a href="https://cftgroup.chat/main/channels/ai-workshop">Mattermost</a>.
 				<strong>There are no stupid questions.</strong> If you're lost, three others are too.</li>
+			<li>It's OK to discuss with the people next to you during the presentation. Helping each other is encouraged.</li>
 			<li>Everything here is practice. Philosophy, ethics and the future of science: lunch and afterwards.
 				We'll gladly join.</li>
 			<li>A warning: some of what we show may feel threatening to how we work as scientists.
@@ -220,7 +226,7 @@
 				"What does this error mean?", "What is a virtual environment?", "How do I do this in VS Code?"</li>
 			<li>That is the mindset shift: a patient explanation of almost anything is now one question away,
 				at your level, as many times as you need it</li>
-			<li>Today: when you're stuck, <strong>ask Claude first</strong>, then us. No question is too basic for it</li>
+			<li>Today: <strong>when in doubt, ask AI</strong> (Claude) first, then us. No question is too basic for it</li>
 			<li>The usual rule still applies: check what matters. It can be wrong, and we'll show you how to catch that</li>
 		</ul>
 		<p class="callout">
@@ -278,33 +284,39 @@
 	</section>
 	<section>
 		<h2>The one plot to remember: task horizon</h2>
-		<div class="two-col">
-			<div>
-				<p class="todo">TODO: insert the latest METR task-horizon figure (length of tasks completed at 50 % success vs. release date)</p>
-			</div>
-			<div>
-				<ul>
-					<li>The length of a task an AI can complete on its own has been <strong>doubling every ~4&ndash;7 months</strong></li>
-					<li>2023: minutes. 2025: about an hour. Now: several hours (update from the latest METR data).</li>
-					<li>Extrapolation is dangerous. But the trend hasn't bent yet.</li>
-				</ul>
-			</div>
-		</div>
-		<p class="small">Source: METR, <em>Measuring AI ability to complete long tasks</em>, and later updates.</p>
+		<img src="img/metr_time_horizon.svg" alt="METR: length of software tasks that different LLMs can complete 50 % of the time, vs. release date" style="display: block; margin: 0 auto; height: 500px;">
+		<ul style="font-size: 0.85em;">
+			<li>How long a task (measured by how long it takes a human expert) an AI completes on its own with 50&nbsp;% success.
+				<strong>Doubling every ~4 months</strong> since 2023. Note the logarithmic scale</li>
+			<li>2023: minutes. 2025: an hour or two. Spring 2026: ~12 h, and the best models are beyond what the benchmark can measure</li>
+			<li>Extrapolation is dangerous. But the trend hasn't bent yet.</li>
+		</ul>
+		<p class="small">Figure: METR, <a href="https://metr.org/time-horizons/"><em>Task-completion time horizons of frontier AI models</em></a>
+			(updated May 2026); T. Kwa et al., <a href="https://arxiv.org/abs/2503.14499"><em>Measuring AI ability to complete long tasks</em></a>,
+			arXiv:2503.14499.</p>
 		<aside class="notes">
 			This is the plot that answers "is it just hype": it's a measured trend over years.
-			Update the number and the figure the week before the workshop.
+			The tasks are software tasks; the y-axis is the time a human expert needs, not the time the AI needs.
+			Doubling time 129 days (95 % CI 104&ndash;158) from 2023 on, in the Time Horizon 1.1 data.
+			Claude Opus 4.6 ~12 h; Claude Mythos Preview ~17 h but above what the task suite can reliably measure.
+			Update the figure the week before the workshop: re-extract the SVG of the D3 chart at metr.org/time-horizons.
 		</aside>
 	</section>
 	<section>
 		<h2>Models today</h2>
 		<ul>
-			<li><strong>Cloud frontier models:</strong> Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5), Haiku 4.5;
-				OpenAI's and Google's frontier models</li>
-			<li><strong>Open-weight models</strong> you can run yourself: Gemma 4, Qwen 3.8, and larger ones
-				(Kimi, DeepSeek) that need a server. <em>Open-weight</em> = you can download the model and run it on your own computer. Behind the best cloud models, but useful</li>
+			<li><strong>Cloud frontier models:</strong>
+				<ul>
+					<li>Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5), Haiku 4.5</li>
+					<li>OpenAI: GPT-6 Astra, Sol and Luna (also in Codex)</li>
+					<li>Google: Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
+				</ul>
+			</li>
+			<li><strong>Open-weight models</strong> you can run yourself: Gemma 4, Qwen 3.8, OpenAI's gpt-oss-20b/120b, and larger ones
+				(Kimi, DeepSeek) that need a server. <em>Open-weight</em> = you can download the model and run it on your own computer.
+				Roughly 1&ndash;2 years behind the frontier, but useful</li>
 			<li><strong>Context windows</strong> of up to ~1M tokens: your whole code base, or a paper's LaTeX
-				plus the analysis, in one session</li>
+				plus the analysis, in one session, in working memory</li>
 			<li><strong>Reasoning:</strong> the model "thinks" before answering; you can trade time for quality</li>
 			<li><strong>Tools:</strong> the model can call functions &mdash; read a file, run a command, search the web</li>
 		</ul>
@@ -316,7 +328,12 @@
 	<section>
 		<h2>Science is not done in a chat window</h2>
 		<ul>
-			<li><span class="todo">TODO: the Navier&ndash;Stokes result &mdash; citation and one sentence on how it was done</span></li>
+			<li><strong>Navier&ndash;Stokes, September 2026:</strong> ~10&nbsp;000 cooperating AI agents ran for ~88 hours
+				and produced a 166-page proof, checked in the Lean proof assistant, that the 3D Navier&ndash;Stokes equations
+				can blow up in finite time under a smooth, localized external force.
+				Not yet peer-reviewed; the unforced problem remains open.
+				<span class="small">(OpenAI, <a href="https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"><em>Finite time blowup for Navier&ndash;Stokes</em></a>, preprint, 8 Sep 2026;
+				<a href="https://github.com/openai/NavierStokesAndEuler">Lean code</a>)</span></li>
 			<li>The pattern in the recent results: not a person asking a chatbot, but
 				<strong>agents</strong> running for hours or days &mdash; deriving, coding, checking, iterating</li>
 			<li>The same pattern scaled down is what you'll use today: an agent that reads your code, runs your tests
@@ -325,7 +342,13 @@
 		</ul>
 		<aside class="notes">
 			"Navier–Stokes was not proven by asking a chatbot" — this is the hook from the kickoff meeting.
-			Get the reference right; this audience will check.
+			Facts: an unreleased internal OpenAI model, ~130 billion output tokens, several million USD of compute.
+			The construction is analytical (a self-similar collapsing vortex + oscillatory pulses), not a neural-network fit.
+			It settles Fefferman's alternatives (C)/(D) of the Clay problem statement, which allow a forcing;
+			the Clay institute's review is ongoing and OpenAI won't claim the prize.
+			Context: Buckmaster &amp; Alpöge (Anthropic) had Lean-verified forced blow-up results for Euler/Boussinesq in August 2026,
+			and there's a priority dispute. Earlier: DeepMind et al., "Discovery of unstable singularities", arXiv:2509.14185 (numerical, 2025).
+			Check the status again the week before the workshop.
 		</aside>
 	</section>
 	<section>
@@ -336,7 +359,7 @@
 				<ul>
 					<li>You copy code and errors in, you copy answers out</li>
 					<li>The model sees only what you paste</li>
-					<li>It cannot check anything</li>
+					<li>It cannot check the validity of its output</li>
 					<li>You are the loop</li>
 				</ul>
 			</div>
@@ -357,7 +380,12 @@
 	<section>
 		<h2>What is a harness?</h2>
 		<div class="harness">
-			<p><strong>Harness</strong> (Claude Code, Codex, Copilot, Cursor, OpenCode, &hellip;)</p>
+			<p><strong>Harness</strong>
+				(<a href="https://code.claude.com/docs">Claude Code</a>,
+				<a href="https://openai.com/codex/">Codex</a>,
+				<a href="https://github.com/features/copilot">Copilot</a>,
+				<a href="https://cursor.com/">Cursor</a>,
+				<a href="https://opencode.ai/">OpenCode</a>, &hellip;)</p>
 			<p style="text-align: center;"><span class="model">Model</span> &nbsp;+&nbsp; tools &nbsp;+&nbsp; context management &nbsp;+&nbsp; permission loop</p>
 			<ul>
 				<li><strong>Tools:</strong> read/edit files, run shell commands, search, web, MCP servers, subagents</li>
@@ -428,7 +456,7 @@
 				physics that's off by a factor of 2</li>
 			<li><strong>Sycophancy:</strong> it tends to agree with you. Ask for critique explicitly, or let a second agent review</li>
 			<li><strong>The remedy is not trust but verification built into the workflow:</strong>
-				tests, type checks, cross-checks against known results &mdash; things the agent can run itself</li>
+				tests, validations, cross-checks against known results &mdash; things the agent can run itself</li>
 			<li>Session 2 is about exactly this: making your project a place where the agent's mistakes get caught
 				before they reach you</li>
 		</ul>
@@ -440,12 +468,13 @@
 		<h2>Security and privacy</h2>
 		<ul>
 			<li>An agent with shell access is <strong>a user on your machine</strong>. It can delete, upload, install.</li>
-			<li>Permission modes: ask before everything, allow-list the safe commands, or let <em>auto mode</em> (a safety classifier) approve actions. Know what each one allows</li>
-			<li>Never paste secrets, tokens or personal data into a prompt. Check your provider's data policy and the
+			<li>Permission modes: ask before everything, allow-list the safe commands, or let <em>auto mode</em> (a safety classifier) approve actions.
+				Know what each one allows. Auto mode only for work on trusted material, preferably sandboxed</li>
+			<li>Never paste secrets, tokens or personal data into a prompt (unless the model is fully on your own machine). Check your provider's data policy and the
 				university's guidelines</li>
 			<li><strong>Prompt injection:</strong> a web page, a PDF, a paper abstract can contain instructions for the agent.
-				Untrusted input + write access = a bad day</li>
-			<li>Version control everything. An agent on the only copy of your thesis is a gamble</li>
+				Untrusted input + write access = a very bad day</li>
+			<li>Version control (git) everything. An agent on the only copy of your thesis is a gamble</li>
 		</ul>
 	</section>
 	<section>
@@ -475,6 +504,124 @@
 
 <!-- ============================================================ SETUP -->
 <section>
+	<section>
+		<h2>Setting up: what you need</h2>
+		<ul>
+			<li><strong>Python 3.12</strong> and <strong>Git</strong></li>
+			<li><strong>An IDE:</strong> <a href="https://code.visualstudio.com/">VS Code</a> or
+				<a href="https://vscodium.com/">VSCodium</a> (the same without Microsoft's telemetry),
+				with the <em>Python</em> and <em>Claude Code</em> extensions</li>
+			<li><strong>Claude Code</strong> and a Claude account &mdash; or GitHub Copilot as the backup</li>
+			<li><strong>This repository</strong>, with its own virtualenv and packages</li>
+		</ul>
+		<p>The next two slides have the commands for <strong>Ubuntu 24.04</strong> and <strong>Windows 11</strong>.
+			macOS: the Ubuntu commands work after installing Python 3.12 and Git with <a href="https://brew.sh/">Homebrew</a>.</p>
+		<p class="callout">Ideally you did this before coming. If not, now is the time &mdash; and if something fails,
+			paste the error to an AI chat or raise a hand.</p>
+		<aside class="notes">
+			These slides are mainly a reference for the PDF / repo. In the room, show them only briefly and
+			go to exercise 00.
+		</aside>
+	</section>
+	<section>
+		<h2>Setup on Ubuntu 24.04</h2>
+		<div class="two-col">
+			<div>
+				<pre class="tall"><code class="language-bash" data-trim>
+# Python 3.12 is Ubuntu 24.04's own Python
+sudo apt update
+sudo apt install git python3 python3-venv python3-pip
+sudo snap install code --classic   # or: codium
+
+# Claude Code command-line tool
+curl -fsSL https://claude.ai/install.sh | bash
+
+# The workshop repository and its packages
+git clone https://github.com/AgenttiX/ai-workshop.git
+cd ai-workshop
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python -m workshop.check
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>Run these in a terminal (<code>Ctrl+Alt+T</code>), one line at a time</li>
+					<li><code>sudo apt</code> installs system packages; <code>pip</code> installs Python packages into the virtualenv</li>
+					<li><code>source venv/bin/activate</code> is needed in every new terminal.
+						The prompt then starts with <code>(venv)</code></li>
+					<li>Tell Git who you are, once:
+						<code>git config --global user.name "Your Name"</code> and <code>user.email</code></li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>Setup on Windows 11</h2>
+		<div class="two-col">
+			<div>
+				<pre class="tall"><code class="language-powershell" data-trim>
+# In PowerShell
+winget install Python.Python.3.12
+winget install Git.Git
+winget install Microsoft.VisualStudioCode
+# Close and reopen PowerShell, then:
+irm https://claude.ai/install.ps1 | iex
+
+git clone https://github.com/AgenttiX/ai-workshop.git
+cd ai-workshop
+py -3.12 -m venv venv
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -m workshop.check
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>Open PowerShell from the Start menu. <code>winget</code> is Windows' own package manager</li>
+					<li>Installing Python from <a href="https://www.python.org/downloads/">python.org</a> works too:
+						tick <em>"Add python.exe to PATH"</em></li>
+					<li>Claude Code needs Git for Windows: it runs its commands in Git Bash</li>
+					<li><code>Set-ExecutionPolicy</code> is needed only once: it allows the activation script to run</li>
+					<li>Alternative: <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a>
+						(<code>wsl --install -d Ubuntu-24.04</code>) and the Ubuntu instructions</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section>
+		<h2>Why do I need an IDE?</h2>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li>An <strong>Integrated Development Environment</strong> puts the editor, terminal, file browser,
+						Git, debugger and Jupyter notebooks in one window</li>
+					<li>It <strong>understands the code:</strong> errors underlined as you type, jump to where a function is defined,
+						autocompletion</li>
+					<li><strong>Diff view:</strong> the agent's changes side by side with the old version, red and green.
+						This is how you review AI-written code &mdash; the most important feature today</li>
+					<li>The agent sees which file you have open and what you have selected</li>
+				</ul>
+			</div>
+			<div>
+				<p>In VS Code / VSCodium:</p>
+				<ol>
+					<li><em>File &rarr; Open Folder&hellip;</em> &rarr; <code>ai-workshop</code></li>
+					<li>Extensions (<code>Ctrl+Shift+X</code>): <em>Python</em> and <em>Claude Code</em></li>
+					<li><code>Ctrl+Shift+P</code> &rarr; <em>Python: Select Interpreter</em> &rarr; <code>venv</code></li>
+				</ol>
+				<p class="callout"><strong>Vim or Emacs?</strong> Keep them. Claude Code runs in a terminal next to any editor,
+					and both can be extended with all this: language servers for the code understanding
+					(e.g. <code>eglot</code>, <code>nvim-lspconfig</code>) and Claude Code plugins
+					(e.g. <code>claude-code.el</code>, <code>claudecode.nvim</code>).</p>
+			</div>
+		</div>
+		<aside class="notes">
+			For those who've only used Jupyter or a plain text editor. Aaron's showcase has an AI-configured Doom Emacs.
+		</aside>
+	</section>
 	<section>
 		<h2>Exercise 00: setup check (10 min)</h2>
 		<p>You set up your laptop at home with the guide in the <strong>README</strong> (the front page of the repository):</p>
@@ -621,7 +768,7 @@
 				<h3>3. The permissions</h3>
 				<ul>
 					<li>Default: ask. Allow-list the safe commands in <code>.claude/settings.json</code></li>
-					<li>Auto mode: a safety classifier approves actions for you. Convenient; know what it lets through</li>
+					<li>Auto mode: a safety classifier approves actions for you. Convenient, but only when working with trusted inputs</li>
 				</ul>
 				<h3>4. The verification</h3>
 				<ul>
@@ -679,9 +826,10 @@
 }
 		</code></pre>
 		<ul>
+			<li><code>"Bash(pytest:*)"</code> = may run any command starting with <code>pytest</code> without asking you</li>
 			<li><code>.claude/settings.json</code> in the repository (shared with the group) or <code>~/.claude/settings.json</code> (personal)</li>
 			<li>Safe to allow: tests, linters, read-only git. Keep the prompt for: installs, network, deletion, <code>git push</code></li>
-			<li>Modes: default (asks first) &rarr; accept edits (edits files without asking) &rarr; plan (reads and proposes only) &rarr; auto (a safety classifier approves most actions)</li>
+			<li>Modes: default (asks first) &rarr; accept edits (edits files without asking) &rarr; plan (reads and proposes only) &rarr; auto (a safety classifier approves most actions; trusted inputs only, preferably sandboxed)</li>
 		</ul>
 	</section>
 	<section>
@@ -713,7 +861,7 @@
 <!-- ============================================================ BREAK -->
 <section class="center-slide">
 	<h1>Lunch: 12:00&ndash;13:00</h1>
-	<p>Setup problems: find an organizer. Philosophy: find another participant (or an organizer). Back at 13:00.</p>
+	<p>Setup problems: find an organizer. Philosophical thoughts: find another participant (or an organizer). Back at 13:00.</p>
 </section>
 
 <!-- ============================================================ PART 3: EXTENDING THE HARNESS -->
@@ -793,7 +941,7 @@ description: The plotting conventions of the
 			<div>
 				<ul>
 					<li>Events: <code>PreToolUse</code>, <code>PostToolUse</code>, <code>Stop</code>, <code>SessionStart</code>, notifications, &hellip;</li>
-					<li>The hook gets the tool call as JSON (structured text) on its input; exit code 2 sends its error output back to the agent</li>
+					<li>The hook gets the tool call as JSON (structured text) on its standard input; exit code 2 sends its error output back to the agent</li>
 					<li>Use for: formatting, linting, secret scanning, notifications, "don't stop until the tests pass"</li>
 					<li>The <em>Stop</em> hook is how Hippe's research loop keeps the agent going (showcase)</li>
 				</ul>
@@ -894,7 +1042,7 @@ claude mcp add --scope project zotero -- zotero-mcp
 		</ul>
 		<table>
 			<tr><th>Pillar</th><th>What it is</th><th>What it gives the agent</th></tr>
-			<tr><td>Unit tests (<code>pytest</code>)</td><td>Small programs that check your code against known answers</td><td>"Does the physics still hold?"</td></tr>
+			<tr><td>Unit tests (<code>pytest</code>)</td><td>Small programs that check your code against known answers</td><td>"Does the physics still hold?" Literature values, known limits, and today's output saved to catch changes</td></tr>
 			<tr><td>Linting (<code>ruff</code>)</td><td>An automatic check for common mistakes and messy code</td><td>Bug patterns and style problems, in milliseconds</td></tr>
 			<tr><td>Type checking (<code>pyrefly</code>)</td><td>Checks that functions get the kinds of values they expect</td><td>Wrong arguments caught across the whole code base</td></tr>
 			<tr><td>CI (GitHub Actions)</td><td>A server that runs all of the above on every change you push</td><td>The same checks on every change, including the agent's</td></tr>
