@@ -44,6 +44,8 @@ def main() -> None:
     fig, ax = plt.subplots()
     for temperature in (3000.0, 5778.0, 10000.0):
         ax.plot(wavelengths * 1e9, spectral_radiance(wavelengths, temperature), label=f"{temperature:.0f} K")
+    sun_peak = peak_wavelength(5778.0) * 1e9
+    ax.axvline(sun_peak, color="gray", linestyle="--", label=f"Sun's peak: {sun_peak:.0f} nm")
     ax.set_xscale("log")
     ax.set_yscale("log")
     ax.set_xlabel("Wavelength (nm)")

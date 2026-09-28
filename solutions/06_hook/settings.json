@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git status:*)",
+      "Bash(pyrefly check:*)",
+      "Bash(pytest:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python -m workshop.check)",
+      "Bash(ruff check:*)",
+      "Bash(ruff format:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/venv/bin/python",
+            "args": ["${CLAUDE_PROJECT_DIR}/exercises/06_hook/hooks/ruff_on_edit.py"]
+          }
+        ]
+      }
+    ]
+  }
+}

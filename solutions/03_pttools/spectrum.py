@@ -25,7 +25,7 @@ def compute_spectrum(v_wall: float, alpha_n: float, r_star: float = 0.1) -> tupl
     model = BagModel(alpha_n_min=min(alpha_n, 0.01))
     bubble = Bubble(model, v_wall=v_wall, alpha_n=alpha_n)
     spectrum = Spectrum(bubble, nuc_type=NucType.EXPONENTIAL, r_star=r_star)
-    return np.asarray(spectrum.f(), dtype=float), np.asarray(spectrum.omgw0(), dtype=float)
+    return np.asarray(spectrum.f(), dtype=float), np.asarray(spectrum.omgw0_h2(), dtype=float)
 
 
 def plot_spectra(v_walls: tuple[float, ...] = (0.4, 0.6, 0.8), alpha_n: float = 0.2) -> None:

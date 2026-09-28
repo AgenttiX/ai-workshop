@@ -13,4 +13,4 @@
    It should read `AGENTS.md` and `README.md` and answer without you telling it where to look.
 5. Look at what it did: which files did it read? That's the "file access" that makes a harness different from a chat.
 
-If something doesn't work, ask an organizer or pair up with your neighbour. The coffee break is reserved for debugging.
+If something doesn't work, ask an organizer or pair up with your neighbour. The lunch break is reserved for debugging.

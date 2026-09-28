@@ -8,7 +8,7 @@ It has no `AGENTS.md`, so an agent working on it has to guess.
    in VS Code, open that folder as the workspace). Run `/init`. It reads the project and writes a draft `CLAUDE.md`.
 2. Read the draft critically. Which of the unwritten conventions did it find, and which did it miss?
    - The units are in the column names of the data file.
-   - The analysis is run with `run.sh`, which activates the virtualenv.
+   - The analysis is run with `python run.py`, which uses the Python of the virtual environment.
    - The results go to `results/`, which is not tracked in Git.
    - The uncertainties in the data are 1σ.
    - The plots should use the workshop style (`workshop.plotting`).

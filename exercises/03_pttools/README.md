@@ -15,6 +15,6 @@ instead of hallucinating an API.
    and check the answer against what you know. Being able to check is the point.
 
 ## What to look for
-- Did it look at `venv/lib/python3.12/site-packages/pttools/` or the examples? An agent that reads the library
-  is doing what you'd do — faster.
+- Did it look at `venv/lib/python3.12/site-packages/pttools/` (`venv\Lib\site-packages\pttools\` on Windows)
+  or the examples? An agent that reads the library is doing what you'd do — faster.
 - If it gets stuck on the API, point it to `pttools.bubble.Bubble`, `pttools.models.BagModel` and `pttools.omgw0.Spectrum`.

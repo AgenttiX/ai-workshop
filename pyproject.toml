@@ -81,7 +81,8 @@ search-path = [
     "exercises/03_pttools",
     "solutions/01_fix_the_bug",
     "solutions/03_pttools",
-    "solutions/04_ai_ready"
+    "solutions/04_ai_ready",
+    "solutions/05_skill"
 ]
 
 [tool.pytest.ini_options]
@@ -147,7 +148,7 @@ ignore = [
 [tool.ruff.lint.isort]
 force-sort-within-sections = true
 # The modules of the exercises are imported by their tests as top-level modules.
-known-first-party = ["blackbody", "fitting", "spectrum", "workshop"]
+known-first-party = ["blackbody", "fitting", "pendulum_period", "spectrum", "workshop"]
 
 [tool.ruff.lint.pep8-naming]
 # Physics symbols
