@@ -9,8 +9,8 @@ Reference solutions for the code exercises are in [`../solutions/`](../solutions
 | 01 | [Fix the bug](./01_fix_the_bug/) | 1 | 10 min | Giving a task, reviewing a diff, running tests |
 | 02 | [Write an AGENTS.md](./02_agents_md/) | 1 | 10 min | Project instructions for the agent |
 | 03 | [PTtools spectrum](./03_pttools/) | 1 (bonus) | 15 min | Making the agent learn a research library from its source |
-| 04 | [AI-ready code](./04_ai_ready/) | 2 | 15 min | Tests, types and lint as the agent's feedback loop |
-| 05 | [A skill](./05_skill/) | 2 | 10 min | Reusable instructions the agent loads when relevant |
+| 04 | [AI-ready code](./04_ai_ready/) | 1 | 15 min | Tests, types and lint as the agent's feedback loop |
+| 05 | [A skill](./05_skill/) | 1 | 10 min | Reusable instructions the agent loads when relevant |
 | 06 | [A hook](./06_hook/) | 2 | 10 min | Deterministic automation on tool events |
 | 07 | [A subagent](./07_subagents/) | 2 | 10 min | Specialist agents with their own context |
 | 08 | [MCP](./08_mcp/) | 2 (optional) | 10 min | Connecting external tools and data |

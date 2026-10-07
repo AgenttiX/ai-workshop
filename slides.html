@@ -128,6 +128,10 @@
 			.reveal figure.full img {
 				max-height: 700px;
 			}
+			.reveal .mcp-sequence svg {
+				display: block;
+				height: 680px;
+			}
 			.reveal figcaption {
 				font-size: 0.45em;
 				line-height: 1.35;
@@ -237,7 +241,7 @@
 			<li>Everything here is practice. Philosophy, ethics and the future of science: lunch and afterwards.
 				We'll gladly join.</li>
 			<li>A warning: some of what we show may feel threatening to how we work as scientists.
-				That's a legitimate reaction. Let's talk about it.</li>
+				That's a legitimate reaction, so let's talk about it.</li>
 			<li>Materials: <a href="https://github.com/AgenttiX/ai-workshop">github.com/AgenttiX/ai-workshop</a></li>
 		</ul>
 		<aside class="notes">
@@ -253,8 +257,9 @@
 				<ol class="schedule">
 					<li>Welcome</li>
 					<li>The state of AI in 2026, chat vs. harness, caveats</li>
+					<li>Setup check</li>
 					<li>Live demo: exercise 01</li>
-					<li>Setup check and hands-on exercises, with us going around</li>
+					<li>Hands-on exercises, with us going around</li>
 					<li>Recap</li>
 				</ol>
 			</div>
@@ -340,7 +345,7 @@
 			<tr><td>2026</td><td>Claude 5 family, multi-agent harnesses, agents working for hours on research tasks</td></tr>
 		</table>
 		<p class="callout">
-			The step that most scientists have missed: from <strong>chat</strong> to <strong>agents with access to your files and tools</strong>.
+			The step that many have missed: from <strong>chat</strong> to <strong>agents with access to your files and tools</strong>.
 		</p>
 		<aside class="notes">
 			Most people in the room stopped updating their mental model at "chat window" in 2023. That model is now out of date.
@@ -356,7 +361,7 @@
 			<li>How long a task (measured by how long it takes a human expert) an AI completes on its own with 50&nbsp;% success.
 				<strong>Doubling every ~4 months</strong> since 2023. Note the logarithmic scale</li>
 			<li>2023: minutes. 2025: an hour or two. 2026: ~12 h, and the best models are beyond what the benchmark can measure reliably</li>
-			<li>Extrapolation is dangerous. But the trend hasn't bent yet.</li>
+			<li>Extrapolation is dangerous, but the trend hasn't bent yet.</li>
 		</ul>
 		<p class="small">Our plot of METR's data: <a href="https://metr.org/time-horizons/">time horizons</a> (May 2026),
 			<a href="https://metr.org/blog/2026-06-26-gpt-5-6-sol/">GPT-5.6 Sol</a> (June 2026).
@@ -622,14 +627,15 @@
 	</section>
 	<section class="center-slide">
 		<h2>Questions so far?</h2>
-		<p>5 minutes. The setup check comes next.</p>
+		<p>Next: the setup check.</p>
+		<aside class="notes">About 5 minutes.</aside>
 	</section>
 </section>
 
 <!-- ============================================================ SETUP -->
 <section>
 	<section>
-		<h2>Exercise 00: setup check (10 min)</h2>
+		<h2>Exercise 00: setup check</h2>
 		<p>You set up your laptop at home with the guide in the <strong>README</strong> (the front page of the repository):</p>
 		<ol>
 			<li>VS Code with the <em>Python</em> and <em>Claude Code</em> extensions (<em>extension</em> = an add-on to VS Code)</li>
@@ -783,7 +789,7 @@
 					<li>With \(\lambda^4\) the code computes \(\lambda B_\lambda\), which peaks at a longer wavelength: 635 nm instead of 502 nm for the Sun.
 						That's 27 % off; the test allows 0.1 %</li>
 					<li>The program ran and the plot looked like a black-body spectrum. Only a check against known physics caught it</li>
-					<li>AI-written code fails in exactly this way. That's why tests matter more with AI, not less</li>
+					<li>AI-written code fails in exactly this way. <em>That's why tests matter more with AI, not less</em></li>
 				</ul>
 			</div>
 			<figure>
@@ -879,17 +885,20 @@
 		</div>
 	</section>
 	<section>
-		<h2>Hands-on 1 (25 min)</h2>
+		<h2>Hands-on 1</h2>
 		<ul>
 			<li><strong>Exercise 01:</strong> fix the bug &mdash; the demo, on your own machine, with your own prompts</li>
 			<li><strong>Exercise 02:</strong> write an <code>AGENTS.md</code> for the pendulum lab with <code>/init</code>, then fix what it missed</li>
 			<li><strong>Exercise 03 (bonus):</strong> make the agent learn PTtools from its source and compute a gravitational wave spectrum</li>
+			<li><strong>Exercise 04:</strong> AI-ready code: let tests, types and lint guide the agent through messy code</li>
+			<li><strong>Exercise 05:</strong> a skill: teach the agent your plot style once</li>
 		</ul>
 		<p class="callout">
 			Read <code>exercises/README.md</code>. Use your own words. Read every diff.
 			Stuck? Ask Claude first, then raise a hand.
 		</p>
-		<aside class="notes">Circulate. The common failure: people accept edits without reading. Point it out kindly.</aside>
+		<aside class="notes">About 25 minutes, or whatever is left before the recap.
+			Circulate. The common failure: people accept edits without reading. Point it out kindly.</aside>
 	</section>
 	<section>
 		<h2>Recap of session 1</h2>
@@ -931,7 +940,7 @@
 			<tr><td>Run several sessions on the same repo</td><td><strong>Git worktrees</strong></td></tr>
 			<tr><td>Run without a human in the loop (scripts, CI)</td><td><strong>Headless mode</strong> (<code>claude -p</code>)</td></tr>
 		</table>
-		<p class="small">Adapted from Hippe's <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a> guide.</p>
+		<p class="small">Adapted from the <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a> guide.</p>
 	</section>
 	<section>
 		<h2>Skills: instructions loaded when relevant</h2>
@@ -1057,6 +1066,118 @@ claude mcp add --scope project zotero -- zotero-mcp
 		</div>
 	</section>
 	<section>
+		<h2>MCP in practice: one real tool call</h2>
+		<div class="mcp-sequence">
+			<svg viewBox="0 0 1700 742" width="100%" role="img" aria-label="Sequence diagram of one MCP tool call from Claude Code to the Inkscape server">
+			<defs><marker id="mcp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker></defs>
+			<rect x="20" y="0" width="340" height="78" rx="12" fill="white" stroke="#d0653b" stroke-width="4"/>
+			<text x="190" y="34" text-anchor="middle" font-size="28" font-weight="700" font-family="Open Sans, sans-serif" fill="#222">Model</text>
+			<text x="190" y="64" text-anchor="middle" font-size="21" font-family="Open Sans, sans-serif" fill="#555">writes text only</text>
+			<line x1="190" y1="78" x2="190" y2="732" stroke="#d0653b" stroke-width="3" stroke-dasharray="8 6"/>
+			<rect x="490" y="0" width="340" height="78" rx="12" fill="white" stroke="#3b8bd0" stroke-width="4"/>
+			<text x="660" y="34" text-anchor="middle" font-size="28" font-weight="700" font-family="Open Sans, sans-serif" fill="#222">Claude Code</text>
+			<text x="660" y="64" text-anchor="middle" font-size="21" font-family="Open Sans, sans-serif" fill="#555">MCP host and client</text>
+			<line x1="660" y1="78" x2="660" y2="732" stroke="#3b8bd0" stroke-width="3" stroke-dasharray="8 6"/>
+			<rect x="980" y="0" width="340" height="78" rx="12" fill="white" stroke="#2e8b57" stroke-width="4"/>
+			<text x="1150" y="34" text-anchor="middle" font-size="28" font-weight="700" font-family="Open Sans, sans-serif" fill="#222">inkscape-mcp</text>
+			<text x="1150" y="64" text-anchor="middle" font-size="21" font-family="Open Sans, sans-serif" fill="#555">MCP server: a Python process</text>
+			<line x1="1150" y1="78" x2="1150" y2="732" stroke="#2e8b57" stroke-width="3" stroke-dasharray="8 6"/>
+			<rect x="1350" y="0" width="340" height="78" rx="12" fill="white" stroke="#73726c" stroke-width="4"/>
+			<text x="1520" y="34" text-anchor="middle" font-size="28" font-weight="700" font-family="Open Sans, sans-serif" fill="#222">Inkscape</text>
+			<text x="1520" y="64" text-anchor="middle" font-size="21" font-family="Open Sans, sans-serif" fill="#555">the actual program</text>
+			<line x1="1520" y1="78" x2="1520" y2="732" stroke="#73726c" stroke-width="3" stroke-dasharray="8 6"/>
+			<text x="905.0" y="106" text-anchor="middle" font-size="20" font-style="italic" font-family="Open Sans, sans-serif" fill="#2e8b57">stdio: JSON-RPC over stdin/stdout</text>
+			<rect x="4" y="120" width="1692" height="172" rx="10" fill="#3b8bd0" fill-opacity="0.05"/>
+			<text x="14" y="282" font-size="19" font-family="Open Sans, sans-serif" fill="#3b8bd0">session start</text>
+			<rect x="4" y="296" width="1692" height="392" rx="10" fill="#3b8bd0" fill-opacity="0.05"/>
+			<text x="14" y="678" font-size="19" font-family="Open Sans, sans-serif" fill="#3b8bd0">one call: 0.53 s</text>
+			<line x1="660" y1="150" x2="1138" y2="150" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="142" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">start: inkscape-mcp --mode stdio</text>
+			<line x1="660" y1="194" x2="1138" y2="194" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="186" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">tools/list</text>
+			<line x1="1150" y1="238" x2="672" y2="238" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="230" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">8 tools + server instructions</text>
+			<line x1="660" y1="282" x2="202" y2="282" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="274" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">tool names, server instructions</text>
+			<line x1="190" y1="326" x2="648" y2="326" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="318" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">ToolSearch: load the schema</text>
+			<line x1="660" y1="370" x2="202" y2="370" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="362" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">schema of inkscape_analysis</text>
+			<line x1="190" y1="414" x2="648" y2="414" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="406" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">inkscape_analysis(dimensions, poster.svg)</text>
+			<rect x="550" y="434" width="220" height="34" rx="8" fill="#fff4cc" stroke="#c9a400" stroke-width="2"/>
+			<text x="660" y="458" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">permission check</text>
+			<line x1="660" y1="502" x2="1138" y2="502" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="494" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">tools/call, same arguments</text>
+			<line x1="1150" y1="546" x2="1508" y2="546" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="1335.0" y="538" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">inkscape --query-width</text>
+			<line x1="1520" y1="590" x2="1162" y2="590" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="1335.0" y="582" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">drawing size</text>
+			<line x1="1150" y1="634" x2="672" y2="634" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="626" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">{"page_width": 297, "page_height": 420, …}</text>
+			<line x1="660" y1="678" x2="202" y2="678" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="670" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">result into the context</text>
+			</svg>
+		</div>
+		<p class="small">Measured in this repository: Claude Code asks the Inkscape server for the size of the workshop poster.
+			The model only writes a request, Claude Code does the talking, and the server runs the real program.</p>
+		<aside class="notes">
+			Walk through it top to bottom.
+			Host and client: Claude Code is the host, and it keeps one client connection per server.
+			Server: inkscape-mcp is an ordinary Python program (~12,700 lines), installed as one entry in ~/.claude.json: the command that starts it.
+			Transport: stdio, i.e. Claude Code starts the process and they exchange JSON-RPC messages through its stdin and stdout. Remote servers (claude.ai connectors) use HTTP instead.
+			Discovery: tools/list returns 8 tools, each with a name, a description and a JSON Schema of its arguments; the server's instructions go into the system prompt.
+			Deferred loading: only the tool names are in the context at first; the model loads the full schema with ToolSearch when it needs the tool.
+			The call: the model writes the request, Claude Code checks the permissions and sends tools/call.
+			The server reads the page size from the SVG's viewBox and runs "inkscape --query-width" and "--query-height" as subprocesses for the drawing size. 0.53 s in total.
+			The result goes into the context as text, like the output of any other tool. That's also why prompt injection through MCP output works.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>The same call as messages</h2>
+		<div class="two-col">
+			<div>
+				<p class="small">Claude Code &rarr; server</p>
+				<pre><code class="language-json" data-trim>
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "method": "tools/call",
+  "params": {
+    "name": "inkscape_analysis",
+    "arguments": {
+      "operation": "dimensions",
+      "input_path": "poster/poster.svg"
+    }
+  }
+}
+				</code></pre>
+			</div>
+			<div>
+				<p class="small">Server &rarr; Claude Code: the tool's output</p>
+				<pre><code class="language-json" data-trim>
+{
+  "success": true,
+  "operation": "dimensions",
+  "data": {
+    "page_width": 297,
+    "page_height": 420,
+    "drawing_width": 1142.17,
+    "drawing_height": 1587.4,
+    "aspect_ratio": 0.7071
+  },
+  "execution_time_ms": 527.6
+}
+				</code></pre>
+			</div>
+		</div>
+		<ul>
+			<li>Each tool in <code>tools/list</code>: a name, a description the model reads to decide, and a JSON Schema of its arguments</li>
+			<li>Besides tools, a server can offer <em>resources</em> (this one serves its own usage guide) and <em>prompts</em></li>
+		</ul>
+		<p class="small">Simplified: the id is illustrative, the path is shortened, and the output is wrapped in a JSON-RPC result envelope.</p>
+	</section>
+	<section>
 		<h2>Beyond the editor: worktrees, headless, CI, plugins</h2>
 		<ul>
 			<li><strong>Git worktree:</strong> a second working copy of the same repository in another folder, on its own branch.
@@ -1066,10 +1187,10 @@ claude mcp add --scope project zotero -- zotero-mcp
 			<li><strong>CI</strong> (continuous integration): a server that runs your checks on every change you push.
 				Claude Code can run there too, e.g. as a GitHub Action that reviews pull requests</li>
 			<li><strong>Plugin:</strong> skills, agents and hooks bundled so that you install them in one go.
-				Hippe's <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a> is one <code>install.sh</code> away</li>
+				Example: <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a></li>
 			<li><strong><code>/insights</code></strong> (terminal version): what have I been asking for repeatedly? &rarr; turn it into a skill</li>
 		</ul>
-		<p class="callout">Don't write everything yourself. Start from a community loadout and edit it to your taste.</p>
+		<p class="callout">No need to write everything yourself; start from a community loadout and edit it to your taste.</p>
 	</section>
 </section>
 
@@ -1173,12 +1294,10 @@ jobs:
 		<p class="callout">And list the commands in <code>AGENTS.md</code>, so the agent knows to run them.</p>
 	</section>
 	<section>
-		<h2>Hands-on 2 (25 min): choose your path</h2>
+		<h2>Hands-on 2: choose your path</h2>
 		<div class="two-col">
 			<div>
 				<ul>
-					<li><strong>04</strong> AI-ready code: the demo on your machine</li>
-					<li><strong>05</strong> A skill: <code>plot-style</code></li>
 					<li><strong>06</strong> A hook: <code>ruff</code> on every edit</li>
 					<li><strong>07</strong> A subagent: the physics reviewer</li>
 					<li><strong>08</strong> MCP: arXiv or Zotero (optional)</li>
@@ -1199,6 +1318,7 @@ jobs:
 					And ask Claude to explain anything you don't understand.</p>
 			</div>
 		</div>
+		<aside class="notes">About 25 minutes, or whatever is left before the final words.</aside>
 	</section>
 </section>
 
@@ -1206,8 +1326,8 @@ jobs:
 <section>
 	<section class="divider center-slide">
 		<h1>Showcases</h1>
-		<p>Three complete workflows, ~11 min each</p>
-		<aside class="notes">Each organizer has a screen recording as a fallback. Keep the time; one question each.</aside>
+		<p>Three complete workflows</p>
+		<aside class="notes">About 11 minutes each. Each organizer has a screen recording as a fallback. Keep the time; one question each.</aside>
 	</section>
 	<section>
 		<h2>Hippe: the research loop</h2>
@@ -1292,7 +1412,7 @@ claude
 			<li><a href="https://support.claude.com/en/articles/16634237-claude-team-plan-for-scientists">Claude Team plan for scientists</a>:
 				a PI files the application, up to 25 people per application. Talk to your group leader today.</li>
 			<li><a href="https://education.github.com/pack">GitHub Student Developer Pack</a>: Copilot for free; apply early, it takes time</li>
-			<li>Hippe's <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a>, Mika's <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a> and
+			<li><a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a>, Mika's <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a> and
 				<a href="https://github.com/CFT-HY/unit-testing-ci-cd">unit testing &amp; CI/CD lecture</a></li>
 			<li>Coordination and questions after today: <a href="https://cftgroup.chat/main/channels/ai-workshop">Mattermost</a></li>
 		</ul>
