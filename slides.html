@@ -87,8 +87,20 @@
 			.reveal ul li ul li {
 				font-size: 85%;
 			}
-			.reveal .schedule td:first-child {
-				white-space: nowrap;
+			.reveal .schedule li {
+				margin: 0.3em 0;
+			}
+			/* Backup slides: reached with the arrow keys, skipped by Space, N, P and the clicker */
+			.reveal .slides section.backup::before {
+				content: "Backup";
+				position: absolute;
+				top: 0;
+				right: 0;
+				padding: 0.1em 0.6em;
+				border-radius: 8px;
+				background: #73726c;
+				color: white;
+				font-size: 0.6em;
 			}
 			.loop {
 				display: flex;
@@ -149,7 +161,7 @@
 <!-- ============================================================ TITLE -->
 <section class="center-slide">
 	<h1>AI workshop for scientists</h1>
-	<p>How AI is <em>actually</em> used effectively in research in 2026</p>
+	<p>How to use AI effectively in research in 2026</p>
 	<p>
 		Aaron Haarti, Antti Hippeläinen &amp; Mika Mäki<br>
 		Doctoral researchers, Department of Physics, University of Helsinki
@@ -162,7 +174,7 @@
 		slides, exercises and these speaker notes (press <code>S</code>)
 	</p>
 	<aside class="notes">
-		Welcome. Three PhD students, no affiliations with AI companies, we learned this out of our own interest.
+		Welcome. Three PhD students, no affiliations with AI companies, we learned this out of our own interest for reasearch as well as hobby purposes.
 		Everything is in the repository; the slides have speaker notes, so you can revisit what we said.
 	</aside>
 </section>
@@ -173,15 +185,15 @@
 		<h2>Practicalities</h2>
 		<ul>
 			<li>10:00&ndash;12:00 foundations, 12:00&ndash;13:00 lunch, 13:00&ndash;15:00 advanced. Laptops out.</li>
-				<li><strong>No experience needed.</strong> We define every term the first time we use it (orange boxes), and there's a glossary at the end. Advanced users: session 2 is for you.</li>
+				<li><strong>No experience needed.</strong> We define every term the first time we use it (orange boxes), and give glossary at the end.</li>
 			<li>Questions: interrupt us, or post in
 				<a href="https://cftgroup.chat/main/channels/ai-workshop">Mattermost</a>.
 				<strong>There are no stupid questions.</strong> If you're lost, three others are too.</li>
-			<li>It's OK to discuss with the people next to you during the presentation. Helping each other is encouraged.</li>
+			<li>It's OK to discuss with the people next to you during the presentation, but do so quietly. Helping each other is encouraged.</li>
 			<li>Everything here is practice. Philosophy, ethics and the future of science: lunch and afterwards.
 				We'll gladly join.</li>
 			<li>A warning: some of what we show may feel threatening to how we work as scientists.
-				That's a legitimate reaction. Let's talk about it at lunch.</li>
+				That's a legitimate reaction. Let's talk about it.</li>
 			<li>Materials: <a href="https://github.com/AgenttiX/ai-workshop">github.com/AgenttiX/ai-workshop</a></li>
 		</ul>
 		<aside class="notes">
@@ -193,36 +205,41 @@
 		<h2>Schedule</h2>
 		<div class="two-col">
 			<div>
-				<h3>Session 1: Foundations</h3>
-				<table class="schedule">
-					<tr><td>10:05</td><td>The state of AI in 2026, chat vs. harness, caveats</td></tr>
-					<tr><td>10:40</td><td>Setup check (exercise 00)</td></tr>
-					<tr><td>10:50</td><td>Live demo: Claude Code fundamentals</td></tr>
-					<tr><td>11:25</td><td>Hands-on: exercises 01&ndash;03</td></tr>
-					<tr><td>11:50</td><td>Q&amp;A and recap</td></tr>
-				</table>
+				<h3>Session 1: Foundations, 10:00&ndash;12:00</h3>
+				<ol class="schedule">
+					<li>Welcome</li>
+					<li>The state of AI in 2026, chat vs. harness, caveats</li>
+					<li>Live demo: exercise 01</li>
+					<li>Setup check and hands-on exercises, with us going around</li>
+					<li>Recap</li>
+				</ol>
 			</div>
 			<div>
-				<h3>Session 2: Advanced</h3>
-				<table class="schedule">
-					<tr><td>13:05</td><td>Extending the harness: skills, hooks, agents, MCP</td></tr>
-					<tr><td>13:35</td><td>Making your project AI-ready</td></tr>
-					<tr><td>13:55</td><td>Hands-on: exercises 04&ndash;10</td></tr>
-					<tr><td>14:20</td><td>Showcases: research loop, HPC, local models</td></tr>
-					<tr><td>14:55</td><td>Wrap-up</td></tr>
-				</table>
+				<h3>Session 2: Advanced, 13:00&ndash;15:00</h3>
+				<ol class="schedule">
+					<li>Extending the harness: skills, hooks, agents, MCP</li>
+					<li>Making your project AI-ready: tests, linting, CI</li>
+					<li>Three demos: research loop, supercomputer, local models</li>
+					<li>Hands-on and discussion</li>
+					<li>Final words</li>
+				</ol>
 			</div>
 		</div>
+		<p class="small">Both sessions start sharp. Theory and demos come first; the hands-on part gets the rest of the time.</p>
+		<aside class="notes">
+			The first theory part may run long; that's fine, the hands-on time absorbs it.
+			Keep the recap to the last 5&ndash;10 minutes of session 1 and the final words to the last 5 minutes of session 2.
+		</aside>
 	</section>
 	<section>
-		<h2>What you'll be able to do afterwards</h2>
+		<h2>What you can do afterwards:</h2>
 		<ol>
-			<li>Explain what changed in AI in 2024&ndash;2026 and why an AI agent working in your files can do far more than a chat window</li>
-			<li>Run Claude Code on a real repository: give a task, review the diff, manage permissions</li>
-			<li>Write an <code>AGENTS.md</code> for your project and manage the context window deliberately</li>
+			<li>Understand the main developments of in AI in recent years and the related jargon, as well as why an AI agent working in your files can do far more than a chat window</li>
+			<li>Run Claude Code on a real project</li>
+			<li>Use guiding files like an <code>AGENTS.md</code> for your project and manage the context window</li>
 			<li>Extend the harness with skills, hooks, subagents and MCP servers</li>
 			<li>Make your research code "AI-ready" with tests, lint, types and CI, so that the agent catches its own mistakes</li>
-			<li>Judge when <em>not</em> to use AI, and how to use it without losing your own understanding</li>
+			<li>Judge when <em>not</em> to use AI</li>
 		</ol>
 	</section>
 	<section>
@@ -1244,14 +1261,44 @@ claude
 			if (/print-pdf/.test(window.location.search)) {
 				document.querySelectorAll("iframe[data-src]").forEach(iframe => { iframe.src = iframe.dataset.src; });
 			}
+			const isBackup = slide => slide.classList.contains("backup");
+
+			// Step to the next or previous main slide, jumping over the backup slides.
+			function stepMain(direction) {
+				const fragments = Reveal.availableFragments();
+				if (direction > 0 ? fragments.next : fragments.prev) {
+					direction > 0 ? Reveal.nextFragment() : Reveal.prevFragment();
+					return;
+				}
+				const slides = Reveal.getSlides();
+				let i = slides.indexOf(Reveal.getCurrentSlide()) + direction;
+				while (slides[i] && isBackup(slides[i])) i += direction;
+				if (slides[i]) {
+					const { h, v } = Reveal.getIndices(slides[i]);
+					Reveal.slide(h, v);
+				}
+			}
+
 			revealjs.addEventListener("load", () => {
 				Reveal.initialize({
 					// Add the current slide number to the URL after a #
 					hash: true,
 					// Learn about plugins: https://revealjs.com/plugins/
 					plugins: [ RevealHighlight, RevealMath.MathJax3, RevealNotes ],
-					// Show both current slide number and total number of slides
-					slideNumber: "c/t",
+					// "Current/total", counting only the main slides, since data-visibility="uncounted"
+					// works only at the end of the deck.
+					slideNumber: slide => {
+						const main = Reveal.getSlides().filter(s => !isBackup(s));
+						return isBackup(slide) ? ["backup"] : [main.indexOf(slide) + 1, "/", main.length];
+					},
+					// Space, N, P, PageUp and PageDown (the clicker) skip the backup slides; the arrow keys reach them.
+					keyboard: {
+						32: event => stepMain(event.shiftKey ? -1 : 1),
+						78: () => stepMain(1),
+						34: () => stepMain(1),
+						80: () => stepMain(-1),
+						33: () => stepMain(-1),
+					},
 					width: 1920,
 					height: 1080,
 				});
