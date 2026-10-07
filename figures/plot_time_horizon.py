@@ -6,7 +6,8 @@ with newer measurements that are not yet in it (``additional_results.yaml``).
 
 The result is an interactive HTML page: hover over a point to see its values, drag to zoom, double-click to reset.
 
-Run with ``python figures/plot_time_horizon.py``. The requirements are in ``figures/requirements.txt``.
+Run with ``python -m figures.plot_time_horizon`` in the root directory of the repository.
+The requirements are in ``figures/requirements.txt``.
 """
 
 import argparse
@@ -17,6 +18,8 @@ from pathlib import Path
 import numpy as np
 import plotly.graph_objects as go
 import yaml
+
+from figures.common import COLOR_GRID, COLOR_TEXT, FONT, FONT_SIZE, write_html
 
 FIGURES_DIR = Path(__file__).resolve().parent
 METR_DATA = FIGURES_DIR / "benchmark_results_1_1.yaml"
@@ -33,16 +36,9 @@ TREND_END = datetime.date(2026, 12, 31)
 X_MIN = datetime.date(2018, 12, 1)
 X_MAX = datetime.date(2027, 4, 1)
 
-#: The font of the reveal.js "sky" theme of the slides
-FONT = "Open Sans"
-#: Font size (pixels) in the iframe of the slides
-FONT_SIZE = 18
-
 COLOR_SOTA = "#2e7d32"
 COLOR_OTHER = "#a5d6a7"
 COLOR_NOT_ROBUST = "#888888"
-COLOR_TEXT = "#333333"
-COLOR_GRID = "#e5e5e5"
 
 #: Display names of the models in METR's data file, shown when hovering over a point.
 #: The models of additional_results.yaml have their names in the file.
@@ -386,39 +382,6 @@ def make_figure(results: list[Result], doubling_time: float, intercept: float, s
 
 
 
-def write_html(fig: go.Figure, path: Path, div_id: str = "time-horizon") -> None:
-    """Save the figure as an HTML page that fills its window, e.g. an iframe in the slides.
-
-    :param fig: the figure
-    :param path: the HTML file to write
-    :param div_id: ID of the HTML element of the figure
-    """
-    page = fig.to_html(
-        include_plotlyjs="cdn",
-        full_html=True,
-        # A fixed ID instead of a random one, so that regenerating the figure does not change the file needlessly
-        div_id=div_id,
-        default_width="100%",
-        default_height="100%",
-        # Zooming by dragging and resetting by double-clicking work without the toolbar.
-        config={"responsive": True, "displayModeBar": False},
-    )
-    # The font of the slides, and no margins or scroll bars around the figure
-    head = (
-        f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={FONT.replace(" ", "+")}'
-        ':ital,wght@0,400;0,700;1,400&display=swap">\n'
-        "<style>html, body { height: 100%; margin: 0; overflow: hidden; }</style>\n"
-    )
-    # Plotly measures the text when drawing it, so the figure is redrawn once the font has loaded.
-    # (In the slides, the iframe must also be loaded only when it's visible, which is why it uses data-src.)
-    redraw = (
-        f"<script>document.fonts.ready.then(() => {{ const plot = document.getElementById('{div_id}'); "
-        "Plotly.newPlot(plot, plot.data, plot.layout, plot._context); });</script>\n"
-    )
-    page = page.replace("<head>", "<head>\n" + head, 1).replace("</body>", redraw + "</body>", 1)
-    path.write_text(page, encoding="utf-8")
-
-
 def main() -> None:
     """Create the figure and save it as an HTML file."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -432,7 +395,7 @@ def main() -> None:
 
     results.sort(key=lambda result: result.release_date)
     fig = make_figure(results, doubling_time, intercept, show_legend=not args.hide_legend)
-    write_html(fig, args.output)
+    write_html(fig, args.output, div_id="time-horizon")
     print(f"Saved {args.output}")
 
 

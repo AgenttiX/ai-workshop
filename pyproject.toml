@@ -97,7 +97,6 @@ search-path = [
     "exercises/01_fix_the_bug",
     "exercises/02_agents_md/pendulum_lab",
     "exercises/03_pttools",
-    "figures",
     "solutions/01_fix_the_bug",
     "solutions/03_pttools",
     "solutions/04_ai_ready",
