@@ -62,25 +62,24 @@
   <g id="programme" font-family="Inter" font-size="6" fill="#ffffff">
     <text x="7" y="228" font-weight="700" font-size="5.4" letter-spacing="0.6" fill="#ff7a4d">PROGRAMME</text>
     <text x="7" y="238" font-weight="700">10:00</text>
-    <text x="27" y="238"><tspan font-weight="700">Foundations:</tspan> the state of AI in 2026, from chatbots</text>
-    <text x="27" y="246">to agents, and honest caveats. Explaining the jargon around</text>
-    <text x="27" y="254">us, ramifications for research and live demos.</text>
-    <text x="27" y="262">Hands-on: tasks, context, permissions.</text>
-    <text x="7" y="272" font-weight="700">12:00</text>
-    <text x="27" y="272">Lunch break</text>
-    <text x="7" y="282" font-weight="700">13:00</text>
-    <text x="27" y="282"><tspan font-weight="700">Advanced:</tspan> skills, hooks, subagents and MCP servers.</text>
-    <text x="27" y="290">Making research code AI-ready with tests, linting and CI.</text>
-    <text x="27" y="298">Hands-on with the exercises or your own project.</text>
-    <text x="27" y="306">Showcases: Continuous research, supercomputers, local models.</text>
+    <text x="27" y="238"><tspan font-weight="700">Basic use:</tspan> AI in 2026, introduction to agents.</text>
+    <text x="27" y="247">•</text>
+    <text x="33" y="247">Live demos and hands-on exercises, also with your</text>
+    <text x="33" y="255">own research problems.</text>
+    <text x="7" y="268" font-weight="700">12:00</text>
+    <text x="27" y="268">Lunch break</text>
+    <text x="7" y="281" font-weight="700">13:00</text>
+    <text x="27" y="281"><tspan font-weight="700">Advanced features:</tspan> agentic skills, hooks, subagents and task delegation,</text>
+    <text x="27" y="289">MCP servers, linting, continuous integration.</text>
+    <text x="27" y="298">•</text>
+    <text x="33" y="298">Showcases: continuous research projects, supercomputer use, running local models.</text>
   </g>
 
   <g id="good-to-know" font-family="Inter" font-size="6" fill="#ffffff">
-    <text x="7" y="320" font-weight="700" font-size="5.4" letter-spacing="0.6" fill="#ff7a4d">GOOD TO KNOW</text>
-    <text x="7" y="330">No experience needed: every term is explained. Plenty for advanced users too!</text>
-    <text x="7" y="338">For students and researchers of the Faculty of Science. In English, free of charge.</text>
-    <text x="7" y="346">Bring your laptop: after signing up, you'll get a step-by-step setup guide.</text>
-    <text x="7" y="354">For students: 1 study credit (ECTS), to be confirmed.</text>
+    <text x="7" y="318" font-weight="700" font-size="5.4" letter-spacing="0.6" fill="#ff7a4d">GOOD TO KNOW</text>
+    <text x="7" y="329">No experience needed: every term is explained. Plenty for advanced users too!</text>
+    <text x="7" y="338">In English, for students and researchers of the Faculty of Science.</text>
+    <text x="7" y="347">Bring your laptop: after signing up, you'll get a step-by-step setup guide.</text>
   </g>
 
   <text id="signup-url" x="7" y="367" font-family="Inter" font-weight="600" font-size="6.6" fill="#ffffff"><tspan font-weight="800" fill="#ff7a4d">Sign up:</tspan> elomake.helsinki.fi/lomakkeet/141638/lomake.html</text>
