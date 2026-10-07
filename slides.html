@@ -346,7 +346,7 @@
 	<section class="divider center-slide">
 		<h1>The state of AI in 2026</h1>
 		<p>What changed, and why it matters for how you work</p>
-		<aside class="notes">Hippe, ~15 min. For those who haven't followed the last 2–3 years: facts first.</aside>
+		<aside class="notes">Antti, ~15 min. For those who haven't followed the last 2–3 years: facts first.</aside>
 	</section>
 	<section>
 		<h2>2022&ndash;2024: from chat to reasoning</h2>
@@ -515,7 +515,7 @@
 		<ul style="font-size: 0.85em;">
 			<li>How long a task (measured by how long it takes a human expert) an AI completes on its own with 50&nbsp;% success.
 				<strong>Doubling every ~4 months</strong> since 2023. Note the logarithmic scale</li>
-			<li>2023: minutes. 2025: an hour or two. 2026: ~12 h, and the best models are beyond what the benchmark can measure reliably</li>
+			<li>2023: minutes. 2025: from ~1 h to ~6 h. 2026: ~12 h, and the best models are beyond what the benchmark can measure reliably</li>
 			<li>Extrapolation is dangerous, but the trend hasn't bent yet.</li>
 		</ul>
 		<p class="small">Our plot of METR's data: <a href="https://metr.org/time-horizons/">time horizons</a> (May 2026),
@@ -530,7 +530,6 @@
 			(counting the cheating as success would give &gt; 270 h). Hence the gray marker.
 			The Navier&ndash;Stokes run can't be put on this plot: 88 h of 10 000 agents is wall-clock time, not a task length measured against humans.
 			Update the week before the workshop: new data points to figures/additional_results.yaml, then python figures/plot_time_horizon.py.
-			METR's own chart is in figures/metr_time_horizon.svg.
 		</aside>
 	</section>
 	<section class="backup">
@@ -591,14 +590,14 @@
 		<ul>
 			<li><strong>Cloud frontier models:</strong>
 				<ul>
-					<li>Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5), Haiku 4.5</li>
-					<li>OpenAI: GPT-6 Astra, Sol and Luna (also in Codex)</li>
-					<li>Google: Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
+					<li>Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5.5), Haiku 4.5</li>
+					<li>OpenAI: GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna (also in Codex)</li>
+					<li>Google: Gemini 4 Argon (rolling out), Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
 				</ul>
 			</li>
 			<li><strong>Open-weight models</strong> you can run yourself: Gemma 4, Qwen 3.8, OpenAI's gpt-oss-20b/120b, and larger ones
-				(Kimi, DeepSeek) that need a server. <em>Open-weight</em> = you can download the model and run it on your own computer.
-				Roughly 1&ndash;2 years behind the frontier, but useful</li>
+				(Kimi, DeepSeek, Mistral Large 4) that need a server. <em>Open-weight</em> = you can download the model and run it on your own computer.
+				The best are ~4 months behind the frontier (Epoch AI); the laptop-sized ones are smaller, but useful</li>
 			<li><strong>Context windows</strong> of up to ~1M tokens: your whole code base, or a paper's LaTeX
 				plus the analysis, in one session, in working memory</li>
 			<li><strong>Reasoning:</strong> the model "thinks" before answering; you can trade time for quality</li>
@@ -783,15 +782,16 @@
 				<strong>agents</strong> running for hours or days &mdash; deriving, coding, checking, iterating</li>
 			<li>The same pattern scaled down is what you'll use today: an agent that reads your code, runs your tests
 				and fixes its own errors</li>
-			<li><span class="todo">TODO: 1&ndash;2 examples closer to home (physics / Kumpula)</span></li>
+			<li>Closer to home: Claude Code ran whole particle-physics analyses on LEP and CMS open data (Moreno et al., 2026),
+				and Anthropic reports Claude raising the proven share of zeta zeros on the critical line from 41.6&nbsp;% to 67&nbsp;% (Aug 2026)</li>
 		</ul>
 		<aside class="notes">
 			"Navier–Stokes was not proven by asking a chatbot" — this is the hook from the kickoff meeting.
-			Facts: an unreleased internal OpenAI model, ~130 billion output tokens, several million USD of compute.
+			Facts: an unreleased internal OpenAI model, ~130 billion output tokens; press reports quote OpenAI executives on several million USD of compute.
 			The construction is analytical (a self-similar collapsing vortex + oscillatory pulses), not a neural-network fit.
 			It settles Fefferman's alternatives (C)/(D) of the Clay problem statement, which allow a forcing;
-			the Clay institute's review is ongoing and OpenAI won't claim the prize.
-			Context: Buckmaster &amp; Alpöge (Anthropic) had Lean-verified forced blow-up results for Euler/Boussinesq in August 2026,
+			per press reports, the Clay institute's review is ongoing and OpenAI won't claim the prize.
+			Context: Buckmaster (NYU) and Alpöge (Anthropic), working with Claude, found forced blow-up solutions in August 2026 (the first Lean-verified on 22 Aug; manuscripts public in September, e.g. arXiv:2609.16470),
 			and there's a priority dispute. Earlier: DeepMind et al., "Discovery of unstable singularities", arXiv:2509.14185 (numerical, 2025).
 			Check the status again the week before the workshop.
 		</aside>
@@ -962,7 +962,7 @@
 			<tr><th>Harness</th><th>Provider</th><th>Where it runs</th><th>Notes</th></tr>
 			<tr><td>Claude Code</td><td>Anthropic</td><td>terminal, VS Code, JetBrains, web</td><td>Used today. Skills, hooks, agents, MCP</td></tr>
 			<tr><td>Codex</td><td>OpenAI</td><td>terminal, IDE, cloud</td><td>Similar concepts</td></tr>
-			<tr><td>GitHub Copilot</td><td>GitHub / Microsoft</td><td>VS Code, cloud</td><td>Free with the Student Developer Pack &mdash; our backup</td></tr>
+			<tr><td>GitHub Copilot</td><td>GitHub / Microsoft</td><td>VS Code, cloud</td><td>Free for verified students (Copilot Student plan; premium models only via Auto) &mdash; our backup</td></tr>
 			<tr><td>Cursor, Antigravity</td><td>Cursor, Google</td><td>own IDE</td><td>IDE-first</td></tr>
 			<tr><td>OpenCode</td><td>open source</td><td>terminal</td><td>Any model, incl. local</td></tr>
 			<tr><td>Chat products</td><td>Claude.ai Projects, ChatGPT</td><td>browser</td><td>Good for text; no file access to your machine</td></tr>
@@ -1038,7 +1038,7 @@
 		<h2>Security and privacy</h2>
 		<ul>
 			<li>An agent with shell access is <strong>a user on your machine</strong>. It can delete, upload, install.</li>
-			<li>Permission modes: ask before everything, allow-list the safe commands, or let <em>auto mode</em> (a safety classifier) approve actions.
+			<li>Permission modes: Claude Code now starts in <em>auto mode</em> (a safety classifier approves actions); <em>Manual</em> asks before everything; an allow-list lets the safe commands through.
 				Know what each one allows. Auto mode only for work on trusted material, preferably sandboxed</li>
 			<li>Never paste secrets, tokens or personal data into a prompt (unless the model is fully on your own machine). Check your provider's data policy and the
 				university's guidelines</li>
@@ -1363,7 +1363,7 @@
 			<div>
 				<h3>3. The permissions</h3>
 				<ul>
-					<li>Default: ask. Allow-list the safe commands in <code>.claude/settings.json</code></li>
+					<li>Starts in auto mode; Shift+Tab (terminal) or the mode indicator (VS Code) switches. Allow-list the safe commands in <code>.claude/settings.json</code></li>
 					<li>Auto mode: a safety classifier approves actions for you. Convenient, but only when working with trusted inputs</li>
 				</ul>
 				<h3>4. The verification</h3>
@@ -1401,20 +1401,20 @@
 					<li><strong>Put in:</strong> commands, structure, conventions, what not to touch, where the docs are</li>
 					<li><strong>Leave out:</strong> anything it can read from the code. It costs context on every session</li>
 					<li><code>/init</code> writes a draft. The valuable part is what only you know</li>
-					<li><code>AGENTS.md</code> is the tool-agnostic name; <code>CLAUDE.md</code> containing <code>@AGENTS.md</code> points Claude Code to it</li>
+					<li><code>AGENTS.md</code> is the tool-agnostic name. Claude Code reads it in place of a missing <code>CLAUDE.md</code>; next to one, import it with <code>@AGENTS.md</code></li>
 				</ul>
 			</div>
 		</div>
 	</section>
 	<section>
 		<h2>Permissions</h2>
-		<p class="def">Before the agent edits a file or runs a command, Claude Code asks you. An <em>allow-list</em> in a settings file lets safe commands run without asking.</p>
+		<p class="def">In <em>Manual</em> mode, Claude Code asks you before the agent edits a file or runs a command; in <em>auto</em> mode, a safety classifier decides. An <em>allow-list</em> in a settings file lets safe commands run without asking.</p>
 		<div class="two-col">
 			<ul>
 				<li><code>"Bash(pytest:*)"</code> = may run any command starting with <code>pytest</code> without asking you</li>
 				<li><code>.claude/settings.json</code> in the repository (shared with the group) or <code>~/.claude/settings.json</code> (personal)</li>
 				<li>Safe to allow: tests, linters, read-only git. Keep the prompt for: installs, network, deletion, <code>git push</code></li>
-				<li>Modes: default (asks first) &rarr; accept edits (edits files without asking) &rarr; plan (reads and proposes only) &rarr; auto (a safety classifier approves most actions; trusted inputs only, preferably sandboxed)</li>
+				<li>Modes: auto, the default since v2.1.283 (a classifier approves most actions; trusted inputs only, preferably sandboxed) &rarr; Manual (asks first) &rarr; accept edits &rarr; plan (reads and proposes only). <code>"defaultMode": "default"</code> in the settings starts in Manual</li>
 			</ul>
 			<pre><code class="language-json" data-trim>
 {
@@ -1471,7 +1471,7 @@
 		<h1>Extending the harness</h1>
 		<p>Skills, hooks, subagents, MCP, and when to use which</p>
 		<aside class="notes">
-			Hippe, 30 min, based on claude-loadout. Each concept: 1 slide + a 3-minute live mini-demo in the workshop repo.
+			Antti, 30 min, based on claude-loadout. Each concept: 1 slide + a 3-minute live mini-demo in the workshop repo.
 		</aside>
 	</section>
 	<section>
@@ -1536,7 +1536,7 @@ description: The plotting conventions of the
 			capture_output=True, text=True)
 		if result.returncode != 0:
 			print(result.stdout, file=sys.stderr)
-			sys.exit(2)  # 2 = block and tell the agent
+			sys.exit(2)  # 2 = tell the agent
 				</code></pre>
 			</div>
 			<div>
@@ -1544,7 +1544,7 @@ description: The plotting conventions of the
 					<li>Events: <code>PreToolUse</code>, <code>PostToolUse</code>, <code>Stop</code>, <code>SessionStart</code>, notifications, &hellip;</li>
 					<li>The hook gets the tool call as JSON (structured text) on its standard input; exit code 2 sends its error output back to the agent</li>
 					<li>Use for: formatting, linting, secret scanning, notifications, "don't stop until the tests pass"</li>
-					<li>The <em>Stop</em> hook is how Hippe's research loop keeps the agent going (showcase)</li>
+					<li>The <em>Stop</em> hook is how Antti's research loop keeps the agent going (showcase)</li>
 				</ul>
 				<p class="callout">Demo: ask for sloppy code with unused imports &rarr; the hook complains &rarr; the agent fixes it unasked.</p>
 			</div>
@@ -1620,9 +1620,10 @@ missing tests. Do not praise the code.
 				<pre><code class="language-bash" data-trim>
 claude mcp list
 claude mcp add arxiv -- uvx arxiv-mcp-server
+# zotero-mcp must be installed first: see exercise 08
 claude mcp add --scope project zotero -- zotero-mcp
 				</code></pre>
-				<p class="small">These are terminal commands; with only the VS Code extension, the same goes into a <code>.mcp.json</code> file.</p>
+				<p class="small">These are terminal commands. A project-scope server is written to <code>.mcp.json</code>, which the VS Code extension reads too.</p>
 				<p>Then, in a session:</p>
 				<p><em>"Find the abstract of arXiv:1909.10040 and summarize the sound shell model."</em></p>
 			</div>
@@ -1877,14 +1878,14 @@ jobs:
 				</ul>
 			</div>
 			<div>
-				<p><strong>10: your own project.</strong> The checklist:</p>
+				<p><strong>10: your own research project.</strong> The checklist:</p>
 				<ol>
-					<li>Git first</li>
-					<li><code>/init</code>, then fix the draft</li>
-					<li>Permissions allow-list</li>
-					<li>A feedback signal: regression tests, ruff</li>
-					<li>A small real task; review; commit</li>
-					<li>A small real <em>research</em> task</li>
+					<li>Git first; raw data read-only, outside the repo</li>
+					<li><code>/init</code> + what it computes, your conventions, what it must never touch</li>
+					<li>Ask before writing data, installing, or cluster jobs</li>
+					<li>Checks from physics: limits, conservation laws, published values</li>
+					<li>Reproducible: pinned environment, seeds, one script per figure</li>
+					<li>First research task: reproduce a figure, check a derivation</li>
 				</ol>
 				<p class="callout">This is what we're here for. Ask us to look at your project with you.
 					And ask Claude to explain anything you don't understand.</p>
@@ -1902,7 +1903,7 @@ jobs:
 		<aside class="notes">About 11 minutes each. Each organizer has a screen recording as a fallback. Keep the time; one question each.</aside>
 	</section>
 	<section>
-		<h2>Hippe: the research loop</h2>
+		<h2>Antti: the research loop</h2>
 		<div class="two-col">
 			<div>
 				<ul>
@@ -1925,7 +1926,7 @@ Reproduce figure 2 of arXiv:XXXX.XXXXX with our
 code, matching the style of fig/*.py. Run the
 tests. Output the promise only when it is true.
 				</code></pre>
-				<p class="todo">TODO (Hippe): pick the demo task; record a fallback</p>
+				<p class="todo">TODO (Antti): pick the demo task; record a fallback</p>
 			</div>
 		</div>
 		<p class="small">Everything in <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a>. Also: vibe-coded hobby projects like <a href="https://github.com/ahippelainen/vote_for_lunch_online">vote_for_lunch_online</a>.</p>

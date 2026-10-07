@@ -27,10 +27,6 @@ The page loads Plotly from its CDN and the Open Sans font of the slides from Goo
 In the slides, it's shown in an `<iframe>` with `data-src`, so that reveal.js loads it only when its slide is shown:
 Plotly can't measure its text in a hidden iframe, which would break the legend and the labels.
 
-## `metr_time_horizon.svg`
-METR's own chart, extracted from the D3 chart of <https://metr.org/time-horizons/> (updated 2026-05-08) on 2026-09-28,
-with the Montserrat font (SIL Open Font License) embedded.
-
 ## Third-party figures
 Used unchanged unless marked as cropped. The captions in the slides carry the same attribution.
 
