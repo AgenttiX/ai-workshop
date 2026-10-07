@@ -6,7 +6,7 @@ with newer measurements that are not yet in it (``additional_results.yaml``).
 
 The result is an interactive HTML page: hover over a point to see its values, drag to zoom, double-click to reset.
 
-Run with ``python -m figures.plot_time_horizon`` in the root directory of the repository.
+Run with ``python -m figures.time_horizon.time_horizon`` in the root directory of the repository.
 The requirements are in ``figures/requirements.txt``.
 """
 
@@ -21,10 +21,10 @@ import yaml
 
 from figures.common import COLOR_GRID, COLOR_TEXT, FONT, FONT_SIZE, write_html
 
-FIGURES_DIR = Path(__file__).resolve().parent
-METR_DATA = FIGURES_DIR / "benchmark_results_1_1.yaml"
-ADDITIONAL_DATA = FIGURES_DIR / "additional_results.yaml"
-OUTPUT = FIGURES_DIR / "time_horizon.html"
+DATA_DIR = Path(__file__).resolve().parent
+METR_DATA = DATA_DIR / "benchmark_results_1_1.yaml"
+ADDITIONAL_DATA = DATA_DIR / "additional_results.yaml"
+OUTPUT = DATA_DIR / "time_horizon.html"
 
 #: METR considers horizons above this unreliable with its current task suite (minutes)
 RELIABLE_LIMIT = 16 * 60

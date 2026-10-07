@@ -2,11 +2,12 @@
 The figures of the slides, and the data and scripts for the plots made by us.
 
 The directory is a Python package, so the plotting scripts are run as modules in the root directory of the repository,
-e.g. `python -m figures.plot_time_horizon`.
+e.g. `python -m figures.time_horizon.time_horizon`.
+Each plot has its own subdirectory (a subpackage) with its data, script and HTML page.
 `common.py` has the code shared by the scripts: the font and colors of the slides,
 and saving a figure as an HTML page that fills its iframe in the slides.
 
-## `time_horizon.html`: the task horizon of AI models
+## `time_horizon/time_horizon.html`: the task horizon of AI models
 Our own interactive Plotly plot of the 50 % time horizon of AI models against their release dates,
 in the style of [METR's chart](https://metr.org/time-horizons/), with newer data points added.
 
@@ -16,14 +17,16 @@ in the style of [METR's chart](https://metr.org/time-horizons/), with newer data
 - `additional_results.yaml`: newer results in the same format, with their sources:
   - GPT-5.6 Sol: [METR, 2026-06-26](https://metr.org/blog/2026-06-26-gpt-5-6-sol/).
     METR does not consider this a robust measurement, so it's shown with a separate marker and not used for the trend.
-- `plot_time_horizon.py`: the plotting script. The trend line is a least-squares fit of the base-2 logarithm
+- `time_horizon.py`: the plotting script. The trend line is a least-squares fit of the base-2 logarithm
   of the horizon for the state-of-the-art models released since 2023 with horizons up to 16 h.
   This reproduces METR's doubling time of 128.7 days.
+
+All of these files are in `time_horizon/`.
 
 To regenerate the figure:
 ```bash
 pip install -r figures/requirements.txt
-python -m figures.plot_time_horizon --hide-legend
+python -m figures.time_horizon.time_horizon --hide-legend
 ```
 The slides use the version without the legend, where the trend line is labeled directly and the non-robust result is gray.
 Leave out `--hide-legend` to show the legend.
