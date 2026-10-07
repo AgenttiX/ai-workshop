@@ -52,6 +52,89 @@
 				margin: 0;
 				vertical-align: -0.15em;
 			}
+			/* A prompt that looks like the input of Claude Code in Claude Desktop (dark theme) */
+			.prompt-cc {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5em;
+				background: #1f1e1d;
+				border-radius: 0.9em;
+				box-shadow: 0 0.3em 1em rgba(0, 0, 0, 0.25);
+				padding: 0.6em 0.8em;
+				font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+				font-size: 0.6em;
+				line-height: 1.45;
+				color: #a6a39a;
+				height: 100%;
+				box-sizing: border-box;
+			}
+			.prompt-cc svg {
+				height: 1.1em;
+				width: auto;
+				vertical-align: middle;
+			}
+			.prompt-cc .cc-header,
+			.prompt-cc .cc-footer {
+				display: flex;
+				align-items: center;
+				gap: 0.7em;
+				font-size: 0.85em;
+			}
+			.prompt-cc .cc-chip {
+				background: #2f2f2c;
+				border-radius: 0.5em;
+				padding: 0.15em 0.6em;
+				color: #c2c0b6;
+			}
+			.prompt-cc .cc-mascot {
+				margin-left: auto;
+				height: 1.8em;
+			}
+			.prompt-cc .cc-box {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				background: #262624;
+				border: 1px solid #3d3d3a;
+				border-radius: 0.7em;
+				padding: 0.6em 0.8em 0.4em;
+				color: #e8e6dc;
+			}
+			.prompt-cc .cc-box p {
+				margin: 0 0 0.6em;
+			}
+			.prompt-cc .cc-enter {
+				align-self: flex-end;
+				color: #8a877f;
+			}
+			.reveal .prompt-cc :not(pre) > code {
+				background: rgba(255, 255, 255, 0.08);
+				border-color: rgba(255, 255, 255, 0.15);
+				color: #e8e6dc;
+			}
+			.prompt-cc .cc-footer .cc-model {
+				margin-left: auto;
+				color: #e8e6dc;
+			}
+			.prompt-cc .cc-footer .cc-light {
+				color: #e8e6dc;
+			}
+			.two-col.prompts {
+				align-items: stretch;
+				row-gap: 0.4em;
+			}
+			.prompt-result {
+				font-size: 0.7em;
+				margin: 0;
+			}
+			/* Redacted text: a black box with filler text of a similar length (the original text is not in this file) */
+			.redacted {
+				background: #000;
+				color: transparent;
+				border-radius: 0.1em;
+				user-select: none;
+			}
 			.callout {
 				border-left: 6px solid #3b8bd0;
 				background: rgba(59, 139, 208, 0.08);
@@ -896,6 +979,89 @@
 			Dark bars: autonomous work, about 8&ndash;11 h per analysis; mid blue: waiting for rate limits; light: active human review.
 			The authors frame it as offloading the repetitive technical work so that people can concentrate on validation,
 			not as replacing the validation.
+		</aside>
+	</section>
+	<section>
+		<h2>Prompts from real research</h2>
+		<div class="two-col prompts">
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> PTPlot</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>Please implement the double-broken power law from arXiv:2403.03723 (DOI:10.1088/1475-7516/2024/10/020)
+					in PTPlot as <code>ptplot.science.spectrum.dbpl2024.PowerSpectrumDBPL2024</code>.
+					Rename the existing <code>PowerSpectrumDBPL</code> as <code>PowerSpectrumDBPL2021</code>.
+					If the article is not already in <code>./literature/</code>, download it there, and read its LaTeX source from there.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Medium</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> pttools</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>I have received a bug report that PTtools seems to produce a dip in the temperature profile at the bubble wall
+					using the values below. Please investigate this and if there is still a bug, please fix it.</p>
+					<p>alpha_n = 0.068<br>
+					a_s = 11.582548/0.84<br>
+					a_b = 11.582548<br>
+					v_wall = 0.6428908756714361<br>
+					model = BagModel(a_s=a_s, a_b=a_b)<br>
+					temp = model.temp(bubble.w, bubble.phase)</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Medium</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+			<p class="prompt-result"><strong>Result:</strong> a correct implementation of the physics of the article,
+				verified line by line. All I had to change was the page numbers of the cited article, which were off by one.</p>
+			<p class="prompt-result"><strong>Result:</strong> a correct fix for a bug that had been in the code for years.</p>
+		</div>
+		<aside class="notes">
+			Two prompts from Mika's research work on first-order phase transitions:
+			adding a spectrum model from a paper to PTPlot, and investigating a bug report in PTtools.
+		</aside>
+	</section>
+	<section>
+		<h2>An overnight research task</h2>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> phd-research</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>Please investigate how <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> is inserted properly into the Sound Shell Model equations.
+					Is the current PTtools implementation such as <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> correct?
+					What <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> appear in the GW power spectrum when inserting <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> into the Sound Shell Model?
+					Investigate this and related questions autonomously until 4:45 AM (local UTC+3 time),
+					and document your findings in <code>./notes/</code>.
+					Please create a Markdown report with step-by-step LaTeX equations in <code>./notes/</code>.
+					You may create commits in this <code>phd-research</code> repository, but not in any other repository.
+					You may edit the local copy of the PTtools repository.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Extra</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+		<p class="prompt-result"><strong>Result:</strong> when I woke up, there was a 14-page report and a Monte Carlo simulation code
+			with new results that, after a more thorough investigation, are likely to become a scientific article.
+			(The 4:45 AM time limit is due to my 5 AM weekly usage limit reset.)</p>
+		<p class="prompt-result"><strong>Conclusions:</strong> The prompts are rather simple.
+			It's the configuration in the repositories that matters
+			(AGENTS.md, repository structure, linting, unit tests, data sources).</p>
+		<aside class="notes">
+			A prompt from Mika's PhD research, left to run autonomously overnight. The redacted parts are unpublished research.
 		</aside>
 	</section>
 	<section>
@@ -2059,6 +2225,37 @@ claude
 		<img src="https://raw.githubusercontent.com/AgenttiX/agx-ai/main/structure/agx-ai-structure.svg"
 			alt="Structure of the agx-ai local AI server" style="display: block; margin: 0 auto; height: 1040px;">
 		<aside class="notes">The structure of the local AI server. Source: github.com/AgenttiX/agx-ai</aside>
+	</section>
+	<section>
+		<h2>This workshop</h2>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> ai-workshop</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>Please review all the documents in <code>./plan/</code> and based on them, create a more detailed plan
+					for the workshop in English in <code>./plan/2026-09-19_ai_plan.md</code>. Include time estimates for each topic.
+					Include both examples that the organizers can run during the presentation, and examples that the workshop
+					participants can practice with. Use reveal.js speaker view notes, where useful.</p>
+					<p>Once you have a plan for the structure of the workshop, create a draft of the presentation in
+					<code>./slides.html</code>. Set up a Python project in the repository for the examples using best practices.
+					Use the existing virtualenv at <code>./venv</code>. You may add packages in <code>requirements.txt</code> as needed.</p>
+					<p>You may ask for additional input from me (Mika) as needed.
+					You may also create additional documents and launch sub-agents as needed.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Fable 5.1</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+		<p class="prompt-result"><strong>Result:</strong> The initial version of this workshop was created with a single prompt.
+			We have improved it quite a bit since, though.
+			You can have a look at the history of the workshop repository for details.</p>
+		<aside class="notes">
+			The prompt of commit 5f00b9a ("Add initial version of the workshop"), one-shotted with Claude Fable 5.1 on 18 Sep 2026.
+		</aside>
 	</section>
 </section>
 
