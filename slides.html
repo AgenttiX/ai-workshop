@@ -47,6 +47,11 @@
 				gap: 2.5em;
 				align-items: start;
 			}
+			img.logo {
+				height: 1em;
+				margin: 0;
+				vertical-align: -0.15em;
+			}
 			.callout {
 				border-left: 6px solid #3b8bd0;
 				background: rgba(59, 139, 208, 0.08);
@@ -643,13 +648,19 @@
 		<ul>
 			<li><strong>Cloud frontier models:</strong>
 				<ul>
-					<li>Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5.5), Haiku 4.5</li>
-					<li>OpenAI: GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna (also in Codex)</li>
-					<li>Google: Gemini 4 Argon (rolling out), Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg" alt="Claude"> Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5.5), Haiku 4.5</li>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/66/OpenAI_logo_2025_%28symbol%29.svg" alt="OpenAI"> OpenAI: GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna (also in Codex)</li>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Gemini_icon_2025.svg" alt="Gemini"> Google: Gemini 4 Argon (rolling out), Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
 				</ul>
 			</li>
-			<li><strong>Open-weight models</strong> you can run yourself: Gemma 4, Qwen 3.8, OpenAI's gpt-oss-20b/120b, and larger ones
-				(Kimi, DeepSeek, Mistral Large 4) that need a server. <em>Open-weight</em> = you can download the model and run it on your own computer.
+			<li><strong>Open-weight models</strong> you can run yourself:
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Gemma_icon.png" alt="Gemma"> Gemma 4,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Qwen_logo.svg" alt="Qwen"> Qwen 3.8,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/66/OpenAI_logo_2025_%28symbol%29.svg" alt="OpenAI"> OpenAI's gpt-oss-20b/120b, and larger ones
+				(<img class="logo" src="https://mistral.ai/cms-media/api/media/file/big-cat-icon.svg" alt="Mistral"> Le Chonk aka. Mistral Large 4,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Moonshot_AI.png" alt="Moonshot AI"> Kimi,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/9/95/DeepSeek-icon.svg" alt="DeepSeek"> DeepSeek) that need a server.
+				<em>Open-weight</em> = you can download the model and run it on your own computer.
 				The best are ~4 months behind the frontier (Epoch AI); the laptop-sized ones are smaller, but useful</li>
 			<li><strong>Context windows</strong> of up to ~1M tokens: your whole code base, or a paper's LaTeX
 				plus the analysis, in one session, in working memory</li>
