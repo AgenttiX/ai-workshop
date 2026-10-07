@@ -2020,7 +2020,7 @@ claude
 		<p>Stay and argue with us about the future of science.</p>
 	</section>
 	<section>
-		<h2>Glossary 1/3: AI</h2>
+		<h2>Glossary 1/5: AI</h2>
 		<table class="glossary">
 			<tr><td>Model, LLM</td><td>The AI itself: a large language model, trained on huge amounts of text to predict what comes next</td></tr>
 			<tr><td>Prompt</td><td>What you write to the model</td></tr>
@@ -2039,7 +2039,7 @@ claude
 		</table>
 	</section>
 	<section>
-		<h2>Glossary 2/3: computers and code</h2>
+		<h2>Glossary 2/5: computers and code</h2>
 		<table class="glossary">
 			<tr><td>Terminal</td><td>A window for typing commands. Also: command line, shell. Windows: PowerShell</td></tr>
 			<tr><td>VS Code</td><td>A code editor. <em>Extensions</em> add features to it, e.g. Python support or Claude Code</td></tr>
@@ -2056,7 +2056,7 @@ claude
 		</table>
 	</section>
 	<section>
-		<h2>Glossary 3/3: checking and extending</h2>
+		<h2>Glossary 3/5: checking and extending</h2>
 		<table class="glossary">
 			<tr><td>Test</td><td>A small program that checks code against a known answer. <code>pytest</code> runs them</td></tr>
 			<tr><td>Linter</td><td>Checks code for common mistakes and messy style, e.g. <code>ruff</code></td></tr>
@@ -2070,6 +2070,43 @@ claude
 			<tr><td>Subagent</td><td>A separate agent with its own context that does a task and reports back</td></tr>
 			<tr><td>MCP server</td><td>A plug-in program that gives the agent new tools or data</td></tr>
 			<tr><td>Headless</td><td>Running the agent from a script, without the interactive window</td></tr>
+		</table>
+	</section>
+	<section>
+		<h2>Glossary 4/5: inside the model</h2>
+		<table class="glossary">
+			<tr><td>Neural network</td><td>A function built from many simple, adjustable units in layers, fitted to data</td></tr>
+			<tr><td>Parameters, weights</td><td>The adjustable numbers of a network, set during training. Their count (e.g. 70 billion) is the model's size</td></tr>
+			<tr><td>Transformer</td><td>The network design of current LLMs (2017): stacked layers of attention and small feed-forward networks</td></tr>
+			<tr><td>Embedding</td><td>A token represented as a long vector of numbers, the form the network computes with</td></tr>
+			<tr><td>Attention</td><td>The step in which each token gathers information from the earlier tokens, weighted by relevance</td></tr>
+			<tr><td>KV cache</td><td>Stored intermediate results (keys and values) of earlier tokens, so they aren't recomputed. Grows with the context</td></tr>
+			<tr><td>Mixture of experts (MoE)</td><td>Only a few sub-networks (experts) run for each token: the compute of a small model, the memory of a large one</td></tr>
+			<tr><td>Temperature</td><td>How random the choice of the next token is: 0 always picks the most likely one</td></tr>
+			<tr><td>Pre-training</td><td>Learning to predict the next token on trillions of tokens of text</td></tr>
+			<tr><td>Post-training</td><td>Turning the text predictor into a helpful assistant: instruction tuning and reinforcement learning</td></tr>
+			<tr><td>Reinforcement learning (RL)</td><td>Training by reward: the model tries, the attempt is scored, the model is nudged toward higher scores. RLHF: the score comes from human preferences</td></tr>
+			<tr><td>Fine-tuning</td><td>Further training of an existing model on a smaller, specific dataset</td></tr>
+			<tr><td>Inference</td><td>Running a trained model to produce output: what you pay for per token</td></tr>
+		</table>
+	</section>
+	<section>
+		<h2>Glossary 5/5: measuring and the wider picture</h2>
+		<table class="glossary">
+			<tr><td>FLOP</td><td>One floating-point operation, e.g. a multiplication. Training compute is counted in FLOP: ~10<sup>27</sup> for the largest runs</td></tr>
+			<tr><td>GPU</td><td>Graphics processing unit: the parallel processor that AI is trained and run on</td></tr>
+			<tr><td>Scaling law</td><td>An empirical power law: the loss falls predictably as parameters, data and compute grow</td></tr>
+			<tr><td>Frontier model</td><td>One of the most capable models at a given time</td></tr>
+			<tr><td>Benchmark</td><td>A fixed set of tasks for comparing models, e.g. SWE-bench (coding) or GPQA (science questions)</td></tr>
+			<tr><td>Contamination</td><td>Test questions that leaked into the training data, so a score measures memory rather than ability</td></tr>
+			<tr><td>Time horizon</td><td>The length of task, in skilled-human working time, that an agent completes with 50&nbsp;% success (METR)</td></tr>
+			<tr><td>Context rot</td><td>A model using its context worse as the context grows, well before it is full</td></tr>
+			<tr><td>Prompt caching</td><td>Re-sent context is read back from a cache instead of recomputed: cheaper and faster</td></tr>
+			<tr><td>Rate limit</td><td>How much you may use per minute, hour or week. Agents reach it quickly</td></tr>
+			<tr><td>Auto mode</td><td>A permission mode in which a second model, a classifier, approves the agent's actions instead of you</td></tr>
+			<tr><td>Sandbox</td><td>An isolated environment in which an agent can't harm the rest of your computer</td></tr>
+			<tr><td>Lean</td><td>A programming language in which mathematical proofs are checked by the computer</td></tr>
+			<tr><td>Zero-day</td><td>A security flaw unknown to the software's maker, so no fix exists yet</td></tr>
 		</table>
 	</section>
 </section>
