@@ -562,55 +562,6 @@
 			Full table with sources: dev/timeline_research.md (organisers only).
 		</aside>
 	</section>
-	<section class="backup">
-		<h2>Scaling laws: the loss is a power law</h2>
-		<p class="def"><strong>Loss</strong> \(L\): how badly the model predicts the next token (lower is better), as a function of
-			the number of parameters \(N\) and of training tokens \(D\). Training compute \(C \approx 6ND\) floating-point operations.</p>
-		\[ L(N,D) = E + \frac{A}{N^{\alpha}} + \frac{B}{D^{\beta}}, \qquad
-			E = 1.82,\; A = 482,\; B = 2085,\; \alpha = 0.348,\; \beta = 0.366 \]
-		<ul>
-			<li>Minimizing \(L\) at fixed \(C\): ~20 tokens per parameter. Chinchilla (70B, 1.4T tokens) beat the 4&times; larger Gopher on the same compute</li>
-			<li>The original fit gave ~70 tokens per parameter; a 2024 replication traced this to an optimizer that stopped early</li>
-			<li>Smaller models get trained far beyond the optimum (Llama&nbsp;3: "much longer than is compute-optimal"): they are cheaper to <em>run</em></li>
-		</ul>
-		<p class="small">J.&nbsp;Hoffmann et al., <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a> (2022).
-			Fit: T.&nbsp;Besiroglu et al. (Epoch AI), <em>Chinchilla scaling: a replication attempt</em>, <a href="https://arxiv.org/abs/2404.10102">arXiv:2404.10102</a> (2024), eq.&nbsp;(3).
-			Llama&nbsp;3: <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a>.</p>
-		<aside class="notes">
-			Physicists will like this one: an empirical power law with an irreducible floor E (Hoffmann et al.: it "should correspond to the entropy of natural text") and two finite-size corrections.
-			6ND: 2 FLOP per parameter per token for the forward pass (one multiply-add), and the backward pass is "approximately twice the compute" (Kaplan et al. 2020, arXiv:2001.08361; used by Hoffmann et al.). It neglects the context-length term of attention.
-			The constants on the slide are Epoch AI's refit (Besiroglu, Erdil, Barnett, You, 2024, eq. 3): 1.8172 + 482.01/N^0.3478 + 2085.43/D^0.3658, fitted to data they reconstructed from Hoffmann et al.'s Figure 4.
-			Hoffmann et al.'s own published fit is E = 1.69, A = 406.4, B = 410.7, α = 0.34, β = 0.28 (their eq. 10).
-			We recomputed the optimum of both fits ourselves (minimizing L at fixed C = 6ND): Epoch's gives 22 → 17 tokens per parameter for C = 10²¹ → 10²⁵ FLOP; Hoffmann et al.'s rounded fit gives 50 → 120.
-			The replication: the intervals were "implausibly narrow"; one of the original authors confirmed the optimizer (L-BFGS-B) terminated early because the Huber losses were averaged instead of summed. The 20-tokens rule from their approaches 1 and 2 survives.
-			Chinchilla: 70B parameters on 1.4T tokens, the same compute as Gopher (280B), and it "uniformly and significantly outperforms" Gopher, GPT-3 (175B) and others on their evaluations.
-			Llama 3 405B: 15.6T tokens ≈ 39 per parameter, "approximately compute-optimal" by Meta's own scaling-law fit on their data. Meta: "we also train our smaller models for much longer than is compute-optimal. The resulting models perform better than compute-optimal models at the same inference budget."
-			Caveat: the loss is not the ability. The power law is smooth; benchmark scores and task horizons are what people care about, and their link to the loss is less clean.
-			The constants depend on the data, the tokenizer and the architecture; don't carry the numbers over to other models.
-		</aside>
-	</section>
-	<section class="backup">
-		<h2>Training compute: about 5&times; more every year</h2>
-		<iframe data-src="figures/training_compute.html" title="Training compute of notable language models vs. their publication date, on a logarithmic scale, 2017 to 2026"
-			style="display: block; margin: 0 auto; width: 1200px; height: 520px; border: 0;"></iframe>
-		<ul style="font-size: 0.85em;">
-			<li>From GPT-3 (2020, 3&times;10<sup>23</sup> FLOP) to ~10<sup>27</sup> FLOP estimated for GPT-6 Astra (2026). Epoch AI: &times;5 per year since 2020; our fit: &times;4.6</li>
-			<li>Most numbers for closed models are Epoch AI's estimates from hardware and training time, not disclosed figures</li>
-		</ul>
-		<p class="small">Our plot of Epoch AI, <a href="https://epoch.ai/data/ai-models"><em>Data on AI Models</em></a> (notable models, CC BY, downloaded 7 Oct 2026);
-			growth rate: Epoch AI, <a href="https://epoch.ai/trends"><em>Trends in AI</em></a> (updated 5 Feb 2026).</p>
-		<aside class="notes">
-			FLOP = floating-point operations (multiplications and additions), the total for the whole training run.
-			Interactive: hover for model, organization and Epoch's confidence rating; open markers are estimates Epoch rates "speculative".
-			"Frontier" is Epoch's flag: a model in the top 10 of training compute when it was released.
-			Our fit: least squares of log10(compute) on date for the 34 frontier language models since 2020: ×4.6 per year, 95 % bootstrap interval ×3.8–5.5, which is too narrow: the bootstrap treats near-duplicate models as independent, and one estimated point (GPT-6 Astra) carries the last 14 months. Epoch's own headline (Trends page, Feb 2026): "Training compute for frontier language models has been growing at 5× per year since 2020". Consistent.
-			Checks of the data against primary sources: Llama 3.1 405B is 3.8·10²⁵ FLOP in the table and in Meta's paper; GPT-3 is 3.14·10²³ in both.
-			GPT-6 Astra (Sep 2026): Epoch's note says OpenAI and partners reported at least 100 000 GB200 GPUs, and their ~10²⁷ is an estimate ("Likely") assuming ~90 days at 25 % utilization; it is not a figure published by OpenAI.
-			Same Trends page: frontier training cost has grown 3.5× per year since 2020; AI chip performance per dollar 49 % per year since 2023.
-			Compare with the scaling-law backup: 100× more compute buys a model with ~10× more parameters and ~10× more data (at the compute-optimal ratio).
-			Data: Epoch AI, notable_ai_models.csv (downloaded 7 Oct 2026).
-		</aside>
-	</section>
 	<section>
 		<h2>Where this is heading</h2>
 		<div class="three-col timeline">
@@ -673,6 +624,290 @@
 			Update the week before the workshop: new data points to figures/additional_results.yaml, then python figures/plot_time_horizon.py.
 		</aside>
 	</section>
+	<section>
+		<h2>Models today</h2>
+		<ul>
+			<li><strong>Cloud frontier models:</strong>
+				<ul>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg" alt="Claude"> Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5.5), Haiku 4.5</li>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/66/OpenAI_logo_2025_%28symbol%29.svg" alt="OpenAI"> OpenAI: GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna (also in Codex)</li>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Gemini_icon_2025.svg" alt="Gemini"> Google: Gemini 4 Argon (rolling out), Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
+				</ul>
+			</li>
+			<li><strong>Open-weight models</strong> you can run yourself:
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Gemma_icon.png" alt="Gemma"> Gemma 4,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Qwen_logo.svg" alt="Qwen"> Qwen 3.8, and larger ones
+				(<img class="logo" src="https://mistral.ai/cms-media/api/media/file/big-cat-icon.svg" alt="Mistral"> Le Chonk aka. Mistral Large 4,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Moonshot_AI.png" alt="Moonshot AI"> Kimi,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/9/95/DeepSeek-icon.svg" alt="DeepSeek"> DeepSeek) that need a server.
+				<em>Open-weight</em> = you can download the model and run it on your own computer.
+				The best are ~4 months behind the frontier (Epoch AI); the laptop-sized ones are smaller, but useful</li>
+			<li><strong>Context windows</strong> of up to ~1M tokens: your whole code base, or a paper's LaTeX
+				plus the analysis, in one session, in working memory</li>
+			<li><strong>Reasoning:</strong> the model "thinks" before answering; you can trade time for quality</li>
+			<li><strong>Tools:</strong> the model can call functions &mdash; read a file, run a command, search the web</li>
+		</ul>
+		<aside class="notes">
+			Don't spend long here. The point is: several capable providers, plus open models as a real alternative
+			(Mika's showcase).
+		</aside>
+	</section>
+	<section>
+		<h2>Science is not done in a chat window</h2>
+		<ul>
+			<li><strong>Navier&ndash;Stokes, September 2026:</strong> ~10&nbsp;000 cooperating AI agents ran for ~88 hours
+				and produced a 166-page proof, checked in the Lean proof assistant, that the 3D Navier&ndash;Stokes equations
+				can blow up in finite time under a smooth, localized external force.
+				Not yet peer-reviewed; the unforced problem remains open.
+				<span class="small">(OpenAI, <a href="https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"><em>Finite time blowup for Navier&ndash;Stokes</em></a>, preprint, 8 Sep 2026;
+				<a href="https://github.com/openai/NavierStokesAndEuler">Lean code</a>)</span></li>
+			<li>The pattern in the recent results: not a person asking a chatbot, but
+				<strong>agents</strong> running for hours or days &mdash; deriving, coding, checking, iterating</li>
+			<li>The same pattern scaled down is what you'll use today: an agent that reads your code, runs your tests
+				and fixes its own errors</li>
+			<li>Closer to home: Claude Code ran whole particle-physics analyses on LEP and CMS open data (Moreno et al., 2026),
+				and Anthropic reports Claude raising the proven share of zeta zeros on the critical line from 41.6&nbsp;% to 67&nbsp;% (Aug 2026)</li>
+		</ul>
+		<aside class="notes">
+			"Navier–Stokes was not proven by asking a chatbot" — this is the hook from the kickoff meeting.
+			Facts: an unreleased internal OpenAI model, ~130 billion output tokens; press reports quote OpenAI executives on several million USD of compute.
+			The construction is analytical (a self-similar collapsing vortex + oscillatory pulses), not a neural-network fit.
+			It settles Fefferman's alternatives (C)/(D) of the Clay problem statement, which allow a forcing;
+			per press reports, the Clay institute's review is ongoing and OpenAI won't claim the prize.
+			Context: Buckmaster (NYU) and Alpöge (Anthropic), working with Claude, found forced blow-up solutions in August 2026 (the first Lean-verified on 22 Aug; manuscripts public in September, e.g. arXiv:2609.16470),
+			and there's a priority dispute. Earlier: DeepMind et al., "Discovery of unstable singularities", arXiv:2509.14185 (numerical, 2025).
+			Check the status again the week before the workshop.
+		</aside>
+	</section>
+	<section>
+		<h2>Prompts from real research</h2>
+		<div class="two-col prompts">
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> PTPlot</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>Please implement the double-broken power law from arXiv:2403.03723 (DOI:10.1088/1475-7516/2024/10/020)
+					in PTPlot as <code>ptplot.science.spectrum.dbpl2024.PowerSpectrumDBPL2024</code>.
+					Rename the existing <code>PowerSpectrumDBPL</code> as <code>PowerSpectrumDBPL2021</code>.
+					If the article is not already in <code>./literature/</code>, download it there, and read its LaTeX source from there.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Medium</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> pttools</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>I have received a bug report that PTtools seems to produce a dip in the temperature profile at the bubble wall
+					using the values below. Please investigate this and if there is still a bug, please fix it.</p>
+					<p>alpha_n = 0.068<br>
+					a_s = 11.582548/0.84<br>
+					a_b = 11.582548<br>
+					v_wall = 0.6428908756714361<br>
+					model = BagModel(a_s=a_s, a_b=a_b)<br>
+					temp = model.temp(bubble.w, bubble.phase)</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Medium</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+			<p class="prompt-result"><strong>Result:</strong> a correct implementation of the physics of the article,
+				verified manually afterwards line by line. All I had to change were the page numbers of the cited articles, which were off by one.</p>
+			<p class="prompt-result"><strong>Result:</strong> a correct fix for a off-by-one bug that had been in the code for years.</p>
+		</div>
+		<aside class="notes">
+			Two prompts from Mika's research work on first-order phase transitions:
+			adding a spectrum model from a paper to PTPlot, and investigating a bug report in PTtools.
+		</aside>
+	</section>
+	<section>
+		<h2>An overnight research task</h2>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> phd-research</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>Please investigate how <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> is inserted properly into the Sound Shell Model equations.
+					Is the current PTtools implementation such as <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> correct?
+					What <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> appear in the GW power spectrum when inserting <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> into the Sound Shell Model?
+					Investigate this and related questions autonomously until 4:45 AM (local UTC+3 time),
+					and document your findings in <code>./notes/</code>.
+					Please create a Markdown report with step-by-step LaTeX equations in <code>./notes/</code>.
+					You may create commits in this <code>phd-research</code> repository, but not in any other repository.
+					You may edit the local copy of the PTtools repository.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Extra</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+		<p class="prompt-result"><strong>Result:</strong> when I woke up, there was a 14-page report and a Monte Carlo simulation code
+			with new results that, after a more thorough investigation, are likely to become a scientific article.
+			(The 4:45 AM time limit is due to my 5 AM weekly usage limit reset.)</p>
+		<p class="prompt-result"><strong>Conclusions:</strong> The prompts are rather simple.
+			It's the configuration in the repositories that matters.
+			(AGENTS.md, repository structure, data sources, skills & scripts, linting, unit tests)</p>
+		<aside class="notes">
+			A prompt from Mika's PhD research, left to run autonomously overnight. The redacted parts are unpublished research.
+		</aside>
+	</section>
+	<section>
+		<h2>Chat vs. harness</h2>
+		<div class="two-col">
+			<div>
+				<h3>Chat</h3>
+				<ul>
+					<li>You copy code and errors in, you copy answers out</li>
+					<li>The model sees only what you paste</li>
+					<li>It cannot check the validity of its output</li>
+					<li>You are the loop</li>
+				</ul>
+			</div>
+			<div>
+				<h3>Harness</h3>
+				<ul>
+					<li>The model reads your files, runs your commands, edits, tests</li>
+					<li>It sees the actual code, data and errors</li>
+					<li>It verifies its own work with your tools</li>
+					<li>The loop runs itself; you review and steer</li>
+				</ul>
+			</div>
+		</div>
+		<p class="callout">
+			In our experience, a huge difference in what you can get done &mdash; and in what can go wrong. Hence this workshop.
+		</p>
+	</section>
+	<section>
+		<h2>What is a harness?</h2>
+		<div class="harness">
+			<p><strong>Harness</strong>
+				(<a href="https://code.claude.com/docs">Claude Code</a>,
+				<a href="https://openai.com/codex/">Codex</a>,
+				<a href="https://github.com/features/copilot">Copilot</a>,
+				<a href="https://cursor.com/">Cursor</a>,
+				<a href="https://opencode.ai/">OpenCode</a>, &hellip;)</p>
+			<p style="text-align: center;"><span class="model">Model</span> &nbsp;+&nbsp; tools &nbsp;+&nbsp; context management &nbsp;+&nbsp; permission loop</p>
+			<ul>
+				<li><strong>Tools:</strong> read/edit files, run shell commands, search, web, MCP servers, subagents</li>
+				<li><strong>Context management:</strong> what goes into the model's window: <code>AGENTS.md</code>, files, tool output, memory, compaction</li>
+				<li><strong>Permission loop:</strong> the agent proposes an action, you (or your rules) approve it</li>
+			</ul>
+		</div>
+		<div class="loop">
+			<span class="step">read</span><span class="arrow">&rarr;</span>
+			<span class="step">think</span><span class="arrow">&rarr;</span>
+			<span class="step">act</span><span class="arrow">&rarr;</span>
+			<span class="step">verify</span><span class="arrow">&circlearrowleft;</span>
+		</div>
+		<aside class="notes">
+			The model is the same one you get in the chat app. The harness is what makes it an agent.
+			The loop diagram comes back in the demo: every tool call is one turn of this loop.
+		</aside>
+	</section>
+	<section>
+		<h2>Why file access and context matter</h2>
+		<div class="media">
+			<ul>
+				<li>The model knows <strong>only what's in its context window</strong> (everything it sees at once): no memory between sessions unless the harness provides it</li>
+				<li>File access means the context is filled with the <em>truth</em>: your code, your data, the actual error message</li>
+				<li>Context is finite and degrades when full: the harness (and you) decide what goes in
+					<ul>
+						<li><code>AGENTS.md</code>: the standing instructions, read every session</li>
+						<li>Tool outputs: what it read and ran</li>
+						<li>Compaction: summarizing the conversation so far when the window fills up</li>
+					</ul>
+				</li>
+				<li>Rule of thumb: <strong>one task per session</strong>, clear when switching</li>
+			</ul>
+			<figure>
+				<img src="figures/lost_in_the_middle.png" alt="Accuracy of answering a question vs. the position of the relevant document among 20: high at the start and end, lowest in the middle">
+				<figcaption>"Lost in the middle": the answer is found less often when it sits in the middle of the context.
+					GPT-3.5, 2023; newer models do better, but still degrade as the context grows.
+					N. F. Liu et al., TACL 12, 157 (2024), Fig. 1, CC BY 4.0</figcaption>
+			</figure>
+		</div>
+	</section>
+	<section>
+		<h2>The landscape</h2>
+		<table>
+			<tr><th>Harness</th><th>Provider</th><th>Where it runs</th><th>Notes</th></tr>
+			<tr><td>Claude Code</td><td>Anthropic</td><td>terminal, VS Code, JetBrains, web</td><td>Used today. Skills, hooks, agents, MCP</td></tr>
+			<tr><td>Codex</td><td>OpenAI</td><td>terminal, IDE, cloud</td><td>Similar concepts</td></tr>
+			<tr><td>GitHub Copilot</td><td>GitHub / Microsoft</td><td>VS Code, cloud</td><td>Free for verified students (Copilot Student plan; premium models only via Auto) &mdash; our backup</td></tr>
+			<tr><td>Cursor, Antigravity</td><td>Cursor, Google</td><td>own IDE</td><td>IDE-first</td></tr>
+			<tr><td>OpenCode</td><td>open source</td><td>terminal</td><td>Any model, incl. local</td></tr>
+			<tr><td>Chat products</td><td>Claude.ai Projects, ChatGPT</td><td>browser</td><td>Good for text; no file access to your machine</td></tr>
+		</table>
+		<p class="callout">
+			Cloud sandboxes exist (Claude Code on the web, Codex cloud), but a harness on <strong>your own machine</strong>,
+			with your data and your tools, is more capable. That's what we use.
+		</p>
+		<aside class="notes">
+			Mention the cloud options first, then say local is better — as agreed in the meeting.
+			Why Claude Code for the exercises: best agentic results in our experience, VS Code integration,
+			the Team plan for scientists, and the concepts transfer to the others.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Scaling laws: the loss is a power law</h2>
+		<p class="def"><strong>Loss</strong> \(L\): how badly the model predicts the next token (lower is better), as a function of
+			the number of parameters \(N\) and of training tokens \(D\). Training compute \(C \approx 6ND\) floating-point operations.</p>
+		\[ L(N,D) = E + \frac{A}{N^{\alpha}} + \frac{B}{D^{\beta}}, \qquad
+			E = 1.82,\; A = 482,\; B = 2085,\; \alpha = 0.348,\; \beta = 0.366 \]
+		<ul>
+			<li>Minimizing \(L\) at fixed \(C\): ~20 tokens per parameter. Chinchilla (70B, 1.4T tokens) beat the 4&times; larger Gopher on the same compute</li>
+			<li>The original fit gave ~70 tokens per parameter; a 2024 replication traced this to an optimizer that stopped early</li>
+			<li>Smaller models get trained far beyond the optimum (Llama&nbsp;3: "much longer than is compute-optimal"): they are cheaper to <em>run</em></li>
+		</ul>
+		<p class="small">J.&nbsp;Hoffmann et al., <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a> (2022).
+			Fit: T.&nbsp;Besiroglu et al. (Epoch AI), <em>Chinchilla scaling: a replication attempt</em>, <a href="https://arxiv.org/abs/2404.10102">arXiv:2404.10102</a> (2024), eq.&nbsp;(3).
+			Llama&nbsp;3: <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a>.</p>
+		<aside class="notes">
+			Physicists will like this one: an empirical power law with an irreducible floor E (Hoffmann et al.: it "should correspond to the entropy of natural text") and two finite-size corrections.
+			6ND: 2 FLOP per parameter per token for the forward pass (one multiply-add), and the backward pass is "approximately twice the compute" (Kaplan et al. 2020, arXiv:2001.08361; used by Hoffmann et al.). It neglects the context-length term of attention.
+			The constants on the slide are Epoch AI's refit (Besiroglu, Erdil, Barnett, You, 2024, eq. 3): 1.8172 + 482.01/N^0.3478 + 2085.43/D^0.3658, fitted to data they reconstructed from Hoffmann et al.'s Figure 4.
+			Hoffmann et al.'s own published fit is E = 1.69, A = 406.4, B = 410.7, α = 0.34, β = 0.28 (their eq. 10).
+			We recomputed the optimum of both fits ourselves (minimizing L at fixed C = 6ND): Epoch's gives 22 → 17 tokens per parameter for C = 10²¹ → 10²⁵ FLOP; Hoffmann et al.'s rounded fit gives 50 → 120.
+			The replication: the intervals were "implausibly narrow"; one of the original authors confirmed the optimizer (L-BFGS-B) terminated early because the Huber losses were averaged instead of summed. The 20-tokens rule from their approaches 1 and 2 survives.
+			Chinchilla: 70B parameters on 1.4T tokens, the same compute as Gopher (280B), and it "uniformly and significantly outperforms" Gopher, GPT-3 (175B) and others on their evaluations.
+			Llama 3 405B: 15.6T tokens ≈ 39 per parameter, "approximately compute-optimal" by Meta's own scaling-law fit on their data. Meta: "we also train our smaller models for much longer than is compute-optimal. The resulting models perform better than compute-optimal models at the same inference budget."
+			Caveat: the loss is not the ability. The power law is smooth; benchmark scores and task horizons are what people care about, and their link to the loss is less clean.
+			The constants depend on the data, the tokenizer and the architecture; don't carry the numbers over to other models.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Training compute: about 5&times; more every year</h2>
+		<iframe data-src="figures/training_compute.html" title="Training compute of notable language models vs. their publication date, on a logarithmic scale, 2017 to 2026"
+			style="display: block; margin: 0 auto; width: 1200px; height: 520px; border: 0;"></iframe>
+		<ul style="font-size: 0.85em;">
+			<li>From GPT-3 (2020, 3&times;10<sup>23</sup> FLOP) to ~10<sup>27</sup> FLOP estimated for GPT-6 Astra (2026). Epoch AI: &times;5 per year since 2020; our fit: &times;4.6</li>
+			<li>Most numbers for closed models are Epoch AI's estimates from hardware and training time, not disclosed figures</li>
+		</ul>
+		<p class="small">Our plot of Epoch AI, <a href="https://epoch.ai/data/ai-models"><em>Data on AI Models</em></a> (notable models, CC BY, downloaded 7 Oct 2026);
+			growth rate: Epoch AI, <a href="https://epoch.ai/trends"><em>Trends in AI</em></a> (updated 5 Feb 2026).</p>
+		<aside class="notes">
+			FLOP = floating-point operations (multiplications and additions), the total for the whole training run.
+			Interactive: hover for model, organization and Epoch's confidence rating; open markers are estimates Epoch rates "speculative".
+			"Frontier" is Epoch's flag: a model in the top 10 of training compute when it was released.
+			Our fit: least squares of log10(compute) on date for the 34 frontier language models since 2020: ×4.6 per year, 95 % bootstrap interval ×3.8–5.5, which is too narrow: the bootstrap treats near-duplicate models as independent, and one estimated point (GPT-6 Astra) carries the last 14 months. Epoch's own headline (Trends page, Feb 2026): "Training compute for frontier language models has been growing at 5× per year since 2020". Consistent.
+			Checks of the data against primary sources: Llama 3.1 405B is 3.8·10²⁵ FLOP in the table and in Meta's paper; GPT-3 is 3.14·10²³ in both.
+			GPT-6 Astra (Sep 2026): Epoch's note says OpenAI and partners reported at least 100 000 GB200 GPUs, and their ~10²⁷ is an estimate ("Likely") assuming ~90 days at 25 % utilization; it is not a figure published by OpenAI.
+			Same Trends page: frontier training cost has grown 3.5× per year since 2020; AI chip performance per dollar 49 % per year since 2023.
+			Compare with the scaling-law backup: 100× more compute buys a model with ~10× more parameters and ~10× more data (at the compute-optimal ratio).
+			Data: Epoch AI, notable_ai_models.csv (downloaded 7 Oct 2026).
+		</aside>
+	</section>
 	<section class="backup">
 		<h2>How the task horizon is measured, and its caveats</h2>
 		<p class="def">METR timed skilled professionals on software, ML and cybersecurity tasks (170 in the paper, 228 in the current suite) and ran AI agents on the same tasks.
@@ -724,34 +959,6 @@
 			CritPt (Sep 2025): 71 research-level challenges written by 50+ physicists from their own unpublished research, with machine-checkable answers. In the paper, GPT-5 (high) scored 5.7 % without tools, 10.6 % with code and 12.6 % with code and web search.
 			The CritPt line is from the Artificial Analysis leaderboard via Epoch, which gives GPT-5 high 12.6 %, exactly the paper's code-and-web number, so the plotted line is very likely tool-augmented (our inference from the match).
 			Message: benchmark numbers are useful for trends, not as proof that a model can do your research. Test it on your own problems.
-		</aside>
-	</section>
-	<section>
-		<h2>Models today</h2>
-		<ul>
-			<li><strong>Cloud frontier models:</strong>
-				<ul>
-					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg" alt="Claude"> Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5.5), Haiku 4.5</li>
-					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/66/OpenAI_logo_2025_%28symbol%29.svg" alt="OpenAI"> OpenAI: GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna (also in Codex)</li>
-					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Gemini_icon_2025.svg" alt="Gemini"> Google: Gemini 4 Argon (rolling out), Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
-				</ul>
-			</li>
-			<li><strong>Open-weight models</strong> you can run yourself:
-				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Gemma_icon.png" alt="Gemma"> Gemma 4,
-				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Qwen_logo.svg" alt="Qwen"> Qwen 3.8, and larger ones
-				(<img class="logo" src="https://mistral.ai/cms-media/api/media/file/big-cat-icon.svg" alt="Mistral"> Le Chonk aka. Mistral Large 4,
-				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Moonshot_AI.png" alt="Moonshot AI"> Kimi,
-				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/9/95/DeepSeek-icon.svg" alt="DeepSeek"> DeepSeek) that need a server.
-				<em>Open-weight</em> = you can download the model and run it on your own computer.
-				The best are ~4 months behind the frontier (Epoch AI); the laptop-sized ones are smaller, but useful</li>
-			<li><strong>Context windows</strong> of up to ~1M tokens: your whole code base, or a paper's LaTeX
-				plus the analysis, in one session, in working memory</li>
-			<li><strong>Reasoning:</strong> the model "thinks" before answering; you can trade time for quality</li>
-			<li><strong>Tools:</strong> the model can call functions &mdash; read a file, run a command, search the web</li>
-		</ul>
-		<aside class="notes">
-			Don't spend long here. The point is: several capable providers, plus open models as a real alternative
-			(Mika's showcase).
 		</aside>
 	</section>
 	<section class="backup">
@@ -938,33 +1145,6 @@
 			Open-weight gap: see the previous slide (Epoch: ~4 months behind the closed frontier).
 		</aside>
 	</section>
-	<section>
-		<h2>Science is not done in a chat window</h2>
-		<ul>
-			<li><strong>Navier&ndash;Stokes, September 2026:</strong> ~10&nbsp;000 cooperating AI agents ran for ~88 hours
-				and produced a 166-page proof, checked in the Lean proof assistant, that the 3D Navier&ndash;Stokes equations
-				can blow up in finite time under a smooth, localized external force.
-				Not yet peer-reviewed; the unforced problem remains open.
-				<span class="small">(OpenAI, <a href="https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"><em>Finite time blowup for Navier&ndash;Stokes</em></a>, preprint, 8 Sep 2026;
-				<a href="https://github.com/openai/NavierStokesAndEuler">Lean code</a>)</span></li>
-			<li>The pattern in the recent results: not a person asking a chatbot, but
-				<strong>agents</strong> running for hours or days &mdash; deriving, coding, checking, iterating</li>
-			<li>The same pattern scaled down is what you'll use today: an agent that reads your code, runs your tests
-				and fixes its own errors</li>
-			<li>Closer to home: Claude Code ran whole particle-physics analyses on LEP and CMS open data (Moreno et al., 2026),
-				and Anthropic reports Claude raising the proven share of zeta zeros on the critical line from 41.6&nbsp;% to 67&nbsp;% (Aug 2026)</li>
-		</ul>
-		<aside class="notes">
-			"Navier–Stokes was not proven by asking a chatbot" — this is the hook from the kickoff meeting.
-			Facts: an unreleased internal OpenAI model, ~130 billion output tokens; press reports quote OpenAI executives on several million USD of compute.
-			The construction is analytical (a self-similar collapsing vortex + oscillatory pulses), not a neural-network fit.
-			It settles Fefferman's alternatives (C)/(D) of the Clay problem statement, which allow a forcing;
-			per press reports, the Clay institute's review is ongoing and OpenAI won't claim the prize.
-			Context: Buckmaster (NYU) and Alpöge (Anthropic), working with Claude, found forced blow-up solutions in August 2026 (the first Lean-verified on 22 Aug; manuscripts public in September, e.g. arXiv:2609.16470),
-			and there's a priority dispute. Earlier: DeepMind et al., "Discovery of unstable singularities", arXiv:2509.14185 (numerical, 2025).
-			Check the status again the week before the workshop.
-		</aside>
-	</section>
 	<section class="backup">
 		<h2>Closer to home: particle-physics analyses by an agent</h2>
 		<figure class="full">
@@ -978,142 +1158,6 @@
 			Dark bars: autonomous work, about 8&ndash;11 h per analysis; mid blue: waiting for rate limits; light: active human review.
 			The authors frame it as offloading the repetitive technical work so that people can concentrate on validation,
 			not as replacing the validation.
-		</aside>
-	</section>
-	<section>
-		<h2>Prompts from real research</h2>
-		<div class="two-col prompts">
-			<div class="prompt-cc">
-				<div class="cc-header">
-					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> PTPlot</span>
-					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
-				</div>
-				<div class="cc-box">
-					<p>Please implement the double-broken power law from arXiv:2403.03723 (DOI:10.1088/1475-7516/2024/10/020)
-					in PTPlot as <code>ptplot.science.spectrum.dbpl2024.PowerSpectrumDBPL2024</code>.
-					Rename the existing <code>PowerSpectrumDBPL</code> as <code>PowerSpectrumDBPL2021</code>.
-					If the article is not already in <code>./literature/</code>, download it there, and read its LaTeX source from there.</p>
-					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
-				</div>
-				<div class="cc-footer">
-					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
-					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Medium</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
-				</div>
-			</div>
-			<div class="prompt-cc">
-				<div class="cc-header">
-					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> pttools</span>
-					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
-				</div>
-				<div class="cc-box">
-					<p>I have received a bug report that PTtools seems to produce a dip in the temperature profile at the bubble wall
-					using the values below. Please investigate this and if there is still a bug, please fix it.</p>
-					<p>alpha_n = 0.068<br>
-					a_s = 11.582548/0.84<br>
-					a_b = 11.582548<br>
-					v_wall = 0.6428908756714361<br>
-					model = BagModel(a_s=a_s, a_b=a_b)<br>
-					temp = model.temp(bubble.w, bubble.phase)</p>
-					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
-				</div>
-				<div class="cc-footer">
-					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
-					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Medium</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
-				</div>
-			</div>
-			<p class="prompt-result"><strong>Result:</strong> a correct implementation of the physics of the article,
-				verified manually afterwards line by line. All I had to change were the page numbers of the cited articles, which were off by one.</p>
-			<p class="prompt-result"><strong>Result:</strong> a correct fix for a off-by-one bug that had been in the code for years.</p>
-		</div>
-		<aside class="notes">
-			Two prompts from Mika's research work on first-order phase transitions:
-			adding a spectrum model from a paper to PTPlot, and investigating a bug report in PTtools.
-		</aside>
-	</section>
-	<section>
-		<h2>An overnight research task</h2>
-			<div class="prompt-cc">
-				<div class="cc-header">
-					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> phd-research</span>
-					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
-				</div>
-				<div class="cc-box">
-					<p>Please investigate how <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> is inserted properly into the Sound Shell Model equations.
-					Is the current PTtools implementation such as <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> correct?
-					What <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> appear in the GW power spectrum when inserting <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> into the Sound Shell Model?
-					Investigate this and related questions autonomously until 4:45 AM (local UTC+3 time),
-					and document your findings in <code>./notes/</code>.
-					Please create a Markdown report with step-by-step LaTeX equations in <code>./notes/</code>.
-					You may create commits in this <code>phd-research</code> repository, but not in any other repository.
-					You may edit the local copy of the PTtools repository.</p>
-					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
-				</div>
-				<div class="cc-footer">
-					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
-					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Extra</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
-				</div>
-			</div>
-		<p class="prompt-result"><strong>Result:</strong> when I woke up, there was a 14-page report and a Monte Carlo simulation code
-			with new results that, after a more thorough investigation, are likely to become a scientific article.
-			(The 4:45 AM time limit is due to my 5 AM weekly usage limit reset.)</p>
-		<p class="prompt-result"><strong>Conclusions:</strong> The prompts are rather simple.
-			It's the configuration in the repositories that matters.
-			(AGENTS.md, repository structure, data sources, skills & scripts, linting, unit tests)</p>
-		<aside class="notes">
-			A prompt from Mika's PhD research, left to run autonomously overnight. The redacted parts are unpublished research.
-		</aside>
-	</section>
-	<section>
-		<h2>Chat vs. harness</h2>
-		<div class="two-col">
-			<div>
-				<h3>Chat</h3>
-				<ul>
-					<li>You copy code and errors in, you copy answers out</li>
-					<li>The model sees only what you paste</li>
-					<li>It cannot check the validity of its output</li>
-					<li>You are the loop</li>
-				</ul>
-			</div>
-			<div>
-				<h3>Harness</h3>
-				<ul>
-					<li>The model reads your files, runs your commands, edits, tests</li>
-					<li>It sees the actual code, data and errors</li>
-					<li>It verifies its own work with your tools</li>
-					<li>The loop runs itself; you review and steer</li>
-				</ul>
-			</div>
-		</div>
-		<p class="callout">
-			In our experience, a huge difference in what you can get done &mdash; and in what can go wrong. Hence this workshop.
-		</p>
-	</section>
-	<section>
-		<h2>What is a harness?</h2>
-		<div class="harness">
-			<p><strong>Harness</strong>
-				(<a href="https://code.claude.com/docs">Claude Code</a>,
-				<a href="https://openai.com/codex/">Codex</a>,
-				<a href="https://github.com/features/copilot">Copilot</a>,
-				<a href="https://cursor.com/">Cursor</a>,
-				<a href="https://opencode.ai/">OpenCode</a>, &hellip;)</p>
-			<p style="text-align: center;"><span class="model">Model</span> &nbsp;+&nbsp; tools &nbsp;+&nbsp; context management &nbsp;+&nbsp; permission loop</p>
-			<ul>
-				<li><strong>Tools:</strong> read/edit files, run shell commands, search, web, MCP servers, subagents</li>
-				<li><strong>Context management:</strong> what goes into the model's window: <code>AGENTS.md</code>, files, tool output, memory, compaction</li>
-				<li><strong>Permission loop:</strong> the agent proposes an action, you (or your rules) approve it</li>
-			</ul>
-		</div>
-		<div class="loop">
-			<span class="step">read</span><span class="arrow">&rarr;</span>
-			<span class="step">think</span><span class="arrow">&rarr;</span>
-			<span class="step">act</span><span class="arrow">&rarr;</span>
-			<span class="step">verify</span><span class="arrow">&circlearrowleft;</span>
-		</div>
-		<aside class="notes">
-			The model is the same one you get in the chat app. The harness is what makes it an agent.
-			The loop diagram comes back in the demo: every tool call is one turn of this loop.
 		</aside>
 	</section>
 	<section class="backup">
@@ -1157,29 +1201,6 @@
 			Likely question: "Can the model run code itself?" Not on your machine: it can only ask, and whatever runs there runs with the harness's permissions; hence the security slide. (The provider's server tools, e.g. Anthropic's code execution tool, run in the provider's sandbox.)
 		</aside>
 	</section>
-	<section>
-		<h2>Why file access and context matter</h2>
-		<div class="media">
-			<ul>
-				<li>The model knows <strong>only what's in its context window</strong> (everything it sees at once): no memory between sessions unless the harness provides it</li>
-				<li>File access means the context is filled with the <em>truth</em>: your code, your data, the actual error message</li>
-				<li>Context is finite and degrades when full: the harness (and you) decide what goes in
-					<ul>
-						<li><code>AGENTS.md</code>: the standing instructions, read every session</li>
-						<li>Tool outputs: what it read and ran</li>
-						<li>Compaction: summarizing the conversation so far when the window fills up</li>
-					</ul>
-				</li>
-				<li>Rule of thumb: <strong>one task per session</strong>, clear when switching</li>
-			</ul>
-			<figure>
-				<img src="figures/lost_in_the_middle.png" alt="Accuracy of answering a question vs. the position of the relevant document among 20: high at the start and end, lowest in the middle">
-				<figcaption>"Lost in the middle": the answer is found less often when it sits in the middle of the context.
-					GPT-3.5, 2023; newer models do better, but still degrade as the context grows.
-					N. F. Liu et al., TACL 12, 157 (2024), Fig. 1, CC BY 4.0</figcaption>
-			</figure>
-		</div>
-	</section>
 	<section class="backup">
 		<h2>A big context window is not a big memory</h2>
 		<p class="def"><strong>Context rot</strong>: as the number of tokens in the context grows, the model's accuracy and recall of what is in it degrade.
@@ -1206,27 +1227,6 @@
 			Epoch AI data insight (25 Jun 2025): context windows of the longest models grew ~30× per year since mid-2023; the "80 % accuracy length" on two long-context benchmarks rose more than 250× in 9 months (the benchmarks: Fiction.LiveBench and MRCR). Their data stop in mid-2025; we haven't found a comparable 2026 measurement for the current models, so don't claim the problem is solved.
 			Our measured session (the cost backup) reached 523k tokens of 1M without compaction; that's within the window, but deep into the region where these studies see degradation for older models.
 			What Claude Code does: auto-compaction near the limit, /compact with instructions, /clear for a fresh start; the API offers server-side compaction and clearing old tool results (context editing).
-		</aside>
-	</section>
-	<section>
-		<h2>The landscape</h2>
-		<table>
-			<tr><th>Harness</th><th>Provider</th><th>Where it runs</th><th>Notes</th></tr>
-			<tr><td>Claude Code</td><td>Anthropic</td><td>terminal, VS Code, JetBrains, web</td><td>Used today. Skills, hooks, agents, MCP</td></tr>
-			<tr><td>Codex</td><td>OpenAI</td><td>terminal, IDE, cloud</td><td>Similar concepts</td></tr>
-			<tr><td>GitHub Copilot</td><td>GitHub / Microsoft</td><td>VS Code, cloud</td><td>Free for verified students (Copilot Student plan; premium models only via Auto) &mdash; our backup</td></tr>
-			<tr><td>Cursor, Antigravity</td><td>Cursor, Google</td><td>own IDE</td><td>IDE-first</td></tr>
-			<tr><td>OpenCode</td><td>open source</td><td>terminal</td><td>Any model, incl. local</td></tr>
-			<tr><td>Chat products</td><td>Claude.ai Projects, ChatGPT</td><td>browser</td><td>Good for text; no file access to your machine</td></tr>
-		</table>
-		<p class="callout">
-			Cloud sandboxes exist (Claude Code on the web, Codex cloud), but a harness on <strong>your own machine</strong>,
-			with your data and your tools, is more capable. That's what we use.
-		</p>
-		<aside class="notes">
-			Mention the cloud options first, then say local is better — as agreed in the meeting.
-			Why Claude Code for the exercises: best agentic results in our experience, VS Code integration,
-			the Team plan for scientists, and the concepts transfer to the others.
 		</aside>
 	</section>
 </section>
@@ -1260,6 +1260,43 @@
 			The blackbody exercise later is a hallucination-shaped bug: an exponent of 4 instead of 5. A test catches it in a second.
 		</aside>
 	</section>
+	<section>
+		<h2>Security and privacy</h2>
+		<ul>
+			<li>An agent with shell access is <strong>a user on your machine</strong>. It can delete, upload, install.</li>
+			<li>Permission modes: Claude Code now starts in <em>auto mode</em> (a safety classifier approves actions); <em>Manual</em> asks before everything; an allow-list lets the safe commands through.
+				Know what each one allows. Auto mode only for work on trusted material, preferably sandboxed</li>
+			<li>Never paste secrets, tokens or personal data into a prompt (unless the model is fully on your own machine). Check your provider's data policy and the
+				university's guidelines</li>
+			<li><strong>Prompt injection:</strong> a web page, a PDF, a paper abstract can contain instructions for the agent.
+				Untrusted input + write access = a very bad day</li>
+			<li>Version control (git) everything. An agent on the only copy of your thesis is a gamble</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Cost, limits, and your own understanding</h2>
+		<ul>
+			<li><strong>Cost:</strong> subscriptions have usage quotas; agents burn tokens fast. Local models are the free-but-slower fallback</li>
+			<li><strong>Skill atrophy:</strong> "How do I keep understanding the physics when the AI writes the code?"
+				<ul>
+					<li>Let it do the mechanical parts. <em>Read</em> everything before it goes into a paper.</li>
+					<li>Ask it to explain. Ask it to teach. Make it show the derivation.</li>
+					<li>Decide deliberately what you want to keep doing by hand</li>
+				</ul>
+			</li>
+			<li><strong>Incentives:</strong> if the productivity gain is as large as it looks to us, "AI or perish" may be coming. We don't have an answer.
+				We have a lunch break.</li>
+			<li><strong>Which provider?</strong> Ethical, legal and practical considerations differ. Know them; make a choice; revisit it</li>
+		</ul>
+		<aside class="notes">
+			One slide only for the philosophy. Invite the discussion to lunch. Then: questions, 5 minutes.
+		</aside>
+	</section>
+	<section class="center-slide">
+		<h2>Questions so far?</h2>
+		<p>Next: the setup check.</p>
+		<aside class="notes">About 5 minutes.</aside>
+	</section>
 	<section class="backup">
 		<h2>Why models make things up</h2>
 		<p class="def"><strong>Singleton rate</strong> \(\mathrm{sr}\): the fraction of facts (e.g. birthdays) that appear exactly once in the training data.
@@ -1285,19 +1322,6 @@
 			Practical consequence for us: ask the model to say when it doesn't know, give it a way to check (search, the paper's PDF, a test), and verify citations; a reference that appeared rarely in the training data is exactly the singleton case of the theorem (our reading, not the paper's claim).
 			Sycophancy is a separate failure (agreeing with the user); not covered by this paper.
 		</aside>
-	</section>
-	<section>
-		<h2>Security and privacy</h2>
-		<ul>
-			<li>An agent with shell access is <strong>a user on your machine</strong>. It can delete, upload, install.</li>
-			<li>Permission modes: Claude Code now starts in <em>auto mode</em> (a safety classifier approves actions); <em>Manual</em> asks before everything; an allow-list lets the safe commands through.
-				Know what each one allows. Auto mode only for work on trusted material, preferably sandboxed</li>
-			<li>Never paste secrets, tokens or personal data into a prompt (unless the model is fully on your own machine). Check your provider's data policy and the
-				university's guidelines</li>
-			<li><strong>Prompt injection:</strong> a web page, a PDF, a paper abstract can contain instructions for the agent.
-				Untrusted input + write access = a very bad day</li>
-			<li>Version control (git) everything. An agent on the only copy of your thesis is a gamble</li>
-		</ul>
 	</section>
 	<section class="backup wide">
 		<h2>Prompt injection, measured</h2>
@@ -1335,25 +1359,6 @@
 			Invariant Labs (26 May 2025): a malicious issue in a public repository, read through the GitHub MCP server, made the agent leak private-repository data into a public PR. "This is not a flaw in the GitHub MCP server code itself, but rather a fundamental architectural issue."
 			Willison's "lethal trifecta": access to private data + exposure to untrusted content + ability to communicate externally. Remove one leg (e.g. no network for an agent reading untrusted PDFs) and this kind of exfiltration has no channel.
 			Related incident, not prompt injection: the Nx "s1ngularity" npm compromise (26 Aug 2025) shipped malware that used the victims' installed AI command-line tools (Claude, Gemini, Amazon Q) to search for secrets; Wiz counted 2180 exposed GitHub accounts (BleepingComputer report). An agent CLI on your machine is a tool for whoever runs code there.
-		</aside>
-	</section>
-	<section>
-		<h2>Cost, limits, and your own understanding</h2>
-		<ul>
-			<li><strong>Cost:</strong> subscriptions have usage quotas; agents burn tokens fast. Local models are the free-but-slower fallback</li>
-			<li><strong>Skill atrophy:</strong> "How do I keep understanding the physics when the AI writes the code?"
-				<ul>
-					<li>Let it do the mechanical parts. <em>Read</em> everything before it goes into a paper.</li>
-					<li>Ask it to explain. Ask it to teach. Make it show the derivation.</li>
-					<li>Decide deliberately what you want to keep doing by hand</li>
-				</ul>
-			</li>
-			<li><strong>Incentives:</strong> if the productivity gain is as large as it looks to us, "AI or perish" may be coming. We don't have an answer.
-				We have a lunch break.</li>
-			<li><strong>Which provider?</strong> Ethical, legal and practical considerations differ. Know them; make a choice; revisit it</li>
-		</ul>
-		<aside class="notes">
-			One slide only for the philosophy. Invite the discussion to lunch. Then: questions, 5 minutes.
 		</aside>
 	</section>
 	<section class="backup">
@@ -1422,11 +1427,6 @@
 				METR's <a href="https://metr.org/blog/2026-02-24-uplift-update/">February 2026 follow-up</a> with late-2025 tools points to a speed-up,
 				but METR calls that estimate unreliable: many developers no longer want to work without AI.</figcaption>
 		</figure>
-	</section>
-	<section class="center-slide">
-		<h2>Questions so far?</h2>
-		<p>Next: the setup check.</p>
-		<aside class="notes">About 5 minutes.</aside>
 	</section>
 </section>
 
@@ -1838,32 +1838,6 @@ missing tests. Do not praise the code.
 			</div>
 		</div>
 	</section>
-	<section class="backup">
-		<h2>Subagents: better results, paid in tokens</h2>
-		<table style="font-size: 0.8em;">
-			<tr><th>Setup</th><th>Tokens relative to a chat</th></tr>
-			<tr><td>Chat</td><td>1&times;</td></tr>
-			<tr><td>Single agent</td><td>~4&times;</td></tr>
-			<tr><td>Multi-agent system (lead agent + subagents)</td><td>~15&times;</td></tr>
-		</table>
-		<ul>
-			<li>Anthropic's research system (Opus&nbsp;4 lead, Sonnet&nbsp;4 subagents) beat a single Opus&nbsp;4 by 90&nbsp;% on their internal research evaluation</li>
-			<li>On a web-research benchmark, the tokens spent alone explained 80&nbsp;% of the variance in performance</li>
-			<li>Good fit: parallel searches, information too large for one context. Poorer fit: tasks whose parts depend on each other, such as much of coding (fewer parallel parts than research)</li>
-		</ul>
-		<p class="small">Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system"><em>How we built our multi-agent research system</em></a> (13 Jun 2025).
-			Claude Code docs, <a href="https://code.claude.com/docs/en/costs"><em>Manage costs effectively</em></a>, read 7 Oct 2026.</p>
-		<aside class="notes">
-			All numbers on the slide are Anthropic's, from one system (their Research feature) in June 2025; we haven't seen independent replications. Treat them as orders of magnitude.
-			Quotes: agents use "about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats."
-			"a multi-agent system with Claude Opus 4 as the lead agent and Claude Sonnet 4 subagents outperformed single-agent Claude Opus 4 by 90.2% on our internal research eval."
-			BrowseComp (a web-browsing benchmark of hard-to-find information): "token usage by itself explains 80% of the variance, with the number of tool calls and the model choice as the two other explanatory factors." Their own conclusion: "Multi-agent systems work mainly because they help spend enough tokens to solve the problem."
-			Limits, their words: "some domains that require all agents to share the same context or involve many dependencies between agents are not a good fit for multi-agent systems today. For instance, most coding tasks involve fewer truly parallelizable tasks than research."
-			Claude Code's own docs (Oct 2026): agent teams use "approximately 7x more tokens than standard sessions when teammates run in plan mode"; each teammate has its own context window; "Use Sonnet for teammates" to keep cost down.
-			Practical rule for the hands-on: use a subagent when its job is "read a lot, report a little" (exploring a code base, reviewing), so the reading stays out of your main context; don't split one tightly coupled edit across agents.
-			In our measured session (the cost backup in session 1), the subagents made 290 of the 463 requests and about 44 % of the input-side cost (12.3 of 27.6 USD at list price; our calculation from the transcript's usage fields, output excluded because those counts are incomplete).
-		</aside>
-	</section>
 	<section>
 		<h2>MCP: the standard plug for tools and data</h2>
 		<p class="def">An <strong>MCP server</strong> is a small program that gives the agent new tools, e.g. searching arXiv or your Zotero library. MCP (Model Context Protocol) is the standard they all follow.</p>
@@ -1958,6 +1932,47 @@ claude mcp add --scope project zotero -- zotero-mcp
 			The result goes into the context as text, like the output of any other tool. That's also why prompt injection through MCP output works.
 		</aside>
 	</section>
+	<section>
+		<h2>Beyond the editor: worktrees, headless, CI, plugins</h2>
+		<ul>
+			<li><strong>Git worktree:</strong> a second working copy of the same repository in another folder, on its own branch.
+				Several sessions can then work in parallel without stepping on each other (<code>claude --worktree</code>)</li>
+			<li><strong>Headless:</strong> Claude Code without the interactive window, from a script or a scheduled job:
+				<code>claude -p "summarize the failing tests"</code></li>
+			<li><strong>CI</strong> (continuous integration): a server that runs your checks on every change you push.
+				Claude Code can run there too, e.g. as a GitHub Action that reviews pull requests</li>
+			<li><strong>Plugin:</strong> skills, agents and hooks bundled so that you install them in one go.
+				Example: <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a></li>
+			<li><strong><code>/insights</code></strong> (terminal version): what have I been asking for repeatedly? &rarr; turn it into a skill</li>
+		</ul>
+		<p class="callout">No need to write everything yourself; start from a community loadout and edit it to your taste.</p>
+	</section>
+	<section class="backup">
+		<h2>Subagents: better results, paid in tokens</h2>
+		<table style="font-size: 0.8em;">
+			<tr><th>Setup</th><th>Tokens relative to a chat</th></tr>
+			<tr><td>Chat</td><td>1&times;</td></tr>
+			<tr><td>Single agent</td><td>~4&times;</td></tr>
+			<tr><td>Multi-agent system (lead agent + subagents)</td><td>~15&times;</td></tr>
+		</table>
+		<ul>
+			<li>Anthropic's research system (Opus&nbsp;4 lead, Sonnet&nbsp;4 subagents) beat a single Opus&nbsp;4 by 90&nbsp;% on their internal research evaluation</li>
+			<li>On a web-research benchmark, the tokens spent alone explained 80&nbsp;% of the variance in performance</li>
+			<li>Good fit: parallel searches, information too large for one context. Poorer fit: tasks whose parts depend on each other, such as much of coding (fewer parallel parts than research)</li>
+		</ul>
+		<p class="small">Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system"><em>How we built our multi-agent research system</em></a> (13 Jun 2025).
+			Claude Code docs, <a href="https://code.claude.com/docs/en/costs"><em>Manage costs effectively</em></a>, read 7 Oct 2026.</p>
+		<aside class="notes">
+			All numbers on the slide are Anthropic's, from one system (their Research feature) in June 2025; we haven't seen independent replications. Treat them as orders of magnitude.
+			Quotes: agents use "about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats."
+			"a multi-agent system with Claude Opus 4 as the lead agent and Claude Sonnet 4 subagents outperformed single-agent Claude Opus 4 by 90.2% on our internal research eval."
+			BrowseComp (a web-browsing benchmark of hard-to-find information): "token usage by itself explains 80% of the variance, with the number of tool calls and the model choice as the two other explanatory factors." Their own conclusion: "Multi-agent systems work mainly because they help spend enough tokens to solve the problem."
+			Limits, their words: "some domains that require all agents to share the same context or involve many dependencies between agents are not a good fit for multi-agent systems today. For instance, most coding tasks involve fewer truly parallelizable tasks than research."
+			Claude Code's own docs (Oct 2026): agent teams use "approximately 7x more tokens than standard sessions when teammates run in plan mode"; each teammate has its own context window; "Use Sonnet for teammates" to keep cost down.
+			Practical rule for the hands-on: use a subagent when its job is "read a lot, report a little" (exploring a code base, reviewing), so the reading stays out of your main context; don't split one tightly coupled edit across agents.
+			In our measured session (the cost backup in session 1), the subagents made 290 of the 463 requests and about 44 % of the input-side cost (12.3 of 27.6 USD at list price; our calculation from the transcript's usage fields, output excluded because those counts are incomplete).
+		</aside>
+	</section>
 	<section class="backup">
 		<h2>The same call as messages</h2>
 		<div class="two-col">
@@ -2001,21 +2016,6 @@ claude mcp add --scope project zotero -- zotero-mcp
 			<li>Besides tools, a server can offer <em>resources</em> (this one serves its own usage guide) and <em>prompts</em></li>
 		</ul>
 		<p class="small">Simplified: the id is illustrative, the path is shortened, and the output is wrapped in a JSON-RPC result envelope.</p>
-	</section>
-	<section>
-		<h2>Beyond the editor: worktrees, headless, CI, plugins</h2>
-		<ul>
-			<li><strong>Git worktree:</strong> a second working copy of the same repository in another folder, on its own branch.
-				Several sessions can then work in parallel without stepping on each other (<code>claude --worktree</code>)</li>
-			<li><strong>Headless:</strong> Claude Code without the interactive window, from a script or a scheduled job:
-				<code>claude -p "summarize the failing tests"</code></li>
-			<li><strong>CI</strong> (continuous integration): a server that runs your checks on every change you push.
-				Claude Code can run there too, e.g. as a GitHub Action that reviews pull requests</li>
-			<li><strong>Plugin:</strong> skills, agents and hooks bundled so that you install them in one go.
-				Example: <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a></li>
-			<li><strong><code>/insights</code></strong> (terminal version): what have I been asking for repeatedly? &rarr; turn it into a skill</li>
-		</ul>
-		<p class="callout">No need to write everything yourself; start from a community loadout and edit it to your taste.</p>
 	</section>
 </section>
 
