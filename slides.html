@@ -769,6 +769,29 @@
 			the ones that fit on a laptop are smaller and further behind.
 		</aside>
 	</section>
+	<section class="backup wide">
+		<h2>The race: United States, China, Europe</h2>
+		<div class="two-col" style="grid-template-columns: 62% 1fr; align-items: center;">
+			<iframe data-src="figures/ai_race.html" title="Notable AI models per year by region, 2018 to 2026: mostly the United States, then China; the EU has a few"
+				style="display: block; width: 100%; height: 560px; border: 0;"></iframe>
+			<div>
+				<img src="figures/mistral_logo.svg" alt="Mistral AI logo" style="height: 110px; margin: 0 0 0.3em 0;">
+				<ul style="font-size: 0.8em;">
+					<li>2025 in Epoch AI's list of notable models: US 60, China 33, EU 1</li>
+					<li>Largest training runs Epoch has estimated: US ~10<sup>27</sup>&nbsp;FLOP, China ~3&times;10<sup>25</sup>, EU ~8&times;10<sup>23</sup></li>
+					<li>Europe's entry this week: Mistral Large 4, "Le Chonk" (6 Oct): 1T parameters, 49B active per token, trained on 3800 GPUs in Europe; open weights promised by the end of October</li>
+				</ul>
+			</div>
+		</div>
+		<p class="small">Our count from Epoch AI, <a href="https://epoch.ai/data/ai-models"><em>Data on AI Models</em></a> (CC BY, downloaded 7 Oct 2026);
+			Mistral AI, <a href="https://mistral.ai/news/mistral-large-4/"><em>Introducing Mistral Large 4</em></a> (6 Oct 2026). Logo: Mistral AI, via Wikimedia Commons (public domain, trademark).</p>
+		<aside class="notes">
+			Counting: a model counts for a region when all its organisations are there; models from several regions are "multinational" (US + France, e.g. Meta's Paris lab, lands there). Epoch's "notable" is a selection: state of the art, highly cited or historically significant, so it is a measure of visibility as much as of output.
+			Largest runs are only among the models Epoch has a compute estimate for: US GPT-6 Astra (Sep 2026, ~1e27, Epoch's estimate); China Doubao-pro (Oct 2024, 2.5e25); EU Mixtral 8x7B (Dec 2023, 7.7e23). Many closed and Chinese models have no estimate, so the gaps are uncertain.
+			Le Chonk: a mixture-of-experts model, 1 trillion parameters, 49 billion active per token, trained on 3800 NVIDIA Grace Blackwell GPUs in Mistral's own European data centres; Mistral claims it beats every open-weight model from the US or Europe; available through the API now, weights "by the end of the month". Training compute not disclosed.
+			Open-weight gap: see the previous slide (Epoch: ~4 months behind the closed frontier).
+		</aside>
+	</section>
 	<section>
 		<h2>Science is not done in a chat window</h2>
 		<ul>

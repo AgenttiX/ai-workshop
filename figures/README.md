@@ -36,6 +36,7 @@ Used unchanged unless marked as cropped. The captions in the slides carry the sa
 | `hallucinated_references_arxiv.png` | Z. Zhao et al., *LLM hallucinations in the wild: Large-scale evidence from non-existent citations*, [arXiv:2605.07723](https://arxiv.org/abs/2605.07723), Fig. 1a, cropped to the arXiv panel | CC BY 4.0 |
 | `epoch_open_closed_gap.png` | J. Edwards & L. Emberson, Epoch AI, [*Open models lag state-of-the-art closed models by 4 months*](https://epoch.ai/data-insights/open-closed-eci-gap), May 2026 | CC BY 4.0 |
 | `hep_agent_timings.png` | E. A. Moreno et al., *AI Agents Can Already Autonomously Perform Experimental High Energy Physics*, [arXiv:2603.20179](https://arxiv.org/abs/2603.20179) | CC BY 4.0 |
+| `mistral_logo.svg` | Mistral AI logo, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mistral_AI_logo_(2025%E2%80%93).svg) | Public domain (text logo); a trademark of Mistral AI |
 | `metr_forecast_vs_observed.png` | METR (J. Becker, N. Rush et al.), *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, [arXiv:2507.09089](https://arxiv.org/abs/2507.09089) | CC BY 4.0 |
 
 ## Backup-slide plots: `training_compute.html`, `benchmarks.html`, `session_tokens.html`
@@ -45,6 +46,8 @@ Our own interactive Plotly plots. They load Plotly from its CDN, so they need an
   (<https://epoch.ai/data/notable_ai_models.csv>, CC BY 4.0), downloaded on 2026-10-07.
 - `benchmarks.html`: the best score so far on MMLU, GPQA Diamond, SWE-bench Verified, FrontierMath,
   Humanity's Last Exam and CritPt. Data: Epoch AI's benchmark data (CC BY 4.0), downloaded on 2026-10-07.
+- `ai_race.html`: notable AI models per year by region (United States, China, EU, United Kingdom, other,
+  multinational), our count from the same Epoch AI data.
 - `session_tokens.html`: the tokens in the context of each request during one of our own Claude Code sessions
   (token counts from the session log only, no message content).
 
