@@ -1146,19 +1146,6 @@
 			Mika's showcase (local models) is the practical version of this slide.
 		</aside>
 	</section>
-	<section class="backup">
-		<h2>How far behind are the open-weight models?</h2>
-		<figure class="full">
-			<img src="figures/epoch_open_closed_gap/epoch_open_closed_gap.png" alt="Epoch Capabilities Index of the best closed-weight and the best open-weight model, January 2023 to May 2026: the open-weight line trails the closed one">
-			<figcaption>Best closed vs. best open-weight model on the Epoch Capabilities Index, 2023&ndash;2026.
-				J. Edwards &amp; L. Emberson, Epoch AI, <a href="https://epoch.ai/data-insights/open-closed-eci-gap"><em>Open models lag state-of-the-art closed models by 4 months</em></a> (May 2026), CC BY 4.0</figcaption>
-		</figure>
-		<aside class="notes">
-			Epoch: since January 2026 the best open-weight models have trailed the best closed ones by about 4 months on average,
-			about 6 months if the open model must score strictly higher. These are the best open models, which need a server;
-			the ones that fit on a laptop are smaller and further behind.
-		</aside>
-	</section>
 	<section class="backup wide">
 		<h2>The race: United States, China, Europe</h2>
 		<div class="two-col" style="grid-template-columns: 62% 1fr; align-items: center;">
@@ -2256,6 +2243,25 @@ claude
 			</div>
 		</div>
 		<p class="small">Configs in <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a>; instructions in exercise 09.</p>
+	</section>
+	<section>
+		<h2>How far behind are the open-weight models?</h2>
+		<iframe data-src="figures/epoch_open_closed_gap/epoch_open_closed_gap.html" title="Epoch Capabilities Index of the best closed-weight model, the best open-weight model and the best open-weight model that fits on a 32 GB GPU, January 2023 to August 2026: each line trails the one above it"
+			style="display: block; margin: 0 auto; width: 1500px; height: 760px; border: 0;"></iframe>
+		<p class="small">Our plot of Epoch AI's data (CC BY 4.0): J. Edwards &amp; L. Emberson,
+			<a href="https://epoch.ai/data-insights/open-closed-eci-gap"><em>Open models lag state-of-the-art closed models by 4 months</em></a> (May 2026);
+			32 GB GPU: <a href="https://epoch.ai/benchmarks">Epoch AI's ECI data</a> (October 2026)</p>
+		<aside class="notes">
+			The plot is interactive: hover over a point for its values, drag to zoom, double-click to reset.
+			Each line shows the best model so far of its group on the Epoch Capabilities Index, which combines many benchmarks into one score.
+			Epoch: since January 2026 the best open-weight models have trailed the best closed ones by about 4 months on average,
+			about 6 months if the open model must score strictly higher. These are the best open models, which need a server.
+			The purple line is ours: open-weight models with at most 40 B parameters, which fit on a 32 GB GPU when quantized to 4 bits.
+			They are about a year behind: Qwen3.8-27B (Aug 2026, 149.4) is level with GPT-5 (Aug 2025, 150.0),
+			and Gemma 4 31B (Apr 2026, 142.7) with o1 (Dec 2024, 142.8).
+			The closed and open lines end in May 2026, when Epoch made their chart; the purple line uses their newer data.
+			The ECI has been refitted since, which moves the scores of the same models by about &plusmn;1.
+		</aside>
 	</section>
 	<section>
 		<img src="https://raw.githubusercontent.com/AgenttiX/agx-ai/main/structure/agx-ai-structure.svg"
