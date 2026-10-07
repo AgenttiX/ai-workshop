@@ -38,23 +38,22 @@ Plotly can't measure its text in a hidden iframe, which would break the legend a
 ## `epoch_open_closed_gap/epoch_open_closed_gap.html`: closed, open and consumer-GPU models
 Our own interactive Plotly version of Epoch AI's chart
 [*Open models lag state-of-the-art closed models by 4 months*](https://epoch.ai/data-insights/open-closed-eci-gap)
-(`epoch_open_closed_gap.png`), with a third curve for the open-weights models
-that fit on a consumer-grade GPU with 32 GB of VRAM.
+(`epoch_open_closed_gap.png`, May 2026), made from Epoch AI's newer data,
+with a third curve for the open-weights models that fit on a consumer-grade GPU with 32 GB of VRAM.
 Each curve shows the models that had a higher Epoch Capabilities Index (ECI) than any earlier model of their group.
+As in Epoch AI's chart, the models without open weights count as closed, also when their accessibility is unknown.
 Gemma 4 26B A4B is also shown as a point of the 32 GB GPU curve, although it's below the curve.
 Gemma 4 E2B, E4B and 12B are not shown, as Epoch AI's data of October 2026 has no ECI score for them.
 
-- `benchmarked_models.csv`: the data of Epoch AI's chart (CC BY 4.0), May 2026.
-  As in their chart, the models without an "Open weights" accessibility count as closed.
-- `consumer_gpu_models.csv`: open-weights models with at most 40 B parameters,
+- `eci_scores.csv`: Epoch AI's ECI scores (CC BY 4.0), extracted from `epoch_capabilities_index/eci_scores.csv`
+  of <https://epoch.ai/data/benchmark_data.zip>, downloaded on 2026-10-07.
+  The ECI is refitted when Epoch AI adds data, so the scores differ slightly from those of Epoch AI's chart (about ±1).
+  Claude 3.5 Sonnet (130) and GPT-5 (150) have no confidence interval, as they anchor the scale.
+- `model_parameters.py`: the number of parameters of the small open-weights models, which `eci_scores.csv` does not have.
+  The 32 GB GPU curve has the ones with at most 40 B parameters,
   whose 4-bit quantized weights (about 20 GB) fit in 32 GB of VRAM with room for the context.
-  The ECI scores, their 90 % confidence intervals, the release dates and the accessibility are from
-  Epoch AI's ECI data (`epoch_capabilities_index/eci_scores.csv` of <https://epoch.ai/data/benchmark_data.zip>,
-  CC BY 4.0), downloaded on 2026-10-07. The parameter counts are from the model names and model cards.
-  The ECI has been refitted since May 2026, which changes the scores of the same models by about ±1 (standard deviation),
-  so the curves can be compared to within about that accuracy.
-- `extract_consumer_models.py`: the script that makes `consumer_gpu_models.csv` from `benchmark_data.zip`.
-  The models and their parameter counts are listed in the script.
+  The counts are from the model names and model cards.
+- `extract_eci_scores.py`: the script that extracts `eci_scores.csv` from `benchmark_data.zip`.
 - `benchmark_data.zip`: Epoch AI's benchmark data, downloaded on 2026-10-07.
   It's not in Git (`*.zip` is in `.gitignore`), so download it with the `--download` option of the script.
 - `epoch_open_closed_gap.py`: the plotting script.
@@ -66,11 +65,12 @@ To regenerate the figure:
 pip install -r figures/requirements.txt
 python -m figures.epoch_open_closed_gap.epoch_open_closed_gap
 ```
-To update the 32 GB GPU curve with the newest data of Epoch AI, add any new models to `MODELS`
-in `extract_consumer_models.py`, then run before the plotting script:
+To update the figure with the newest data of Epoch AI, run before the plotting script:
 ```bash
-python -m figures.epoch_open_closed_gap.extract_consumer_models --download
+python -m figures.epoch_open_closed_gap.extract_eci_scores --download
 ```
+Then add any new small open-weights models to `model_parameters.py`, and update `DATA_DATE` and,
+if needed, the labels in `epoch_open_closed_gap.py`.
 
 ## Third-party figures
 Used unchanged unless marked as cropped. The captions in the slides carry the same attribution.

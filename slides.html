@@ -2246,21 +2246,21 @@ claude
 	</section>
 	<section>
 		<h2>How far behind are the open-weight models?</h2>
-		<iframe data-src="figures/epoch_open_closed_gap/epoch_open_closed_gap.html" title="Epoch Capabilities Index of the best closed-weight model, the best open-weight model and the best open-weight model that fits on a 32 GB GPU, January 2023 to August 2026: each line trails the one above it"
+		<iframe data-src="figures/epoch_open_closed_gap/epoch_open_closed_gap.html" title="Epoch Capabilities Index of the best closed-weight model, the best open-weight model and the best open-weight model that fits on a 32 GB GPU, January 2023 to September 2026: each line trails the one above it"
 			style="display: block; margin: 0 auto; width: 1500px; height: 760px; border: 0;"></iframe>
-		<p class="small">Our plot of Epoch AI's data (CC BY 4.0): J. Edwards &amp; L. Emberson,
-			<a href="https://epoch.ai/data-insights/open-closed-eci-gap"><em>Open models lag state-of-the-art closed models by 4 months</em></a> (May 2026);
-			32 GB GPU: <a href="https://epoch.ai/benchmarks">Epoch AI's ECI data</a> (October 2026)</p>
+		<p class="small">Our plot of <a href="https://epoch.ai/benchmarks">Epoch AI's ECI data</a> (October 2026, CC BY 4.0),
+			after J. Edwards &amp; L. Emberson, <a href="https://epoch.ai/data-insights/open-closed-eci-gap"><em>Open models lag state-of-the-art closed models by 4 months</em></a> (May 2026)</p>
 		<aside class="notes">
 			The plot is interactive: hover over a point for its values, drag to zoom, double-click to reset.
 			Each line shows the best model so far of its group on the Epoch Capabilities Index, which combines many benchmarks into one score.
-			Epoch: since January 2026 the best open-weight models have trailed the best closed ones by about 4 months on average,
+			Epoch (May 2026): since January 2026 the best open-weight models have trailed the best closed ones by about 4 months on average,
 			about 6 months if the open model must score strictly higher. These are the best open models, which need a server.
 			The purple line is ours: open-weight models with at most 40 B parameters, which fit on a 32 GB GPU when quantized to 4 bits.
 			They are about a year behind: Qwen3.8-27B (Aug 2026, 149.4) is level with GPT-5 (Aug 2025, 150.0),
-			and Gemma 4 31B (Apr 2026, 142.7) with o1 (Dec 2024, 142.8).
-			The closed and open lines end in May 2026, when Epoch made their chart; the purple line uses their newer data.
-			The ECI has been refitted since, which moves the scores of the same models by about &plusmn;1.
+			and Gemma 4 31B (Apr 2026, 142.7) is between o1 (Dec 2024, 141.9) and Gemini 2.5 Pro (Mar 2025, 144.2).
+			In the newer data, the best open model Kimi K3 (Jul 2026, 157.4) is between GPT-5.3 Codex (Feb 2026, 156.8)
+			and GPT-5.4 Pro (Mar 2026, 158.9): about 5 months behind.
+			The ECI is refitted when Epoch adds data, so the scores differ slightly (about &plusmn;1) from those in Epoch's article.
 		</aside>
 	</section>
 	<section>
