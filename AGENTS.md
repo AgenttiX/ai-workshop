@@ -42,6 +42,7 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - `./slides.html` is the reveal.js presentation slides. Speaker notes are in `<aside class="notes">` elements.
 - `./solutions/` contains the reference solutions of the exercises, each with a `README.md` explaining what happened.
   The code is tested in CI.
+- `./themes/` contains custom reveal.js themes for the slides (`_base.css` + one file of variables per theme, see `themes/README.md`).
 - `./tests/` contains the tests of the `workshop` package.
 - `./workshop/` is a small Python package with helpers shared by the exercises (environment check, plotting style, data generation).
 

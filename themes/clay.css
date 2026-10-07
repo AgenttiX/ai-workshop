@@ -1,0 +1,33 @@
+/**
+ * Clay: a warm light theme on cream paper with terracotta and slate blue accents,
+ * in the colours of the Claude apps that the participants use during the workshop.
+ *
+ * Usage: replace the theme link of slides.html with
+ *   <link rel="stylesheet" href="themes/clay.css">
+ */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap");
+@import url("_base.css");
+
+:root {
+	--r-background-color: #faf9f5;
+	--r-main-font: Inter, "Helvetica Neue", Arial, sans-serif;
+	--r-main-color: #2b2a27;
+	--r-heading-font: Fraunces, Georgia, serif;
+	--r-heading-color: #1f1e1d;
+
+	--t-heading-weight: 600;
+	--t-accent: #3d6b8f;
+	--t-accent-rgb: 61, 107, 143;
+	--t-accent-2: #d9663f;
+	--t-accent-2-rgb: 217, 102, 63;
+	--t-title-bar: #d9663f;
+	--t-strong: #1f1e1d;
+	--t-muted: #73726c;
+	--t-surface: #ffffff;
+	--t-border: rgba(31, 30, 29, 0.14);
+	--t-code-bg: #f0eee6;
+	--t-code-color: #8a3a1f;
+	--t-tint: 0.09;
+	--t-shadow-alpha: 0.1;
+	--t-viewport: radial-gradient(ellipse at 20% 0%, #fdfcf9 0%, #faf9f5 45%, #f2efe6 100%);
+}

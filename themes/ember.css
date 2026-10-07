@@ -1,0 +1,41 @@
+/**
+ * Ember: a dark theme that matches the workshop poster.
+ * Warm charcoal background, orange titles and definitions, teal callouts.
+ *
+ * Usage: replace the theme link of slides.html with
+ *   <link rel="stylesheet" href="themes/ember.css">
+ */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap");
+@import url("_base.css");
+
+:root {
+	--r-background-color: #141311;
+	--r-main-font: Inter, "Helvetica Neue", Arial, sans-serif;
+	--r-main-color: #e8e4dc;
+	--r-heading-font: "Space Grotesk", Inter, sans-serif;
+	--r-heading-color: #ffffff;
+	--r-selection-color: #141311;
+
+	--t-heading-weight: 600;
+	--t-accent: #5ec4b6;
+	--t-accent-rgb: 94, 196, 182;
+	--t-accent-2: #ff7a4d;
+	--t-accent-2-rgb: 255, 122, 77;
+	--t-title-bar: #ff7a4d;
+	--t-divider-color: #ff7a4d;
+	--t-strong: #ffffff;
+	--t-muted: #a8a49b;
+	--t-surface: #1f1e1d;
+	--t-border: rgba(232, 228, 220, 0.16);
+	--t-code-bg: rgba(255, 255, 255, 0.07);
+	--t-code-color: #ffb08f;
+	--t-tint: 0.12;
+	--t-shadow-alpha: 0.5;
+	--t-figure-bg: #ffffff;
+	--t-figure-radius: 0.3em;
+	--t-logo-bg: rgba(255, 255, 255, 0.92);
+	--t-logo-padding: 0.06em;
+	--t-viewport:
+		radial-gradient(ellipse at 85% 110%, rgba(255, 122, 77, 0.16) 0%, transparent 55%),
+		radial-gradient(ellipse at 0% 0%, #2a2724 0%, #141311 60%);
+}
