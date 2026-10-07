@@ -41,6 +41,8 @@ Our own interactive Plotly version of Epoch AI's chart
 (`epoch_open_closed_gap.png`), with a third curve for the open-weights models
 that fit on a consumer-grade GPU with 32 GB of VRAM.
 Each curve shows the models that had a higher Epoch Capabilities Index (ECI) than any earlier model of their group.
+Gemma 4 26B A4B is also shown as a point of the 32 GB GPU curve, although it's below the curve.
+Gemma 4 E2B, E4B and 12B are not shown, as Epoch AI's data of October 2026 has no ECI score for them.
 
 - `benchmarked_models.csv`: the data of Epoch AI's chart (CC BY 4.0), May 2026.
   As in their chart, the models without an "Open weights" accessibility count as closed.

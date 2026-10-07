@@ -41,6 +41,8 @@ X_MAX = datetime.date(2026, 9, 30)
 COLOR_CLOSED = "#00a5a6"
 COLOR_OPEN = "#e1418f"
 COLOR_CONSUMER = "#7b5cd6"
+#: The color of the highlighted models
+COLOR_HIGHLIGHT = "#a16207"
 
 #: The models to label in the plot on each curve, as in Epoch AI's chart, and their labels.
 #: The other models are shown without a label. The keys are the "Model group" column of benchmarked_models.csv
@@ -69,9 +71,17 @@ OPEN_LABELS: dict[str, str] = {
 CONSUMER_LABELS: dict[str, str] = {
     "Qwen3-32B": "Qwen3-32B",
     "Gemma 4 31B": "Gemma 4 31B",
+    "Gemma 4 26B A4B": "Gemma 4 26B A4B",
     "Qwen3.6-27B": "Qwen3.6-27B",
     "Qwen3.8-27B": "Qwen3.8-27B",
 }
+
+#: Models of consumer_gpu_models.csv that are shown as points even though they are not on the curve.
+#: Gemma 4 E2B, E4B and 12B would belong here too, but they have no ECI score in Epoch AI's data of October 2026.
+CONSUMER_EXTRA_MODELS = ("Gemma 4 26B A4B",)
+
+#: Models whose markers and labels are shown in :data:`COLOR_HIGHLIGHT`, e.g. the ones discussed in the slides
+HIGHLIGHTED_MODELS = ("Gemma 4 31B", "Gemma 4 26B A4B", "Qwen3.8-27B")
 
 #: Label positions that differ from the default (above the marker, to its left): (xanchor, yanchor, xshift, yshift).
 #: The keys are the labels.
@@ -84,7 +94,8 @@ LABEL_POSITIONS: dict[str, tuple[str, str, int, int]] = {
     "DeepSeek-R1": ("left", "bottom", 8, 1),
     "Qwen3-235B-A22B": ("left", "top", 8, -4),
     "Qwen3-32B": ("left", "top", 8, -4),
-    "Gemma 4 31B": ("right", "top", -6, -4),
+    "Gemma 4 31B": ("left", "middle", 28, 5),
+    "Gemma 4 26B A4B": ("left", "middle", 28, -5),
     "Qwen3.6-27B": ("left", "top", 8, -4),
     "Qwen3.8-27B": ("right", "top", -8, -2),
 }
@@ -178,21 +189,33 @@ def frontier(models: list[Model]) -> list[Model]:
     return result
 
 
-def step_trace(models: list[Model], name: str, color: str, symbol: str) -> go.Scatter:
+def step_trace(
+    models: list[Model], name: str, color: str, symbol: str, lines: bool = True, show_legend: bool = True
+) -> go.Scatter:
     """Create a trace of a frontier as a step line: each level holds until a better model is released.
 
     :param models: the frontier models, sorted by release date
-    :param name: name of the trace in the legend
-    :param color: color of the line and the markers
+    :param name: name of the trace in the legend.
+        Traces with the same name are shown and hidden together by clicking the legend.
+    :param color: color of the line and the markers, except the markers of :data:`HIGHLIGHTED_MODELS`
     :param symbol: Plotly marker symbol, so that the curves can be told apart without color
+    :param lines: whether to connect the markers with a step line. Without it, the models are shown as points.
+    :param show_legend: whether to show the trace in the legend
     :return: the trace
     """
     return go.Scatter(
         x=[model.release_date for model in models],
         y=[model.eci for model in models],
-        mode="lines+markers",
+        mode="lines+markers" if lines else "markers",
+        legendgroup=name,
+        showlegend=show_legend,
         line={"color": color, "width": 3, "shape": "hv"},
-        marker={"color": color, "size": 11, "symbol": symbol, "line": {"color": "white", "width": 2}},
+        marker={
+            "color": [COLOR_HIGHLIGHT if model.name in HIGHLIGHTED_MODELS else color for model in models],
+            "size": 11,
+            "symbol": symbol,
+            "line": {"color": "white", "width": 2},
+        },
         name=name,
         customdata=[[model.name, model.ci_low, model.ci_high] for model in models],
         hovertemplate="<b>%{customdata[0]}</b><br>"
@@ -208,7 +231,7 @@ def add_labels(fig: go.Figure, models: list[Model], labels: dict[str, str], colo
     :param fig: the figure
     :param models: the models of the curve
     :param labels: the models to label and their labels
-    :param color: color of the labels
+    :param color: color of the labels, except those of :data:`HIGHLIGHTED_MODELS`
     """
     for model in models:
         if model.name not in labels:
@@ -224,27 +247,30 @@ def add_labels(fig: go.Figure, models: list[Model], labels: dict[str, str], colo
             yanchor=yanchor,
             xshift=xshift,
             yshift=yshift,
-            font={"size": FONT_SIZE - 3, "color": color},
+            font={"size": FONT_SIZE - 3, "color": COLOR_HIGHLIGHT if model.name in HIGHLIGHTED_MODELS else color},
         )
 
 
-def make_figure(closed: list[Model], open_: list[Model], consumer: list[Model]) -> go.Figure:
+def make_figure(
+    closed: list[Model], open_: list[Model], consumer: list[Model], consumer_extra: list[Model]
+) -> go.Figure:
     """Create the figure.
 
     :param closed: the frontier of the closed-weights models
     :param open_: the frontier of the open-weights models
     :param consumer: the frontier of the open-weights models that fit on a consumer GPU
+    :param consumer_extra: other open-weights models that fit on a consumer GPU, shown as points
     :return: the figure
     """
+    consumer_name = "Open weights, fits on a 32 GB GPU"
     fig = go.Figure()
     fig.add_trace(step_trace(closed, "Closed weights", COLOR_CLOSED, "circle"))
     fig.add_trace(step_trace(open_, "Open weights", COLOR_OPEN, "square"))
-    fig.add_trace(
-        step_trace(consumer, "Open weights, fits on a 32 GB GPU", COLOR_CONSUMER, "diamond")
-    )
+    fig.add_trace(step_trace(consumer, consumer_name, COLOR_CONSUMER, "diamond"))
+    fig.add_trace(step_trace(consumer_extra, consumer_name, COLOR_CONSUMER, "diamond", lines=False, show_legend=False))
     add_labels(fig, closed, CLOSED_LABELS, COLOR_CLOSED)
     add_labels(fig, open_, OPEN_LABELS, COLOR_OPEN)
-    add_labels(fig, consumer, CONSUMER_LABELS, COLOR_CONSUMER)
+    add_labels(fig, consumer + consumer_extra, CONSUMER_LABELS, COLOR_CONSUMER)
 
     fig.update_layout(
         autosize=True,
@@ -304,11 +330,16 @@ def main() -> None:
     models = load_epoch_models(EPOCH_DATA)
     closed = frontier([model for model in models if not model.open_weights])
     open_ = frontier([model for model in models if model.open_weights])
-    consumer = frontier(load_consumer_models(CONSUMER_DATA))
-    for name, curve in (("Closed", closed), ("Open", open_), ("32 GB GPU", consumer)):
-        print(f"{name}: " + ", ".join(f"{model.name} ({model.eci:.1f})" for model in curve))
+    consumer_models = load_consumer_models(CONSUMER_DATA)
+    consumer = frontier(consumer_models)
+    consumer_extra = [
+        model for model in consumer_models if model.name in CONSUMER_EXTRA_MODELS and model not in consumer
+    ]
+    groups = {"Closed": closed, "Open": open_, "32 GB GPU": consumer, "32 GB GPU, not on the curve": consumer_extra}
+    for name, group in groups.items():
+        print(f"{name}: " + ", ".join(f"{model.name} ({model.eci:.1f})" for model in group))
 
-    fig = make_figure(closed, open_, consumer)
+    fig = make_figure(closed, open_, consumer, consumer_extra)
     write_html(fig, args.output, div_id="epoch-open-closed-gap")
     print(f"Saved {args.output}")
 
