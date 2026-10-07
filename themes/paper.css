@@ -1,0 +1,34 @@
+/**
+ * Paper: a light theme like a lab notebook on graph paper.
+ * Serif headings, deep blue accents and orange definitions.
+ *
+ * Usage: replace the theme link of slides.html with
+ *   <link rel="stylesheet" href="themes/paper.css">
+ */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&family=JetBrains+Mono:wght@400;600&display=swap");
+@import url("_base.css");
+
+:root {
+	--r-background-color: #fdfdfb;
+	--r-main-font: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+	--r-main-color: #222833;
+	--r-heading-font: "IBM Plex Serif", Georgia, serif;
+	--r-heading-color: #14365c;
+
+	--t-heading-weight: 600;
+	--t-accent: #1f5f9e;
+	--t-accent-rgb: 31, 95, 158;
+	--t-accent-2: #d9663f;
+	--t-accent-2-rgb: 217, 102, 63;
+	--t-strong: #14365c;
+	--t-muted: #5f6672;
+	--t-surface: #ffffff;
+	--t-border: rgba(20, 54, 92, 0.18);
+	--t-code-bg: rgba(31, 95, 158, 0.07);
+	--t-tint: 0.07;
+	--t-shadow-alpha: 0.12;
+	--t-viewport:
+		linear-gradient(rgba(31, 95, 158, 0.055) 1px, transparent 1px) 0 0 / 48px 48px,
+		linear-gradient(90deg, rgba(31, 95, 158, 0.055) 1px, transparent 1px) 0 0 / 48px 48px,
+		#fdfdfb;
+}

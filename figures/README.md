@@ -1,6 +1,11 @@
 # Figures
 The figures of the slides, and the data and scripts for the plots made by us.
 
+The directory is a Python package, so the plotting scripts are run as modules in the root directory of the repository,
+e.g. `python -m figures.plot_time_horizon`.
+`common.py` has the code shared by the scripts: the font and colors of the slides,
+and saving a figure as an HTML page that fills its iframe in the slides.
+
 ## `time_horizon.html`: the task horizon of AI models
 Our own interactive Plotly plot of the 50 % time horizon of AI models against their release dates,
 in the style of [METR's chart](https://metr.org/time-horizons/), with newer data points added.
@@ -18,7 +23,7 @@ in the style of [METR's chart](https://metr.org/time-horizons/), with newer data
 To regenerate the figure:
 ```bash
 pip install -r figures/requirements.txt
-python figures/plot_time_horizon.py --hide-legend
+python -m figures.plot_time_horizon --hide-legend
 ```
 The slides use the version without the legend, where the trend line is labeled directly and the non-robust result is gray.
 Leave out `--hide-legend` to show the legend.
@@ -27,6 +32,32 @@ The page loads Plotly from its CDN and the Open Sans font of the slides from Goo
 In the slides, it's shown in an `<iframe>` with `data-src`, so that reveal.js loads it only when its slide is shown:
 Plotly can't measure its text in a hidden iframe, which would break the legend and the labels.
 
+## `epoch_open_closed_gap/epoch_open_closed_gap.html`: closed, open and consumer-GPU models
+Our own interactive Plotly version of Epoch AI's chart
+[*Open models lag state-of-the-art closed models by 4 months*](https://epoch.ai/data-insights/open-closed-eci-gap)
+(`epoch_open_closed_gap.png`), with a third curve for the open-weights models
+that fit on a consumer-grade GPU with 32 GB of VRAM.
+Each curve shows the models that had a higher Epoch Capabilities Index (ECI) than any earlier model of their group.
+
+- `benchmarked_models.csv`: the data of Epoch AI's chart (CC BY 4.0), May 2026.
+  As in their chart, the models without an "Open weights" accessibility count as closed.
+- `consumer_gpu_models.csv`: open-weights models with at most 40 B parameters,
+  whose 4-bit quantized weights (about 20 GB) fit in 32 GB of VRAM with room for the context.
+  The ECI scores, their 90 % confidence intervals, the release dates and the accessibility are from
+  Epoch AI's ECI data (`epoch_capabilities_index/eci_scores.csv` of <https://epoch.ai/data/benchmark_data.zip>,
+  CC BY 4.0), downloaded on 2026-10-07. The parameter counts are from the model names and model cards.
+  The ECI has been refitted since May 2026, which changes the scores of the same models by about ±1 (standard deviation),
+  so the curves can be compared to within about that accuracy.
+- `epoch_open_closed_gap.py`: the plotting script.
+
+All of these files are in `epoch_open_closed_gap/`.
+
+To regenerate the figure:
+```bash
+pip install -r figures/requirements.txt
+python -m figures.epoch_open_closed_gap.epoch_open_closed_gap
+```
+
 ## Third-party figures
 Used unchanged unless marked as cropped. The captions in the slides carry the same attribution.
 
@@ -34,7 +65,7 @@ Used unchanged unless marked as cropped. The captions in the slides carry the sa
 |---|---|---|
 | `lost_in_the_middle.png` | N. F. Liu et al., *Lost in the Middle: How Language Models Use Long Contexts*, TACL 12, 157 (2024), [doi:10.1162/tacl_a_00638](https://doi.org/10.1162/tacl_a_00638), Fig. 1 | CC BY 4.0 (the TACL version; the arXiv version is not CC-licensed) |
 | `hallucinated_references_arxiv.png` | Z. Zhao et al., *LLM hallucinations in the wild: Large-scale evidence from non-existent citations*, [arXiv:2605.07723](https://arxiv.org/abs/2605.07723), Fig. 1a, cropped to the arXiv panel | CC BY 4.0 |
-| `epoch_open_closed_gap.png` | J. Edwards & L. Emberson, Epoch AI, [*Open models lag state-of-the-art closed models by 4 months*](https://epoch.ai/data-insights/open-closed-eci-gap), May 2026 | CC BY 4.0 |
+| `epoch_open_closed_gap/epoch_open_closed_gap.png` | J. Edwards & L. Emberson, Epoch AI, [*Open models lag state-of-the-art closed models by 4 months*](https://epoch.ai/data-insights/open-closed-eci-gap), May 2026 | CC BY 4.0 |
 | `hep_agent_timings.png` | E. A. Moreno et al., *AI Agents Can Already Autonomously Perform Experimental High Energy Physics*, [arXiv:2603.20179](https://arxiv.org/abs/2603.20179) | CC BY 4.0 |
 | `mistral_logo.svg` | Mistral AI logo, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mistral_AI_logo_(2025%E2%80%93).svg) | Public domain (text logo); a trademark of Mistral AI |
 | `metr_forecast_vs_observed.png` | METR (J. Becker, N. Rush et al.), *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, [arXiv:2507.09089](https://arxiv.org/abs/2507.09089) | CC BY 4.0 |

@@ -1,0 +1,36 @@
+Model,Organization,Release date,Total parameters (B),Active parameters (B),Model accessibility,ECI,ECI CI low,ECI CI high
+LLaMA-33B,Meta AI,2023-02-24,32.5,32.5,Open weights (non-commercial),107.41,97.41,112.09
+LLaMA-13B,Meta AI,2023-02-24,13.0,13.0,Open weights (non-commercial),100.58,88.99,106.41
+Llama 2-13B,Meta AI,2023-07-18,13.0,13.0,Open weights (restricted use),106.17,96.07,110.78
+Qwen-14B,Alibaba,2023-09-24,14.2,14.2,Open weights (restricted use),113.03,103.3,117.38
+Mistral 7B v0.1,Mistral AI,2023-09-27,7.2,7.2,Open weights (unrestricted),112.21,102.36,116.31
+Yi-34B,01.AI,2023-11-02,34.4,34.4,Open weights (restricted use),117.39,107.96,120.6
+Phi-2,Microsoft,2023-12-12,2.7,2.7,Open weights (unrestricted),107.94,88.62,113.81
+Gemma 7B,Google DeepMind,2024-02-21,8.5,8.5,Open weights (restricted use),111.99,102.38,116.53
+Llama 3-8B,Meta AI,2024-04-18,8.0,8.0,Open weights (restricted use),116.45,106.78,119.26
+phi-3-small 7.4B,Microsoft,2024-04-23,7.4,7.4,Open weights (unrestricted),121.83,114.76,124.37
+phi-3-medium 14B,Microsoft,2024-04-23,14.0,14.0,Open weights (unrestricted),121.23,113.78,124.1
+Gemma 2 27B,Google DeepMind,2024-06-24,27.2,27.2,Open weights (restricted use),122.08,114.44,124.08
+Gemma 2 9B,Google DeepMind,2024-06-24,9.2,9.2,Open weights (restricted use),119.83,111.63,122.61
+Mistral NeMo,Mistral AI,2024-07-18,12.2,12.2,Open weights (unrestricted),118.68,110.95,121.19
+Qwen2.5-32B,Alibaba,2024-09-17,32.5,32.5,Open weights (unrestricted),128.52,122.17,130.03
+Phi-4,Microsoft Research,2024-12-12,14.7,14.7,Open weights (unrestricted),130.42,124.72,132.03
+DeepSeek-R1-Distill-Qwen-32B,DeepSeek,2025-01-20,32.8,32.8,Open weights (unrestricted),137.44,126.59,138.7
+DeepSeek-R1-Distill-Qwen-14B,DeepSeek,2025-01-20,14.8,14.8,Open weights (unrestricted),135.43,127.05,138.01
+Mistral Small 3,Mistral AI,2025-01-30,24.0,24.0,Open weights (unrestricted),127.07,121.39,128.85
+QwQ-32B,Alibaba,2025-03-05,32.5,32.5,Open weights (unrestricted),137.6,132.89,141.63
+Gemma 3 27B,Google DeepMind,2025-03-12,27.4,27.4,Open weights (restricted use),130.04,124.28,132.2
+Qwen3-8B,Alibaba,2025-04-28,8.2,8.2,Open weights (unrestricted),136.17,130.09,138.24
+Qwen3-32B,Alibaba,2025-04-29,32.8,32.8,Open weights (unrestricted),138.51,135.14,140.28
+Qwen3-14B,Alibaba,2025-04-29,14.8,14.8,Open weights (unrestricted),138.23,133.7,140.03
+Qwen3-30B-A3B,Alibaba,2025-04-29,30.5,3.3,Open weights (unrestricted),136.18,129.7,138.62
+Magistral Small 1.0,Mistral AI,2025-06-10,24.0,24.0,Open weights (unrestricted),133.19,128.75,134.47
+Qwen3-30B-A3B-Thinking (Jul 2025),Alibaba,2025-07-30,30.5,3.3,Open weights (unrestricted),139.63,135.51,140.97
+gpt-oss-20b,OpenAI,2025-08-05,20.9,3.6,Open weights (unrestricted),137.82,132.91,139.61
+Qwen3.5-9B,Alibaba,2026-02-24,9.0,9.0,Open weights (restricted use),139.46,136.25,141.51
+Qwen3.5-35B-A3B,Alibaba,2026-02-24,35.0,3.0,Open weights (unrestricted),142.52,140.29,144.81
+Gemma 4 31B,Google DeepMind,2026-04-02,30.7,30.7,Open weights (restricted use),142.74,140.25,145.1
+Gemma 4 26B A4B,Google DeepMind,2026-04-02,25.2,3.8,Open weights (unrestricted),141.85,138.71,143.42
+Qwen3.6-35B-A3B,Alibaba,2026-04-14,35.0,3.0,Open weights (unrestricted),143.93,141.21,145.93
+Qwen3.6-27B,Alibaba,2026-04-22,27.0,27.0,Open weights (unrestricted),146.5,144.31,147.72
+Qwen3.8-27B,Alibaba,2026-08-14,27.0,27.0,Open weights (unrestricted),149.38,147.3,151.13

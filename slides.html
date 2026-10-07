@@ -10,7 +10,7 @@
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/monokai.min.css" integrity="sha512-z8wQkuDRFwCBfoj7KOiu1MECaRVoXx6rZQWL21x0BsVVH7JkqCp1Otf39qve6CrCycOOL5o9vgfII5Smds23rg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/theme/sky.min.css" integrity="sha512-gLymIttr2gq642OBM4g7Oab3Bx3J1XB1TSbP5DZqcXaDWULMmSHHHkXFdRsx4lMFmt9705mNRozs1qeSvOAJpw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="themes/latent.css">
 		<style>
 			:root h2 {
 				--r-heading-text-transform: none;
@@ -46,6 +46,94 @@
 				grid-template-columns: 1fr 1fr;
 				gap: 2.5em;
 				align-items: start;
+			}
+			img.logo {
+				height: 1em;
+				margin: 0;
+				vertical-align: -0.15em;
+			}
+			/* A prompt that looks like the input of Claude Code in Claude Desktop (dark theme) */
+			.prompt-cc {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5em;
+				background: #1f1e1d;
+				border-radius: 0.9em;
+				box-shadow: 0 0.3em 1em rgba(0, 0, 0, 0.25);
+				padding: 0.6em 0.8em;
+				font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+				font-size: 0.6em;
+				line-height: 1.45;
+				color: #a6a39a;
+				height: 100%;
+				box-sizing: border-box;
+			}
+			.prompt-cc svg {
+				height: 1.1em;
+				width: auto;
+				vertical-align: middle;
+			}
+			.prompt-cc .cc-header,
+			.prompt-cc .cc-footer {
+				display: flex;
+				align-items: center;
+				gap: 0.7em;
+				font-size: 0.85em;
+			}
+			.prompt-cc .cc-chip {
+				background: #2f2f2c;
+				border-radius: 0.5em;
+				padding: 0.15em 0.6em;
+				color: #c2c0b6;
+			}
+			.prompt-cc .cc-mascot {
+				margin-left: auto;
+				height: 1.8em;
+			}
+			.prompt-cc .cc-box {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				background: #262624;
+				border: 1px solid #3d3d3a;
+				border-radius: 0.7em;
+				padding: 0.6em 0.8em 0.4em;
+				color: #e8e6dc;
+			}
+			.prompt-cc .cc-box p {
+				margin: 0 0 0.6em;
+			}
+			.prompt-cc .cc-enter {
+				align-self: flex-end;
+				color: #8a877f;
+			}
+			.reveal .prompt-cc :not(pre) > code {
+				background: rgba(255, 255, 255, 0.08);
+				border-color: rgba(255, 255, 255, 0.15);
+				color: #e8e6dc;
+			}
+			.prompt-cc .cc-footer .cc-model {
+				margin-left: auto;
+				color: #e8e6dc;
+			}
+			.prompt-cc .cc-footer .cc-light {
+				color: #e8e6dc;
+			}
+			.two-col.prompts {
+				align-items: stretch;
+				row-gap: 0.4em;
+			}
+			.prompt-result {
+				font-size: 0.7em;
+				margin: 0;
+			}
+			/* Redacted text: a black box with filler text of a similar length (the original text is not in this file) */
+			.redacted {
+				background: #000;
+				color: transparent;
+				border-radius: 0.1em;
+				user-select: none;
 			}
 			.callout {
 				border-left: 6px solid #3b8bd0;
@@ -232,7 +320,7 @@
 	</p>
 	<p class="small">
 		<a href="https://github.com/AgenttiX/ai-workshop">github.com/AgenttiX/ai-workshop</a> &mdash;
-		slides, exercises and these speaker notes (press <code>S</code>)
+		slides & exercises
 	</p>
 	<aside class="notes">
 		Welcome. Three PhD students, no affiliations with AI companies, we learned this out of our own interest for reasearch as well as hobby purposes.
@@ -246,7 +334,7 @@
 		<h2>Practicalities</h2>
 		<ul>
 			<li>10:00&ndash;12:00 foundations, 12:00&ndash;13:00 lunch, 13:00&ndash;15:00 advanced. Laptops out.</li>
-				<li><strong>No experience needed.</strong> We define every term the first time we use it (orange boxes), and give glossary at the end.</li>
+				<li><strong>No experience needed.</strong> We define every term the first time we use it (orange boxes), and a full glossary follows the basic terms.</li>
 			<li>Questions: interrupt us, or post in
 				<a href="https://cftgroup.chat/main/channels/ai-workshop">Mattermost</a>.
 				<strong>There are no stupid questions.</strong> If you're lost, three others are too.</li>
@@ -336,8 +424,98 @@
 			<tr><td>Repository</td><td>A project folder whose history is tracked by Git, the version-control program.</td></tr>
 		</table>
 		<aside class="notes">
-			Don't read the table aloud. Say: these nine words come up constantly; the rest we define when they appear, in the orange boxes, and the glossary at the end has everything.
+			Don't read the table aloud. Say: these nine words come up constantly; the rest we define when they appear, in the orange boxes, and the glossary on the next slides has everything.
 		</aside>
+	</section>
+	<section>
+		<h2>Glossary 1/5: AI</h2>
+		<table class="glossary">
+			<tr><td>Model, LLM</td><td>The AI itself: a large language model, trained on huge amounts of text to predict what comes next</td></tr>
+			<tr><td>Prompt</td><td>What you write to the model</td></tr>
+			<tr><td>Token</td><td>The unit a model reads and writes: a short word or a piece of a longer one</td></tr>
+			<tr><td>Context window</td><td>Everything the model sees at once: messages, replies, files read. Limited in size</td></tr>
+			<tr><td>Compaction</td><td>Summarizing the conversation so far to free up the context window</td></tr>
+			<tr><td>Reasoning model</td><td>A model that "thinks" (writes out intermediate steps) before answering</td></tr>
+			<tr><td>Open-weight model</td><td>A model you can download and run on your own computer</td></tr>
+			<tr><td>Hallucination</td><td>A confident, plausible, wrong answer</td></tr>
+			<tr><td>Sycophancy</td><td>The model's tendency to agree with you</td></tr>
+			<tr><td>Prompt injection</td><td>Instructions for the agent hidden in a web page, file or paper it reads</td></tr>
+			<tr><td>Agent</td><td>A model that acts: reads files, runs commands, checks results, repeats</td></tr>
+			<tr><td>Harness</td><td>The program that makes a model an agent: tools, context management, permissions. E.g. Claude Code</td></tr>
+			<tr><td>Tool call</td><td>One action of the agent, e.g. reading a file or running a command</td></tr>
+			<tr><td>API</td><td>The interface through which programs (rather than people) talk to a model or service</td></tr>
+		</table>
+	</section>
+	<section>
+		<h2>Glossary 2/5: computers and code</h2>
+		<table class="glossary">
+			<tr><td>Terminal</td><td>A window for typing commands. Also: command line, shell. Windows: PowerShell</td></tr>
+			<tr><td>VS Code</td><td>A code editor. <em>Extensions</em> add features to it, e.g. Python support or Claude Code</td></tr>
+			<tr><td>Command Palette</td><td>Ctrl+Shift+P (Mac: Cmd+Shift+P) in VS Code: search for any command by name</td></tr>
+			<tr><td>Package</td><td>A library of Python code you install with <code>pip</code>, e.g. NumPy</td></tr>
+			<tr><td>Virtual environment</td><td>A folder with its own Python and packages, separate from the rest of the computer</td></tr>
+			<tr><td>Git</td><td>Version control: records every change so that you can review and undo it</td></tr>
+			<tr><td>Repository</td><td>A project folder tracked by Git. GitHub hosts repositories online</td></tr>
+			<tr><td>Commit</td><td>A saved snapshot of the files, with a message saying what changed</td></tr>
+			<tr><td>Diff</td><td>The difference between two versions of a file</td></tr>
+			<tr><td>Branch, worktree</td><td>A parallel line of work in a repository; a worktree is a separate folder for one branch</td></tr>
+			<tr><td>Markdown</td><td>Plain text with light formatting (<code>.md</code>), e.g. <code>AGENTS.md</code></td></tr>
+			<tr><td>JSON</td><td>A plain-text format for structured data, e.g. <code>settings.json</code></td></tr>
+		</table>
+	</section>
+	<section>
+		<h2>Glossary 3/5: checking and extending</h2>
+		<table class="glossary">
+			<tr><td>Test</td><td>A small program that checks code against a known answer. <code>pytest</code> runs them</td></tr>
+			<tr><td>Linter</td><td>Checks code for common mistakes and messy style, e.g. <code>ruff</code></td></tr>
+			<tr><td>Type checker</td><td>Checks that functions get the kinds of values they expect, e.g. <code>pyrefly</code></td></tr>
+			<tr><td>CI</td><td>Continuous integration: a server runs the checks on every change you push</td></tr>
+			<tr><td>AGENTS.md, CLAUDE.md</td><td>Standing instructions the agent reads at the start of every session</td></tr>
+			<tr><td>Plan mode</td><td>The agent only reads and proposes; nothing changes until you approve</td></tr>
+			<tr><td>Permissions, allow-list</td><td>The agent asks before acting; the allow-list names what it may do without asking</td></tr>
+			<tr><td>Skill</td><td>Instructions (and scripts) loaded only when the task matches their description</td></tr>
+			<tr><td>Hook</td><td>A command run automatically at a fixed moment, e.g. after every edit</td></tr>
+			<tr><td>Subagent</td><td>A separate agent with its own context that does a task and reports back</td></tr>
+			<tr><td>MCP server</td><td>A plug-in program that gives the agent new tools or data</td></tr>
+			<tr><td>Headless</td><td>Running the agent from a script, without the interactive window</td></tr>
+		</table>
+	</section>
+	<section>
+		<h2>Glossary 4/5: inside the model</h2>
+		<table class="glossary">
+			<tr><td>Neural network</td><td>A function built from many simple, adjustable units in layers, fitted to data</td></tr>
+			<tr><td>Parameters, weights</td><td>The adjustable numbers of a network, set during training. Their count (e.g. 70 billion) is the model's size</td></tr>
+			<tr><td>Transformer</td><td>The network design of current LLMs (2017): stacked layers of attention and small feed-forward networks</td></tr>
+			<tr><td>Embedding</td><td>A token represented as a long vector of numbers, the form the network computes with</td></tr>
+			<tr><td>Attention</td><td>The step in which each token gathers information from the earlier tokens, weighted by relevance</td></tr>
+			<tr><td>KV cache</td><td>Stored intermediate results (keys and values) of earlier tokens, so they aren't recomputed. Grows with the context</td></tr>
+			<tr><td>Mixture of experts (MoE)</td><td>Only a few sub-networks (experts) run for each token: the compute of a small model, the memory of a large one</td></tr>
+			<tr><td>Temperature</td><td>How random the choice of the next token is: 0 always picks the most likely one</td></tr>
+			<tr><td>Pre-training</td><td>Learning to predict the next token on trillions of tokens of text</td></tr>
+			<tr><td>Post-training</td><td>Turning the text predictor into a helpful assistant: instruction tuning and reinforcement learning</td></tr>
+			<tr><td>Reinforcement learning (RL)</td><td>Training by reward: the model tries, the attempt is scored, the model is nudged toward higher scores. RLHF: the score comes from human preferences</td></tr>
+			<tr><td>Fine-tuning</td><td>Further training of an existing model on a smaller, specific dataset</td></tr>
+			<tr><td>Inference</td><td>Running a trained model to produce output: what you pay for per token</td></tr>
+		</table>
+	</section>
+	<section>
+		<h2>Glossary 5/5: measuring and the wider picture</h2>
+		<table class="glossary">
+			<tr><td>FLOP</td><td>One floating-point operation, e.g. a multiplication. Training compute is counted in FLOP: ~10<sup>27</sup> for the largest runs</td></tr>
+			<tr><td>GPU</td><td>Graphics processing unit: the parallel processor that AI is trained and run on</td></tr>
+			<tr><td>Scaling law</td><td>An empirical power law: the loss falls predictably as parameters, data and compute grow</td></tr>
+			<tr><td>Frontier model</td><td>One of the most capable models at a given time</td></tr>
+			<tr><td>Benchmark</td><td>A fixed set of tasks for comparing models, e.g. SWE-bench (coding) or GPQA (science questions)</td></tr>
+			<tr><td>Contamination</td><td>Test questions that leaked into the training data, so a score measures memory rather than ability</td></tr>
+			<tr><td>Time horizon</td><td>The length of task, in skilled-human working time, that an agent completes with 50&nbsp;% success (METR)</td></tr>
+			<tr><td>Context rot</td><td>A model using its context worse as the context grows, well before it is full</td></tr>
+			<tr><td>Prompt caching</td><td>Re-sent context is read back from a cache instead of recomputed: cheaper and faster</td></tr>
+			<tr><td>Rate limit</td><td>How much you may use per minute, hour or week. Agents reach it quickly</td></tr>
+			<tr><td>Auto mode</td><td>A permission mode in which a second model, a classifier, approves the agent's actions instead of you</td></tr>
+			<tr><td>Sandbox</td><td>An isolated environment in which an agent can't harm the rest of your computer</td></tr>
+			<tr><td>Lean</td><td>A programming language in which mathematical proofs are checked by the computer</td></tr>
+			<tr><td>Zero-day</td><td>A security flaw unknown to the software's maker, so no fix exists yet</td></tr>
+		</table>
 	</section>
 </section>
 
@@ -488,13 +666,18 @@
 		<ul>
 			<li><strong>Cloud frontier models:</strong>
 				<ul>
-					<li>Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5.5), Haiku 4.5</li>
-					<li>OpenAI: GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna (also in Codex)</li>
-					<li>Google: Gemini 4 Argon (rolling out), Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg" alt="Claude"> Anthropic: Claude 5 (Fable 5.1, Opus 5.5, Sonnet 5.5), Haiku 4.5</li>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/66/OpenAI_logo_2025_%28symbol%29.svg" alt="OpenAI"> OpenAI: GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna (also in Codex)</li>
+					<li><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Gemini_icon_2025.svg" alt="Gemini"> Google: Gemini 4 Argon (rolling out), Gemini 3.1 Pro, Gemini 3 Deep Think, Gemini 3.8 Flash</li>
 				</ul>
 			</li>
-			<li><strong>Open-weight models</strong> you can run yourself: Gemma 4, Qwen 3.8, OpenAI's gpt-oss-20b/120b, and larger ones
-				(Kimi, DeepSeek, Mistral Large 4) that need a server. <em>Open-weight</em> = you can download the model and run it on your own computer.
+			<li><strong>Open-weight models</strong> you can run yourself:
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Gemma_icon.png" alt="Gemma"> Gemma 4,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Qwen_logo.svg" alt="Qwen"> Qwen 3.8, and larger ones
+				(<img class="logo" src="https://mistral.ai/cms-media/api/media/file/big-cat-icon.svg" alt="Mistral"> Le Chonk aka. Mistral Large 4,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Moonshot_AI.png" alt="Moonshot AI"> Kimi,
+				<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/9/95/DeepSeek-icon.svg" alt="DeepSeek"> DeepSeek) that need a server.
+				<em>Open-weight</em> = you can download the model and run it on your own computer.
 				The best are ~4 months behind the frontier (Epoch AI); the laptop-sized ones are smaller, but useful</li>
 			<li><strong>Context windows</strong> of up to ~1M tokens: your whole code base, or a paper's LaTeX
 				plus the analysis, in one session, in working memory</li>
@@ -531,6 +714,89 @@
 			Context: Buckmaster (NYU) and Alpöge (Anthropic), working with Claude, found forced blow-up solutions in August 2026 (the first Lean-verified on 22 Aug; manuscripts public in September, e.g. arXiv:2609.16470),
 			and there's a priority dispute. Earlier: DeepMind et al., "Discovery of unstable singularities", arXiv:2509.14185 (numerical, 2025).
 			Check the status again the week before the workshop.
+		</aside>
+	</section>
+	<section>
+		<h2>Prompts from real research</h2>
+		<div class="two-col prompts">
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> PTPlot</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>Please implement the double-broken power law from arXiv:2403.03723 (DOI:10.1088/1475-7516/2024/10/020)
+					in PTPlot as <code>ptplot.science.spectrum.dbpl2024.PowerSpectrumDBPL2024</code>.
+					Rename the existing <code>PowerSpectrumDBPL</code> as <code>PowerSpectrumDBPL2021</code>.
+					If the article is not already in <code>./literature/</code>, download it there, and read its LaTeX source from there.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Medium</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> pttools</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>I have received a bug report that PTtools seems to produce a dip in the temperature profile at the bubble wall
+					using the values below. Please investigate this and if there is still a bug, please fix it.</p>
+					<p>alpha_n = 0.068<br>
+					a_s = 11.582548/0.84<br>
+					a_b = 11.582548<br>
+					v_wall = 0.6428908756714361<br>
+					model = BagModel(a_s=a_s, a_b=a_b)<br>
+					temp = model.temp(bubble.w, bubble.phase)</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Medium</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+			<p class="prompt-result"><strong>Result:</strong> a correct implementation of the physics of the article,
+				verified manually afterwards line by line. All I had to change were the page numbers of the cited articles, which were off by one.</p>
+			<p class="prompt-result"><strong>Result:</strong> a correct fix for a off-by-one bug that had been in the code for years.</p>
+		</div>
+		<aside class="notes">
+			Two prompts from Mika's research work on first-order phase transitions:
+			adding a spectrum model from a paper to PTPlot, and investigating a bug report in PTtools.
+		</aside>
+	</section>
+	<section>
+		<h2>An overnight research task</h2>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> phd-research</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>Please investigate how <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> is inserted properly into the Sound Shell Model equations.
+					Is the current PTtools implementation such as <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> correct?
+					What <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> appear in the GW power spectrum when inserting <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> into the Sound Shell Model?
+					Investigate this and related questions autonomously until 4:45 AM (local UTC+3 time),
+					and document your findings in <code>./notes/</code>.
+					Please create a Markdown report with step-by-step LaTeX equations in <code>./notes/</code>.
+					You may create commits in this <code>phd-research</code> repository, but not in any other repository.
+					You may edit the local copy of the PTtools repository.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">Extra</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+		<p class="prompt-result"><strong>Result:</strong> when I woke up, there was a 14-page report and a Monte Carlo simulation code
+			with new results that, after a more thorough investigation, are likely to become a scientific article.
+			(The 4:45 AM time limit is due to my 5 AM weekly usage limit reset.)</p>
+		<p class="prompt-result"><strong>Conclusions:</strong> The prompts are rather simple.
+			It's the configuration in the repositories that matters.
+			(AGENTS.md, repository structure, data sources, skills & scripts, linting, unit tests)</p>
+		<aside class="notes">
+			A prompt from Mika's PhD research, left to run autonomously overnight. The redacted parts are unpublished research.
 		</aside>
 	</section>
 	<section>
@@ -883,7 +1149,7 @@
 	<section class="backup">
 		<h2>How far behind are the open-weight models?</h2>
 		<figure class="full">
-			<img src="figures/epoch_open_closed_gap.png" alt="Epoch Capabilities Index of the best closed-weight and the best open-weight model, January 2023 to May 2026: the open-weight line trails the closed one">
+			<img src="figures/epoch_open_closed_gap/epoch_open_closed_gap.png" alt="Epoch Capabilities Index of the best closed-weight and the best open-weight model, January 2023 to May 2026: the open-weight line trails the closed one">
 			<figcaption>Best closed vs. best open-weight model on the Epoch Capabilities Index, 2023&ndash;2026.
 				J. Edwards &amp; L. Emberson, Epoch AI, <a href="https://epoch.ai/data-insights/open-closed-eci-gap"><em>Open models lag state-of-the-art closed models by 4 months</em></a> (May 2026), CC BY 4.0</figcaption>
 		</figure>
@@ -1996,6 +2262,37 @@ claude
 			alt="Structure of the agx-ai local AI server" style="display: block; margin: 0 auto; height: 1040px;">
 		<aside class="notes">The structure of the local AI server. Source: github.com/AgenttiX/agx-ai</aside>
 	</section>
+	<section>
+		<h2>This workshop</h2>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> ai-workshop</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>Please review all the documents in <code>./plan/</code> and based on them, create a more detailed plan
+					for the workshop in English in <code>./plan/2026-09-19_ai_plan.md</code>. Include time estimates for each topic.
+					Include both examples that the organizers can run during the presentation, and examples that the workshop
+					participants can practice with. Use reveal.js speaker view notes, where useful.</p>
+					<p>Once you have a plan for the structure of the workshop, create a draft of the presentation in
+					<code>./slides.html</code>. Set up a Python project in the repository for the examples using best practices.
+					Use the existing virtualenv at <code>./venv</code>. You may add packages in <code>requirements.txt</code> as needed.</p>
+					<p>You may ask for additional input from me (Mika) as needed.
+					You may also create additional documents and launch sub-agents as needed.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Fable 5.1</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+		<p class="prompt-result"><strong>Result:</strong> The initial version of this workshop was created with a single prompt.
+			We have improved it quite a bit since, though.
+			You can have a look at the history of the workshop repository for details.</p>
+		<aside class="notes">
+			The prompt of commit 5f00b9a ("Add initial version of the workshop"), one-shotted with Claude Fable 5.1 on 18 Sep 2026.
+		</aside>
+	</section>
 </section>
 
 <!-- ============================================================ WRAP-UP -->
@@ -2018,96 +2315,6 @@ claude
 		<p>Feedback: <span class="todo">QR code / link to the form</span></p>
 		<p>Study credits: <span class="todo">what to submit to the doctoral programme</span></p>
 		<p>Stay and argue with us about the future of science.</p>
-	</section>
-	<section>
-		<h2>Glossary 1/5: AI</h2>
-		<table class="glossary">
-			<tr><td>Model, LLM</td><td>The AI itself: a large language model, trained on huge amounts of text to predict what comes next</td></tr>
-			<tr><td>Prompt</td><td>What you write to the model</td></tr>
-			<tr><td>Token</td><td>The unit a model reads and writes: a short word or a piece of a longer one</td></tr>
-			<tr><td>Context window</td><td>Everything the model sees at once: messages, replies, files read. Limited in size</td></tr>
-			<tr><td>Compaction</td><td>Summarizing the conversation so far to free up the context window</td></tr>
-			<tr><td>Reasoning model</td><td>A model that "thinks" (writes out intermediate steps) before answering</td></tr>
-			<tr><td>Open-weight model</td><td>A model you can download and run on your own computer</td></tr>
-			<tr><td>Hallucination</td><td>A confident, plausible, wrong answer</td></tr>
-			<tr><td>Sycophancy</td><td>The model's tendency to agree with you</td></tr>
-			<tr><td>Prompt injection</td><td>Instructions for the agent hidden in a web page, file or paper it reads</td></tr>
-			<tr><td>Agent</td><td>A model that acts: reads files, runs commands, checks results, repeats</td></tr>
-			<tr><td>Harness</td><td>The program that makes a model an agent: tools, context management, permissions. E.g. Claude Code</td></tr>
-			<tr><td>Tool call</td><td>One action of the agent, e.g. reading a file or running a command</td></tr>
-			<tr><td>API</td><td>The interface through which programs (rather than people) talk to a model or service</td></tr>
-		</table>
-	</section>
-	<section>
-		<h2>Glossary 2/5: computers and code</h2>
-		<table class="glossary">
-			<tr><td>Terminal</td><td>A window for typing commands. Also: command line, shell. Windows: PowerShell</td></tr>
-			<tr><td>VS Code</td><td>A code editor. <em>Extensions</em> add features to it, e.g. Python support or Claude Code</td></tr>
-			<tr><td>Command Palette</td><td>Ctrl+Shift+P (Mac: Cmd+Shift+P) in VS Code: search for any command by name</td></tr>
-			<tr><td>Package</td><td>A library of Python code you install with <code>pip</code>, e.g. NumPy</td></tr>
-			<tr><td>Virtual environment</td><td>A folder with its own Python and packages, separate from the rest of the computer</td></tr>
-			<tr><td>Git</td><td>Version control: records every change so that you can review and undo it</td></tr>
-			<tr><td>Repository</td><td>A project folder tracked by Git. GitHub hosts repositories online</td></tr>
-			<tr><td>Commit</td><td>A saved snapshot of the files, with a message saying what changed</td></tr>
-			<tr><td>Diff</td><td>The difference between two versions of a file</td></tr>
-			<tr><td>Branch, worktree</td><td>A parallel line of work in a repository; a worktree is a separate folder for one branch</td></tr>
-			<tr><td>Markdown</td><td>Plain text with light formatting (<code>.md</code>), e.g. <code>AGENTS.md</code></td></tr>
-			<tr><td>JSON</td><td>A plain-text format for structured data, e.g. <code>settings.json</code></td></tr>
-		</table>
-	</section>
-	<section>
-		<h2>Glossary 3/5: checking and extending</h2>
-		<table class="glossary">
-			<tr><td>Test</td><td>A small program that checks code against a known answer. <code>pytest</code> runs them</td></tr>
-			<tr><td>Linter</td><td>Checks code for common mistakes and messy style, e.g. <code>ruff</code></td></tr>
-			<tr><td>Type checker</td><td>Checks that functions get the kinds of values they expect, e.g. <code>pyrefly</code></td></tr>
-			<tr><td>CI</td><td>Continuous integration: a server runs the checks on every change you push</td></tr>
-			<tr><td>AGENTS.md, CLAUDE.md</td><td>Standing instructions the agent reads at the start of every session</td></tr>
-			<tr><td>Plan mode</td><td>The agent only reads and proposes; nothing changes until you approve</td></tr>
-			<tr><td>Permissions, allow-list</td><td>The agent asks before acting; the allow-list names what it may do without asking</td></tr>
-			<tr><td>Skill</td><td>Instructions (and scripts) loaded only when the task matches their description</td></tr>
-			<tr><td>Hook</td><td>A command run automatically at a fixed moment, e.g. after every edit</td></tr>
-			<tr><td>Subagent</td><td>A separate agent with its own context that does a task and reports back</td></tr>
-			<tr><td>MCP server</td><td>A plug-in program that gives the agent new tools or data</td></tr>
-			<tr><td>Headless</td><td>Running the agent from a script, without the interactive window</td></tr>
-		</table>
-	</section>
-	<section>
-		<h2>Glossary 4/5: inside the model</h2>
-		<table class="glossary">
-			<tr><td>Neural network</td><td>A function built from many simple, adjustable units in layers, fitted to data</td></tr>
-			<tr><td>Parameters, weights</td><td>The adjustable numbers of a network, set during training. Their count (e.g. 70 billion) is the model's size</td></tr>
-			<tr><td>Transformer</td><td>The network design of current LLMs (2017): stacked layers of attention and small feed-forward networks</td></tr>
-			<tr><td>Embedding</td><td>A token represented as a long vector of numbers, the form the network computes with</td></tr>
-			<tr><td>Attention</td><td>The step in which each token gathers information from the earlier tokens, weighted by relevance</td></tr>
-			<tr><td>KV cache</td><td>Stored intermediate results (keys and values) of earlier tokens, so they aren't recomputed. Grows with the context</td></tr>
-			<tr><td>Mixture of experts (MoE)</td><td>Only a few sub-networks (experts) run for each token: the compute of a small model, the memory of a large one</td></tr>
-			<tr><td>Temperature</td><td>How random the choice of the next token is: 0 always picks the most likely one</td></tr>
-			<tr><td>Pre-training</td><td>Learning to predict the next token on trillions of tokens of text</td></tr>
-			<tr><td>Post-training</td><td>Turning the text predictor into a helpful assistant: instruction tuning and reinforcement learning</td></tr>
-			<tr><td>Reinforcement learning (RL)</td><td>Training by reward: the model tries, the attempt is scored, the model is nudged toward higher scores. RLHF: the score comes from human preferences</td></tr>
-			<tr><td>Fine-tuning</td><td>Further training of an existing model on a smaller, specific dataset</td></tr>
-			<tr><td>Inference</td><td>Running a trained model to produce output: what you pay for per token</td></tr>
-		</table>
-	</section>
-	<section>
-		<h2>Glossary 5/5: measuring and the wider picture</h2>
-		<table class="glossary">
-			<tr><td>FLOP</td><td>One floating-point operation, e.g. a multiplication. Training compute is counted in FLOP: ~10<sup>27</sup> for the largest runs</td></tr>
-			<tr><td>GPU</td><td>Graphics processing unit: the parallel processor that AI is trained and run on</td></tr>
-			<tr><td>Scaling law</td><td>An empirical power law: the loss falls predictably as parameters, data and compute grow</td></tr>
-			<tr><td>Frontier model</td><td>One of the most capable models at a given time</td></tr>
-			<tr><td>Benchmark</td><td>A fixed set of tasks for comparing models, e.g. SWE-bench (coding) or GPQA (science questions)</td></tr>
-			<tr><td>Contamination</td><td>Test questions that leaked into the training data, so a score measures memory rather than ability</td></tr>
-			<tr><td>Time horizon</td><td>The length of task, in skilled-human working time, that an agent completes with 50&nbsp;% success (METR)</td></tr>
-			<tr><td>Context rot</td><td>A model using its context worse as the context grows, well before it is full</td></tr>
-			<tr><td>Prompt caching</td><td>Re-sent context is read back from a cache instead of recomputed: cheaper and faster</td></tr>
-			<tr><td>Rate limit</td><td>How much you may use per minute, hour or week. Agents reach it quickly</td></tr>
-			<tr><td>Auto mode</td><td>A permission mode in which a second model, a classifier, approves the agent's actions instead of you</td></tr>
-			<tr><td>Sandbox</td><td>An isolated environment in which an agent can't harm the rest of your computer</td></tr>
-			<tr><td>Lean</td><td>A programming language in which mathematical proofs are checked by the computer</td></tr>
-			<tr><td>Zero-day</td><td>A security flaw unknown to the software's maker, so no fix exists yet</td></tr>
-		</table>
 	</section>
 </section>
 

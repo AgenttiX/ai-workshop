@@ -31,7 +31,8 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 ## Project structure
 - `./dev/` contains temporary files (Markdown etc.) that are not tracked in Git.
 - `./figures/` contains the figures of the slides, and the data and Plotly scripts for the plots made by us
-  (requirements in `figures/requirements.txt`).
+  (requirements in `figures/requirements.txt`). It's a Python package with the shared plotting code in `figures/common.py`,
+  so run the scripts as modules, e.g. `python -m figures.plot_time_horizon`.
 - `./exercises/` contains the exercises for the participants, one directory per exercise with a `README.md`.
   The starters are deliberately imperfect (e.g. `01_fix_the_bug` has a physics bug and `04_ai_ready` has lint errors),
   so their tests are not run by the default `pytest`, and `04_ai_ready` is excluded from the linter and type checker.
@@ -42,6 +43,7 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - `./slides.html` is the reveal.js presentation slides. Speaker notes are in `<aside class="notes">` elements.
 - `./solutions/` contains the reference solutions of the exercises, each with a `README.md` explaining what happened.
   The code is tested in CI.
+- `./themes/` contains custom reveal.js themes for the slides (`_base.css` + one file of variables per theme, see `themes/README.md`).
 - `./tests/` contains the tests of the `workshop` package.
 - `./workshop/` is a small Python package with helpers shared by the exercises (environment check, plotting style, data generation).
 
