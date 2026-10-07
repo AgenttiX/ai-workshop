@@ -51,6 +51,10 @@ Each curve shows the models that had a higher Epoch Capabilities Index (ECI) tha
   CC BY 4.0), downloaded on 2026-10-07. The parameter counts are from the model names and model cards.
   The ECI has been refitted since May 2026, which changes the scores of the same models by about ±1 (standard deviation),
   so the curves can be compared to within about that accuracy.
+- `extract_consumer_models.py`: the script that makes `consumer_gpu_models.csv` from `benchmark_data.zip`.
+  The models and their parameter counts are listed in the script.
+- `benchmark_data.zip`: Epoch AI's benchmark data, downloaded on 2026-10-07.
+  It's not in Git (`*.zip` is in `.gitignore`), so download it with the `--download` option of the script.
 - `epoch_open_closed_gap.py`: the plotting script.
 
 All of these files are in `epoch_open_closed_gap/`.
@@ -59,6 +63,11 @@ To regenerate the figure:
 ```bash
 pip install -r figures/requirements.txt
 python -m figures.epoch_open_closed_gap.epoch_open_closed_gap
+```
+To update the 32 GB GPU curve with the newest data of Epoch AI, add any new models to `MODELS`
+in `extract_consumer_models.py`, then run before the plotting script:
+```bash
+python -m figures.epoch_open_closed_gap.extract_consumer_models --download
 ```
 
 ## Third-party figures

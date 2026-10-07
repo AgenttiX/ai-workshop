@@ -27,8 +27,8 @@ Qwen3-30B-A3B,Alibaba,2025-04-29,30.5,3.3,Open weights (unrestricted),136.18,129
 Magistral Small 1.0,Mistral AI,2025-06-10,24.0,24.0,Open weights (unrestricted),133.19,128.75,134.47
 Qwen3-30B-A3B-Thinking (Jul 2025),Alibaba,2025-07-30,30.5,3.3,Open weights (unrestricted),139.63,135.51,140.97
 gpt-oss-20b,OpenAI,2025-08-05,20.9,3.6,Open weights (unrestricted),137.82,132.91,139.61
-Qwen3.5-9B,Alibaba,2026-02-24,9.0,9.0,Open weights (restricted use),139.46,136.25,141.51
 Qwen3.5-35B-A3B,Alibaba,2026-02-24,35.0,3.0,Open weights (unrestricted),142.52,140.29,144.81
+Qwen3.5-9B,Alibaba,2026-02-24,9.0,9.0,Open weights (restricted use),139.46,136.25,141.51
 Gemma 4 31B,Google DeepMind,2026-04-02,30.7,30.7,Open weights (restricted use),142.74,140.25,145.1
 Gemma 4 26B A4B,Google DeepMind,2026-04-02,25.2,3.8,Open weights (unrestricted),141.85,138.71,143.42
 Qwen3.6-35B-A3B,Alibaba,2026-04-14,35.0,3.0,Open weights (unrestricted),143.93,141.21,145.93

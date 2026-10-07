@@ -21,3 +21,5 @@ solutions/**/results/
 poster/build/
 # Private venv of the Inkscape MCP server
 poster/.venv/
+# Downloaded data, e.g. figures/epoch_open_closed_gap/benchmark_data.zip
+*.zip
