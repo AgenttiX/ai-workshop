@@ -34,7 +34,7 @@ Used unchanged unless marked as cropped. The captions in the slides carry the sa
 |---|---|---|
 | `lost_in_the_middle.png` | N. F. Liu et al., *Lost in the Middle: How Language Models Use Long Contexts*, TACL 12, 157 (2024), [doi:10.1162/tacl_a_00638](https://doi.org/10.1162/tacl_a_00638), Fig. 1 | CC BY 4.0 (the TACL version; the arXiv version is not CC-licensed) |
 | `hallucinated_references_arxiv.png` | Z. Zhao et al., *LLM hallucinations in the wild: Large-scale evidence from non-existent citations*, [arXiv:2605.07723](https://arxiv.org/abs/2605.07723), Fig. 1a, cropped to the arXiv panel | CC BY 4.0 |
-| `epoch_open_closed_gap.png` | J. Edwards & L. Emberson, Epoch AI, [*Open models lag state-of-the-art closed models by 4 months*](https://epoch.ai/data-insights/open-closed-eci-gap), May 2026 | CC BY 4.0 |
+| `epoch_open_closed_gap/epoch_open_closed_gap.png` | J. Edwards & L. Emberson, Epoch AI, [*Open models lag state-of-the-art closed models by 4 months*](https://epoch.ai/data-insights/open-closed-eci-gap), May 2026 | CC BY 4.0 |
 | `hep_agent_timings.png` | E. A. Moreno et al., *AI Agents Can Already Autonomously Perform Experimental High Energy Physics*, [arXiv:2603.20179](https://arxiv.org/abs/2603.20179) | CC BY 4.0 |
 | `mistral_logo.svg` | Mistral AI logo, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mistral_AI_logo_(2025%E2%80%93).svg) | Public domain (text logo); a trademark of Mistral AI |
 | `metr_forecast_vs_observed.png` | METR (J. Becker, N. Rush et al.), *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, [arXiv:2507.09089](https://arxiv.org/abs/2507.09089) | CC BY 4.0 |
