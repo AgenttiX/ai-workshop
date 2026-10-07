@@ -44,20 +44,20 @@
 			.two-col {
 				display: grid;
 				grid-template-columns: 1fr 1fr;
-				gap: 1.5em;
+				gap: 2.5em;
 				align-items: start;
 			}
 			.callout {
 				border-left: 6px solid #3b8bd0;
 				background: rgba(59, 139, 208, 0.08);
-				padding: 0.4em 0.8em;
-				margin: 0.6em 0;
+				padding: 0.5em 0.9em;
+				margin: 0.9em 0;
 			}
 			.reveal table {
 				font-size: 0.85em;
 			}
 			.reveal table th, .reveal table td {
-				padding: 0.2em 0.6em;
+				padding: 0.3em 0.6em;
 			}
 			.reveal pre {
 				width: 100%;
@@ -81,14 +81,58 @@
 			.reveal .divider p {
 				color: #555;
 			}
-			.reveal ul {
-				line-height: 1.4;
+			.reveal ul, .reveal ol {
+				line-height: 1.5;
 			}
 			.reveal ul li ul li {
 				font-size: 85%;
 			}
-			.reveal .schedule li {
-				margin: 0.3em 0;
+			/* Air between the points of a list; less between the sub-points */
+			.reveal li + li {
+				margin-top: 0.45em;
+			}
+			.reveal li li + li, .reveal li > ul, .reveal li > ol {
+				margin-top: 0.2em;
+			}
+			/* Lists in the narrow columns wrap a lot, so they get less air */
+			.reveal .two-col ul, .reveal .two-col ol {
+				line-height: 1.4;
+			}
+			.reveal .two-col li + li {
+				margin-top: 0.3em;
+			}
+			.reveal .slides section h2 {
+				margin-bottom: 0.7em;
+			}
+			/* Text takes the left two thirds, so that the lines stay readable.
+			   Tables, code, columns and diagrams keep the full width, and so does a slide with class="wide". */
+			.reveal .slides section:not(.center-slide):not(.wide) > :is(ul, ol, p, .def, .callout) {
+				max-width: 64%;
+			}
+			/* A slide with a figure: <div class="media"><div>text</div><figure>…</figure></div> */
+			.reveal .media {
+				display: grid;
+				grid-template-columns: 62% 1fr;
+				gap: 2em;
+				align-items: center;
+			}
+			.reveal figure {
+				margin: 0;
+			}
+			.reveal figure img {
+				display: block;
+				margin: 0 auto;
+				max-height: 640px;
+				object-fit: contain;
+			}
+			.reveal figure.full img {
+				max-height: 700px;
+			}
+			.reveal figcaption {
+				font-size: 0.45em;
+				line-height: 1.35;
+				color: #555;
+				margin-top: 0.5em;
 			}
 			/* Backup slides: reached with the arrow keys, skipped by Space, N, P and the clicker */
 			.reveal .slides section.backup::before {
@@ -130,8 +174,8 @@
 			.def {
 				border-left: 6px solid #d9663f;
 				background: rgba(217, 102, 63, 0.08);
-				padding: 0.3em 0.8em;
-				margin: 0.3em 0 0.6em 0;
+				padding: 0.4em 0.9em;
+				margin: 0.4em 0 0.9em 0;
 			}
 			.glossary td:first-child {
 				font-weight: bold;
@@ -219,7 +263,7 @@
 				<ol class="schedule">
 					<li>Extending the harness: skills, hooks, agents, MCP</li>
 					<li>Making your project AI-ready: tests, linting, CI</li>
-					<li>Three demos: research loop, supercomputer, local models</li>
+					<li>Three demos: continuous research loops, supercomputer use, running local models</li>
 					<li>Hands-on and discussion</li>
 					<li>Final words</li>
 				</ol>
@@ -245,7 +289,7 @@
 	<section>
 		<h2>How we learned all this: by asking</h2>
 		<ul>
-			<li>We learned to use these tools on our own, mostly by <strong>asking Claude and other models along the way</strong>:
+			<li>We learned to use these tools on our own, <strong>mostly by asking Claude and other models along the way</strong>:
 				"What does this error mean?", "What is a virtual environment?", "How do I do this in VS Code?"</li>
 			<li>That is the mindset shift: a patient explanation of almost anything is now one question away,
 				at your level, as many times as you need it</li>
@@ -263,19 +307,18 @@
 	<section>
 		<h2>Words we'll use all day</h2>
 		<table class="glossary">
-			<tr><td>Model (LLM)</td><td>The AI itself: a program trained on huge amounts of text to predict what comes next. Claude, GPT and Gemini are models.</td></tr>
-			<tr><td>Prompt</td><td>What you write to the model: a question, a task, instructions.</td></tr>
-			<tr><td>Token</td><td>The unit a model reads and writes: a short word or a piece of a longer one. Limits and prices are counted in tokens.</td></tr>
-			<tr><td>Context window</td><td>Everything the model can "see" at once: your messages, its replies, the files it has read. It has a maximum size.</td></tr>
-			<tr><td>Agent</td><td>A model that can act: read files, run commands, check the result and try again until the task is done.</td></tr>
-			<tr><td>Harness</td><td>The program around the model that makes it an agent: it gives the model tools, manages its context and asks your permission. Claude Code is a harness.</td></tr>
+			<tr><td>Model (LLM)</td><td>The AI itself: a program trained on huge amounts of data to predict what comes next. Claude, GPT and Gemini are models.</td></tr>
+			<tr><td>Prompt</td><td>What you write to the model.</td></tr>
+			<tr><td>Token</td><td>The unit a model reads and writes at once. Limits and prices are counted in tokens.</td></tr>
+			<tr><td>Context window</td><td>Everything the model can "see"/"remember" at once: your messages, its replies, the files it has read. It has a maximum size.</td></tr>
+			<tr><td>Agent</td><td>A model prompted in a specific manner, and can act on its own, like read files and run code.</td></tr>
+			<tr><td>Harness</td><td>A program around the model that makes it an agent: <em>it gives the model tools, manages its context and asks your permission</em>. Claude Code is a harness.</td></tr>
 			<tr><td>Tool call</td><td>One action of the agent, e.g. "read this file" or "run this command".</td></tr>
 			<tr><td>Terminal</td><td>A window where you type commands instead of clicking.</td></tr>
 			<tr><td>Repository</td><td>A project folder whose history is tracked by Git, the version-control program.</td></tr>
 		</table>
 		<aside class="notes">
-			Don't read the table aloud. Say: these nine words come up constantly; the rest we define when they appear,
-			in the orange boxes, and the glossary at the end has everything.
+			Don't read the table aloud. Say: these nine words come up constantly; the rest we define when they appear, in the orange boxes, and the glossary at the end has everything.
 		</aside>
 	</section>
 </section>
@@ -353,6 +396,19 @@
 			(Mika's showcase).
 		</aside>
 	</section>
+	<section class="backup">
+		<h2>How far behind are the open-weight models?</h2>
+		<figure class="full">
+			<img src="figures/epoch_open_closed_gap.png" alt="Epoch Capabilities Index of the best closed-weight and the best open-weight model, January 2023 to May 2026: the open-weight line trails the closed one">
+			<figcaption>Best closed vs. best open-weight model on the Epoch Capabilities Index, 2023&ndash;2026.
+				J. Edwards &amp; L. Emberson, Epoch AI, <a href="https://epoch.ai/data-insights/open-closed-eci-gap"><em>Open models lag state-of-the-art closed models by 4 months</em></a> (May 2026), CC BY 4.0</figcaption>
+		</figure>
+		<aside class="notes">
+			Epoch: since January 2026 the best open-weight models have trailed the best closed ones by about 4 months on average,
+			about 6 months if the open model must score strictly higher. These are the best open models, which need a server;
+			the ones that fit on a laptop are smaller and further behind.
+		</aside>
+	</section>
 	<section>
 		<h2>Science is not done in a chat window</h2>
 		<ul>
@@ -377,6 +433,21 @@
 			Context: Buckmaster &amp; Alpöge (Anthropic) had Lean-verified forced blow-up results for Euler/Boussinesq in August 2026,
 			and there's a priority dispute. Earlier: DeepMind et al., "Discovery of unstable singularities", arXiv:2509.14185 (numerical, 2025).
 			Check the status again the week before the workshop.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Closer to home: particle-physics analyses by an agent</h2>
+		<figure class="full">
+			<img src="figures/hep_agent_timings.png" alt="Wall-clock hours per analysis on ALEPH, DELPHI and CMS open data, split into autonomous agent work, rate-limit waits and human review">
+			<figcaption>Claude Code ran whole analyses on ALEPH, DELPHI and CMS open data: event selection, backgrounds,
+				uncertainties, statistical inference and a paper draft. Hours per analysis.
+				E. A. Moreno et al., <a href="https://arxiv.org/abs/2603.20179"><em>AI Agents Can Already Autonomously Perform Experimental High Energy Physics</em></a>,
+				arXiv:2603.20179 (2026), CC BY 4.0</figcaption>
+		</figure>
+		<aside class="notes">
+			Dark bars: autonomous work, about 8&ndash;11 h per analysis; mid blue: waiting for rate limits; light: active human review.
+			The authors frame it as offloading the repetitive technical work so that people can concentrate on validation,
+			not as replacing the validation.
 		</aside>
 	</section>
 	<section>
@@ -434,18 +505,26 @@
 	</section>
 	<section>
 		<h2>Why file access and context matter</h2>
-		<ul>
-			<li>The model knows <strong>only what's in its context window</strong> (everything it sees at once): no memory between sessions unless the harness provides it</li>
-			<li>File access means the context is filled with the <em>truth</em>: your code, your data, the actual error message</li>
-			<li>Context is finite and degrades when full: the harness (and you) decide what goes in
-				<ul>
-					<li><code>AGENTS.md</code>: the standing instructions, read every session</li>
-					<li>Tool outputs: what it read and ran</li>
-					<li>Compaction: summarizing the conversation so far when the window fills up</li>
-				</ul>
-			</li>
-			<li>Rule of thumb: <strong>one task per session</strong>, clear when switching</li>
-		</ul>
+		<div class="media">
+			<ul>
+				<li>The model knows <strong>only what's in its context window</strong> (everything it sees at once): no memory between sessions unless the harness provides it</li>
+				<li>File access means the context is filled with the <em>truth</em>: your code, your data, the actual error message</li>
+				<li>Context is finite and degrades when full: the harness (and you) decide what goes in
+					<ul>
+						<li><code>AGENTS.md</code>: the standing instructions, read every session</li>
+						<li>Tool outputs: what it read and ran</li>
+						<li>Compaction: summarizing the conversation so far when the window fills up</li>
+					</ul>
+				</li>
+				<li>Rule of thumb: <strong>one task per session</strong>, clear when switching</li>
+			</ul>
+			<figure>
+				<img src="figures/lost_in_the_middle.png" alt="Accuracy of answering a question vs. the position of the relevant document among 20: high at the start and end, lowest in the middle">
+				<figcaption>"Lost in the middle": the answer is found less often when it sits in the middle of the context.
+					GPT-3.5, 2023; newer models do better, but still degrade as the context grows.
+					N. F. Liu et al., TACL 12, 157 (2024), Fig. 1, CC BY 4.0</figcaption>
+			</figure>
+		</div>
 	</section>
 	<section>
 		<h2>The landscape</h2>
@@ -479,15 +558,22 @@
 	</section>
 	<section>
 		<h2>It still makes things up &mdash; now at scale</h2>
-		<ul>
-			<li><strong>Hallucination:</strong> confident, plausible, wrong. Citations that don't exist, APIs that don't exist,
-				physics that's off by a factor of 2</li>
-			<li><strong>Sycophancy:</strong> it tends to agree with you. Ask for critique explicitly, or let a second agent review</li>
-			<li><strong>The remedy is not trust but verification built into the workflow:</strong>
-				tests, validations, cross-checks against known results &mdash; things the agent can run itself</li>
-			<li>Session 2 is about exactly this: making your project a place where the agent's mistakes get caught
-				before they reach you</li>
-		</ul>
+		<div class="media">
+			<ul>
+				<li><strong>Hallucination:</strong> confident, plausible, wrong. Citations that don't exist, APIs that don't exist,
+					physics that's off by a factor of 2</li>
+				<li><strong>Sycophancy:</strong> it tends to agree with you. Ask for critique explicitly, or let a second agent review</li>
+				<li><strong>The remedy is not trust but verification built into the workflow:</strong>
+					tests, validations, cross-checks against known results &mdash; things the agent can run itself</li>
+				<li>Session 2 is about exactly this: making your project a place where the agent's mistakes get caught
+					before they reach you</li>
+			</ul>
+			<figure>
+				<img src="figures/hallucinated_references_arxiv.png" alt="Estimated rate of non-existent references in arXiv papers, 2020 to 2025: about zero until 2024, then rising to about 0.4 %">
+				<figcaption>Non-existent references in arXiv papers, estimated as the excess over the pre-LLM baseline.
+					Z. Zhao et al., arXiv:2605.07723 (2026), Fig. 1a (cropped), CC BY 4.0</figcaption>
+			</figure>
+		</div>
 		<aside class="notes">
 			The blackbody exercise later is a hallucination-shaped bug: an exponent of 4 instead of 5. A test catches it in a second.
 		</aside>
@@ -523,6 +609,16 @@
 		<aside class="notes">
 			One slide only for the philosophy. Invite the discussion to lunch. Then: questions, 5 minutes.
 		</aside>
+	</section>
+	<section class="backup">
+		<h2>Does it actually make us faster?</h2>
+		<figure class="full">
+			<img src="figures/metr_forecast_vs_observed.png" alt="Forecast speed-ups by economists, ML experts and developers vs. the observed effect: tasks took 19 % longer with AI">
+			<figcaption>Randomised trial, 16 experienced open-source developers, early-2025 tools: everyone forecast a speed-up,
+				but tasks took 19 % longer with AI. METR, <a href="https://arxiv.org/abs/2507.09089">arXiv:2507.09089</a> (2025), CC BY 4.0.
+				METR's <a href="https://metr.org/blog/2026-02-24-uplift-update/">February 2026 follow-up</a> with late-2025 tools points to a speed-up,
+				but METR calls that estimate unreliable: many developers no longer want to work without AI.</figcaption>
+		</figure>
 	</section>
 	<section class="center-slide">
 		<h2>Questions so far?</h2>
@@ -676,17 +772,24 @@
 	</section>
 	<section>
 		<h2>What was wrong</h2>
-		<pre><code class="language-diff" data-trim>
+		<div class="media">
+			<div>
+				<pre><code class="language-diff" data-trim>
 	-        return 2 * H * C**2 / wavelength**4 / np.expm1(x)
 	+        return 2 * H * C**2 / wavelength**5 / np.expm1(x)
-		</code></pre>
-		<p class="def"><strong>Diff:</strong> the difference between two versions of a file. Red (&minus;) lines were removed, green (+) lines added.</p>
-		<ul>
-			<li>With \(\lambda^4\) the code computes \(\lambda B_\lambda\), which peaks at a longer wavelength: 635 nm instead of 502 nm for the Sun.
-				That's 27 % off; the test allows 0.1 %</li>
-			<li>The program ran and the plot looked like a black-body spectrum. Only a check against known physics caught it</li>
-			<li>AI-written code fails in exactly this way. That's why tests matter more with AI, not less</li>
-		</ul>
+				</code></pre>
+				<p class="def"><strong>Diff:</strong> the difference between two versions of a file. Red (&minus;) lines were removed, green (+) lines added.</p>
+				<ul>
+					<li>With \(\lambda^4\) the code computes \(\lambda B_\lambda\), which peaks at a longer wavelength: 635 nm instead of 502 nm for the Sun.
+						That's 27 % off; the test allows 0.1 %</li>
+					<li>The program ran and the plot looked like a black-body spectrum. Only a check against known physics caught it</li>
+					<li>AI-written code fails in exactly this way. That's why tests matter more with AI, not less</li>
+				</ul>
+			</div>
+			<figure>
+				<img src="figures/blackbody_bug.png" alt="Normalised spectral radiance of the Sun: the correct curve peaks at 502 nm, the buggy one at 635 nm; both look like plausible black-body spectra">
+			</figure>
+		</div>
 	</section>
 	<section>
 		<h2>Four things you control</h2>
@@ -754,7 +857,14 @@
 	<section>
 		<h2>Permissions</h2>
 		<p class="def">Before the agent edits a file or runs a command, Claude Code asks you. An <em>allow-list</em> in a settings file lets safe commands run without asking.</p>
-		<pre><code class="language-json" data-trim>
+		<div class="two-col">
+			<ul>
+				<li><code>"Bash(pytest:*)"</code> = may run any command starting with <code>pytest</code> without asking you</li>
+				<li><code>.claude/settings.json</code> in the repository (shared with the group) or <code>~/.claude/settings.json</code> (personal)</li>
+				<li>Safe to allow: tests, linters, read-only git. Keep the prompt for: installs, network, deletion, <code>git push</code></li>
+				<li>Modes: default (asks first) &rarr; accept edits (edits files without asking) &rarr; plan (reads and proposes only) &rarr; auto (a safety classifier approves most actions; trusted inputs only, preferably sandboxed)</li>
+			</ul>
+			<pre><code class="language-json" data-trim>
 {
   "permissions": {
     "allow": [
@@ -765,13 +875,8 @@
     ]
   }
 }
-		</code></pre>
-		<ul>
-			<li><code>"Bash(pytest:*)"</code> = may run any command starting with <code>pytest</code> without asking you</li>
-			<li><code>.claude/settings.json</code> in the repository (shared with the group) or <code>~/.claude/settings.json</code> (personal)</li>
-			<li>Safe to allow: tests, linters, read-only git. Keep the prompt for: installs, network, deletion, <code>git push</code></li>
-			<li>Modes: default (asks first) &rarr; accept edits (edits files without asking) &rarr; plan (reads and proposes only) &rarr; auto (a safety classifier approves most actions; trusted inputs only, preferably sandboxed)</li>
-		</ul>
+			</code></pre>
+		</div>
 	</section>
 	<section>
 		<h2>Hands-on 1 (25 min)</h2>
@@ -1261,7 +1366,8 @@ claude
 			if (/print-pdf/.test(window.location.search)) {
 				document.querySelectorAll("iframe[data-src]").forEach(iframe => { iframe.src = iframe.dataset.src; });
 			}
-			const isBackup = slide => slide.classList.contains("backup");
+			// The slide is undefined when reveal.js computes the slide number during initialization.
+			const isBackup = slide => slide?.classList.contains("backup") ?? false;
 
 			// Step to the next or previous main slide, jumping over the backup slides.
 			function stepMain(direction) {
