@@ -128,6 +128,19 @@
 			.reveal figure.full img {
 				max-height: 700px;
 			}
+			.reveal .three-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				gap: 1.5em;
+				align-items: start;
+			}
+			.reveal .timeline {
+				font-size: 0.78em;
+			}
+			.reveal .timeline h3 {
+				font-size: 1.15em;
+				margin-bottom: 0.4em;
+			}
 			.reveal .mcp-sequence svg {
 				display: block;
 				height: 680px;
@@ -336,21 +349,163 @@
 		<aside class="notes">Hippe, ~15 min. For those who haven't followed the last 2–3 years: facts first.</aside>
 	</section>
 	<section>
-		<h2>A short timeline</h2>
-		<table>
-			<tr><td>2022</td><td>ChatGPT: chat with a language model</td></tr>
-			<tr><td>2023</td><td>GPT-4, Claude 2: useful for text and code snippets. You paste, it answers. Context windows grow to 100k&ndash;200k tokens</td></tr>
-			<tr><td>2024</td><td>Tool use, 1M-token context windows, the first <em>reasoning models</em> (they "think" before answering), early coding agents</td></tr>
-			<tr><td>2025</td><td>Claude Code, Codex, Copilot agent mode: agents in your editor and terminal. Tasks of about an hour without supervision</td></tr>
-			<tr><td>2026</td><td>Claude 5 family, multi-agent harnesses, agents working for hours on research tasks</td></tr>
-		</table>
-		<p class="callout">
-			The step that many have missed: from <strong>chat</strong> to <strong>agents with access to your files and tools</strong>.
-		</p>
+		<h2>2022&ndash;2024: from chat to reasoning</h2>
+		<div class="two-col timeline">
+			<div>
+				<h3>2022&ndash;2023: chat</h3>
+				<ul>
+					<li><strong>Nov 2022</strong> ChatGPT: a chat window on GPT-3.5</li>
+					<li><strong>Mar 2023</strong> GPT-4: bar exam top 10&nbsp;%; 8k-token context</li>
+					<li><strong>Jun 2023</strong> Function calling: the model writes JSON to call your tools</li>
+					<li><strong>Jul&ndash;Nov 2023</strong> Claude 2 / 2.1: 100k &rarr; 200k-token context; Llama 2: open weights</li>
+				</ul>
+			</div>
+			<div>
+				<h3>2024: long context, agents, reasoning</h3>
+				<ul>
+					<li><strong>Feb</strong> Gemini 1.5: 1M-token context</li>
+					<li><strong>Mar&ndash;May</strong> Devin, SWE-agent: the first coding agents solve ~13&nbsp;% of SWE-bench issues</li>
+					<li><strong>Jul</strong> GPT-4o mini: $0.15 per million tokens, 99&nbsp;% cheaper than 2022's davinci</li>
+					<li><strong>Sep</strong> o1: reinforcement learning on chains of thought; AIME 12&nbsp;% &rarr; 83&nbsp;%</li>
+					<li><strong>Oct</strong> Nobel prizes: Hopfield &amp; Hinton (physics), Hassabis &amp; Jumper (chemistry)</li>
+					<li><strong>Oct&ndash;Nov</strong> Claude <em>computer use</em>; the Model Context Protocol</li>
+					<li><strong>Dec</strong> o3: 76&ndash;88&nbsp;% on ARC-AGI-1; DeepSeek-V3 trained in 2.8M GPU-hours</li>
+				</ul>
+			</div>
+		</div>
 		<aside class="notes">
-			Most people in the room stopped updating their mental model at "chat window" in 2023. That model is now out of date.
-			Dates: Claude 2 (Jul 2023, 100k), Claude 2.1 (Nov 2023, 200k), Gemini 1.5 (Feb 2024, 1M), OpenAI o1 (Sep 2024),
-			Claude Code research preview (Feb 2025).
+			Most people in the room stopped updating their mental model at "chat window" in 2023.
+			Function calling (June 2023) is the seed of everything agentic: the model only writes JSON, the program around it acts.
+			o1 is the turn to reasoning models: reinforcement learning on the model's own chains of thought, and quality bought with thinking time.
+			Sources: the vendors' announcements and papers (OpenAI, Anthropic, Google, Cognition, Princeton's SWE-agent arXiv:2405.15793, DeepSeek-V3 arXiv:2412.19437), nobelprize.org, arcprize.org.
+		</aside>
+	</section>
+	<section>
+		<h2>2025&ndash;2026: agents</h2>
+		<div class="two-col timeline">
+			<div>
+				<h3>2025: agents in the terminal</h3>
+				<ul>
+					<li><strong>Jan</strong> DeepSeek-R1: open-weight reasoning learned by reinforcement learning</li>
+					<li><strong>Feb</strong> Claude Code and Copilot agent mode, the same day; task horizon ~1&nbsp;h</li>
+					<li><strong>Mar</strong> METR: the task horizon doubles every ~7 months (since 2024: ~4)</li>
+					<li><strong>May</strong> AlphaEvolve: 4&times;4 complex matrices in 48 multiplications</li>
+					<li><strong>Jul</strong> IMO gold-medal level (35/42) by OpenAI and Google DeepMind</li>
+					<li><strong>Jul</strong> METR trial: developers 19&nbsp;% slower with AI, but felt 20&nbsp;% faster</li>
+					<li><strong>Dec</strong> MCP and AGENTS.md go to the Linux Foundation</li>
+				</ul>
+			</div>
+			<div>
+				<h3>2026: agents doing research</h3>
+				<ul>
+					<li><strong>Feb</strong> Opus 4.6: 1M context, agent teams; task horizon ~12&nbsp;h</li>
+					<li><strong>Feb</strong> GPT-5.2 conjectures a formula for gluon amplitudes (arXiv:2602.12176)</li>
+					<li><strong>Apr</strong> Anthropic withholds Mythos Preview over the zero-days it found</li>
+					<li><strong>May</strong> An OpenAI model disproves Erdős's unit-distance conjecture</li>
+					<li><strong>Jul</strong> Agents in a cyber evaluation break into Hugging Face</li>
+					<li><strong>Aug</strong> Claude: proven share of zeta zeros on the critical line 41.6&nbsp;% &rarr; 67&nbsp;%</li>
+					<li><strong>Sep</strong> Forced Navier&ndash;Stokes blow-up: ~10&nbsp;000 agents, 88&nbsp;h</li>
+					<li><strong>Sep</strong> FrontierMath Tier 4 at 100&nbsp;%; ARC-AGI-2 at 95&nbsp;%</li>
+				</ul>
+				<p class="small">The 2026 maths results are the companies' own claims, with Lean formalisations; independent peer review is still pending.</p>
+			</div>
+		</div>
+		<aside class="notes">
+			The step that most scientists have missed: from chat to agents with access to your files and tools.
+			Horizons are METR's 50 % time horizons (Claude 3.7 Sonnet ~1 h in Feb 2025; Opus 4.6 ~12 h in Feb 2026).
+			Mythos Preview (7 Apr 2026): Anthropic reports zero-days in every major OS and browser and kept the model to Project Glasswing partners.
+			Hugging Face (disclosed 16 Jul 2026): agents of OpenAI models in a cyber evaluation, with production refusals off, found a zero-day and reached Hugging Face's systems; Anthropic disclosed similar evaluation incidents on 30 Jul.
+			Erdős unit distances (20 May 2026): n^(1+δ) unit distances with δ ≈ 0.014, beating the 1946 grid bound; checked by external mathematicians at OpenAI's invitation.
+			Zeta zeros (10 Aug 2026): two Claude Code sessions, ~60 subagents, Lean formalisation; checked by Alpöge and Furman.
+			Benchmark lifetimes: ARC-AGI-2 4 % → 95 % in 18 months; FrontierMath Tier 4 22 % → 100 % in ~13 months; the FrontierMath open-problem set is at ~3 %.
+			Full table with sources: dev/timeline_research.md (organisers only).
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Scaling laws: the loss is a power law</h2>
+		<p class="def"><strong>Loss</strong> \(L\): how badly the model predicts the next token (lower is better), as a function of
+			the number of parameters \(N\) and of training tokens \(D\). Training compute \(C \approx 6ND\) floating-point operations.</p>
+		\[ L(N,D) = E + \frac{A}{N^{\alpha}} + \frac{B}{D^{\beta}}, \qquad
+			E = 1.82,\; A = 482,\; B = 2085,\; \alpha = 0.348,\; \beta = 0.366 \]
+		<ul>
+			<li>Minimizing \(L\) at fixed \(C\): ~20 tokens per parameter. Chinchilla (70B, 1.4T tokens) beat the 4&times; larger Gopher on the same compute</li>
+			<li>The original fit gave ~70 tokens per parameter; a 2024 replication traced this to an optimizer that stopped early</li>
+			<li>Smaller models get trained far beyond the optimum (Llama&nbsp;3: "much longer than is compute-optimal"): they are cheaper to <em>run</em></li>
+		</ul>
+		<p class="small">J.&nbsp;Hoffmann et al., <a href="https://arxiv.org/abs/2203.15556">arXiv:2203.15556</a> (2022).
+			Fit: T.&nbsp;Besiroglu et al. (Epoch AI), <em>Chinchilla scaling: a replication attempt</em>, <a href="https://arxiv.org/abs/2404.10102">arXiv:2404.10102</a> (2024), eq.&nbsp;(3).
+			Llama&nbsp;3: <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a>.</p>
+		<aside class="notes">
+			Physicists will like this one: an empirical power law with an irreducible floor E (Hoffmann et al.: it "should correspond to the entropy of natural text") and two finite-size corrections.
+			6ND: 2 FLOP per parameter per token for the forward pass (one multiply-add), and the backward pass is "approximately twice the compute" (Kaplan et al. 2020, arXiv:2001.08361; used by Hoffmann et al.). It neglects the context-length term of attention.
+			The constants on the slide are Epoch AI's refit (Besiroglu, Erdil, Barnett, You, 2024, eq. 3): 1.8172 + 482.01/N^0.3478 + 2085.43/D^0.3658, fitted to data they reconstructed from Hoffmann et al.'s Figure 4.
+			Hoffmann et al.'s own published fit is E = 1.69, A = 406.4, B = 410.7, α = 0.34, β = 0.28 (their eq. 10).
+			We recomputed the optimum of both fits ourselves (minimizing L at fixed C = 6ND): Epoch's gives 22 → 17 tokens per parameter for C = 10²¹ → 10²⁵ FLOP; Hoffmann et al.'s rounded fit gives 50 → 120.
+			The replication: the intervals were "implausibly narrow"; one of the original authors confirmed the optimizer (L-BFGS-B) terminated early because the Huber losses were averaged instead of summed. The 20-tokens rule from their approaches 1 and 2 survives.
+			Chinchilla: 70B parameters on 1.4T tokens, the same compute as Gopher (280B), and it "uniformly and significantly outperforms" Gopher, GPT-3 (175B) and others on their evaluations.
+			Llama 3 405B: 15.6T tokens ≈ 39 per parameter, "approximately compute-optimal" by Meta's own scaling-law fit on their data. Meta: "we also train our smaller models for much longer than is compute-optimal. The resulting models perform better than compute-optimal models at the same inference budget."
+			Caveat: the loss is not the ability. The power law is smooth; benchmark scores and task horizons are what people care about, and their link to the loss is less clean.
+			The constants depend on the data, the tokenizer and the architecture; don't carry the numbers over to other models.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Training compute: about 5&times; more every year</h2>
+		<iframe data-src="figures/training_compute.html" title="Training compute of notable language models vs. their publication date, on a logarithmic scale, 2017 to 2026"
+			style="display: block; margin: 0 auto; width: 1200px; height: 520px; border: 0;"></iframe>
+		<ul style="font-size: 0.85em;">
+			<li>From GPT-3 (2020, 3&times;10<sup>23</sup> FLOP) to ~10<sup>27</sup> FLOP estimated for GPT-6 Astra (2026). Epoch AI: &times;5 per year since 2020; our fit: &times;4.6</li>
+			<li>Most numbers for closed models are Epoch AI's estimates from hardware and training time, not disclosed figures</li>
+		</ul>
+		<p class="small">Our plot of Epoch AI, <a href="https://epoch.ai/data/ai-models"><em>Data on AI Models</em></a> (notable models, CC BY, downloaded 7 Oct 2026);
+			growth rate: Epoch AI, <a href="https://epoch.ai/trends"><em>Trends in AI</em></a> (updated 5 Feb 2026).</p>
+		<aside class="notes">
+			FLOP = floating-point operations (multiplications and additions), the total for the whole training run.
+			Interactive: hover for model, organization and Epoch's confidence rating; open markers are estimates Epoch rates "speculative".
+			"Frontier" is Epoch's flag: a model in the top 10 of training compute when it was released.
+			Our fit: least squares of log10(compute) on date for the 34 frontier language models since 2020: ×4.6 per year, 95 % bootstrap interval ×3.8–5.5, which is too narrow: the bootstrap treats near-duplicate models as independent, and one estimated point (GPT-6 Astra) carries the last 14 months. Epoch's own headline (Trends page, Feb 2026): "Training compute for frontier language models has been growing at 5× per year since 2020". Consistent.
+			Checks of the data against primary sources: Llama 3.1 405B is 3.8·10²⁵ FLOP in the table and in Meta's paper; GPT-3 is 3.14·10²³ in both.
+			GPT-6 Astra (Sep 2026): Epoch's note says OpenAI and partners reported at least 100 000 GB200 GPUs, and their ~10²⁷ is an estimate ("Likely") assuming ~90 days at 25 % utilization; it is not a figure published by OpenAI.
+			Same Trends page: frontier training cost has grown 3.5× per year since 2020; AI chip performance per dollar 49 % per year since 2023.
+			Compare with the scaling-law backup: 100× more compute buys a model with ~10× more parameters and ~10× more data (at the compute-optimal ratio).
+			Data: Epoch AI, notable_ai_models.csv (downloaded 7 Oct 2026).
+		</aside>
+	</section>
+	<section>
+		<h2>Where this is heading</h2>
+		<div class="three-col timeline">
+			<div>
+				<h3>Measured</h3>
+				<ul>
+					<li>Task horizon doubles every ~4 months (129 days, 95&nbsp;% CI 104&ndash;158)</li>
+					<li>Frontier training compute: &times;5 per year</li>
+					<li>Forecasters underestimate: in 2021, 13&nbsp;% predicted on MATH for 2022; actual 50&nbsp;%</li>
+				</ul>
+			</div>
+			<div>
+				<h3>Extrapolated, if the trends hold</h3>
+				<ul>
+					<li>Horizon ~500&nbsp;h, three work-months, by end of 2027 (CI 250&ndash;1200&nbsp;h)</li>
+					<li>2&times;10<sup>29</sup>&nbsp;FLOP runs feasible by 2030; power is the limit</li>
+					<li>Public human text (~300T tokens) used up in 2026&ndash;2032</li>
+					<li>Data centres: ~950&nbsp;TWh in 2030, ~3&nbsp;% of world electricity</li>
+				</ul>
+			</div>
+			<div>
+				<h3>Opinion</h3>
+				<ul>
+					<li>Human-level AI: AI researchers' median 2047 (2023 survey); Metaculus 2031</li>
+					<li>METR: AI may already speed up AI progress ~1.5&times; (preliminary)</li>
+				</ul>
+			</div>
+		</div>
+		<p class="small">METR; Epoch AI; IEA, <em>Energy and AI</em> (2026); K.&nbsp;Grace et al., <a href="https://arxiv.org/abs/2401.02843">arXiv:2401.02843</a>; J.&nbsp;Steinhardt (2022); Metaculus, as of 7 Oct 2026.</p>
+		<aside class="notes">
+			Keep the three kinds apart: what was measured, what follows if a trend continues, and what people believe.
+			Horizon: anchored at Opus 4.6, 11.98 h (Feb 2026), doubling every 128.7 d; METR itself says measurements above 16 h are unreliable, so this is pure extrapolation. With the slower all-time doubling (~197 d) it is ~140 h.
+			Compute: Epoch, "Can AI scaling continue through 2030?" (Aug 2024): 2e29 FLOP likely feasible; constraints by power, chips, data and latency. Today's largest, ~1e27 FLOP (GPT-6 Astra, Epoch's estimate), is on that track.
+			Data: Epoch (2024): ~300T tokens of public human text (90 % CI 100T–1000T); synthetic data and RL make a hard wall unlikely.
+			Forecasts: Steinhardt, "AI forecasting: one year in" (2022): 12.7 % predicted, 50.3 % actual. In 2022 superforecasters gave IMO gold by 2025 2.3 %; it happened in July 2025.
+			METR (22 Sep 2026): "~1.5X" acceleration, "perhaps 30 % chance of 2X". AI 2027 is a scenario, not a forecast; its authors now put an automated coder in 2028–2030.
 		</aside>
 	</section>
 	<section>
@@ -378,6 +533,59 @@
 			METR's own chart is in figures/metr_time_horizon.svg.
 		</aside>
 	</section>
+	<section class="backup">
+		<h2>How the task horizon is measured, and its caveats</h2>
+		<p class="def">METR timed skilled professionals on software, ML and cybersecurity tasks (170 in the paper, 228 in the current suite) and ran AI agents on the same tasks.
+			The <strong>50&nbsp;% time horizon</strong> \(h\): the human time at which the agent's fitted success rate is 50&nbsp;%.</p>
+		\[ p_\text{success} = \sigma\big((\log h_\text{agent} - \log t_\text{task})\,\beta_\text{agent}\big), \qquad \sigma(x) = \frac{1}{1+e^{-x}} \]
+		<ul>
+			<li>At 80&nbsp;% success the horizon is ~5&times; shorter: GPT-5.2 5.9&nbsp;h at 50&nbsp;%, 1.1&nbsp;h at 80&nbsp;%</li>
+			<li>Wide error bars: Claude Opus 4.6 12&nbsp;h, 95&nbsp;% CI 5&ndash;60&nbsp;h. Above 16&nbsp;h the task suite can't measure reliably</li>
+			<li>The timed humans were new to the code: on four of METR's own pull requests, such contractors took 5&ndash;18&times; longer than its maintainers</li>
+		</ul>
+		<p class="small">T.&nbsp;Kwa et al. (METR), <a href="https://arxiv.org/abs/2503.14499">arXiv:2503.14499</a> v4 (2026), &sect;2&ndash;4.
+			Numbers: METR <a href="https://metr.org/time-horizons/">Time Horizon 1.1</a> data (updated 8 May 2026); 80&nbsp;% ratio our calculation.</p>
+		<aside class="notes">
+			The baseliners: about 5 years of relevant experience on average, most from top-100 universities, working on code new to them. The fit: one logistic curve per agent, in log task length; like item response theory, but the difficulty of a task is the human time, not a fitted parameter. "Agent" = model + METR's scaffold.
+			Tasks: RE-Bench (8-hour ML research engineering), HCAST, and 66 short software actions (SWAA); 170 tasks in the paper, 228 in the Time Horizon 1.1 suite (METR, Jan 2026). Continuously scored tasks are made pass/fail at a human-level threshold.
+			80 % horizon: we took p80/p50 from METR's benchmark_results_1_1.yaml for the models released 2024–2026: median ratio 5.3, range 4.0–10.3. GPT-5.2: p50 352 min, p80 66 min. Mythos Preview (early): p50 1045 min, p80 186 min, i.e. above 16 h, where METR calls its measurements unreliable. Opus 4.6: p50 719 min (317–3634).
+			External validity, from the paper's §4: (1) the trend reproduces on SWE-bench Verified, with an even shorter doubling time;
+			(2) on tasks scored as "messier" (resource-limited, novel, dynamic environment) the models do worse at a given length, but improve at the same rate: "we find no evidence of plateaus in performance trends specific to the higher messiness subset";
+			(3) internal pull requests: "contractors taking 5-18x longer to fix issues than repo maintainers", and the agents' performance matched contractor time, not maintainer time.
+			So "12 hours" means 12 hours of a competent person who is new to the code base; for you, in your own code, the same task may be much shorter.
+			The paper's own caveat: "time horizon is always measured relative to a domain, task distribution, and human baseliners' level of skill and context".
+			The paper's extrapolation (v4): if the trend holds and generalizes, 1-month (167 h) software tasks between mid-2028 and mid-2030 (80 % CI), or early 2027 if the 2024–25 trend continues. Present it as their conditional statement, not a prediction of ours.
+			The horizon is a human time; it says nothing about how long the agent itself takes.
+		</aside>
+	</section>
+	<section class="backup wide">
+		<h2>Benchmarks: built to be hard, climbing within years</h2>
+		<iframe data-src="figures/benchmarks.html" title="Best score so far on six AI benchmarks vs. the release date of the models, 2021 to 2026"
+			style="display: block; margin: 0 auto; width: 1500px; height: 470px; border: 0;"></iframe>
+		<ul style="font-size: 0.85em;">
+			<li>GPQA: PhD experts score 81&nbsp;% on Diamond, 65&nbsp;% on the full set. HLE: under 10&nbsp;% at its release, 55&nbsp;% now (GPT-6 Astra, Sep 2026). CritPt, unpublished physics research problems: 32&nbsp;% (GPT-5.6 Sol, Jul 2026, likely with tools)</li>
+			<li>Benchmarks age: OpenAI dropped SWE-bench Verified in Feb 2026 (flawed tests, solutions memorised); in audited subsets, ~18&ndash;29&nbsp;% of HLE's chemistry and biology answers are disputed</li>
+		</ul>
+		<p class="small">Our plot of Epoch AI, <a href="https://epoch.ai/benchmarks"><em>Capabilities &amp; benchmarking</em></a> (CC BY, downloaded 7 Oct 2026).
+			GPQA: D.&nbsp;Rein et al., <a href="https://arxiv.org/abs/2311.12022">arXiv:2311.12022</a>. HLE: L.&nbsp;Phan et al., <a href="https://arxiv.org/abs/2501.14249">arXiv:2501.14249</a>.
+			CritPt: M.&nbsp;Zhu et al., <a href="https://arxiv.org/abs/2509.26574">arXiv:2509.26574</a>.
+			<a href="https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/">OpenAI</a> (2026); <a href="https://futurehouse.org/research/hle-exam">FutureHouse</a> (2025).</p>
+		<aside class="notes">
+			Each line is the best score of any model released up to that date, as collected by Epoch AI; hover for the model. The year in the legend is when the benchmark came out; some lines start earlier because older models were evaluated afterwards.
+			Settings differ between entries (reasoning effort, tools, sometimes the developer's own report), so read the lines as trends, not exact rankings.
+			MMLU (Hendrycks et al. 2020, arXiv:2009.03300): "57 tasks including elementary mathematics, US history, computer science, law", multiple choice; ~88 % by late 2024, after which Epoch's sources stopped reporting it. Saturated.
+			GPQA (Rein et al., Nov 2023): 448 "Google-proof" questions in biology, physics and chemistry; PhD experts 65 % (74 % excluding mistakes they themselves spotted), skilled non-experts with web access 34 %, GPT-4 39 %.
+			The Diamond subset (198 questions) keeps only questions that both expert validators answered correctly (or where the second one made a clear mistake) and most non-experts got wrong, so expert accuracy on Diamond is high by construction; the 65 % on the slide is the abstract's number for the whole set. Best on Diamond now ~96 % (GPT-6 Astra, Sep 2026).
+			SWE-bench Verified (Aug 2024): 500 real GitHub issues in Python repositories, checked by people. Epoch's own runs stop at 83 % (Claude Opus 4.7, Apr 2026).
+			OpenAI's Feb 2026 post (reported by Decrypt, 24 Feb 2026; the OpenAI page was not readable for us): of 138 tasks its model kept failing, 59.4 % had flawed tests; GPT-5.2, Claude Opus 4.5 and Gemini 3 Flash could reproduce the reference fixes from memory. They moved to SWE-bench Pro.
+			FrontierMath tiers 1–3 (Epoch AI, 2024; the line uses Epoch's revised v2 problem set of June 2026, on which they re-ran older models): best 94 % (GPT-6 Astra; GPT-6.1 Sol in late September in the raw data). Tier 4 is close to saturated too in Epoch's data (GPT-6.1 Sol 100 %, GPT-6 Astra 97.6 %); only the new "Erdős" set is still hard: Astra solved 2 of 68 per Epoch's benchmark page. The lines show the best score so far, so they stay flat after the last measurement.
+			Humanity's Last Exam (Jan 2025): 2500 questions from ~1000 experts, made so that the then-frontier models failed them. 55 % for GPT-6 Astra (source of that number: as listed by Epoch, from the Scale AI leaderboard or the developer; settings unknown).
+			HLE quality: FutureHouse (Jul 2025) found "29 ± 3.7%" of text-only chemistry and biology answers conflicting with the literature; the HLE team's own review (Sep 2025) found ~18 % of a bio/chem subset problematic.
+			CritPt (Sep 2025): 71 research-level challenges written by 50+ physicists from their own unpublished research, with machine-checkable answers. In the paper, GPT-5 (high) scored 5.7 % without tools, 10.6 % with code and 12.6 % with code and web search.
+			The CritPt line is from the Artificial Analysis leaderboard via Epoch, which gives GPT-5 high 12.6 %, exactly the paper's code-and-web number, so the plotted line is very likely tool-augmented (our inference from the match).
+			Message: benchmark numbers are useful for trends, not as proof that a model can do your research. Test it on your own problems.
+		</aside>
+	</section>
 	<section>
 		<h2>Models today</h2>
 		<ul>
@@ -399,6 +607,154 @@
 		<aside class="notes">
 			Don't spend long here. The point is: several capable providers, plus open models as a real alternative
 			(Mika's showcase).
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Tokens: what the model actually reads</h2>
+		<p class="def">A <strong>tokenizer</strong> cuts text into pieces from a fixed <strong>vocabulary</strong> (GPT-4o: 200&nbsp;000 pieces, learned from frequent byte sequences) and replaces each piece by its number.</p>
+		<table style="font-size: 0.75em;">
+			<tr><th>Text</th><th>Tokens (GPT-4o tokenizer)</th></tr>
+			<tr><td><code>&blank;strawberry</code> (after a space)</td><td><code>&blank;strawberry</code> = number 101830</td></tr>
+			<tr><td><code>strawberry</code> (start of a line)</td><td><code>st</code> | <code>raw</code> | <code>berry</code></td></tr>
+			<tr><td><code>&blank;Hippeläinen</code></td><td><code>&blank;Hipp</code> | <code>el</code> | <code>äinen</code></td></tr>
+			<tr><td><code>&blank;lentokonesuihkuturbiini&hellip;</code> (61 letters)</td><td>23 tokens: <code>&blank;lent</code> | <code>ok</code> | <code>ones</code> | <code>ui</code> | <code>h</code> | &hellip;</td></tr>
+		</table>
+		<ul>
+			<li>English: roughly 3&ndash;4 characters per token, depending on the tokenizer. Other languages often need more tokens for the same text: higher cost, less fits in the context</li>
+			<li>The model sees "101830", not s-t-r-a-w-b-e-r-r-y: the usual explanation for miscounted letters. Only part of the story: models seem to recognise the letters but miscount repeated ones</li>
+		</ul>
+		<p class="small">Our run of OpenAI's <a href="https://github.com/openai/tiktoken"><code>o200k_base</code></a> vocabulary.
+			3.94 characters per token (Llama&nbsp;3): A.&nbsp;Grattafiori et al., <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a>.
+			Languages: A.&nbsp;Petrov et al., <a href="https://arxiv.org/abs/2305.15425">arXiv:2305.15425</a>.
+			Letters: T.&nbsp;Fu et al., <a href="https://arxiv.org/abs/2412.18626">arXiv:2412.18626</a>.</p>
+		<aside class="notes">
+			&blank; marks a space: the space belongs to the following word, so " strawberry" and "strawberry" are different tokens.
+			The table was made by running byte-pair encoding with the o200k_base vocabulary (the GPT-4o tokenizer, downloaded from openaipublic.blob.core.windows.net, SHA-256 matching tiktoken's)
+			with our own 30-line script; it reproduces tiktoken's "hello" = 24912, " world" = 2375.
+			Claude and Gemini use their own tokenizers, which are not all public, so the split differs per model; the point is the same.
+			The vocabulary size: o200k_base has 199 998 ordinary tokens, Llama 3 has 128 000.
+			"About 4 characters per token" is the Llama 3 measurement (3.94 on English data); OpenAI's API docs give the same rule of thumb, "1 token is approximately 4 characters or 0.75 words for English text" (developers.openai.com/api/docs/concepts, read 2026-10-07).
+			Petrov et al. compared the token counts of the same text translated into many languages, with the tokenizers of 2023 (we read the abstract only);
+			"up to 15 times" is their extreme case, not Finnish. We did not measure Finnish versus English text with o200k; we expect a factor above 1 (an unmeasured guess), which is why no number for Finnish is on the slide.
+			Letter counting: Fu et al. (Dec 2024) tested several models; errors correlate with how many times a letter repeats, and the authors conclude that the models recognise the letters but fail at counting them ("capable of recognizing the letters but not counting them").
+			So "tokenization explains it" is the folk explanation, and the evidence suggests it is only part of it. Another example (Kalai et al., arXiv:2509.04664): "How many Ds are in DEEPSEEK? If you know, just say the number" got "2" or "3" from DeepSeek-V3 in ten trials (May 2025); the answer is 1.
+			The long word is "lentokonesuihkuturbiinimoottoriapumekaanikkoaliupseerioppilas", aircraft jet-turbine-engine auxiliary-mechanic NCO student; 23 tokens for 61 letters, against about 15 tokens for 61 characters of typical English with Llama 3's tokenizer (3.94 characters per token; a different tokenizer from the one above). Claude 4.7 and later use a tokenizer that produces ~30 % more tokens for the same text (Claude pricing page).
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Inside the model: attention and the next token</h2>
+		<p class="def"><strong>Transformer</strong>: the network design of current LLMs. Each token becomes a vector (its <em>embedding</em>); tens to ~100 stacked layers update the vectors.
+			<strong>Self-attention</strong> maps each vector to a query \(q\), a key \(k\) and a value \(v\).</p>
+		\[ \mathrm{Attention}(Q,K,V)=\mathrm{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V,
+			\qquad p(\text{next}=i)=\frac{e^{z_i/T}}{\sum_j e^{z_j/T}} \]
+		<ul>
+			<li>Each token averages the values \(v\) of all earlier tokens, weighted by how well its \(q\) matches their \(k\)</li>
+			<li>The last layer scores every vocabulary entry (\(z_i\)). One token is drawn, appended, repeat</li>
+			<li>Temperature \(T\): \(T\to 0\) always picks the most likely token; larger \(T\), more varied text</li>
+		</ul>
+		<p class="small">A. Vaswani et al., <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a> (2017), eq. (1).
+			Llama&nbsp;3 405B has 126 layers: A.&nbsp;Grattafiori et al., <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a> (2024).</p>
+		<aside class="notes">
+			This is the whole forward pass, minus the feed-forward (MLP) part of each layer, which holds most of the parameters.
+			\(Q, K, V\) are the matrices of the queries, keys and values of all tokens; \(d_k\) is their length (128 in Llama 3).
+			The \(\sqrt{d_k}\): Vaswani et al. "suspect that for large values of \(d_k\), the dot products grow large in magnitude, pushing the softmax into regions where it has extremely small gradients".
+			"Earlier tokens": in a generating model, a mask hides the later tokens, so the model can't peek at the answer during training.
+			Many heads run in parallel (Llama 3 70B: 64 query heads), each free to learn a different kind of "what to look at".
+			"~100 layers": Llama 3 has 32 (8B), 80 (70B) and 126 (405B) layers. The closed frontier models don't publish their architecture.
+			Sampling: in practice T is combined with cutting off the unlikely tail (top-p or "nucleus" sampling, Holtzman et al., ICLR 2020, arXiv:1904.09751).
+			Likely question: "so it's just autocomplete?" The training objective is next-token prediction, yes; post-training (next backup slide) and tools are what make it an assistant and an agent.
+			Whether "just predicting the next token" limits what it can do is an open debate; the measured abilities on the task-horizon plot are the evidence we can point to.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Why long context is expensive</h2>
+		<p class="def">The <strong>KV cache</strong> holds the keys and values of all earlier tokens in the GPU's memory,
+			so that they aren't recomputed for every new token.</p>
+		\[ \frac{\text{KV memory}}{\text{token}} = 2 \times n_\text{layers} \times n_\text{KV heads} \times d_\text{head} \times 2\,\text{B}
+			\overset{\text{Llama 3 70B}}{=} 2\times 80\times 8\times 128\times 2\,\text{B} = 320\,\text{KiB} \]
+		<ul>
+			<li>128k tokens of context: 40&nbsp;GiB of cache <em>per conversation</em>, next to ~140&nbsp;GB of model weights</li>
+			<li>Every token attends to every earlier one: the compute for a whole sequence grows as \(n^2\)</li>
+			<li>Hence <em>prompt caching</em>: a re-sent prefix is read back instead of recomputed. Claude: 0.1&times; the input price (0.05&times; on Opus&nbsp;5.5, 0.025&times; on Fable&nbsp;5.1).
+				An agent re-sends the whole conversation on every step</li>
+		</ul>
+		<p class="small">Our calculation from the Llama&nbsp;3 architecture (Table 3 of <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a>), 16-bit numbers.
+			\(n^2\): Vaswani et al., <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a>, Table 1.
+			Prices: <a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude API pricing</a>, read 7 Oct 2026.</p>
+		<aside class="notes">
+			The factor 2 in front is K and V; the last 2 B is the bytes of one 16-bit (bf16) number.
+			Llama 3 70B: 80 layers, 8 key/value heads, head dimension 8192/64 = 128. 2·80·8·128·2 B = 327 680 B = 320 KiB per token.
+			128k = 131 072 tokens → 40 GiB (43 GB). Weights: ~70·10⁹ parameters × 2 B ≈ 140 GB.
+			Llama 3 already shrinks this 8-fold with grouped-query attention: 64 query heads share 8 key/value heads ("to reduce the size of key-value caches during decoding", Llama 3 paper §3.2).
+			Servers can also store the cache in 8 bits, halving it. The closed frontier models don't publish their architectures, so their numbers are unknown; the scaling with context length is the point.
+			n²: Vaswani et al. Table 1 gives O(n²·d) per self-attention layer. With the KV cache, each new token costs O(n·d) attention work, but over a whole sequence it's still n².
+			At moderate lengths the feed-forward layers dominate the compute. Our rough estimate for Llama 3 70B: per token and layer, the feed-forward part costs ≈ 2·3·8192·28 672 ≈ 1.4 GFLOP, the attention scores and weighted sum ≈ 4·n·8192 FLOP, equal at n ≈ 40k tokens.
+			Prompt caching: Anthropic doesn't document what exactly it stores; open-source servers such as vLLM (automatic prefix caching) store exactly this KV cache
+			("caches the KV cache of existing queries, so that a new query can directly reuse the KV cache if it shares the same prefix", vLLM docs).
+			Pricing as of 7 Oct 2026: cache hits are 0.1× the base input price, 0.05× on Opus 5.5 and 0.025× on Fable 5.1; Claude 4.6 and later bill the full 1M-token window at the standard rate.
+			Claude Code's cost docs: "Claude Code sends your full conversation with every request", which is why a long session is mostly cache reads, and why /clear between tasks saves usage.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Training: from text predictor to reasoning agent</h2>
+		<table style="font-size: 0.75em;">
+			<tr><th>Stage</th><th>Data</th><th>What it adds</th></tr>
+			<tr><td><strong>Pre-training</strong></td><td>~10<sup>13</sup> tokens of web text, code, books (Llama&nbsp;3: 15.6&times;10<sup>12</sup>)</td><td>Language, facts, code: a text predictor</td></tr>
+			<tr><td><strong>Instruction tuning</strong></td><td>Example dialogues written by people (or models)</td><td>The assistant format: answer the question</td></tr>
+			<tr><td><strong>RL from feedback</strong> (RLHF)</td><td>People's (or an AI's) rankings of pairs of answers</td><td>Helpfulness, tone, refusals. A 1.3B model tuned so was preferred over the 175B GPT-3</td></tr>
+			<tr><td><strong>RL with verifiable rewards</strong></td><td>Maths with known answers, code with tests</td><td>Long chains of reasoning before answering</td></tr>
+		</table>
+		<p class="def"><strong>Reinforcement learning</strong> (RL): the model tries, a reward scores the result, and the weights shift towards what was rewarded.
+			<strong>Thinking tokens</strong> are the text a reasoning model writes before its answer; billed as output, often shown only as a summary.</p>
+		<ul>
+			<li>DeepSeek-R1-Zero, rewarded by automatic checks of its answers (plus a format check): maths score 15.6&nbsp;% &rarr; 71.0&nbsp;%; its answers grew longer unprompted</li>
+		</ul>
+		<p class="small">Llama&nbsp;3: <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a>.
+			InstructGPT: L.&nbsp;Ouyang et al., <a href="https://arxiv.org/abs/2203.02155">arXiv:2203.02155</a> (2022).
+			DeepSeek-R1: <a href="https://arxiv.org/abs/2501.12948">arXiv:2501.12948</a>, <em>Nature</em> 645, 633 (2025).
+			Billing: <a href="https://code.claude.com/docs/en/costs">Claude Code docs</a>.</p>
+		<aside class="notes">
+			The order and names are the common recipe; each lab's exact pipeline differs and the closed labs publish few details.
+			Llama 3 405B pre-training took 3.8·10²⁵ FLOP; how compute splits between pre-training and RL in today's frontier models is not published. Llama 3 says its smaller models were trained "much longer than is compute-optimal" (see the scaling-law backup).
+			InstructGPT (OpenAI, 2022): "outputs from the 1.3B parameter InstructGPT model are preferred to outputs from the 175B GPT-3, despite having 100x fewer parameters."
+			RLAIF / Constitutional AI (Anthropic, Bai et al. 2022, arXiv:2212.08073): an AI judges the answers against written principles instead of people ranking them.
+			DeepSeek-R1-Zero (Jan 2025): RL directly on the base model, with "rule-based" rewards: is the boxed maths answer right, do the LeetCode tests pass, is the thinking inside think-tags.
+			They deliberately avoided neural reward models "because we find that the neural reward model may suffer from reward hacking".
+			AIME 2024 pass@1 15.6 % → 71.0 %, 86.7 % with majority voting. Their Figure 3: the average response length on the training set grows steadily during RL ("naturally learns to solve reasoning tasks with more thinking time").
+			The "aha moment": an intermediate model wrote "Wait, wait. Wait. That's an aha moment I can flag here." and started re-evaluating its approach.
+			Why it matters for science: the same recipe favours tasks with a checkable answer. That's also why we push tests in session 2: they make your problem verifiable for the agent too.
+			Thinking tokens: billed as output tokens (Claude Code cost docs); Claude's API returns summarized thinking blocks rather than the raw text (Claude extended-thinking docs, in their examples).
+			Don't read the thinking as a faithful transcript: Chen et al. (Anthropic, arXiv:2505.05410, 2025) gave reasoning models hints and found that their chains of thought "reveal their usage of hints in at least 1% of examples where they use the hint, but the reveal rate is often below 20%".
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Parameters, experts, and what fits on your machine</h2>
+		<p class="def"><strong>Parameters</strong>: the learned numbers of the network. <strong>Mixture of experts</strong> (MoE): each layer has many alternative blocks ("experts");
+			a router sends each token to a few. All must be in memory; only the chosen ones compute.</p>
+		<table style="font-size: 0.75em;">
+			<tr><th>Open-weight model</th><th>Total parameters</th><th>Active per token</th><th>Memory needed</th></tr>
+			<tr><td>gpt-oss-20b (MoE, 32 experts)</td><td>20.9&nbsp;B</td><td>3.6&nbsp;B</td><td>"as little as 16&nbsp;GB"</td></tr>
+			<tr><td>gpt-oss-120b (MoE, 128 experts)</td><td>116.8&nbsp;B</td><td>5.1&nbsp;B</td><td>one 80&nbsp;GB GPU</td></tr>
+			<tr><td>Llama&nbsp;3 70B (dense)</td><td>70&nbsp;B</td><td>70&nbsp;B</td><td>~140&nbsp;GB in 16-bit</td></tr>
+			<tr><td>DeepSeek-V3 (MoE)</td><td>671&nbsp;B</td><td>37&nbsp;B</td><td>~670&nbsp;GB in 8-bit: a server</td></tr>
+		</table>
+		<ul>
+			<li>Memory &asymp; parameters &times; bits per parameter / 8, plus the KV cache. gpt-oss stores its experts in ~4 bits</li>
+			<li>Speed roughly follows the <em>active</em> parameters: MoE is how large models stay fast and cheap to run</li>
+		</ul>
+		<p class="small">gpt-oss model card: OpenAI, <a href="https://arxiv.org/abs/2508.10925">arXiv:2508.10925</a> (2025).
+			DeepSeek-AI, <a href="https://arxiv.org/abs/2412.19437">arXiv:2412.19437</a> (2024). Llama&nbsp;3: <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a>.
+			Last two memory figures: our estimate.</p>
+		<aside class="notes">
+			gpt-oss (OpenAI, Aug 2025, Apache 2.0): 120b has 36 layers, 128 experts per MoE block, top-4 routing; 20b has 24 layers, 32 experts, top-4.
+			Quote: the MoE weights, "90+% of the total parameter count", are quantized to MXFP4, "4.25 bits per parameter", which "enables the larger model to fit on a single 80GB GPU and the smaller model to run on systems with as little as 16GB memory".
+			Checkpoint sizes 60.8 GiB and 12.8 GiB.
+			DeepSeek-V3 (Dec 2024): "671B total parameters with 37B activated for each token", pre-trained on 14.8T tokens, "2.788M H800 GPU hours for its full training".
+			The ~670 GB is our estimate (671·10⁹ × 1 byte); the exact size of the released files may differ. Llama 3 70B at 16 bits: our estimate, 70·10⁹ × 2 bytes.
+			The speed claim is a rule of thumb, not a measurement: generating one token needs reading all active weights from memory, so for one user the speed is roughly memory bandwidth / bytes of active weights.
+			Total parameters still set the memory, so a MoE model is cheap to run per token but not small to host.
+			The closed frontier models don't publish parameter counts; any number you read for them is an outside estimate.
+			Mika's showcase (local models) is the practical version of this slide.
 		</aside>
 	</section>
 	<section class="backup">
@@ -508,6 +864,47 @@
 			The loop diagram comes back in the demo: every tool call is one turn of this loop.
 		</aside>
 	</section>
+	<section class="backup">
+		<h2>A tool call, as the harness sees it</h2>
+		<div class="two-col" style="grid-template-columns: 1.3fr 1fr; gap: 1.5em;">
+			<div>
+				<pre><code class="language-json" data-trim style="max-height: none;">
+// 1. The request lists the tools (with the whole conversation)
+"tools": [{"name": "run_command",
+  "description": "Run a shell command in the project folder.",
+  "input_schema": {"type": "object",
+    "properties": {"command": {"type": "string"}},
+    "required": ["command"]}}]
+
+// 2. The model answers with a tool call instead of text
+"stop_reason": "tool_use",
+"content": [{"type": "tool_use", "id": "toolu_01A…",
+  "name": "run_command", "input": {"command": "pytest -q"}}]
+
+// 3. The harness runs it and sends the result back
+{"role": "user", "content": [{"type": "tool_result",
+  "tool_use_id": "toolu_01A…", "content": "1 failed, 7 passed …"}]}
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>The model only produces text. A tool call is structured text that the harness parses, checks against your permissions, and executes</li>
+					<li>Then the model is called again with everything so far. Repeat until it replies without a tool call: that is the agent loop</li>
+					<li>Tool definitions are tokens too: they are sent with every request</li>
+				</ul>
+			</div>
+		</div>
+		<p class="small">Format: Anthropic, <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview"><em>Tool use with Claude</em></a>, read 7 Oct 2026. The tool and its values are our example.</p>
+		<aside class="notes">
+			The JSON is abridged (no model name, max_tokens or messages array in step 1) and the comments are not valid JSON; the field names and structure follow the Claude API docs.
+			Docs: "Claude responds with stop_reason: "tool_use" and one or more tool_use blocks. Your code executes the operation and sends back a tool_result." Client tools run in your application; server tools (web search, web fetch, code execution) run on Anthropic's side.
+			"Your code" is the harness: Claude Code, Codex and Copilot implement this kind of loop; the permission prompt you see in Claude Code sits between step 2 and step 3.
+			Other providers' APIs follow the same pattern under the name "function calling" (the Claude docs use both names; we didn't compare the other APIs' field names).
+			Token cost from the pricing page: any request with tools carries a hidden tool-use system prompt (286 tokens on Opus 5.5) plus the tool names, descriptions and schemas; e.g. the computer-use toolset adds about 4500 input tokens, the browser toolset about 6600. Presumably one reason why Claude Code now loads MCP tool definitions on demand ("deferred by default", cost docs).
+			Step 3 is why a long log or a big file read is expensive: its whole text becomes part of the conversation, and is re-sent (from the cache) with every later request. See the "one session, measured" backup.
+			Likely question: "Can the model run code itself?" Not on your machine: it can only ask, and whatever runs there runs with the harness's permissions; hence the security slide. (The provider's server tools, e.g. Anthropic's code execution tool, run in the provider's sandbox.)
+		</aside>
+	</section>
 	<section>
 		<h2>Why file access and context matter</h2>
 		<div class="media">
@@ -530,6 +927,34 @@
 					N. F. Liu et al., TACL 12, 157 (2024), Fig. 1, CC BY 4.0</figcaption>
 			</figure>
 		</div>
+	</section>
+	<section class="backup">
+		<h2>A big context window is not a big memory</h2>
+		<p class="def"><strong>Context rot</strong>: as the number of tokens in the context grows, the model's accuracy and recall of what is in it degrade.
+			Most current Claude models accept 1M tokens per request (Haiku 4.5: 200k): very roughly 600&ndash;750k words, depending on the tokenizer.</p>
+		<table style="font-size: 0.72em;">
+			<tr><th>Study</th><th>Finding</th></tr>
+			<tr><td>RULER, 2024: 17 models</td><td>Of the models that claim &ge; 32k tokens, only half perform satisfactorily at 32k</td></tr>
+			<tr><td>Chroma, Jul 2025: 18 models (GPT-4.1, Claude 4, Gemini 2.5, &hellip;)</td><td>Performance "grows increasingly unreliable as input length grows", even on simple tasks; worse with similar-looking distractors</td></tr>
+			<tr><td>Epoch AI, Jun 2025: two long-context benchmarks</td><td>The input length at which the best models still reach 80&nbsp;% accuracy grew &gt; 250&times; in nine months</td></tr>
+		</table>
+		<ul>
+			<li>It improves fast, but the advice stands: keep the context relevant. Harnesses <em>compact</em> (summarize) the history, clear old tool output, and hand reading to subagents</li>
+		</ul>
+		<p class="small">C.-P.&nbsp;Hsieh et al., <a href="https://arxiv.org/abs/2404.06654">arXiv:2404.06654</a>.
+			K.&nbsp;Hong, A.&nbsp;Troynikov, J.&nbsp;Huber, <a href="https://www.trychroma.com/research/context-rot"><em>Context rot</em></a> (Chroma, 2025).
+			G.&nbsp;Burnham, T.&nbsp;Adamczewski, <a href="https://epoch.ai/data-insights/context-windows">Epoch AI</a> (2025).
+			Claude docs, <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows"><em>Context windows</em></a>, read 7 Oct 2026.</p>
+		<aside class="notes">
+			The main slide's "lost in the middle" figure (Liu et al.) is the classic version: position matters. This backup adds: length matters, even when the answer is easy to find.
+			Definition from the Claude docs (Oct 2026): "As token count grows, accuracy and recall degrade, a phenomenon known as context rot. This makes curating what's in context just as important as how much space is available."
+			1M tokens for Fable 5.1, Opus 5.5, Sonnet 5 / 5.5 and others, billed at standard price; ~750k words with the 0.75 words/token rule of thumb (our conversion).
+			RULER (Hsieh et al., Apr 2024): synthetic tasks beyond needle-in-a-haystack; "only half of them can maintain satisfactory performance at the length of 32K" among models claiming 32K or more.
+			Chroma (Jul 2025): controlled experiments varying only the input length: needle–question similarity, distractors, a repeated-words copying task, LongMemEval conversations. "Models do not use their context uniformly."
+			Epoch AI data insight (25 Jun 2025): context windows of the longest models grew ~30× per year since mid-2023; the "80 % accuracy length" on two long-context benchmarks rose more than 250× in 9 months (the benchmarks: Fiction.LiveBench and MRCR). Their data stop in mid-2025; we haven't found a comparable 2026 measurement for the current models, so don't claim the problem is solved.
+			Our measured session (the cost backup) reached 523k tokens of 1M without compaction; that's within the window, but deep into the region where these studies see degradation for older models.
+			What Claude Code does: auto-compaction near the limit, /compact with instructions, /clear for a fresh start; the API offers server-side compaction and clearing old tool results (context editing).
+		</aside>
 	</section>
 	<section>
 		<h2>The landscape</h2>
@@ -583,6 +1008,32 @@
 			The blackbody exercise later is a hallucination-shaped bug: an exponent of 4 instead of 5. A test catches it in a second.
 		</aside>
 	</section>
+	<section class="backup">
+		<h2>Why models make things up</h2>
+		<p class="def"><strong>Singleton rate</strong> \(\mathrm{sr}\): the fraction of facts (e.g. birthdays) that appear exactly once in the training data.
+			Kalai et al. prove that for such arbitrary facts the error rate of a calibrated base model on such facts is roughly at least \(\mathrm{sr}\) (up to small correction terms; post-training weakens the bound).</p>
+		\[ \mathrm{err} \;\gtrsim\; \mathrm{sr}, \qquad
+			\text{score} = \begin{cases} +1 & \text{correct} \\ \;\;\,0 & \text{“I don’t know”} \\ -\tfrac{t}{1-t} & \text{wrong} \end{cases} \]
+		<ul>
+			<li>Most benchmarks grade right/wrong only (\(t = 0\)): a guess never scores below "I don't know", so training for them rewards bluffing.
+				With the penalty, answering pays off only above confidence \(t\)</li>
+			<li>Their example: asked for Kalai's birthday "if you know", an open model gave three different wrong dates</li>
+		</ul>
+		<p class="small">A.&nbsp;T.&nbsp;Kalai et al. (OpenAI), <em>Why language models hallucinate</em>,
+			<a href="https://arxiv.org/abs/2509.04664">arXiv:2509.04664</a> (2025), Theorem&nbsp;2 and &sect;4.2.</p>
+		<aside class="notes">
+			Their framing: "Like students facing hard exam questions, large language models sometimes guess when uncertain".
+			Two causes. (1) Pre-training: "Generating valid outputs is in some sense harder than answering these Yes/No questions" (is this output valid?), so the errors of a classifier carry over to generation: they arise from plain statistics, even with error-free training data.
+			For arbitrary facts with no pattern (birthdays), Theorem 2: err ≥ sr − 2/min|E_c| − (35 + 6 ln N)/√N − δ, with probability ≥ 99 %, where δ is a calibration term; the "≳" on the slide hides these correction terms.
+			Their example in words: "if 20% of birthday facts appear exactly once in the pretraining data, then one expects base models to hallucinate on at least 20% of birthday facts." The singleton rate is Turing's "missing mass" estimator (Good 1953).
+			(2) Post-training and evaluation: most benchmarks and leaderboards use binary 0–1 grading, under which "abstaining is strictly sub-optimal". Their proposed fix is socio-technical: put explicit confidence targets into the mainstream benchmarks' instructions ("Answer only if you are > t confident, since mistakes are penalized t/(1 − t) points…"), t = 0.5, 0.75, 0.9 → penalties 1, 3, 9 (the paper prints 2 for t = 0.75, a typo: t/(1 − t) = 3).
+			Expected score of answering with confidence p: p − (1−p)·t/(1−t), positive exactly when p > t. Check: p = t gives t − (1−t)·t/(1−t) = 0.
+			The birthday example: "a state-of-the-art open-source language model output three incorrect dates: '03-07', '15-06', and '01-01', even though a response was requested only if known" (DeepSeek-V3 via the DeepSeek app, 11 May 2025).
+			Measured today: on SimpleQA Verified (1000 short fact questions, Google 2025), the best models in Epoch AI's runs answer ~70–76 % correct when prompted to always give an answer, so the rest are wrong guesses rather than abstentionsly (GPT-6 Astra 75.6 %, Sep 2026; whether tools were allowed isn't stated). So a quarter of plain fact questions still go unanswered or wrong.
+			Practical consequence for us: ask the model to say when it doesn't know, give it a way to check (search, the paper's PDF, a test), and verify citations; a reference that appeared rarely in the training data is exactly the singleton case of the theorem (our reading, not the paper's claim).
+			Sycophancy is a separate failure (agreeing with the user); not covered by this paper.
+		</aside>
+	</section>
 	<section>
 		<h2>Security and privacy</h2>
 		<ul>
@@ -595,6 +1046,44 @@
 				Untrusted input + write access = a very bad day</li>
 			<li>Version control (git) everything. An agent on the only copy of your thesis is a gamble</li>
 		</ul>
+	</section>
+	<section class="backup wide">
+		<h2>Prompt injection, measured</h2>
+		<p class="def"><strong>Attack success rate</strong>: how often an agent carries out instructions planted in what it reads (web page, issue, file).
+			An <em>adaptive</em> attacker refines the injection over many tries.</p>
+		<table style="font-size: 0.72em;">
+			<tr><th>Model and attack</th><th>Attack success rate</th></tr>
+			<tr><td>2024 agents, one fixed attack (AgentDojo)</td><td>GPT-4o 48&nbsp;%, Claude 3.5 Sonnet 34&nbsp;%</td></tr>
+			<tr><td>Claude Opus 5.5 (Sep 2026), 1804 known attacks, best of 15 tries</td><td>1.0&nbsp;%</td></tr>
+			<tr><td>Opus 5.5, attacker trained on the test scenarios: coding</td><td>55&nbsp;% of attempts (all successes on its fallback model); 11&nbsp;% with Anthropic's detectors</td></tr>
+			<tr><td>Opus 5.5, attacker trained on the test scenarios: computer use</td><td>0.07&nbsp;% of attempts</td></tr>
+		</table>
+		<ul>
+			<li>Adaptive attacks broke 12 published defenses (most above 90&nbsp;%) most of which had reported near 0&nbsp;%</li>
+			<li>May 2025, a researchers' demo with tool approvals switched off: a planted GitHub issue made Claude 4 Opus copy private-repository data into a public pull request.
+				Danger = private data + untrusted input + a way out</li>
+		</ul>
+		<p class="small">E.&nbsp;Debenedetti et al., <a href="https://arxiv.org/abs/2406.13352">arXiv:2406.13352</a> (NeurIPS 2024), Table&nbsp;3.
+			Anthropic, <a href="https://www.anthropic.com/claude-opus-5-5-system-card">Claude Opus 5.5 system card</a> (22 Sep 2026), &sect;5.2.
+			M.&nbsp;Nasr et al., <a href="https://arxiv.org/abs/2510.09023">arXiv:2510.09023</a> (2025).
+			<a href="https://invariantlabs.ai/blog/mcp-github-vulnerability">Invariant Labs</a> (2025); <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">S.&nbsp;Willison</a> (2025).</p>
+		<aside class="notes">
+			The rows use different benchmarks and attackers: compare within a row, not across rows.
+			AgentDojo (ETH Zürich and Invariant Labs, NeurIPS 2024 Datasets and Benchmarks): 97 tasks (email client, e-banking, travel booking, workspace), 629 security cases. Table 3, targeted attack success rate with their "important message" attack: GPT-4o 47.7 %, Claude 3.5 Sonnet 33.9 %, Claude 3 Opus 11.3 %. (The paper's introduction says attacks succeed against the best agents in under 25 % of cases, which does not match its own Table 3.) a simple tool-filter defense brought GPT-4o to 7.5 %.
+			AgentDojo §4.1: "more capable models tend to be easier to attack, a form of inverse scaling law"; their explanation: "models with low utility often fail at correctly executing the attacker's goal, even when the prompt injection succeeds."
+			The rows use different attackers and environments: compare within a row's description, not across rows.
+			Opus 5.5 system card (22 Sep 2026), §5.2: (1) Gray Swan's Indirect Prompt Injection benchmark: 37 scenarios, 1804 attacks from public red-teaming competitions, aimed at irreversible harm (exfiltration, deletion, payments). Opus 5.5: 0.1 % at k = 1, 0.7 % at k = 10, 1.0 % at k = 15 attempts; highest in GUI computer use (2.8 % at k = 15).
+			(2) Gray Swan's adaptive "Shade" attacker, trained on the 40 coding test scenarios and given 200 attempts each: 54.61 % of attempts succeeded, 37 of 40 scenarios broken at least once; with Anthropic's prompt-injection probes 11.13 % (36/40). Opus 5 was at 88.92 %.
+			Important nuance from the card: all of these coding successes came from requests that a cyber-safety classifier had routed to the fallback model Claude Opus 4.8; "none of the 2,872 requests Claude Opus 5.5 answered directly were susceptible to the attack."
+			(3) Computer use, same kind of attacker, 14 scenarios: 0.07 % (2 of 2800 attempts, in one scenario).
+			The card's own caveat: these adaptive evaluations "reflect a deliberately permissive threat model: the attacker optimizes directly against the test scenarios and is given many attempts per scenario."
+			The same card says auto mode is "now the default permission mode in Claude Code for most of our users", pairing injection probes with a classifier that blocks dangerous tool calls.
+			For comparison, the Opus 4.6 card (Feb 2026) had 0 % in coding with the weaker attacker of the time, and 17.8 % / 78.6 % (1 / 200 attempts) in computer use: the attacks and the defenses both move.
+			Nasr et al. (Oct 2025): "we bypass 12 recent defenses … with attack success rate above 90% for most; importantly, the majority of defenses originally reported near-zero attack success rates." The lesson: a defense evaluated only against fixed attacks says little.
+			Invariant Labs (26 May 2025): a malicious issue in a public repository, read through the GitHub MCP server, made the agent leak private-repository data into a public PR. "This is not a flaw in the GitHub MCP server code itself, but rather a fundamental architectural issue."
+			Willison's "lethal trifecta": access to private data + exposure to untrusted content + ability to communicate externally. Remove one leg (e.g. no network for an agent reading untrusted PDFs) and this kind of exfiltration has no channel.
+			Related incident, not prompt injection: the Nx "s1ngularity" npm compromise (26 Aug 2025) shipped malware that used the victims' installed AI command-line tools (Claude, Gemini, Amazon Q) to search for secrets; Wiz counted 2180 exposed GitHub accounts (BleepingComputer report). An agent CLI on your machine is a tool for whoever runs code there.
+		</aside>
 	</section>
 	<section>
 		<h2>Cost, limits, and your own understanding</h2>
@@ -613,6 +1102,63 @@
 		</ul>
 		<aside class="notes">
 			One slide only for the philosophy. Invite the discussion to lunch. Then: questions, 5 minutes.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>One of our agent sessions, measured</h2>
+		<iframe data-src="figures/session_tokens.html" title="Tokens in the context of each request during a 2.7-hour Claude Code session: growing from 48 thousand to 523 thousand"
+			style="display: block; margin: 0 auto; width: 1200px; height: 430px; border: 0;"></iframe>
+		<ul style="font-size: 0.85em;">
+			<li>2.7&nbsp;h reviewing this workshop's repository (Opus&nbsp;5.5 + subagents): ~100&nbsp;M tokens read, 98&nbsp;% from the cache; 0.47&nbsp;M generated.
+				<strong>39&nbsp;USD at API list prices</strong>, half of it for cache reads</li>
+			<li>Every request re-sends the whole conversation: 48k tokens before any work, 523k at the end. Hence <code>/clear</code> between tasks</li>
+			<li>Anthropic, enterprise users: ~13&nbsp;USD per developer-day; 90&nbsp;% below 30&nbsp;USD</li>
+		</ul>
+		<p class="small">Our measurement: Claude Code's own usage records of the session (28 Sep 2026). Prices: <a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude API pricing</a>, read 7 Oct 2026.
+			<a href="https://code.claude.com/docs/en/costs">Claude Code docs, <em>Manage costs effectively</em></a>, read 7 Oct 2026.</p>
+		<aside class="notes">
+			The session: a review of this workshop repository on 28 Sep 2026 (auto-title "AI workshop repo accessibility review"), Claude Opus 5.5 in Claude Code, 173 requests of the main agent plus subagents (one Haiku 4.5), 2.66 h wall clock.
+			Numbers from Claude Code's own cost record at the end of the transcript (cost-state): Opus 5.5 read 99.96 M tokens from cache, wrote 1.19 M to the cache, 902 uncached input tokens, 468 744 output tokens of which 218 241 thinking; 36.82 USD. Haiku 4.5 (probably the web search and fetch helpers; our guess): 2.23 USD, incl. 61 web searches. Total 39.05 USD.
+			Independent check: our own sum from the per-request usage fields reproduces the input-side numbers exactly (99 961 906 cache reads; 1 189 661 cache writes; 902 input); and the prices from the pricing page reproduce 36.82 USD to the cent. The per-request output counts in the transcript are incomplete, so the plot shows only the context.
+			Cost split (Opus): cache reads 20.0 USD, cache writes 7.4 USD (5-minute writes at 1.25×, 1-hour writes at 2× the 4 USD input price), output 9.4 USD. Output is 0.5 % of the tokens but a quarter of the cost; cache reads are 98 % of the tokens and half the cost.
+			"48k before any work" is the first request: system prompt, tool definitions, CLAUDE.md/AGENTS.md, the user's prompt. Run /context in Claude Code to see the breakdown for your setup. The flat stretches of the plot are breaks with no requests.
+			A subscription (Pro, Max, Team) is not billed per token; the dollar figure is what the same tokens would cost on the API. On a subscription the same usage counts against the 5-hour and weekly limits instead.
+			Anthropic's numbers (cost docs): "Across enterprise deployments, the average cost is around 13 USD per developer per active day and 150-250 USD per developer per month, with costs remaining below 30 USD per active day for 90% of users."
+			One heavy session of ours is about three average developer-days by that measure; that's one data point, not a typical session.
+			The same docs: "Claude Code sends your full conversation with every request", and agent teams use "approximately 7x more tokens than standard sessions when teammates run in plan mode".
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>Energy and water per prompt: a contested number</h2>
+		<table style="font-size: 0.72em;">
+			<tr><th>Source</th><th>What</th><th>Energy</th><th>Water</th></tr>
+			<tr><td>Google (2025), measured in production</td><td>median Gemini Apps text prompt</td><td>0.24&nbsp;Wh</td><td>0.26&nbsp;mL</td></tr>
+			<tr><td>OpenAI CEO's blog (2025), no method given</td><td>average ChatGPT query</td><td>0.34&nbsp;Wh</td><td>0.32&nbsp;mL</td></tr>
+			<tr><td>Epoch AI (2025), estimate</td><td>GPT-4o, 500 tokens out; short / 10k / 100k tokens in</td><td>0.3 / 2.5 / 40&nbsp;Wh</td><td>&ndash;</td></tr>
+			<tr><td>Jegham et al. (2025), estimate for 30 models</td><td>short / long prompts (long = 10k in, 1.5k out)</td><td>0.05 (Llama 3.1 8B, short) to &gt;&nbsp;29&nbsp;Wh (DeepSeek-R1, long); GPT-4o short 0.42&nbsp;Wh</td><td>&ndash;</td></tr>
+			<tr><td>Mistral (2025), life-cycle study</td><td>400-token reply</td><td>&ndash;</td><td>45&nbsp;mL</td></tr>
+		</table>
+		<ul>
+			<li>For scale: boiling 1&nbsp;L of water for tea takes ~90&nbsp;Wh. A short prompt is small; long contexts and agents multiply it</li>
+			<li>Water differs 170&times; between studies, likely because they count different things. All data centres: 415&nbsp;TWh in 2024, 1.5&nbsp;% of the world's electricity</li>
+		</ul>
+		<p class="small">C.&nbsp;Elsworth et al. (Google), <a href="https://arxiv.org/abs/2508.15734">arXiv:2508.15734</a>.
+			S.&nbsp;Altman, <a href="https://blog.samaltman.com/the-gentle-singularity"><em>The gentle singularity</em></a> (10 Jun 2025).
+			J.&nbsp;You, <a href="https://epoch.ai/gradient-updates/how-much-energy-does-chatgpt-use">Epoch AI</a> (Feb 2025).
+			N.&nbsp;Jegham et al., <a href="https://arxiv.org/abs/2505.09598">arXiv:2505.09598</a>.
+			<a href="https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai">Mistral AI</a> (22 Jul 2025).
+			IEA, <a href="https://www.iea.org/reports/energy-and-ai/executive-summary"><em>Energy and AI</em></a> (2025).</p>
+		<aside class="notes">
+			Present this as a range with reasons, not as one number. Only Google's figure is a measurement in production; the others are estimates or unexplained claims.
+			Google (Aug 2025): 0.24 Wh, 0.03 gCO2e, 0.26 mL per median Gemini Apps text prompt; counts accelerators, host CPU and DRAM, idle reserved machines and data-centre overhead; "33x reduction in energy consumption … over one year". Water = on-site cooling water (consumptive WUE) only. Median text prompt: says nothing about long prompts, images, or agents.
+			Altman (blog, 10 Jun 2025): "the average query uses about 0.34 watt-hours … about 0.000085 gallons of water" (= 0.32 mL, our conversion). No method published.
+			Epoch AI (Josh You, Feb 2025): ~0.3 Wh for a typical GPT-4o query, assuming 500 output tokens, 100 B active parameters, H100s; "pessimistic" assumptions by design; ~2.5 Wh with a 10k-token input and ~40 Wh with 100k.
+			Jegham et al. ("How hungry is AI?", v6 Nov 2025): infrastructure-aware estimates from API speed data; most energy-intensive models above 29 Wh per long prompt; 65-fold spread between models; a 0.42 Wh short query at 700 M queries/day ≈ the electricity of 35 000 US households (their figure; 0.42 Wh × 700 M per day alone gives about 10 000 households by our arithmetic, so their total likely includes more than short queries).
+			Mistral (with Carbone 4 and ADEME, Jul 2025): 1.14 gCO2e, 45 mL water, 0.16 mg Sb eq per 400-token Le Chat reply; "marginal impacts of inference … excluding users' terminals". What the 45 mL includes (e.g. water for generating the electricity) is not stated on the page we read; the gap to Google's 0.26 mL is our explanation by scope, not verified.
+			Boiling 1 L of water from 20 °C: 4.18 kJ/(kg K) × 80 K ≈ 334 kJ ≈ 93 Wh (our arithmetic, ignoring losses). So one litre ≈ 390 Gemini prompts by Google's median, and a ~0.25 L cup of tea ≈ 100.
+			Agents: our measured session processed ~100 M tokens, but mostly cache reads, whose energy per token nobody publishes; we don't convert it to Wh because we have no defensible factor.
+			IEA "Energy and AI" (2025): data centres ~415 TWh in 2024 (~1.5 % of world electricity), "set to more than double to around 945 TWh by 2030", AI the main driver. That is all data centres, not only AI.
+			Training is separate: Mistral Large 2's training plus 18 months of use: 20.4 kt CO2e and 281 000 m³ of water (same Mistral page).
 		</aside>
 	</section>
 	<section class="backup">
@@ -1039,6 +1585,32 @@ missing tests. Do not praise the code.
 				<p class="callout">Demo: review the exercise 04 solution with the physics reviewer and a general reviewer, in parallel.</p>
 			</div>
 		</div>
+	</section>
+	<section class="backup">
+		<h2>Subagents: better results, paid in tokens</h2>
+		<table style="font-size: 0.8em;">
+			<tr><th>Setup</th><th>Tokens relative to a chat</th></tr>
+			<tr><td>Chat</td><td>1&times;</td></tr>
+			<tr><td>Single agent</td><td>~4&times;</td></tr>
+			<tr><td>Multi-agent system (lead agent + subagents)</td><td>~15&times;</td></tr>
+		</table>
+		<ul>
+			<li>Anthropic's research system (Opus&nbsp;4 lead, Sonnet&nbsp;4 subagents) beat a single Opus&nbsp;4 by 90&nbsp;% on their internal research evaluation</li>
+			<li>On a web-research benchmark, the tokens spent alone explained 80&nbsp;% of the variance in performance</li>
+			<li>Good fit: parallel searches, information too large for one context. Poorer fit: tasks whose parts depend on each other, such as much of coding (fewer parallel parts than research)</li>
+		</ul>
+		<p class="small">Anthropic, <a href="https://www.anthropic.com/engineering/multi-agent-research-system"><em>How we built our multi-agent research system</em></a> (13 Jun 2025).
+			Claude Code docs, <a href="https://code.claude.com/docs/en/costs"><em>Manage costs effectively</em></a>, read 7 Oct 2026.</p>
+		<aside class="notes">
+			All numbers on the slide are Anthropic's, from one system (their Research feature) in June 2025; we haven't seen independent replications. Treat them as orders of magnitude.
+			Quotes: agents use "about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats."
+			"a multi-agent system with Claude Opus 4 as the lead agent and Claude Sonnet 4 subagents outperformed single-agent Claude Opus 4 by 90.2% on our internal research eval."
+			BrowseComp (a web-browsing benchmark of hard-to-find information): "token usage by itself explains 80% of the variance, with the number of tool calls and the model choice as the two other explanatory factors." Their own conclusion: "Multi-agent systems work mainly because they help spend enough tokens to solve the problem."
+			Limits, their words: "some domains that require all agents to share the same context or involve many dependencies between agents are not a good fit for multi-agent systems today. For instance, most coding tasks involve fewer truly parallelizable tasks than research."
+			Claude Code's own docs (Oct 2026): agent teams use "approximately 7x more tokens than standard sessions when teammates run in plan mode"; each teammate has its own context window; "Use Sonnet for teammates" to keep cost down.
+			Practical rule for the hands-on: use a subagent when its job is "read a lot, report a little" (exploring a code base, reviewing), so the reading stays out of your main context; don't split one tightly coupled edit across agents.
+			In our measured session (the cost backup in session 1), the subagents made 290 of the 463 requests and about 44 % of the input-side cost (12.3 of 27.6 USD at list price; our calculation from the transcript's usage fields, output excluded because those counts are incomplete).
+		</aside>
 	</section>
 	<section>
 		<h2>MCP: the standard plug for tools and data</h2>

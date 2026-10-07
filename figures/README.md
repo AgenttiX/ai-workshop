@@ -42,6 +42,16 @@ Used unchanged unless marked as cropped. The captions in the slides carry the sa
 | `hep_agent_timings.png` | E. A. Moreno et al., *AI Agents Can Already Autonomously Perform Experimental High Energy Physics*, [arXiv:2603.20179](https://arxiv.org/abs/2603.20179) | CC BY 4.0 |
 | `metr_forecast_vs_observed.png` | METR (J. Becker, N. Rush et al.), *Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity*, [arXiv:2507.09089](https://arxiv.org/abs/2507.09089) | CC BY 4.0 |
 
+## Backup-slide plots: `training_compute.html`, `benchmarks.html`, `session_tokens.html`
+Our own interactive Plotly plots. They load Plotly from its CDN, so they need an internet connection.
+- `training_compute.html`: training compute of notable models vs. publication date, with our least-squares fit
+  to Epoch AI's frontier models since 2020 (×4.6 per year). Data: Epoch AI, *Data on AI Models*
+  (<https://epoch.ai/data/notable_ai_models.csv>, CC BY 4.0), downloaded on 2026-10-07.
+- `benchmarks.html`: the best score so far on MMLU, GPQA Diamond, SWE-bench Verified, FrontierMath,
+  Humanity's Last Exam and CritPt. Data: Epoch AI's benchmark data (CC BY 4.0), downloaded on 2026-10-07.
+- `session_tokens.html`: the tokens in the context of each request during one of our own Claude Code sessions
+  (token counts from the session log only, no message content).
+
 ## `blackbody_bug.png`
 Our own plot: the normalised Planck spectrum of the Sun (T = 5778 K) with the correct \(1/\lambda^5\)
 and the buggy \(1/\lambda^4\) of exercise 01. The peaks are at 501.5 nm and 635.1 nm (+26.6 %).
