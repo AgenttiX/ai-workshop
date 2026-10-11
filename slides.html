@@ -1966,10 +1966,37 @@ claude mcp add --scope project zotero -- zotero-mcp
 			<li><strong>CI</strong> (continuous integration): a server that runs your checks on every change you push.
 				Claude Code can run there too, e.g. as a GitHub Action that reviews pull requests</li>
 			<li><strong>Plugin:</strong> skills, agents and hooks bundled so that you install them in one go.
-				Example: <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a></li>
+				A whole configuration can also live in a plain repository with an install script, e.g. <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a></li>
 			<li><strong><code>/insights</code></strong> (terminal version): what have I been asking for repeatedly? &rarr; turn it into a skill</li>
 		</ul>
 		<p class="callout">No need to write everything yourself; start from a community loadout and edit it to your taste.</p>
+	</section>
+	<section>
+		<h2>Make it yours: every upgrade is within reach</h2>
+		<div class="two-col">
+			<div>
+				<h3>Writing like me</h3>
+				<ul>
+					<li>A private repository of samples of my own work, one folder per domain: prose, LaTeX, Python, Mathematica, figures</li>
+					<li>The strongest evidence: the diffs of my edits to Claude's drafts</li>
+					<li>A command mines each domain's samples into a <code>STYLE.md</code>; every rule is tagged <em>observed</em> (with the sample), <em>stated</em> or <em>inferred</em></li>
+					<li>Claude reads it before writing anything in my name, and says when a domain has too few samples to know</li>
+				</ul>
+			</div>
+			<div>
+				<h3>Notebooks I like to read</h3>
+				<ul>
+					<li>Claude writes Mathematica as plain-text <code>.wl</code> sources with section markers: easy to diff, review and run headless</li>
+					<li>A converter turns them into real notebooks with typeset math (fractions, powers, roots); each formatted cell is checked against the original and left unchanged if the check fails</li>
+					<li>Each check sits in the notebook, with its verdict in the text cell after it</li>
+				</ul>
+			</div>
+		</div>
+		<p class="callout">If you have an idea how something could be better, every upgrade is within reach: describe it, and have Claude build the tool.</p>
+		<aside class="notes">
+			Both are my own ideas, built with Claude. The style repository has only a few samples so far (mostly blog writing); the mechanism matters more than the size.
+			The notebook converter is the from-wl mode of the mathematica-notebook skill in claude-loadout.
+		</aside>
 	</section>
 	<section class="backup">
 		<h2>Subagents: better results, paid in tokens</h2>
