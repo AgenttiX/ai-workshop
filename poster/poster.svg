@@ -48,27 +48,27 @@
 
   <g id="when-where" font-family="Inter" fill="#ffffff">
     <text id="date" x="7" y="199" font-weight="800" font-size="13">Friday 30 October 2026</text>
-    <text id="time-place" x="7" y="212" font-weight="600" font-size="7.5">10:00–15:00 · Physicum D101, Kumpula campus</text>
+    <text id="time-place" x="7" y="212" font-weight="600" font-size="7.5">12:00–16:30 · Physicum E207, Kumpula campus</text>
   </g>
 
-  <!-- Replace the placeholder with the QR code of the published E-lomake -->
+  <!-- QR code of the E-lomake sign-up form (figures/qrcode.png) -->
   <g id="qr" font-family="Inter" text-anchor="middle">
-    <rect id="qr-placeholder" x="232" y="186" width="58" height="58" rx="2" fill="#ffffff"/>
-    <text x="261" y="217" font-size="4.5" fill="#73726c">QR code</text>
+    <rect id="qr-bg" x="232" y="186" width="58" height="58" rx="2" fill="#ffffff"/>
+    <image id="qr-code" x="234" y="188" width="54" height="54" preserveAspectRatio="xMidYMid meet" style="image-rendering:pixelated" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACz0lEQVR42u2d0Y7DMAgE4dT//2Xu+SLA68Z2qt74qY3SKKPCGjBxPOyLxo9BAw000EADDTTQQAMNNNBAAw00+nhlB338u/h7cvn1csyrS2VXUe8AS4MGmuUqUHpZ5qHRfs0EIMZXmboDLA0aaPaogODx3vq0t/FB9rMyjhCUAUuDBpo9KiCMco5Xp3IfezeWBg00n6wCF48PMa2/nOz8N9BA85kqMD9FlxF8Wf+LNiAILA0aaJ5Sgfn5PMZ1AWEFIabvAEuDBprlKnCiq7jPHIL/BhpoTg2PKgx4002FjKCf8u/IA5YGDTR7YgE1Wg9RAC7HhLqAuqqApUEDzaJYwFqnuzOV29jtfawggaVBA81ZFbDEBwVlENYDvAoc3swNsDRooFmuAnfa+/vOQhODCUFzsDRooFmuAkI7YB+eezvv92lB30roxALQQPN8RmCi6/q4LiCMqFQFS4MGmjXjJeQBQiyvNgLZTF1AvSssDRpolqtA5nnqokBUs726D8HlolNJA5YGDTRHMoI7j/7O7zIiFAuxNGig2a0CfYeQj/N4mxEKE6UAS4MGmnMZger7QtKvSotwMpYGDTQbVSCrBghpwe29x/r6X2Bp0EDzVCwQ45hfXSQUOonKh5SF5UIsDRpolqtA5tNqdV/NA6YCf/oFoIHmCRWwKhboQ4PsUx9HqEVALA0aaB5TgRhnCYJu9MmFjfMFLA0aaHarQLTTcYyrBkKkX1Ygy1yDugA00JxTAfXRQbXfR3gribqPCHUBaKA5lxEIi/d9BC/M3ermAfQLQAPNY3WBqfbg7O0CfSUwO8XFy5MRQAPNERUQRua/Ma4G2EztwarkAkuDBpoPUIHMa9XmIJupLgghCZYGDTTLVUBNAdS3Equ7GL35ahIsDRpoVqrAVCOfsHFwrxYxVgv2GoIGmi3Dg/8GGmiggQYaaKCBBhpooIEGGmj+K80vLab7tP4P6/4AAAAASUVORK5CYII="/>
     <text x="261" y="253" font-weight="700" font-size="6" fill="#ffffff">Scan to sign up</text>
     <text x="261" y="261" font-weight="700" font-size="5" fill="#ff7a4d">by Tuesday 27 October</text>
   </g>
 
   <g id="programme" font-family="Inter" font-size="6" fill="#ffffff">
     <text x="7" y="228" font-weight="700" font-size="5.4" letter-spacing="0.6" fill="#ff7a4d">PROGRAMME</text>
-    <text x="7" y="238" font-weight="700">10:00</text>
+    <text x="7" y="238" font-weight="700">12:00</text>
     <text x="27" y="238"><tspan font-weight="700">Basic use:</tspan> AI in 2026, introduction to agents.</text>
     <text x="27" y="247">•</text>
     <text x="33" y="247">Live demos and hands-on exercises, also with your</text>
     <text x="33" y="255">own research problems.</text>
-    <text x="7" y="268" font-weight="700">12:00</text>
-    <text x="27" y="268">Lunch break</text>
-    <text x="7" y="281" font-weight="700">13:00</text>
+    <text x="7" y="268" font-weight="700">14:00</text>
+    <text x="27" y="268">Coffee break</text>
+    <text x="7" y="281" font-weight="700">14:30</text>
     <text x="27" y="281"><tspan font-weight="700">Advanced features:</tspan> agentic skills, hooks, subagents and task delegation,</text>
     <text x="27" y="289">MCP servers, linting, continuous integration.</text>
     <text x="27" y="298">•</text>

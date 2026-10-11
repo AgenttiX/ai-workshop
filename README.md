@@ -6,8 +6,8 @@ University of Helsinki by
 [Antti "Hippe" Hippeläinen](https://github.com/ahippelainen) and
 [Mika Mäki](https://github.com/AgenttiX).
 
-- **When and where (preliminary):** Friday 30 October 2026, 10:00–15:00 (lunch break 12:00–13:00),
-  Physicum D101, Kumpula campus
+- **When and where:** Friday 30 October 2026, 12:00–16:30 (coffee break 14:00–14:30),
+  Physicum E207, Kumpula campus
 - **Who:** students and researchers of the Faculty of Science. No experience needed; advanced topics are included too.
 - **Language:** English. **Bring your laptop**, set up as described below.
 - **Study credit:** 1 ECTS for students (preliminary, to be confirmed).

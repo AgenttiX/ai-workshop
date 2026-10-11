@@ -34,7 +34,7 @@ since the plots and some of the logos are drawn for a light background.
 - **Graphics**, as SVG files in `latent/`, drawn on the background layer of reveal.js.
   reveal.js copies the classes of each `<section>` to its background, so the class of the slide selects the graphic:
   - all slides except the non-divider `.center-slide` ones: a small neural network in the top-right corner (`corner.svg`)
-  - `.center-slide` (title, "Questions?", lunch, "Thank you!"): a neural network across the slide,
+  - `.center-slide` (title, "Questions?", coffee break, "Thank you!"): a neural network across the slide,
     faded out behind the text, with a few glowing activation paths (`title.svg`)
   - `.divider`: the attention of two tokens to the previous tokens, as arcs above a row of tokens (`divider.svg`)
   - a `data-background-*` attribute on a slide replaces the graphic, except for the corner network.

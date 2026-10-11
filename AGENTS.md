@@ -6,7 +6,8 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 
 ## Workshop description
 - Participants: BSc, MSc and PhD students and researchers of the Faculty of Science (voluntary participation)
-- Structure: 2 h session (10:00–12:00) + 1 h lunch break + 2 h session (13:00–15:00)
+- When and where: Friday 30 October 2026, Physicum E207, Kumpula campus
+- Structure: 2 h session (12:00–14:00) + 30 min coffee break + 2 h session (14:30–16:30)
 - Language: English
 - Coordination: [Mattermost](https://cftgroup.chat/main/channels/ai-workshop)
 - Exercise platform: Claude Code with Claude Team plan for scientists
