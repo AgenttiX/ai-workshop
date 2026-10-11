@@ -10,6 +10,9 @@ installs the requirements into it, runs the checks there and tells you how to ac
 Run it again inside the activated virtual environment to confirm that everything works.
 """
 
+# Postponed annotations: an old Python (e.g. 3.9) must get as far as the friendly version check.
+from __future__ import annotations
+
 import argparse
 from dataclasses import dataclass
 import importlib.metadata
@@ -30,6 +33,8 @@ OPTIONAL_COMMANDS: tuple[str, ...] = ("claude", "code", "codium")
 #: VS Code extensions that the workshop uses
 VSCODE_EXTENSIONS: tuple[str, ...] = ("anthropic.claude-code", "ms-python.python")
 MIN_PYTHON: tuple[int, int] = (3, 12)
+#: How to run the setup on this system (Ubuntu has no `python` outside a virtual environment)
+SETUP_COMMAND: str = ("py -3" if os.name == "nt" else "python3") + " -m workshop.check --setup"
 
 REPO_DIR = Path(__file__).resolve().parent.parent
 VENV_DIR = REPO_DIR / "venv"
@@ -105,6 +110,7 @@ def ask(question: str) -> bool:
     Returns False without asking if there is nobody to answer, e.g. in CI.
     """
     if sys.stdin is None or not sys.stdin.isatty():
+        print(f"{question} Not asking, as this is not an interactive terminal. To do it, run: {SETUP_COMMAND}")
         return False
     try:
         answer = input(f"{question} [Y/n] ")
@@ -187,7 +193,7 @@ def check_package(name: str) -> CheckResult:
     try:
         version = importlib.metadata.version(name)
     except importlib.metadata.PackageNotFoundError:
-        return CheckResult(name, False, "not installed. Run: python -m workshop.check --setup")
+        return CheckResult(name, False, f"not installed. Run: {SETUP_COMMAND}")
     return CheckResult(name, True, version)
 
 

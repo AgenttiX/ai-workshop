@@ -5,6 +5,7 @@ $T = 2 \pi \sqrt{L / g}$, so a linear fit of $T^2$ against $L$ gives the gravita
 """
 
 import csv
+from typing import overload
 
 import numpy as np
 
@@ -14,6 +15,10 @@ from workshop.type_hints import FloatArr
 G_STANDARD: float = 9.80665
 
 
+@overload
+def pendulum_period(length: float, g: float = G_STANDARD) -> float: ...
+@overload
+def pendulum_period(length: FloatArr, g: float = G_STANDARD) -> FloatArr: ...
 def pendulum_period(length: FloatArr | float, g: float = G_STANDARD) -> FloatArr | float:
     """$T$, the period of a simple pendulum in s.
 
