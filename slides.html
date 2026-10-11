@@ -1820,7 +1820,7 @@ description: The plotting conventions of the
 					<li>Events: <code>PreToolUse</code>, <code>PostToolUse</code>, <code>Stop</code>, <code>SessionStart</code>, notifications, &hellip;</li>
 					<li>The hook gets the tool call as JSON (structured text) on its standard input; exit code 2 sends its error output back to the agent</li>
 					<li>Use for: formatting, linting, secret scanning, notifications, "don't stop until the tests pass"</li>
-					<li>The <em>Stop</em> hook is how Antti's research loop keeps the agent going (showcase)</li>
+					<li>Antti's research setups use hooks for what must never be skipped: pushes only where approved, Mathematica only with a kill timeout, LaTeX checked after every edit (showcase)</li>
 				</ul>
 				<p class="callout">Demo: ask for sloppy code with unused imports &rarr; the hook complains &rarr; the agent fixes it unasked.</p>
 			</div>
@@ -2179,33 +2179,89 @@ jobs:
 		<aside class="notes">About 11 minutes each. Each organizer has a screen recording as a fallback. Keep the time; one question each.</aside>
 	</section>
 	<section>
-		<h2>Antti: the research loop</h2>
+		<h2>Antti: two research setups</h2>
 		<div class="two-col">
 			<div>
+				<h3>Physics: I stay in the loop</h3>
 				<ul>
-					<li>One orchestrator session; subagents for literature, derivation, code, review</li>
-					<li>The <strong>Ralph loop</strong>: a <code>Stop</code> hook that feeds the same prompt back until the completion promise is true
-						&mdash; "an infinite for loop until the task is done"</li>
-					<li>The <code>academic-pipeline</code> skill: research &rarr; write &rarr; integrity check &rarr; review &rarr; revise</li>
-					<li>Style inferred from old files: the agent writes like you</li>
+					<li>I dictate a question; one Claude Code session plans it and hands parts to specialist subagents (literature, derivations, numerics)</li>
+					<li>Claude writes only in the project's <code>LLM/</code> folder: dated scripts, logs, notebooks, draft notes</li>
+					<li>An independent recomputation in a fresh context before I spend my time</li>
+					<li>I check everything and move it into the notes and the paper myself</li>
+					<li>Hours, attended</li>
 				</ul>
 			</div>
 			<div>
-				<pre><code class="language-bash" data-trim>
-# .claude/ralph-loop.local.md
----
-iteration: 3
-max_iterations: 20
-completion_promise: "FIGURE 2 REPRODUCED"
----
-Reproduce figure 2 of arXiv:XXXX.XXXXX with our
-code, matching the style of fig/*.py. Run the
-tests. Output the promise only when it is true.
-				</code></pre>
-				<p class="todo">TODO (Antti): pick the demo task; record a fallback</p>
+				<h3>Mathematics: fully autonomous</h3>
+				<ul>
+					<li>I give a folder and a problem and approve a charter; the program runs for weeks</li>
+					<li>Every claim moves through ledgers: idea &rarr; candidate &rarr; verified, or killed with the reason</li>
+					<li>Fresh adversary agents attack every result; computers search overnight without any LLM</li>
+					<li>Nothing is published before I have understood it end to end</li>
+					<li>Weeks, unattended</li>
+				</ul>
 			</div>
 		</div>
-		<p class="small">Everything in <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a>. Also: vibe-coded hobby projects like <a href="https://github.com/ahippelainen/vote_for_lunch_online">vote_for_lunch_online</a>.</p>
+		<p class="small">Both are skills in <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a>: <code>research-init</code> and <code>research-autonomous</code>.</p>
+		<aside class="notes">
+			The difference is who checks: in physics I check every step before it goes into a paper;
+			in mathematics the checking is built into the program (independent code, adversaries, tiers) and I come in only at the end, for sign-off.
+		</aside>
+	</section>
+	<section>
+		<h2>Physics: Claude works in <code>LLM/</code>, I promote</h2>
+		<img src="figures/research-physics.svg" alt="Flow chart of the physics setup: a dictated question, a Claude Code session, specialist subagents writing into the LLM folder, independent checks, and the author checking and promoting results into his own files" style="display: block; margin: 0 auto; height: 860px;">
+		<aside class="notes">Source: claude/docs/diagrams/generate.py in claude-loadout.</aside>
+	</section>
+	<section>
+		<h2>Mathematics: an autonomous research program</h2>
+		<img src="figures/research-math.svg" alt="Flow chart of the autonomous mathematics program: orchestrator, role agents, ledgers with verification tiers, overnight compute without an LLM, and outputs for the owner's sign-off" style="display: block; margin: 0 auto; height: 860px;">
+		<aside class="notes">
+			Tiers: V0 computed once, V1 reproduced by independent code, V2 survived a fresh adversary and a novelty check, V3 I understood it. Only V3 leaves the repository.
+		</aside>
+	</section>
+	<section>
+		<h2>Live: the program running upstairs</h2>
+		<ul>
+			<li>A program on the Hodge conjecture, running on my work computer since 5 October</li>
+			<li><code>STATE.md</code>: where it is, what it decided, what it asks me</li>
+			<li>The roadmap: what is known, what the program has shown, what is open</li>
+			<li>The ledgers, last night's digest, and the lecture notes it wrote for me from the basics</li>
+		</ul>
+		<p class="callout">Nothing it has found is checked by a human yet. That is exactly what the tiers say.</p>
+		<p class="todo">TODO (Antti): update the numbers in the notes the day before</p>
+		<aside class="notes">
+			Measured 2026-10-11 from the repository: 8 results at tier V2, none at V3; 29 ideas, 8 candidates, 3 killed; lecture notes 806 pp (frozen), companion note 177 pp.
+			Open in order: STATE.md, roadmap/roadmap.svg, ledgers/VERIFIED.md (one entry), digests/ (latest), lecture_notes/main.pdf.
+		</aside>
+	</section>
+	<section>
+		<h2>Live: a physics question, dictated</h2>
+			<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> RhoTowers</span>
+					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
+				</div>
+				<div class="cc-box">
+					<p>New research project in Dropbox called RhoTowers. I want to reproduce two classic AdS/QCD results and then go one step further.
+					First the vector-meson tower in the hard-wall model of Erlich, Katz, Son and Stephanov, and in the soft-wall model of Karch, Katz, Son and Stephanov.
+					Get both papers from arXiv, derive the mode equation for the vector field yourself and check that you recover their spectra.</p>
+					<p>Then take a power-law dilaton, &phi;(z) = (cz)<sup>p</sup>, as in arXiv:1701.01398, and fit all three models to the PDG &rho; masses.
+					Plot m<sup>2</sup> against n for the data and the three fits, give me the fitted parameters with the fit quality, and compute the &rho; decay constant in each model.</p>
+					<p>Ask me before you fix any convention. Everything you make goes into <code>LLM/</code>; at the end, run an independent check and write me a short derivation note.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
+					<span class="cc-model">Opus 5.5</span> <span class="cc-light">High</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+		<p class="prompt-result todo">Result: after the test run (time, what it got right, what I had to correct)</p>
+		<aside class="notes">
+			Dictated live; the text on the slide is the plan, not a script.
+			What to point out while it runs: the project layout, the conventions question (my gate), files appearing only in LLM/, the fit, the fresh-context recomputation, the derivation note.
+			References: EKSS hep-ph/0501128; KKSS hep-ph/0602229; power-law dilaton arXiv:1701.01398.
+		</aside>
 	</section>
 	<section>
 		<h2>Aaron: the supercomputer and the editor</h2>
