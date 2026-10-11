@@ -2221,46 +2221,43 @@ jobs:
 		</aside>
 	</section>
 	<section>
-		<h2>Live: the program running upstairs</h2>
-		<ul>
-			<li>A program on the Hodge conjecture, running on my work computer since 5 October</li>
-			<li><code>STATE.md</code>: where it is, what it decided, what it asks me</li>
-			<li>The roadmap: what is known, what the program has shown, what is open</li>
-			<li>The ledgers, last night's digest, and the lecture notes it wrote for me from the basics</li>
-		</ul>
-		<p class="callout">Nothing it has found is checked by a human yet. That is exactly what the tiers say.</p>
-		<p class="todo">TODO (Antti): update the numbers in the notes the day before</p>
+		<h2>Mathematics: five days of a program on the Hodge conjecture</h2>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li><strong>A new result, claimed:</strong> a computer-assisted proof that Weil classes are algebraic on a class of abelian sixfolds that the known theorems (Schoen, Markman) do not cover</li>
+					<li>Written up as a <strong>68-page paper</strong>, with a reproduction code repository</li>
+					<li>Supporting families in every even dimension</li>
+					<li>It found and credited its own prior art, killed 3 claims of its own charter, and re-planned when an outside result it relied on was withdrawn</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+					<li><strong>For me to read:</strong> 806 pages of lecture notes from the basics, and a 177-page companion that explains the main proof step by step</li>
+					<li><strong>Ledgers:</strong> 29 ideas &rarr; 8 candidates &rarr; 8 results that survived fresh AI adversaries; 3 killed</li>
+					<li>Running on my work computer right now</li>
+				</ul>
+				<p class="callout">No human expert has checked the proofs. I have read the paper, but I cannot fully follow them. It will be published as a case study, with exactly that status.</p>
+			</div>
+		</div>
 		<aside class="notes">
-			Measured 2026-10-11 from the repository: 8 results at tier V2, none at V3; 29 ideas, 8 candidates, 3 killed; lecture notes 806 pp (frozen), companion note 177 pp.
-			Open in order: STATE.md, roadmap/roadmap.svg, ledgers/VERIFIED.md (one entry), digests/ (latest), lecture_notes/main.pdf.
+			Measured 2026-10-11 from the repository: program started 5 Oct, checkpoint 9 Oct; main result VER-0008 (tier V2, conditional, computer-assisted): every Weil class is algebraic on every non-split Weil sixfold over Q(sqrt(-3)) with Hermitian determinant -2.
+			Paper: papers/weil-nonsplit (rev 7, 68 pp). Companion 177 pp; lecture notes 806 pp (frozen). Ledgers 29 / 8 / 8 / 3.
+			Files to show, in order: STATE.md, roadmap/roadmap.svg, ledgers/VERIFIED.md (VER-0008), papers/weil-nonsplit/main.pdf (abstract), lecture_notes/main.pdf, the latest digests/ file.
 		</aside>
 	</section>
 	<section>
-		<h2>Live: a physics question, dictated</h2>
-			<div class="prompt-cc">
-				<div class="cc-header">
-					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> RhoTowers</span>
-					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
-				</div>
-				<div class="cc-box">
-					<p>New research project in Dropbox called RhoTowers. I want to reproduce two classic AdS/QCD results and then go one step further.
-					First the vector-meson tower in the hard-wall model of Erlich, Katz, Son and Stephanov, and in the soft-wall model of Karch, Katz, Son and Stephanov.
-					Get both papers from arXiv, derive the mode equation for the vector field yourself and check that you recover their spectra.</p>
-					<p>Then take a power-law dilaton, &phi;(z) = (cz)<sup>p</sup>, as in arXiv:1701.01398, and fit all three models to the PDG &rho; masses.
-					Plot m<sup>2</sup> against n for the data and the three fits, give me the fitted parameters with the fit quality, and compute the &rho; decay constant in each model.</p>
-					<p>Ask me before you fix any convention. Everything you make goes into <code>LLM/</code>; at the end, run an independent check and write me a short derivation note.</p>
-					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
-				</div>
-				<div class="cc-footer">
-					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span>
-					<span class="cc-model">Opus 5.5</span> <span class="cc-light">High</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
-				</div>
-			</div>
-		<p class="prompt-result todo">Result: after the test run (time, what it got right, what I had to correct)</p>
+		<h2>Physics, live: <em>RhoTowers</em>, steered by voice</h2>
+		<ul>
+			<li><strong>Reproduce</strong> the &rho;-meson towers of the hard-wall (Erlich, Katz, Son, Stephanov 2005) and soft-wall (Karch, Katz, Son, Stephanov 2006) models, deriving the mode equation ourselves</li>
+			<li><strong>Update the potential:</strong> a general dilaton, e.g. &phi;(z) = (cz)<sup>p</sup>; the soft wall is p = 2</li>
+			<li><strong>Fit</strong> all models to the measured &rho; masses; compare the Regge trajectories (m<sup>2</sup> against n)</li>
+			<li><strong>Compute</strong> more, e.g. the &rho; decay constants: which model holds up?</li>
+			<li><strong>Check:</strong> an independent recomputation in a fresh context, and a derivation note</li>
+		</ul>
+		<p class="callout">Watch where I step in: the conventions, the next step, and what gets promoted out of <code>LLM/</code>.</p>
 		<aside class="notes">
-			Dictated live; the text on the slide is the plan, not a script.
-			What to point out while it runs: the project layout, the conventions question (my gate), files appearing only in LLM/, the fit, the fresh-context recomputation, the derivation note.
-			References: EKSS hep-ph/0501128; KKSS hep-ph/0602229; power-law dilaton arXiv:1701.01398.
+			Dictated live, with my own twist. References: EKSS hep-ph/0501128; KKSS hep-ph/0602229; power-law dilaton arXiv:1701.01398.
 		</aside>
 	</section>
 	<section>
