@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- A3 poster of the Kumpula AI workshop for scientists, dark theme. Units: mm.
      Printed on an office printer: no bleed, content at least 7 mm from the edges. -->
-<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="420mm" viewBox="0 0 297 420">
+<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="420mm" viewBox="0 0 297 420" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <radialGradient id="glow" cx="50%" cy="26%" r="62%">
       <stop offset="0" stop-color="#3a2a22"/>
@@ -54,7 +54,7 @@
   <!-- QR code of the E-lomake sign-up form (figures/qrcode.png) -->
   <g id="qr" font-family="Inter" text-anchor="middle">
     <rect id="qr-bg" x="232" y="186" width="58" height="58" rx="2" fill="#ffffff"/>
-    <image id="qr-code" x="234" y="188" width="54" height="54" preserveAspectRatio="xMidYMid meet" style="image-rendering:pixelated" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACz0lEQVR42u2d0Y7DMAgE4dT//2Xu+SLA68Z2qt74qY3SKKPCGjBxPOyLxo9BAw000EADDTTQQAMNNNBAAw00+nhlB338u/h7cvn1csyrS2VXUe8AS4MGmuUqUHpZ5qHRfs0EIMZXmboDLA0aaPaogODx3vq0t/FB9rMyjhCUAUuDBpo9KiCMco5Xp3IfezeWBg00n6wCF48PMa2/nOz8N9BA85kqMD9FlxF8Wf+LNiAILA0aaJ5Sgfn5PMZ1AWEFIabvAEuDBprlKnCiq7jPHIL/BhpoTg2PKgx4002FjKCf8u/IA5YGDTR7YgE1Wg9RAC7HhLqAuqqApUEDzaJYwFqnuzOV29jtfawggaVBA81ZFbDEBwVlENYDvAoc3swNsDRooFmuAnfa+/vOQhODCUFzsDRooFmuAkI7YB+eezvv92lB30roxALQQPN8RmCi6/q4LiCMqFQFS4MGmjXjJeQBQiyvNgLZTF1AvSssDRpolqtA5nnqokBUs726D8HlolNJA5YGDTRHMoI7j/7O7zIiFAuxNGig2a0CfYeQj/N4mxEKE6UAS4MGmnMZger7QtKvSotwMpYGDTQbVSCrBghpwe29x/r6X2Bp0EDzVCwQ45hfXSQUOonKh5SF5UIsDRpolqtA5tNqdV/NA6YCf/oFoIHmCRWwKhboQ4PsUx9HqEVALA0aaB5TgRhnCYJu9MmFjfMFLA0aaHarQLTTcYyrBkKkX1Ygy1yDugA00JxTAfXRQbXfR3gribqPCHUBaKA5lxEIi/d9BC/M3ermAfQLQAPNY3WBqfbg7O0CfSUwO8XFy5MRQAPNERUQRua/Ma4G2EztwarkAkuDBpoPUIHMa9XmIJupLgghCZYGDTTLVUBNAdS3Equ7GL35ahIsDRpoVqrAVCOfsHFwrxYxVgv2GoIGmi3Dg/8GGmiggQYaaKCBBhpooIEGGmj+K80vLab7tP4P6/4AAAAASUVORK5CYII="/>
+    <image id="qr-code" x="234" y="188" width="54" height="54" preserveAspectRatio="xMidYMid meet" style="image-rendering:pixelated" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAACz0lEQVR42u2d0Y7DMAgE4dT//2Xu+SLA68Z2qt74qY3SKKPCGjBxPOyLxo9BAw000EADDTTQQAMNNNBAAw00+nhlB338u/h7cvn1csyrS2VXUe8AS4MGmuUqUHpZ5qHRfs0EIMZXmboDLA0aaPaogODx3vq0t/FB9rMyjhCUAUuDBpo9KiCMco5Xp3IfezeWBg00n6wCF48PMa2/nOz8N9BA85kqMD9FlxF8Wf+LNiAILA0aaJ5Sgfn5PMZ1AWEFIabvAEuDBprlKnCiq7jPHIL/BhpoTg2PKgx4002FjKCf8u/IA5YGDTR7YgE1Wg9RAC7HhLqAuqqApUEDzaJYwFqnuzOV29jtfawggaVBA81ZFbDEBwVlENYDvAoc3swNsDRooFmuAnfa+/vOQhODCUFzsDRooFmuAkI7YB+eezvv92lB30roxALQQPN8RmCi6/q4LiCMqFQFS4MGmjXjJeQBQiyvNgLZTF1AvSssDRpolqtA5nnqokBUs726D8HlolNJA5YGDTRHMoI7j/7O7zIiFAuxNGig2a0CfYeQj/N4mxEKE6UAS4MGmnMZger7QtKvSotwMpYGDTQbVSCrBghpwe29x/r6X2Bp0EDzVCwQ45hfXSQUOonKh5SF5UIsDRpolqtA5tNqdV/NA6YCf/oFoIHmCRWwKhboQ4PsUx9HqEVALA0aaB5TgRhnCYJu9MmFjfMFLA0aaHarQLTTcYyrBkKkX1Ygy1yDugA00JxTAfXRQbXfR3gribqPCHUBaKA5lxEIi/d9BC/M3ermAfQLQAPNY3WBqfbg7O0CfSUwO8XFy5MRQAPNERUQRua/Ma4G2EztwarkAkuDBpoPUIHMa9XmIJupLgghCZYGDTTLVUBNAdS3Equ7GL35ahIsDRpoVqrAVCOfsHFwrxYxVgv2GoIGmi3Dg/8GGmiggQYaaKCBBhpooIEGGmj+K80vLab7tP4P6/4AAAAASUVORK5CYII="/>
     <text x="261" y="253" font-weight="700" font-size="6" fill="#ffffff">Scan to sign up</text>
     <text x="261" y="261" font-weight="700" font-size="5" fill="#ff7a4d">by Tuesday 27 October</text>
   </g>
