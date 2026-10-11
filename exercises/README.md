@@ -2,6 +2,7 @@
 Each exercise has a `README.md` with the task, suggested prompts and what to look for.
 Use your own words for the prompts: the suggested ones are only there in case you're stuck.
 Reference solutions for the code exercises are in [`../solutions/`](../solutions/) — try before you peek.
+The exercises are written for Claude Code. Using GitHub Copilot, Codex or Antigravity instead? See [the extra guide](./other_agents.md).
 
 | # | Exercise | Session | Time | What you practise |
 |---|---|---|---|---|
