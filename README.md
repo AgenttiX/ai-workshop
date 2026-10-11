@@ -8,9 +8,13 @@ University of Helsinki by
 
 - **When and where:** Friday 30 October 2026, 12:00–16:30 (coffee break 14:00–14:30),
   Physicum E207, Kumpula campus
-- **Who:** students and researchers of the Faculty of Science. No experience needed; advanced topics are included too.
+- **Who:** researchers and students of the Faculty of Science. No experience needed; advanced topics are included too.
+- **Programme:**
+  - *12:00 Foundations:* AI in 2026, chat windows vs. AI agents, the caveats, a live demo, hands-on exercises.
+  - *14:30 Advanced:* extending the agent with your own instructions, automatic checks, helper agents and tools,
+    making your project AI-ready (tests, automatic code checks, continuous integration), and three showcases: two research setups (attended physics and an autonomous mathematics program),
+    supercomputer use, and running models on your own computer.
 - **Language:** English. **Bring your laptop**, set up as described below.
-- **Study credit:** 1 ECTS for students (preliminary, to be confirmed).
 - **Contact:** aaron.haarti@helsinki.fi, antti.hippelainen@helsinki.fi, mika.x.maki@helsinki.fi, joonas.nattila@helsinki.fi
 - Slides: [`slides.html`](./slides.html) (open it in a browser; press `S` for the speaker notes, `F` for full screen)
 
