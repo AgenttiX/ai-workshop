@@ -35,8 +35,8 @@ directly, without a shell, so the same configuration works on Linux, macOS and W
 `${CLAUDE_PROJECT_DIR}` is replaced by the folder where the session started, so the hook works from any subfolder.
 
 ## Installing it
-Merge the `hooks` block into `.claude/settings.json` next to `"permissions"`, or copy [`settings.json`](./settings.json)
-over it on Linux/macOS. According to the current [documentation](https://code.claude.com/docs/en/settings),
+The simplest way is to copy the snippet to `.claude/settings.local.json`, as in the exercise: Claude Code combines it with
+the shared `.claude/settings.json`. Alternatively, merge the `hooks` block into `.claude/settings.json` next to `"permissions"`. According to the current [documentation](https://code.claude.com/docs/en/settings),
 Claude Code reloads settings files while it runs, so a restart shouldn't be needed; restarting doesn't hurt.
 `/hooks` lists the active hooks (in the VS Code extension also the **Hooks** entry of the Customize section).
 

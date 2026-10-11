@@ -6,7 +6,17 @@ The agent sees the server's tools and decides when to call them.
 ## Task
 1. List the servers already configured: `claude mcp list` (or `/mcp` inside a session).
 2. Add an arXiv server. The exact command depends on the server; for example, with the
-   [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server) package (needs [`uv`](https://docs.astral.sh/uv/)):
+   [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server) package. It needs [`uv`](https://docs.astral.sh/uv/),
+   a Python package runner; install it first if `uv --version` doesn't work, then open a new terminal:
+   ```bash
+   # Linux, macOS
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+   ```powershell
+   # Windows (PowerShell)
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   ```
+   Then add the server (the same command on every system):
    ```bash
    claude mcp add arxiv -- uvx arxiv-mcp-server
    ```
@@ -14,7 +24,7 @@ The agent sees the server's tools and decides when to call them.
 3. Start a session and ask:
    > Find the abstract of arXiv:1909.10040 and summarize the sound shell model in three sentences.
 
-   Watch the tool calls: the agent picks the server's `search`/`download` tools by itself.
+   Watch the tool calls: the agent picks the server's tools (e.g. `search_papers`, `get_abstract`, `download_paper`) by itself.
 4. If you use Zotero, try [zotero-mcp](https://github.com/54yyyu/zotero-mcp), which gives the agent access to your library:
    ask it to find the papers in your library related to what you're working on.
 

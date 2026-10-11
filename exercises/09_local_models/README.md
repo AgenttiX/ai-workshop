@@ -19,9 +19,17 @@ models were 1–2 years ago, which is still remarkably useful for many tasks.
    ```
 3. Point Claude Code at the proxy:
    ```bash
+   # Linux, macOS
    export ANTHROPIC_BASE_URL=http://localhost:4000
    export ANTHROPIC_AUTH_TOKEN=local
    export ANTHROPIC_MODEL=local-model
+   claude
+   ```
+   ```powershell
+   # Windows (PowerShell)
+   $env:ANTHROPIC_BASE_URL = "http://localhost:4000"
+   $env:ANTHROPIC_AUTH_TOKEN = "local"
+   $env:ANTHROPIC_MODEL = "local-model"
    claude
    ```
 4. Do exercise 01 again with the local model and compare: time, quality, how many tries it needs.

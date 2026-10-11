@@ -4,8 +4,8 @@ a script, a data file, a run script, and conventions that exist only in someone'
 It has no `AGENTS.md`, so an agent working on it has to guess.
 
 ## Task
-1. Open a Claude Code session *in `exercises/02_agents_md/pendulum_lab/`* (in the terminal: `cd` there and run `claude`;
-   in VS Code, open that folder as the workspace). Run `/init`. It reads the project and writes a draft `CLAUDE.md`.
+1. Open a Claude Code session *in `exercises/02_agents_md/pendulum_lab/`*. In the terminal, from the repository folder:
+   `cd exercises/02_agents_md/pendulum_lab` and then `claude` (the same in PowerShell). Run `/init`. It reads the project and writes a draft `CLAUDE.md`.
 2. Read the draft critically. Which of the unwritten conventions did it find, and which did it miss?
    - The units are in the column names of the data file.
    - The analysis is run with `python run.py`, which uses the Python of the virtual environment.

@@ -9,7 +9,8 @@ instead of hallucinating an API.
    > Use the bag model, an exponential nucleation type and the given r_star. Read the PTtools source and examples
    > to find the right API before writing code. Then run pytest exercises/03_pttools.
 
-   The first run takes about a minute, as PTtools compiles its numerical code with Numba.
+   The first run takes 1–3 minutes, as PTtools compiles its numerical code with Numba. If Claude's command times out,
+   ask it to run the tests again. The NumbaLSODA and TBB messages printed on import are harmless.
 2. Then ask it to implement `plot_spectra()` for several wall velocities, e.g. 0.4, 0.6 and 0.8, and run the script.
 3. Ask a physics question about the result, e.g. why the peak frequency moves with the wall velocity,
    and check the answer against what you know. Being able to check is the point.

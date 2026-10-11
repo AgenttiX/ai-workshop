@@ -186,7 +186,8 @@ three programs with `winget install Python.Python.3.12`, `winget install Git.Git
 3. **VS Code.** Download it from [code.visualstudio.com](https://code.visualstudio.com/), open the downloaded file
    and drag Visual Studio Code to Applications. Start VS Code, press Cmd+Shift+P, type
    **Shell Command: Install 'code' command in PATH** and press Enter.
-4. Check that everything works. Each command should print a version number:
+4. **Close the Terminal window and open a new one**, so that it finds the new programs.
+   Then check that everything works. Each command should print a version number, and Python should be 3.12 or newer:
    ```bash
    python3 --version
    git --version
@@ -200,19 +201,16 @@ Start VS Code and open the **Extensions** view: the icon of four squares on the 
 1. **Python** by Microsoft: running Python and choosing the virtual environment.
 2. **Claude Code** by Anthropic: the AI agent.
 
-A Claude icon appears in VS Code. Clicking it opens the Claude Code panel.
+Claude Code is marked by the **Spark icon**, a small orange star. To open its panel, open any file (e.g. `README.md`) and click
+the Spark icon in the top-right corner of the editor (it appears when a file is open), or click the Spark icon in the Activity Bar on the left.
 
-<details>
-<summary>Optional: Claude Code in the terminal</summary>
-
-The VS Code extension contains everything you need. Claude Code also runs in a plain terminal,
-which some advanced exercises use. To install that version:
+**Also install Claude Code for the terminal.** Several exercises run `claude` in a terminal, and the extension does not
+make that command available there. (The quick setup above already did this.)
 - Linux and macOS: `curl -fsSL https://claude.ai/install.sh | bash`
 - Windows PowerShell: `irm https://claude.ai/install.ps1 | iex`
 
 Open a new terminal and check with `claude --version`. These commands are from the
 [official setup guide](https://code.claude.com/docs/en/setup).
-</details>
 
 ### Step 3: Download the workshop materials
 In the terminal, go to your home folder and download (*clone*) this repository. A **repository** is a folder
@@ -230,7 +228,7 @@ You don't need to buy anything for the workshop: we arrange access to Claude Cod
 and send the details to everyone who signs up. If you already have Claude Pro, Max or Team, you can use your own account.
 (The free Claude plan doesn't include Claude Code.)
 
-To log in, click the Claude icon in VS Code and choose to sign in. A browser window opens; log in there.
+To log in, open the Claude Code panel (the Spark icon) and choose to sign in. A browser window opens; log in there.
 
 ### Step 5: Create the Python environment and check everything
 A **virtual environment** ("venv") is a folder with its own copy of Python and its own packages, separate from the
@@ -270,7 +268,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
    python -m workshop.check
    ```
    once more. Everything should be `OK` or `WARN`.
-4. Click the Claude icon to open Claude Code and ask:
+4. Click the Spark icon to open Claude Code and ask:
    > What is this repository about?
 
    It reads the files of the repository and answers. If it does, you're ready. See you at the workshop!
@@ -292,6 +290,8 @@ When something fails, the error message usually says why. Paste it into any AI c
 | The check says `FAIL` for a package | Run the check again with `--setup` added, e.g. `python3 -m workshop.check --setup`. |
 | The terminal in VS Code doesn't show `(venv)` | Select the interpreter (step 6), then open a new terminal. Or activate it by hand (step 5). |
 | You can't install programs on a university-managed laptop | Tell us well before the workshop. The Python and VS Code installers above work without administrator rights. |
+| `claude` is not found in the terminal | Install the terminal version ([step 2](#step-2-install-the-vs-code-extensions)), then open a new terminal. The VS Code extension alone doesn't add the command. |
+| `git pull` says your local changes would be overwritten | You have edited files in the exercises. Keep a copy of your work with `git stash`, then `git pull` again; `git stash pop` brings your changes back. |
 | Claude Code says that your plan doesn't include it | The free Claude plan doesn't include Claude Code; see [step 4](#step-4-a-claude-account). |
 
 ---

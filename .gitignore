@@ -11,6 +11,8 @@ dev
 htmlcov
 render
 venv
+# Personal Claude Code settings (exercise 06 puts the hook here)
+.claude/settings.local.json
 # Outputs of the exercises. The scripts save figures into fig/ of the current directory.
 /fig/
 exercises/**/fig/

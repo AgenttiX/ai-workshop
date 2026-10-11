@@ -27,12 +27,14 @@ instead of just believing it.
 </details>
 
 ## 2. Give Claude the task
-Open the Claude Code panel (the Claude icon in the top right corner of the editor, or in the sidebar)
+Open the Claude Code panel (the Spark icon in the top-right corner of the editor when a file is open, or in the Activity Bar on the left)
 and describe the problem. Try to use your own words. If you're stuck, copy this:
 > The test in exercises/01_fix_the_bug fails. Find the bug, fix it and run the tests to check that they pass.
 
-Claude now reads the files, thinks, edits and runs commands. Depending on your permission settings,
-it asks you before editing a file or running a command. Read what it wants to do before you click *Yes*.
+Claude now reads the files, thinks, edits and runs commands. Claude Code starts in *Auto* mode, where it acts without asking.
+For this exercise, switch to *Manual*: click the mode indicator at the bottom of the prompt box and choose **Manual**
+(in the terminal: press Shift+Tab until it shows the manual mode). Then it asks you before editing a file or running a command.
+Read what it wants to do before you click *Yes*.
 
 <details>
 <summary>Why this prompt works</summary>

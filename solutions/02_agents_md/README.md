@@ -25,7 +25,7 @@ The five conventions differ in how visible they are in the files:
 |---|---|---|
 | Units in the column names | The header of `data/pendulum.csv` (`length_cm`, `period_s`, `period_err_s`) | Often finds it if it opens the CSV file. |
 | How to run the analysis | `run.py` | Usually finds it: a run script is an obvious thing to document. |
-| Results go to `results/`, not tracked in Git | `RESULTS_DIR` in `analyse.py`. The "not in Git" part is in the `.gitignore` of the workshop root, outside the folder | Often finds the folder, often misses that it is ignored by Git. |
+| Results go to `results/`, not tracked in Git | `RESULTS_DIR` in `analyse.py`. The "not in Git" part is in `pendulum_lab/.gitignore` (and also in the `.gitignore` of the workshop root) | Often finds the folder, often misses that it is ignored by Git. |
 | Uncertainties are 1σ | Nowhere in `pendulum_lab/` | Can't find it. It may guess, or not mention the uncertainties at all. |
 | Plots use `workshop.plotting` | The imports in `analyse.py` | May describe it as a fact about the code rather than as a rule for new plots. |
 

@@ -1,12 +1,12 @@
 # Exercise 00: Setup check (10 min)
-1. Open this repository in VS Code and activate the virtualenv in the terminal.
+1. Open this repository in VS Code and activate the virtual environment in the terminal
+   (the commands are in [step 5 of the setup guide](../../README.md#step-5-create-the-python-environment-and-check-everything)).
 2. Run the environment check:
    ```bash
    python -m workshop.check
    ```
-   Everything marked `FAIL` has to be fixed. `MISS` is fine for `claude` if you use the VS Code extension,
-   and for `code`/`codium` if VS Code is not on your PATH.
-3. Start Claude Code (the extension's icon in VS Code, or `claude` in the terminal) and log in.
+   Everything marked `FAIL` has to be fixed. `WARN` is fine for `code`/`codium` if VS Code is not on your PATH.
+3. Start Claude Code (the Spark icon in VS Code, or `claude` in the terminal) and log in.
 4. Ask it:
    > What is this repository about, and how do I run its tests?
 

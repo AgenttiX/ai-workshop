@@ -6,8 +6,14 @@ that the main agent can delegate to. Use them for parallel work, for specialists
 ## Task
 1. Copy the template into the agents directory of this repository:
    ```bash
+   # Linux, macOS
    mkdir -p .claude/agents
    cp exercises/07_subagents/agents/physics-reviewer.md .claude/agents/
+   ```
+   ```powershell
+   # Windows (PowerShell)
+   New-Item -ItemType Directory -Force .claude\agents
+   Copy-Item exercises\07_subagents\agents\physics-reviewer.md .claude\agents\
    ```
    Read it: the frontmatter defines the name, when to use it, the tools it may use and the model;
    the body is its system prompt.
