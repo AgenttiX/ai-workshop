@@ -72,7 +72,7 @@
     <text x="27" y="281"><tspan font-weight="700">Advanced features:</tspan> agentic skills, hooks, subagents and task delegation,</text>
     <text x="27" y="289">MCP servers, linting, continuous integration.</text>
     <text x="27" y="298">•</text>
-    <text x="33" y="298">Showcases: continuous research projects, supercomputer use, running local models.</text>
+    <text x="33" y="298">Showcases: continuous research projects and running local models.</text>
   </g>
 
   <g id="good-to-know" font-family="Inter" font-size="6" fill="#ffffff">
@@ -87,16 +87,15 @@
   <g id="footer" font-family="Inter" font-size="5.4" fill="#ffffff">
     <rect x="7" y="373" width="283" height="0.5" fill="#6a625a"/>
     <text x="7" y="381.5" font-weight="700" font-size="5" letter-spacing="0.6" fill="#ff7a4d">ORGANISERS</text>
-    <text x="7" y="389">Aaron Haarti, Antti Hippeläinen &amp; Mika Mäki</text>
+    <text x="7" y="389">Antti Hippeläinen &amp; Mika Mäki</text>
     <text x="7" y="396">Doctoral researchers</text>
     <text x="7" y="403">Joonas Nättilä, Associate Professor</text>
     <text x="7" y="410">University of Helsinki · Faculty of Science</text>
     <g text-anchor="end">
       <text x="290" y="381.5" font-weight="700" font-size="5" letter-spacing="0.6" fill="#ff7a4d">CONTACT</text>
-      <text x="290" y="389">aaron.haarti@helsinki.fi</text>
-      <text x="290" y="396">antti.hippelainen@helsinki.fi</text>
-      <text x="290" y="403">mika.x.maki@helsinki.fi</text>
-      <text x="290" y="410">joonas.nattila@helsinki.fi</text>
+      <text x="290" y="389">antti.hippelainen@helsinki.fi</text>
+      <text x="290" y="396">mika.x.maki@helsinki.fi</text>
+      <text x="290" y="403">joonas.nattila@helsinki.fi</text>
     </g>
   </g>
 </svg>

@@ -1,9 +1,6 @@
 cff-version: 1.2.0
 message: "When referring to this workshop or repository, please cite it as below."
 authors:
-- family-names: "Haarti"
-  given-names: "Aaron"
-  orcid: "https://orcid.org/0009-0008-0339-972X"
 - family-names: "Hippeläinen"
   given-names: "Antti"
   orcid: "https://orcid.org/0000-0002-6129-6568"

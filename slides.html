@@ -315,7 +315,7 @@
 	<h1>AI workshop for scientists</h1>
 	<p>How to use AI effectively in research in 2026</p>
 	<p>
-		Aaron Haarti, Antti Hippeläinen &amp; Mika Mäki<br>
+		Antti Hippeläinen &amp; Mika Mäki<br>
 		Doctoral researchers, Department of Physics, University of Helsinki
 	</p>
 	<p>
@@ -371,7 +371,7 @@
 				<ol class="schedule">
 					<li>Extending the harness: skills, hooks, agents, MCP</li>
 					<li>Making your project AI-ready: tests, linting, CI</li>
-					<li>Three demos: two research setups (attended physics, autonomous mathematics), supercomputer use, running local models</li>
+					<li>Three demos: two research setups (attended physics, autonomous mathematics) and running local models</li>
 					<li>Hands-on and discussion</li>
 					<li>Final words</li>
 				</ol>
@@ -1435,7 +1435,7 @@
 			of your computer. The workshop's lives in <code>ai-workshop/venv</code>.</p>
 		<p>Didn't manage? Raise a hand now. After a word on IDEs, the next two slides are the check.</p>
 		<aside class="notes">
-			All three organizers circulate. Keep to 10 minutes; whatever isn't fixed gets fixed at the coffee break.
+			Both organizers circulate. Keep to 10 minutes; whatever isn't fixed gets fixed at the coffee break.
 		</aside>
 	</section>
 	<section>
@@ -1466,7 +1466,7 @@
 			</div>
 		</div>
 		<aside class="notes">
-			For those who've only used Jupyter or a plain text editor. Aaron's showcase has an AI-configured Doom Emacs.
+			For those who've only used Jupyter or a plain text editor.
 		</aside>
 	</section>
 	<section>
@@ -2169,7 +2169,7 @@ jobs:
 	<section class="divider center-slide">
 		<h1>Showcases</h1>
 		<p>Three complete workflows</p>
-		<aside class="notes">About 11 minutes each. Each organizer has a screen recording as a fallback. Keep the time; one question each.</aside>
+		<aside class="notes">Each showcase has a screen recording as a fallback. Keep the time; one question each.</aside>
 	</section>
 	<section>
 		<h2>Antti: two research setups</h2>
@@ -2252,16 +2252,6 @@ jobs:
 		<aside class="notes">
 			Dictated live, with my own twist. References: EKSS hep-ph/0501128; KKSS hep-ph/0602229; power-law dilaton arXiv:1701.01398.
 		</aside>
-	</section>
-	<section>
-		<h2>Aaron: the supercomputer and the editor</h2>
-		<ul>
-			<li>Claude Code on the laptop &rarr; SSH to the cluster &rarr; write the batch script &rarr; <code>sbatch</code> &rarr; watch <code>squeue</code> &rarr; fetch the results &rarr; plot</li>
-			<li>Why the permission allow-list matters here: <code>ssh</code>, <code>squeue</code>, <code>scp</code> are safe to allow; <code>scancel</code> and <code>rm</code> are not</li>
-			<li>The editor as an AI-configured tool: a Doom Emacs configuration written by Claude</li>
-			<li>A combined workflow: what an agent looks like when it spans your laptop, the cluster and your tools</li>
-		</ul>
-		<p class="todo">TODO (Aaron): cluster, a job that finishes in &lt; 2 min, fallback recording</p>
 	</section>
 	<section>
 		<h2>Mika: local models</h2>

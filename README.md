@@ -2,7 +2,6 @@
 A hands-on workshop on how AI is actually used in research today: not chat windows, but AI agents
 that read your files, run your code and check their own work. Organized at the Kumpula campus of the
 University of Helsinki by
-[Aaron Haarti](https://github.com/haaaaron),
 [Antti "Hippe" Hippeläinen](https://github.com/ahippelainen) and
 [Mika Mäki](https://github.com/AgenttiX).
 
@@ -12,10 +11,10 @@ University of Helsinki by
 - **Programme:**
   - *12:00 Foundations:* AI in 2026, chat windows vs. AI agents, the caveats, a live demo, hands-on exercises.
   - *14:30 Advanced:* extending the agent with your own instructions, automatic checks, helper agents and tools,
-    making your project AI-ready (tests, automatic code checks, continuous integration), and three showcases: two research setups (attended physics and an autonomous mathematics program),
-    supercomputer use, and running models on your own computer.
+    making your project AI-ready (tests, automatic code checks, continuous integration), and three showcases: two research setups (attended physics and an autonomous mathematics program)
+    and running models on your own computer.
 - **Language:** English. **Bring your laptop**, set up as described below.
-- **Contact:** aaron.haarti@helsinki.fi, antti.hippelainen@helsinki.fi, mika.x.maki@helsinki.fi, joonas.nattila@helsinki.fi
+- **Contact:** antti.hippelainen@helsinki.fi, mika.x.maki@helsinki.fi, joonas.nattila@helsinki.fi
 - Slides: [`slides.html`](./slides.html) (open it in a browser; press `S` for the speaker notes, `F` for full screen)
 
 **Contents:** [Setup](#set-up-your-laptop-before-the-workshop) ·

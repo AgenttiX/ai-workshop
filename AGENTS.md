@@ -16,7 +16,6 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - Programming language for exercises: Python 3.12 or newer
 
 ## Workshop organizers
-- [Aaron Haarti](https://github.com/haaaaron): PhD student in computational field theory
 - [Antti "Hippe" Hippeläinen](https://github.com/ahippelainen): PhD student in holography
 - [Mika Mäki](https://github.com/AgenttiX): PhD student in first-order cosmological phase transitions
 

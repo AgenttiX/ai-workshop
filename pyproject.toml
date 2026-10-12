@@ -21,7 +21,6 @@ keywords = [
 ]
 # When updating these, also update CITATION.cff.
 authors = [
-    {name = "Aaron Haarti", email = "aaron.haarti@helsinki.fi"},
     {name = "Antti Hippeläinen", email = "antti.hippelainen@helsinki.fi"},
     {name = "Mika Mäki", email = "mika.x.maki@helsinki.fi"}
 ]
