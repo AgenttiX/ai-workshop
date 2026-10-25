@@ -45,9 +45,10 @@ jobs:
         working-directory: ${{ runner.temp }}
         run: bash -eo pipefail "$GITHUB_WORKSPACE/setup/ubuntu.sh"
       - name: Check the installed tools
-        working-directory: ${{ runner.temp }}/ai-workshop
+        working-directory: ${{ github.workspace }}
         run: |
           export PATH="$HOME/.local/bin:/snap/bin:$PATH"
+          cd ~/Git/ai-workshop
           venv/bin/python --version
           dpkg -s claude-desktop | grep "Status: install ok installed"
           claude --version
@@ -67,9 +68,10 @@ jobs:
         working-directory: ${{ runner.temp }}
         run: bash -eo pipefail "$GITHUB_WORKSPACE/setup/macos.sh"
       - name: Check the installed tools
-        working-directory: ${{ runner.temp }}/ai-workshop
+        working-directory: ${{ github.workspace }}
         run: |
           export PATH="$HOME/.local/bin:$PATH"
+          cd ~/Git/ai-workshop
           venv/bin/python --version
           test -d /Applications/Claude.app
           claude --version
@@ -103,9 +105,10 @@ jobs:
         run: . "$env:GITHUB_WORKSPACE\setup\windows.ps1"
       # The script runs in one PowerShell session. A participant reopens PowerShell to get the new PATH.
       - name: Check the installed tools
-        working-directory: ${{ runner.temp }}\ai-workshop
+        working-directory: ${{ github.workspace }}
         run: |
           $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
+          cd ~\Git\ai-workshop
           foreach ($id in "Python.Python.3.14", "Git.Git", "Microsoft.VisualStudioCode", "Anthropic.Claude") {
             winget list --id $id --exact --disable-interactivity
             if ($LASTEXITCODE -ne 0) { throw "WinGet did not install $id" }

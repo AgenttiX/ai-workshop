@@ -16,7 +16,7 @@ University of Helsinki by
 - **Language:** English.
 - **Bring your laptop**, set up as described below.
 - **Contact:** antti.hippelainen@helsinki.fi, mika.x.maki@helsinki.fi, joonas.nattila@helsinki.fi
-- Slides: [`slides.html`](./slides.html) (Download it to your computer and then open it in a browser; press `S` for the speaker notes, `F` for full screen)
+- Slides: [`slides.html`](./slides.html) (download it to your computer and then open it in a browser; press `S` for the speaker notes, `F` for full screen)
 
 **Contents:** [Setup](#set-up-your-laptop-before-the-workshop) ·
 [Troubleshooting](#troubleshooting) · [Exercises](#exercises)
@@ -52,10 +52,14 @@ sudo curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://
 echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" | sudo tee /etc/apt/sources.list.d/claude-desktop.list
 sudo apt update
 sudo apt install claude-desktop
-# Alternatively, install the command-line Claude Code. This is included in Claude Desktop.
+# Claude Desktop may also install the command-line Claude Code. Check with:
+# claude --version
+# If it's missing, install it with:
 # curl -fsSL https://claude.ai/install.sh | bash
 
 # The workshop repository and its packages
+mkdir -p ~/Git
+cd ~/Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
 python3 -m venv venv
@@ -73,13 +77,17 @@ brew install --cask visual-studio-code   # or: vscodium
 
 # Claude desktop app
 brew install --cask claude
-# Alternatively, install the command-line Claude Code. This is included in Claude Desktop.
+# Claude Desktop may also install the command-line Claude Code. Check with:
+# claude --version
+# If it's missing, install it with:
 # curl -fsSL https://claude.ai/install.sh | bash
 
 # The workshop repository and its packages
+mkdir -p ~/Git
+cd ~/Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
-python3.14 -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python -m workshop.check
@@ -90,10 +98,14 @@ python -m workshop.check
 ```powershell
 # In PowerShell. Anthropic.Claude is the Claude desktop app.
 winget install Python.Python.3.14 Git.Git Microsoft.VisualStudioCode Anthropic.Claude
-# Alternatively, install the command-line Claude Code. This is included in Claude Desktop.
+# Claude Desktop may also install the command-line Claude Code. Check with:
+# claude --version
+# If it's missing, install it with:
 # irm https://claude.ai/install.ps1 | iex
 
 # Close and reopen PowerShell, then:
+New-Item -ItemType Directory -Force ~\Git
+cd ~\Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
 py -3.14 -m venv venv
@@ -112,7 +124,7 @@ python -m workshop.check
 | Programming language | **Python 3.12 or later** | The programming language of the exercises. The instructions below default to Python 3.14 where applicable. |
 | Version control | **Git** | It records every change to your files so that you can see and undo them. It's also how you download the workshop materials. |
 | AI harness | **Claude Code, GitHub Copilot or OpenCode** | A harness is a program that enables an AI agent to interact with your computer and files. |
-| Account | **A paid Claude plan, GitHub Education, or an AI provider of your choice** | Claude Code needs Claude Pro, Max or Team. The free plan doesn't include Claude Code. Students and researchers can use GitHub Copilot through GitHub Education instead. See [step 6](#step-1-an-account-for-the-ai-agent). |
+| Account | **A paid Claude plan, GitHub Education, or an AI provider of your choice** | Claude Code needs Claude Pro, Max or Team. The free plan doesn't include Claude Code. Students and researchers can use GitHub Copilot through GitHub Education instead. See [step 1](#step-1-an-account-for-an-ai-provider). |
 
 You can also use other tools of your choice if you prefer.
 These are simply the ones with which we are familiar enough that we can provide support.
@@ -145,6 +157,7 @@ The exercises are written for Claude Code, but most of them work with Copilot to
 
 <details open>
 <summary><b>A provider of your choice</b></summary>
+
 You may also use an AI provider of your choice. Some notable ones include:
 
 - [Google Gemini](https://gemini.google/subscriptions/)
@@ -211,7 +224,10 @@ Once VS Code is installed, you can also use its built-in terminal: menu **Termin
    ```bash
    python3 --version
    git --version
+   # Visual Studio Code
    code --version
+   # VSCodium
+   codium --version
    ```
 </details>
 
@@ -229,19 +245,24 @@ Once VS Code is installed, you can also use its built-in terminal: menu **Termin
    The default choices on every screen are fine. Git also installs *Git Bash*, which Claude Code uses to run commands.
 3. **VS Code.** Download the **User Installer** from [code.visualstudio.com](https://code.visualstudio.com/)
    (it doesn't need administrator rights) and keep the option **Add to PATH** ticked.
+   For VSCodium, download the **user installer** (`VSCodiumUserSetup-x64-….exe`) from
+   [VSCodium releases](https://github.com/VSCodium/vscodium/releases) and keep the option **Add to PATH** ticked.
 4. **Close all PowerShell windows and open a new one**, so that it finds the new programs.
    Then check that everything works. Each command should print a version number:
    ```powershell
    py -3 --version
    git --version
+   # Visual Studio Code
    code --version
+   # VSCodium
+   codium --version
    ```
    `py` is the Python launcher for Windows; `py -3` means "the newest Python 3 installed".
    Use it instead of `python` until the virtual environment is set up in step 8.
 
 If you already use [winget](https://learn.microsoft.com/windows/package-manager/winget/), you can install the same
 three programs with `winget install Python.Python.3.14`, `winget install Git.Git` and
-`winget install Microsoft.VisualStudioCode`.
+`winget install Microsoft.VisualStudioCode` (VSCodium: `winget install VSCodium.VSCodium`).
 </details>
 
 <details>
@@ -255,12 +276,18 @@ three programs with `winget install Python.Python.3.14`, `winget install Git.Git
 3. **VS Code.** Download it from [code.visualstudio.com](https://code.visualstudio.com/), open the downloaded file
    and drag Visual Studio Code to Applications. Start VS Code, press Cmd+Shift+P, type
    **Shell Command: Install 'code' command in PATH** and press Enter.
+   For VSCodium, download the `.dmg` file from [VSCodium releases](https://github.com/VSCodium/vscodium/releases)
+   (or with Homebrew: `brew install --cask vscodium`), drag VSCodium to Applications, and use the command
+   **Shell Command: Install 'codium' command in PATH** in the same way.
 4. **Close the Terminal window and open a new one**, so that it finds the new programs.
    Then check that everything works. Each command should print a version number, and Python should be 3.12 or newer:
    ```bash
    python3 --version
    git --version
+   # Visual Studio Code
    code --version
+   # VSCodium
+   codium --version
    ```
 </details>
 
@@ -286,7 +313,7 @@ A desktop client is an app in which you chat with an AI agent that works on the 
   ```
   On Fedora and other Linux distributions, the desktop app isn't available yet: use a command-line tool of [step 5](#step-5-install-a-command-line-ai-harness).
 
-Start **Claude** from your applications. Sign in with the account of [step 1](#step-1-an-account-for-the-ai-agent).
+Start **Claude** from your applications. Sign in with the account of [step 1](#step-1-an-account-for-an-ai-provider).
 </details>
 
 <details>
@@ -298,7 +325,7 @@ including Copilot Free and GitHub Education.
 1. Download it for your system from [github.com/features/ai/github-app](https://github.com/features/ai/github-app)
    and install it.
 2. Open it, click **Sign in to GitHub** and follow the prompts.
-3. When it asks for repositories, add the `ai-workshop` folder as a local folder after [step 7](#step-7-download-the-workshop-materials),
+3. When it asks for repositories, add the `~/Git/ai-workshop` folder as a local folder after [step 7](#step-7-download-the-workshop-materials),
    or skip this and add it later.
 
 See the [official quickstart](https://docs.github.com/en/copilot/get-started/quickstart-copilot-app).
@@ -312,7 +339,7 @@ See the [official quickstart](https://docs.github.com/en/copilot/get-started/qui
    (`.deb` for Ubuntu and Debian, `.rpm` for Fedora). With Homebrew on macOS: `brew install --cask opencode-desktop`.
 2. Open it and connect a model provider, e.g. your GitHub Copilot account (`/connect`, then **GitHub Copilot**).
    See the [providers documentation](https://opencode.ai/docs/providers/).
-   Note that a Claude Pro or Max subscription can't be used in OpenCode without some trickery.
+   Note that a Claude subscription can't be used in OpenCode without some trickery.
 3. Test whether the `opencode` command is now available in your terminal.
    If not, on Linux, you can make it available with a symbolic link by running this command:
    ```bash
@@ -328,9 +355,8 @@ This is the primary tool used in this workshop.
 <details open>
 <summary><b>Claude Code</b></summary>
 
-If you installed Claude Desktop, check with `claude --version`,
-whether it also installed the command-line version.
-If not, install it with the commands below.
+Claude Desktop may also install the command-line version. If you installed it, check with `claude --version`
+in a new terminal. If the command is not found, install it with the commands below.
 
 - Linux and macOS: `curl -fsSL https://claude.ai/install.sh | bash`
 - Windows PowerShell: `irm https://claude.ai/install.ps1 | iex`
@@ -360,7 +386,7 @@ OpenCode Desktop (instructions above) already includes the command-line version,
 - Windows
   - OpenCode recommends on Windows: [OpenCode WSL instructions](https://opencode.ai/docs/windows-wsl/)
   - Chocolatey: [`choco install opencode`](https://community.chocolatey.org/packages/opencode) (third-party package)
-  - Node.js: `npm install -g opencode/cli`
+  - Node.js: `npm install -g @opencode/cli`
 
 Check with `opencode --version`. Start it with `opencode` and connect a model provider with `/connect`.
 See the [official documentation](https://opencode.ai/docs/).
@@ -373,7 +399,7 @@ Start VS Code or VSCodium and open the **Extensions** view: the icon of four squ
 1. **Python**: for running Python and choosing the virtual environment.
    [VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python),
    [VSCodium](https://open-vsx.org/vscode/item?itemName=ms-python.python)
-2. One of the AI agent plugins
+2. A plugin for your AI harness
    - **Claude Code**:
      [VS Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code),
      [VSCodium](https://open-vsx.org/vscode/item?itemName=Anthropic.claude-code)
@@ -391,19 +417,25 @@ the Spark icon in the top-right corner of the editor (it appears when a file is 
 In the terminal, go to your home folder and download (*clone*) this repository. A **repository** is a folder
 whose history Git tracks.
 ```bash
-mkdir ~/Git
+mkdir -p ~/Git
 cd ~/Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
 ```
-This creates the folder `Git/ai-workshop` in your home folder, and `cd` ("change directory") moves the terminal into it.
-The same commands work in PowerShell on Windows.
+On Windows, in PowerShell:
+```powershell
+New-Item -ItemType Directory -Force ~\Git
+cd ~\Git
+git clone https://github.com/AgenttiX/ai-workshop.git
+cd ai-workshop
+```
+This creates the folder `Git/ai-workshop` in your home folder (`~`), and `cd` ("change directory") moves the terminal into it.
 
 
 ### Step 8: Create the Python environment and check everything
 A **virtual environment** ("venv") is a folder with its own copy of Python and its own packages, separate from the
 rest of your computer, so that the workshop can't break anything else and vice versa.
-The workshop's check script creates it for you. In the terminal, inside the `ai-workshop` folder, run:
+The workshop's check script creates it for you. In the terminal, inside the `~/Git/ai-workshop` folder, run:
 
 | System | Command |
 |---|---|
@@ -430,7 +462,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 
 ### Step 9: Open the workshop in VS Code and say hello to the AI
-1. In VS Code: **File → Open Folder…** and choose the `ai-workshop` folder.
+1. In VS Code: **File → Open Folder…** and choose the `ai-workshop` folder in the `Git` folder of your home folder.
    If VS Code asks whether you trust the authors of the files, answer yes.
 2. Choose the virtual environment: press Ctrl+Shift+P (Cmd+Shift+P on a Mac), type **Python: Select Interpreter**
    and pick the one that mentions `venv`.
@@ -458,13 +490,13 @@ When something fails, the error message usually says why. Paste it into any AI c
 | Windows: `py` is not recognized | Close and reopen PowerShell. If that doesn't help, run the Python installer again and make sure the py launcher is included. |
 | Windows: typing `python` opens the Microsoft Store | Use `py -3` instead, or activate the virtual environment first. |
 | Windows: "running scripts is disabled on this system" | `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`, then activate again. |
-| `git` or `code` is not recognized / not found | Close and reopen the terminal (or VS Code) after installing. On macOS, see step 3 for the `code` command. |
+| `git`, `code` or `codium` is not recognized / not found | Close and reopen the terminal (or VS Code) after installing. On macOS, see step 3 for the `code` and `codium` commands. |
 | The check says `FAIL` for a package | Run the check again with `--setup` added, e.g. `python3 -m workshop.check --setup`. |
 | The terminal in VS Code doesn't show `(venv)` | Select the interpreter (step 9), then open a new terminal. Or activate it by hand (step 8). |
 | You can't install programs on a university-managed laptop | Tell us well before the workshop. The Python and VS Code installers above work without administrator rights. |
-| `claude` is not found in the terminal | Install the command-line version ([step 5](#step-5-install-a-command-line-ai-harness)), then open a new terminal. The desktop app and the VS Code extension don't add the command. |
+| `claude` is not found in the terminal | Install the command-line version ([step 5](#step-5-install-a-command-line-ai-harness)), then open a new terminal. Claude Desktop may not add the command, and the VS Code extension doesn't. |
 | `git pull` says your local changes would be overwritten | You have edited files in the exercises. Keep a copy of your work with `git stash`, then `git pull` again; `git stash pop` brings your changes back. |
-| Claude Code says that your plan doesn't include it | The free Claude plan doesn't include Claude Code; see [step 1](#step-1-an-account-for-the-ai-agent). |
+| Claude Code says that your plan doesn't include it | The free Claude plan doesn't include Claude Code; see [step 1](#step-1-an-account-for-an-ai-provider). |
 
 ---
 
