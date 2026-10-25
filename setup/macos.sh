@@ -2,8 +2,10 @@
 brew install git python@3.14
 brew install --cask visual-studio-code   # or: vscodium
 
-# Claude Code command-line tool
-curl -fsSL https://claude.ai/install.sh | bash
+# Claude desktop app
+brew install --cask claude
+# Alternatively, install the command-line Claude Code. This is included in Claude Desktop.
+# curl -fsSL https://claude.ai/install.sh | bash
 
 # The workshop repository and its packages
 git clone https://github.com/AgenttiX/ai-workshop.git

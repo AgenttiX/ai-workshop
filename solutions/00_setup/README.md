@@ -44,9 +44,9 @@ The PATH is the list of folders where the terminal looks for commands.
 ## Common problems
 | Problem | Fix |
 |---|---|
-| Linux/macOS: `python3: command not found` | Install Python 3.12 or later (see the [README](../../README.md#step-1-install-python-git-and-vs-code)). On Ubuntu 24.04: `sudo apt install python3 python3-venv`. |
+| Linux/macOS: `python3: command not found` | Install Python 3.12 or later (see the [README](../../README.md#step-3-install-python-git-and-vs-code-or-vscodium)). On Ubuntu: `sudo apt install python3 python3-venv`. |
 | Windows: `py` is not recognized | Close and reopen PowerShell. If that doesn't help, rerun the Python installer and include the `py` launcher. |
-| Windows: typing `python` opens the Microsoft Store | Python isn't installed or isn't on the PATH. Use `py -3` until the venv is active. |
+| Windows: typing `python` opens the Microsoft Store | Python isn't installed or isn't on the PATH. Use `py -3.14` until the venv is active. |
 | Debian/Ubuntu: `ensurepip is not available` or "The virtual environment was not created successfully" | The `venv` module is a separate package: `sudo apt install python3-venv`. Then run the check again. |
 | Windows PowerShell: "running scripts is disabled on this system" when activating | Run once: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`. This lets you run local scripts such as `Activate.ps1`, for your user only. |
 | The VS Code terminal doesn't show `(venv)` | Ctrl+Shift+P (Cmd+Shift+P on a Mac) → **Python: Select Interpreter** → pick the one in `venv`. Then open a *new* terminal. |
@@ -57,7 +57,7 @@ To run the check by hand:
 | System | First time (creates `venv/`) | Activate `venv/` | Afterwards |
 |---|---|---|---|
 | Linux, macOS | `python3 -m workshop.check` | `source venv/bin/activate` | `python -m workshop.check` |
-| Windows (PowerShell) | `py -3 -m workshop.check` | `venv\Scripts\Activate.ps1` | `python -m workshop.check` |
+| Windows (PowerShell) | `py -3.14 -m workshop.check` | `venv\Scripts\Activate.ps1` | `python -m workshop.check` |
 
 ## What the agent typically does in step 4
 Claude Code loads `CLAUDE.md` into its context (its working memory for the conversation) at the start of every session.

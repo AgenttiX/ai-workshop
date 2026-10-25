@@ -28,8 +28,7 @@ jobs:
       - name: Install requirements
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install -r figures/requirements.txt
+          pip install -r requirements.txt -r figures/requirements.txt
       - name: Environment check
         run: python -m workshop.check
       - name: Check that the README has the current setup scripts

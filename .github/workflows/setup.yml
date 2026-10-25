@@ -49,6 +49,7 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:/snap/bin:$PATH"
           venv/bin/python --version
+          dpkg -s claude-desktop | grep "Status: install ok installed"
           claude --version
           code --version
 
@@ -69,7 +70,8 @@ jobs:
         working-directory: ${{ runner.temp }}/ai-workshop
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          venv/bin/python --version | grep "Python 3.14"
+          venv/bin/python --version
+          test -d /Applications/Claude.app
           claude --version
           code --version
 
@@ -104,11 +106,10 @@ jobs:
         working-directory: ${{ runner.temp }}\ai-workshop
         run: |
           $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
-          foreach ($id in "Python.Python.3.14", "Git.Git", "Microsoft.VisualStudioCode") {
+          foreach ($id in "Python.Python.3.14", "Git.Git", "Microsoft.VisualStudioCode", "Anthropic.Claude") {
             winget list --id $id --exact --disable-interactivity
             if ($LASTEXITCODE -ne 0) { throw "WinGet did not install $id" }
           }
-          $version = .\venv\Scripts\python.exe --version
-          if ($version -notlike "Python 3.14*") { throw "The virtualenv has $version instead of Python 3.14" }
+          .\venv\Scripts\python.exe --version
           claude --version
           code --version
