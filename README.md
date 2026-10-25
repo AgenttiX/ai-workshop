@@ -478,6 +478,55 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 ---
 
+### Step 10: Local models (optional)
+Local AI models are a viable alternative to cloud-hosted models.
+They are not as capable as frontier-level cloud models, but they are sufficient for many kinds of useful work.
+As long as you have enough free memory (RAM or VRAM), you can run a useful AI agent even on a laptop without any internet access.
+**The setup instructions below are provided already in this readme before the workshop, as downloading the multi-gigabyte LLM models can take several hours.**
+
+As an example of recent local LLMs, the memory requirements for Google's Gemma 4 QAT are available
+[here](https://ai.google.dev/gemma/docs/core#gemma-4-inference-memory-requirements).
+For most use, 4-bit quantization is sufficient. The E2B and E4B versions are useful for testing,
+but for actual work the versions from 12B onwards are preferred.
+If you have enough memory, the 26B A4B is preferable over the 12B,
+since the former is significantly faster due to its mixture-of-experts (MoE) architecture despite its larger size.
+In model names, B refers to how many billions of parameters it has, which determines the memory use.
+E refers to an effective number of parameters.
+A means how many parameters are activated during the generation of each output token, which determines the output speed (tokens/s).
+For example, the Gemma 4 26B A4B has 26 billion parameters, of which 4 billion are activated when generating each output token.
+
+Therefore, for testing you should have at least 3 GB of free memory (RAM or VRAM),
+and for multipurpose work at least 7 GB, preferably 16 GB.
+On Linux, you can check your free RAM with `free -h`, and free VRAM with `nvtop` or `nvidia-smi`, if you have them installed.
+On Windows, you can check these in Task Manager.
+
+There are several backends for running LLMs locally.
+These can be connected to any compatible client or harness, such as OpenCode or [Open WebUI](https://openwebui.com/).
+
+**One of the easiest ways to get started with local LLMs is [LM Studio](https://lmstudio.ai/)**,
+as it bundles the LLM backend, chat interface and agent harness in one package.
+You can just download it, select an LLM that fits on your computer, and get started.
+
+However, LM Studio is not very optimized, and with other backends it's possible to fit much larger models and run them much faster on the same hardware.
+Perhaps the most popular LLM backend for consumer hardware is [llama.cpp](https://llama.app/),
+as it works on a variety of platforms and is capable of splitting an LLM between a GPU and a CPU,
+if the LLM doesn't fit entirely in the VRAM of the GPU. This is known as CPU offloading.
+This way, even a GPU with 4 GB of VRAM can be highly useful.
+An example laptop config for llama.cpp is available [here](https://github.com/AgenttiX/agx-ai/tree/main/llama-cpp-agx-l14).
+
+The highest performance is often achieved with [vLLM](https://vllm.ai/).
+However, it often requires more memory than llama.cpp for the same models,
+and its support for CPU offloading is more limited.
+It also requires extensive configuration for optimal performance,
+and has limited support of model formats.
+
+For advanced users interested in local models, our recommendation is to install llama.cpp in a Docker container if on Linux, and natively if on Windows.
+(Docker has some overhead on Windows. For macOS, we haven't tested.)
+Once you have llama.cpp working, you can start experimenting with vLLM.
+Both of these provide an OpenAI-compatible HTTP endpoint, to which you can connect your client or harness of choice.
+An example OpenCode config is available [here](https://github.com/AgenttiX/agx-ai/blob/main/opencode/opencode.jsonc).
+
+---
 
 ## Troubleshooting
 When something fails, the error message usually says why. Paste it into any AI chatbot and ask
