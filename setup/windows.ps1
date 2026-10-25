@@ -10,8 +10,8 @@ New-Item -ItemType Directory -Force ~\Git
 cd ~\Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
-py -3.14 -m venv venv
+py -3.14 -m venv .venv
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-.\venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python -m workshop.check

@@ -2,7 +2,7 @@
 <One sentence: what the code computes or analyses, and for which paper or thesis chapter.>
 
 ## Commands
-- Set up: `<e.g. python -m venv venv && pip install -r requirements.txt>`
+- Set up: `<e.g. python -m venv .venv && pip install -r requirements.txt>`
 - Run: `<e.g. python simulate.py --config configs/default.toml>`
 - Test: `<e.g. pytest>` (takes <time>; run `<fast subset>` while iterating)
 - Lint and type check: `<e.g. ruff check && pyrefly check>`

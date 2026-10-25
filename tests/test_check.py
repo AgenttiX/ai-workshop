@@ -47,7 +47,7 @@ def test_vscode_extensions_are_skipped_without_the_editor():
 
 
 def test_virtual_environment_is_detected(monkeypatch, tmp_path):
-    monkeypatch.setattr(sys, "prefix", str(tmp_path / "venv"))
+    monkeypatch.setattr(sys, "prefix", str(tmp_path / ".venv"))
     monkeypatch.setattr(sys, "base_prefix", str(tmp_path / "python"))
     assert check.in_virtual_environment()
 
@@ -67,15 +67,15 @@ def test_conda_environment_counts_as_an_environment(monkeypatch, tmp_path):
 
 
 def test_venv_python_paths():
-    venv = Path("venv")
+    venv = Path(".venv")
     assert check.venv_python(venv, windows=False) == venv / "bin" / "python"
     assert check.venv_python(venv, windows=True) == venv / "Scripts" / "python.exe"
 
 
 def test_activation_instructions():
-    assert "source venv/bin/activate" in check.activation_instructions(windows=False)
+    assert "source .venv/bin/activate" in check.activation_instructions(windows=False)
     windows = check.activation_instructions(windows=True)
-    assert "venv\\Scripts\\Activate.ps1" in windows
+    assert ".venv\\Scripts\\Activate.ps1" in windows
     assert "Set-ExecutionPolicy" in windows
 
 

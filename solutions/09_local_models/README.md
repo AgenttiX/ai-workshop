@@ -33,7 +33,7 @@ Start the model server (LM Studio's server tab, or `docker compose -f exercises/
 after editing the model path). LM Studio listens on port **1234** by default, not 8080:
 then change `api_base` in `config.yaml` to `http://localhost:1234/v1`.
 
-Install and start LiteLLM in its own environment. Installing it into the workshop's `venv/` may change the versions
+Install and start LiteLLM in its own environment. Installing it into the workshop's `.venv/` may change the versions
 of packages the exercises rely on. LiteLLM's [documentation](https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models)
 suggests `uv tool install 'litellm[proxy]'`. Then, from the workshop folder:
 `litellm --config exercises/09_local_models/litellm/config.yaml --port 4000`

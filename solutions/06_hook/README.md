@@ -3,7 +3,7 @@
 ## The result
 [`settings.json`](./settings.json) is a complete `.claude/settings.json` for this repository on Linux and macOS:
 the existing permission allow-list plus the `PostToolUse` hook. On Windows, the only difference is the Python path:
-`${CLAUDE_PROJECT_DIR}/venv/Scripts/python.exe` instead of `${CLAUDE_PROJECT_DIR}/venv/bin/python`,
+`${CLAUDE_PROJECT_DIR}/.venv/Scripts/python.exe` instead of `${CLAUDE_PROJECT_DIR}/.venv/bin/python`,
 as in [`settings.windows.snippet.json`](../../exercises/06_hook/settings.windows.snippet.json).
 
 When it works, asking for `exercises/06_hook/sloppy.py` goes like this: Claude writes the file, the hook reports
@@ -19,7 +19,7 @@ How [`ruff_on_edit.py`](../../exercises/06_hook/hooks/ruff_on_edit.py) works:
 1. Claude Code sends the tool call as JSON on the hook's standard input (stdin). The path of the edited file is in
    `tool_input.file_path`, always absolute ([documentation](https://code.claude.com/docs/en/hooks#posttooluse-input)).
 2. If the file isn't an existing `.py` file, the hook exits with 0: nothing happens.
-3. Otherwise it runs `python -m ruff check <file>` with the same Python that runs the hook, i.e. the one in `venv/`.
+3. Otherwise it runs `python -m ruff check <file>` with the same Python that runs the hook, i.e. the one in `.venv/`.
 4. If ruff finds problems, the hook prints them to its error output (stderr) and exits with code 2.
 
 The exit code decides what happens ([documentation](https://code.claude.com/docs/en/hooks#exit-code-2-behavior-per-event)):
@@ -44,8 +44,8 @@ To test the hook without Claude, create a file with an unused import and pipe JS
 
 | System | Command |
 |---|---|
-| Linux, macOS | `echo '{"tool_input": {"file_path": "exercises/06_hook/sloppy.py"}}' \| venv/bin/python exercises/06_hook/hooks/ruff_on_edit.py; echo $?` |
-| Windows (PowerShell) | `'{"tool_input": {"file_path": "exercises/06_hook/sloppy.py"}}' \| venv\Scripts\python.exe exercises\06_hook\hooks\ruff_on_edit.py; $LASTEXITCODE` |
+| Linux, macOS | `echo '{"tool_input": {"file_path": "exercises/06_hook/sloppy.py"}}' \| .venv/bin/python exercises/06_hook/hooks/ruff_on_edit.py; echo $?` |
+| Windows (PowerShell) | `'{"tool_input": {"file_path": "exercises/06_hook/sloppy.py"}}' \| .venv\Scripts\python.exe exercises\06_hook\hooks\ruff_on_edit.py; $LASTEXITCODE` |
 
 It should print the ruff output and `2`. A clean file or a `.txt` file prints only `0`.
 
@@ -59,14 +59,14 @@ It should print the ruff output and `2`. A clean file or a `.txt` file prints on
 [`hooks/pytest_on_stop.py`](./hooks/pytest_on_stop.py) runs `pytest` on one directory when Claude is about to stop.
 If tests fail, it prints the last lines of the pytest output to stderr and exits with 2, which for `Stop` means
 "don't stop, continue with this message". Add it to `"hooks"` in `.claude/settings.json` (Linux/macOS shown;
-on Windows use `venv/Scripts/python.exe`):
+on Windows use `.venv/Scripts/python.exe`):
 ```json
 "Stop": [
   {
     "hooks": [
       {
         "type": "command",
-        "command": "${CLAUDE_PROJECT_DIR}/venv/bin/python",
+        "command": "${CLAUDE_PROJECT_DIR}/.venv/bin/python",
         "args": [
           "${CLAUDE_PROJECT_DIR}/solutions/06_hook/hooks/pytest_on_stop.py",
           "${CLAUDE_PROJECT_DIR}/exercises/01_fix_the_bug"

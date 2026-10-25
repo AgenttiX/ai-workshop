@@ -3,7 +3,7 @@ Determines the gravitational acceleration g by fitting T² = 4π² L / g to pend
 
 ## Commands
 - Run the analysis in this folder with `python run.py`, on Linux, macOS and Windows alike.
-  It runs `analyse.py` with the Python of the workshop's virtual environment (`../../../venv`),
+  It runs `analyse.py` with the Python of the workshop's virtual environment (`../../../.venv`),
   which has the `workshop` package that `analyse.py` imports.
 
 ## Data

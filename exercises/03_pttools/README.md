@@ -5,7 +5,7 @@ instead of hallucinating an API.
 
 ## Task
 1. `spectrum.py` has a stub `compute_spectrum()` and `test_spectrum.py` tests it. Ask Claude Code to implement it:
-   > Implement compute_spectrum() in exercises/03_pttools/spectrum.py with PTtools (installed in venv).
+   > Implement compute_spectrum() in exercises/03_pttools/spectrum.py with PTtools (installed in .venv).
    > Use the bag model, an exponential nucleation type and the given r_star. Read the PTtools source and examples
    > to find the right API before writing code. Then run pytest exercises/03_pttools.
 
@@ -16,6 +16,6 @@ instead of hallucinating an API.
    and check the answer against what you know. Being able to check is the point.
 
 ## What to look for
-- Did it look at `venv/lib/python3.*/site-packages/pttools/` (`venv\Lib\site-packages\pttools\` on Windows)
+- Did it look at `.venv/lib/python3.*/site-packages/pttools/` (`.venv\Lib\site-packages\pttools\` on Windows)
   or the examples? An agent that reads the library is doing what you'd do — faster.
 - If it gets stuck on the API, point it to `pttools.bubble.Bubble`, `pttools.models.BagModel` and `pttools.omgw0.Spectrum`.

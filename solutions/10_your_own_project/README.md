@@ -17,7 +17,7 @@ git init
 git add .
 git commit -m "State before using an agent"
 ```
-Before `git add .`, create a file `.gitignore` listing what shouldn't be tracked: large data, `plots/`, `venv/`.
+Before `git add .`, create a file `.gitignore` listing what shouldn't be tracked: large data, `plots/`, `.venv/`.
 If Git asks who you are, run `git config --global user.name "Your Name"` and
 `git config --global user.email "you@helsinki.fi"` once.
 

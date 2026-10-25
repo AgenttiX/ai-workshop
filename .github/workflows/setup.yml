@@ -49,7 +49,7 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:/snap/bin:$PATH"
           cd ~/Git/ai-workshop
-          venv/bin/python --version
+          .venv/bin/python --version
           dpkg -s claude-desktop | grep "Status: install ok installed"
           claude --version
           code --version
@@ -72,7 +72,7 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:$PATH"
           cd ~/Git/ai-workshop
-          venv/bin/python --version
+          .venv/bin/python --version
           test -d /Applications/Claude.app
           claude --version
           code --version
@@ -113,6 +113,6 @@ jobs:
             winget list --id $id --exact --disable-interactivity
             if ($LASTEXITCODE -ne 0) { throw "WinGet did not install $id" }
           }
-          .\venv\Scripts\python.exe --version
+          .\.venv\Scripts\python.exe --version
           claude --version
           code --version

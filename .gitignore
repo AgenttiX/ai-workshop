@@ -10,6 +10,7 @@ coverage.xml
 dev
 htmlcov
 render
+.venv
 venv
 # Personal Claude Code settings (exercise 06 puts the hook here)
 .claude/settings.local.json

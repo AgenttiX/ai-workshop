@@ -20,7 +20,7 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - [Mika Mäki](https://github.com/AgenttiX): PhD student in first-order cosmological phase transitions
 
 ## Commands
-- Set up the virtualenv at `./venv` and check the environment: `python3 -m workshop.check` (Windows: `py -3 -m workshop.check`).
+- Set up the virtualenv at `./.venv` and check the environment: `python3 -m workshop.check` (Windows: `py -3 -m workshop.check`).
   It creates the venv and installs `requirements.txt` if needed.
 - Run tests: `pytest` (runs `tests/` and `solutions/`; run the tests of an exercise with e.g. `pytest exercises/01_fix_the_bug`)
 - Lint: `ruff check`

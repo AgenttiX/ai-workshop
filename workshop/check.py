@@ -5,7 +5,7 @@ Run in the root directory of the repository::
     python3 -m workshop.check    # Linux and macOS
     py -3 -m workshop.check      # Windows
 
-If you run it outside a virtual environment, it offers to create one in ``venv/``,
+If you run it outside a virtual environment, it offers to create one in ``.venv/``,
 installs the requirements into it, runs the checks there and tells you how to activate it.
 Run it again inside the activated virtual environment to confirm that everything works.
 """
@@ -37,7 +37,7 @@ MIN_PYTHON: tuple[int, int] = (3, 12)
 SETUP_COMMAND: str = ("py -3" if os.name == "nt" else "python3") + " -m workshop.check --setup"
 
 REPO_DIR = Path(__file__).resolve().parent.parent
-VENV_DIR = REPO_DIR / "venv"
+VENV_DIR = REPO_DIR / ".venv"
 IS_WINDOWS = os.name == "nt"
 
 
@@ -74,24 +74,24 @@ def venv_python(venv_dir: Path = VENV_DIR, windows: bool = IS_WINDOWS) -> Path:
 
 
 def activation_instructions(windows: bool = IS_WINDOWS) -> str:
-    """Explain how to activate the virtual environment in ``venv/``, as text for the terminal.
+    """Explain how to activate the virtual environment in ``.venv/``, as text for the terminal.
 
     :param windows: whether to give the commands for Windows
     """
     if windows:
         commands = (
-            "  PowerShell (the default terminal of VS Code):  venv\\Scripts\\Activate.ps1\n"
-            "  Command Prompt:                                venv\\Scripts\\activate.bat\n"
-            "  Git Bash:                                      source venv/Scripts/activate\n"
+            "  PowerShell (the default terminal of VS Code):  .venv\\Scripts\\Activate.ps1\n"
+            "  Command Prompt:                                .venv\\Scripts\\activate.bat\n"
+            "  Git Bash:                                      source .venv/Scripts/activate\n"
             "If PowerShell says that running scripts is disabled, run this once and try again:\n"
             "  Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned\n"
         )
     else:
-        commands = "  source venv/bin/activate\n"
+        commands = "  source .venv/bin/activate\n"
     return (
         "To activate the virtual environment in a terminal, run in the workshop directory:\n"
         f"{commands}"
-        "When it's active, the prompt of the terminal starts with (venv).\n"
+        "When it's active, the prompt of the terminal starts with (.venv).\n"
         "In VS Code: press Ctrl+Shift+P (Cmd+Shift+P on a Mac), choose 'Python: Select Interpreter' and pick\n"
         "the one in venv. New terminals in VS Code then activate it automatically."
     )
@@ -161,7 +161,7 @@ def set_up_venv(force: bool) -> int | None:
             print("Please install Python 3.12 or later (see README.md) and run this script with it.")
             return 1
         print("A virtual environment is a folder with its own Python and packages, separate from the rest of")
-        print("your computer. The workshop uses one in the folder venv/.")
+        print("your computer. The workshop uses one in the folder .venv/.")
         if not (force or ask("Create it and install the requirements into it now?")):
             return None
         if not create_venv() or not install_requirements(python):

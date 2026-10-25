@@ -62,8 +62,8 @@ mkdir -p ~/Git
 cd ~/Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 python -m workshop.check
 ```
@@ -87,8 +87,8 @@ mkdir -p ~/Git
 cd ~/Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 python -m workshop.check
 ```
@@ -108,9 +108,9 @@ New-Item -ItemType Directory -Force ~\Git
 cd ~\Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
-py -3.14 -m venv venv
+py -3.14 -m venv .venv
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-.\venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python -m workshop.check
 ```
@@ -451,10 +451,10 @@ Finally, **activate** the virtual environment, i.e. tell the terminal to use its
 
 | System | Command |
 |---|---|
-| Linux, macOS | `source venv/bin/activate` |
-| Windows (PowerShell) | `venv\Scripts\Activate.ps1` |
+| Linux, macOS | `source .venv/bin/activate` |
+| Windows (PowerShell) | `.venv\Scripts\Activate.ps1` |
 
-The start of the prompt changes to `(venv)`. From now on, `python` means the Python of the workshop.
+The start of the prompt changes to `(.venv)`. From now on, `python` means the Python of the workshop.
 On Windows, if PowerShell says that "running scripts is disabled on this system", run this once and try again:
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
@@ -465,8 +465,8 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 1. In VS Code: **File → Open Folder…** and choose the `ai-workshop` folder in the `Git` folder of your home folder.
    If VS Code asks whether you trust the authors of the files, answer yes.
 2. Choose the virtual environment: press Ctrl+Shift+P (Cmd+Shift+P on a Mac), type **Python: Select Interpreter**
-   and pick the one that mentions `venv`.
-3. Open a terminal in VS Code (**Terminal → New Terminal**). The prompt should start with `(venv)`. Run
+   and pick the one that mentions `.venv`.
+3. Open a terminal in VS Code (**Terminal → New Terminal**). The prompt should start with `(.venv)`. Run
    ```bash
    python -m workshop.check
    ```
@@ -492,7 +492,7 @@ When something fails, the error message usually says why. Paste it into any AI c
 | Windows: "running scripts is disabled on this system" | `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`, then activate again. |
 | `git`, `code` or `codium` is not recognized / not found | Close and reopen the terminal (or VS Code) after installing. On macOS, see step 3 for the `code` and `codium` commands. |
 | The check says `FAIL` for a package | Run the check again with `--setup` added, e.g. `python3 -m workshop.check --setup`. |
-| The terminal in VS Code doesn't show `(venv)` | Select the interpreter (step 9), then open a new terminal. Or activate it by hand (step 8). |
+| The terminal in VS Code doesn't show `(.venv)` | Select the interpreter (step 9), then open a new terminal. Or activate it by hand (step 8). |
 | You can't install programs on a university-managed laptop | Tell us well before the workshop. The Python and VS Code installers above work without administrator rights. |
 | `claude` is not found in the terminal | Install the command-line version ([step 5](#step-5-install-a-command-line-ai-harness)), then open a new terminal. Claude Desktop may not add the command, and the VS Code extension doesn't. |
 | `git pull` says your local changes would be overwritten | You have edited files in the exercises. Keep a copy of your work with `git stash`, then `git pull` again; `git stash pop` brings your changes back. |

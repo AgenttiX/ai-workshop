@@ -55,7 +55,7 @@ Claude Code loads `CLAUDE.md` from the folder where you start it *and from every
 `pendulum_lab/` is inside the workshop repository, so a session started there, in the terminal or with the folder
 opened as the VS Code workspace, also sees the workshop's root `CLAUDE.md`, and through it the workshop's `AGENTS.md`.
 This affects the exercise in three ways:
-- `/init` and the answers in step 4 may use facts from the workshop's file, e.g. that there is a `venv/`.
+- `/init` and the answers in step 4 may use facts from the workshop's file, e.g. that there is a `.venv/`.
   A correct answer in step 4 is therefore not proof that *your* file is complete. Read your file and compare.
 - Type `/context` to see which memory files are loaded, and in which order.
 - By default, Claude Code reads an `AGENTS.md` on its own only if there is no `CLAUDE.md` in the folder or any folder

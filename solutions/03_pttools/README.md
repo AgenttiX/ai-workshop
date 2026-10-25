@@ -49,8 +49,8 @@ The library is installed in the virtual environment, so the agent can read its s
 
 | System | Location |
 |---|---|
-| Linux, macOS | `venv/lib/python3.*/site-packages/pttools/` |
-| Windows | `venv\Lib\site-packages\pttools\` |
+| Linux, macOS | `.venv/lib/python3.*/site-packages/pttools/` |
+| Windows | `.venv\Lib\site-packages\pttools\` |
 
 Good behaviour looks like: searching for `class Spectrum`, reading the `__init__` docstrings of `Bubble` and `Spectrum`,
 or running `python -c "from pttools.omgw0 import Spectrum; help(Spectrum)"`.
@@ -94,6 +94,6 @@ If the agent's answer mentions the shell thickness and $c_s$, it's on the right 
 If it says "faster walls give higher frequencies" without qualification, ask it to compute the peak for a few wall speeds.
 
 ## What to take away about prompting
-1. Tell the agent *where the truth is*: "read the PTtools source in venv before writing code".
+1. Tell the agent *where the truth is*: "read the PTtools source in .venv before writing code".
 2. Ask for evidence: which file and which docstring did it base the call on?
 3. For physics questions, ask the agent to *compute* something you can check (here: the peak frequency against $v_\text{wall}$), not only to explain.

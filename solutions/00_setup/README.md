@@ -15,16 +15,16 @@ It is a small Python program, [`workshop/check.py`](../../workshop/check.py). `-
 "run the module `check` of the package `workshop`". It does two things: it sets up the virtual environment
 if needed, and it checks that everything the exercises need is installed.
 
-A *virtual environment* ("venv") is a folder, here `venv/`, with its own Python and its own packages,
+A *virtual environment* ("venv") is a folder, here `.venv/`, with its own Python and its own packages,
 separate from the rest of your computer.
 
 **Outside a virtual environment** (the first time you run it):
 1. It checks that the Python running it is 3.12 or newer. If not, it stops and asks you to install Python 3.12 or later.
-2. If `venv/` doesn't exist, it asks `Create it and install the requirements into it now? [Y/n]`. Enter means yes.
-   It then creates `venv/` with the Python you ran it with and installs the packages of `requirements.txt` into it.
+2. If `.venv/` doesn't exist, it asks `Create it and install the requirements into it now? [Y/n]`. Enter means yes.
+   It then creates `.venv/` with the Python you ran it with and installs the packages of `requirements.txt` into it.
    This takes several minutes. If you answer no, it only runs the checks with your current Python,
    so the packages show `FAIL`.
-3. It runs the checks again *with the Python of `venv/`* and prints how to activate the environment.
+3. It runs the checks again *with the Python of `.venv/`* and prints how to activate the environment.
 
 **Inside an active virtual environment** it only runs the checks.
 
@@ -47,17 +47,17 @@ The PATH is the list of folders where the terminal looks for commands.
 | Linux/macOS: `python3: command not found` | Install Python 3.12 or later (see the [README](../../README.md#step-3-install-python-git-and-vs-code-or-vscodium)). On Ubuntu: `sudo apt install python3 python3-venv`. |
 | Windows: `py` is not recognized | Close and reopen PowerShell. If that doesn't help, rerun the Python installer and include the `py` launcher. |
 | Windows: typing `python` opens the Microsoft Store | Python isn't installed or isn't on the PATH. Use `py -3.14` until the venv is active. |
-| Debian/Ubuntu: `ensurepip is not available` or "The virtual environment was not created successfully" | The `venv` module is a separate package: `sudo apt install python3-venv`. Then run the check again. |
+| Debian/Ubuntu: `ensurepip is not available` or "The virtual environment was not created successfully" | The `.venv` module is a separate package: `sudo apt install python3-venv`. Then run the check again. |
 | Windows PowerShell: "running scripts is disabled on this system" when activating | Run once: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`. This lets you run local scripts such as `Activate.ps1`, for your user only. |
-| The VS Code terminal doesn't show `(venv)` | Ctrl+Shift+P (Cmd+Shift+P on a Mac) → **Python: Select Interpreter** → pick the one in `venv`. Then open a *new* terminal. |
+| The VS Code terminal doesn't show `(.venv)` | Ctrl+Shift+P (Cmd+Shift+P on a Mac) → **Python: Select Interpreter** → pick the one in `.venv`. Then open a *new* terminal. |
 | Claude Code says your plan doesn't include it | Claude Code needs a Pro, Max, Team, Enterprise or Console account. The free claude.ai plan doesn't include Claude Code ([setup docs](https://code.claude.com/docs/en/setup#authenticate)). |
 
 To run the check by hand:
 
-| System | First time (creates `venv/`) | Activate `venv/` | Afterwards |
+| System | First time (creates `.venv/`) | Activate `.venv/` | Afterwards |
 |---|---|---|---|
-| Linux, macOS | `python3 -m workshop.check` | `source venv/bin/activate` | `python -m workshop.check` |
-| Windows (PowerShell) | `py -3.14 -m workshop.check` | `venv\Scripts\Activate.ps1` | `python -m workshop.check` |
+| Linux, macOS | `python3 -m workshop.check` | `source .venv/bin/activate` | `python -m workshop.check` |
+| Windows (PowerShell) | `py -3.14 -m workshop.check` | `.venv\Scripts\Activate.ps1` | `python -m workshop.check` |
 
 ## What the agent typically does in step 4
 Claude Code loads `CLAUDE.md` into its context (its working memory for the conversation) at the start of every session.
