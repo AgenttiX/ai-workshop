@@ -1,9 +1,7 @@
 # In PowerShell. Anthropic.Claude is the Claude desktop app.
 winget install Python.Python.3.14 Git.Git Microsoft.VisualStudioCode Anthropic.Claude
-# Claude Desktop may also install the command-line Claude Code. Check with:
-# claude --version
-# If it's missing, install it with:
-# irm https://claude.ai/install.ps1 | iex
+# The command-line Claude Code. Claude Desktop doesn't always install it.
+irm https://claude.ai/install.ps1 | iex
 
 # Close and reopen PowerShell, then:
 New-Item -ItemType Directory -Force ~\Git

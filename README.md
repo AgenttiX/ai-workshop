@@ -63,10 +63,8 @@ sudo curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://
 echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" | sudo tee /etc/apt/sources.list.d/claude-desktop.list
 sudo apt update
 sudo apt install claude-desktop
-# Claude Desktop may also install the command-line Claude Code. Check with:
-# claude --version
-# If it's missing, install it with:
-# curl -fsSL https://claude.ai/install.sh | bash
+# The command-line Claude Code. Claude Desktop doesn't always install it.
+curl -fsSL https://claude.ai/install.sh | bash
 
 # The workshop repository and its packages
 mkdir -p ~/Git
@@ -88,17 +86,15 @@ brew install --cask visual-studio-code   # or: vscodium
 
 # Claude desktop app
 brew install --cask claude
-# Claude Desktop may also install the command-line Claude Code. Check with:
-# claude --version
-# If it's missing, install it with:
-# curl -fsSL https://claude.ai/install.sh | bash
+# The command-line Claude Code. Claude Desktop doesn't always install it.
+curl -fsSL https://claude.ai/install.sh | bash
 
 # The workshop repository and its packages
 mkdir -p ~/Git
 cd ~/Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
-python3 -m venv .venv
+python3.14 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python -m workshop.check
@@ -109,10 +105,8 @@ python -m workshop.check
 ```powershell
 # In PowerShell. Anthropic.Claude is the Claude desktop app.
 winget install Python.Python.3.14 Git.Git Microsoft.VisualStudioCode Anthropic.Claude
-# Claude Desktop may also install the command-line Claude Code. Check with:
-# claude --version
-# If it's missing, install it with:
-# irm https://claude.ai/install.ps1 | iex
+# The command-line Claude Code. Claude Desktop doesn't always install it.
+irm https://claude.ai/install.ps1 | iex
 
 # Close and reopen PowerShell, then:
 New-Item -ItemType Directory -Force ~\Git

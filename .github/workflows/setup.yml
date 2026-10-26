@@ -90,13 +90,18 @@ jobs:
           fetch-depth: 0
       - name: Clone this commit instead of the main branch
         run: git config --global url."$($env:GITHUB_WORKSPACE -replace '\\', '/')".insteadOf "$env:REPO_URL"
-      # Windows 11 comes with WinGet, but the Windows Server runners don't
-      - name: Install WinGet
+      # Windows 11 and the Windows Server 2025 runners come with WinGet, but older runners don't.
+      # Reinstalling it where it already is fails (HRESULT 0x80073CF1), so only install it when it's missing.
+      - name: Install WinGet if missing
         run: |
-          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-          Install-Module -Name Microsoft.WinGet.Client -Repository PSGallery -Force
-          Repair-WinGetPackageManager -AllUsers -Latest -Force
-          Add-Content -Path $env:GITHUB_PATH -Value "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+          if (Get-Command winget -ErrorAction SilentlyContinue) {
+            winget --version
+          } else {
+            Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+            Install-Module -Name Microsoft.WinGet.Client -Repository PSGallery -Force
+            Repair-WinGetPackageManager -AllUsers -Latest -Force
+            Add-Content -Path $env:GITHUB_PATH -Value "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+          }
       # A participant accepts these at the first prompt, which the CI can't answer
       - name: Accept the terms of the WinGet source
         run: winget list --accept-source-agreements --disable-interactivity | Out-Null

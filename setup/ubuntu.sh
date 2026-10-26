@@ -9,10 +9,8 @@ sudo curl -fsSLo /usr/share/keyrings/claude-desktop-archive-keyring.asc https://
 echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/claude-desktop-archive-keyring.asc] https://downloads.claude.ai/claude-desktop/apt/stable stable main" | sudo tee /etc/apt/sources.list.d/claude-desktop.list
 sudo apt update
 sudo apt install claude-desktop
-# Claude Desktop may also install the command-line Claude Code. Check with:
-# claude --version
-# If it's missing, install it with:
-# curl -fsSL https://claude.ai/install.sh | bash
+# The command-line Claude Code. Claude Desktop doesn't always install it.
+curl -fsSL https://claude.ai/install.sh | bash
 
 # The workshop repository and its packages
 mkdir -p ~/Git
