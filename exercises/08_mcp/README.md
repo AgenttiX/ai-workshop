@@ -1,36 +1,45 @@
 # Exercise 08: MCP (10 min, optional)
-The [Model Context Protocol](https://modelcontextprotocol.io/) is a standard for connecting tools and data sources
-to an agent: paper databases, reference managers, lab instruments, databases, your group's wiki.
-The agent sees the server's tools and decides when to call them.
+The [Model Context Protocol](https://modelcontextprotocol.io/) is a standard for connecting tools and data sources to an agent: paper databases, reference managers, lab instruments, databases, your group's wiki. The agent sees the server's tools and decides when to call them.
 
 ## Task
-1. List the servers already configured: `claude mcp list` (or `/mcp` inside a session).
-2. Add an arXiv server. The exact command depends on the server; for example, with the
-   [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server) package. It needs [`uv`](https://docs.astral.sh/uv/),
-   a Python package runner; install it first if `uv --version` doesn't work, then open a new terminal:
-   ```bash
-   # Linux, macOS
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-   ```
-   ```powershell
-   # Windows (PowerShell)
-   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-   ```
-   Then add the server (the same command on every system):
-   ```bash
-   claude mcp add arxiv -- uvx arxiv-mcp-server
-   ```
-   Check the server's README for the current install command before running it.
-3. Start a session and ask:
-   > Find the abstract of arXiv:1909.10040 and summarize the sound shell model in three sentences.
 
-   Watch the tool calls: the agent picks the server's tools (e.g. `search_papers`, `get_abstract`, `download_paper`) by itself.
-4. If you use Zotero, try [zotero-mcp](https://github.com/54yyyu/zotero-mcp), which gives the agent access to your library:
-   ask it to find the papers in your library related to what you're working on.
+### 1. List the configured servers
+Run `claude mcp list` in the terminal (or type `/mcp` inside a session).
+
+### 2. Add an arXiv server
+The exact command depends on the server; here we use the [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server) package. Check its README for the current install command before you run the one below, as these change.
+
+**a. Install `uv`** if `uv --version` doesn't print a version. [`uv`](https://docs.astral.sh/uv/) is a Python package runner that starts the server. Run the command for your system, then close the terminal and open a new one.
+
+**Linux and macOS:**
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows (PowerShell):**
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**b. Add the server** (the same command on every system):
+
+```bash
+claude mcp add arxiv -- uvx arxiv-mcp-server
+```
+
+### 3. Use it
+Start a session and ask:
+
+> Find the abstract of arXiv:1909.10040 and summarize the sound shell model in three sentences.
+
+Watch the tool calls: the agent picks the server's tools (e.g. `search_papers`, `get_abstract`, `download_paper`) by itself.
+
+### 4. Bonus: Zotero
+If you use Zotero, try [zotero-mcp](https://github.com/54yyyu/zotero-mcp), which gives the agent access to your library: ask it to find the papers in your library related to what you're working on.
 
 ## What to look for
-- **Trust.** An MCP server runs code on your machine and its output goes into the agent's context.
-  A malicious paper abstract could contain instructions for the agent (prompt injection). Only add servers you trust,
-  and keep the permission prompts on for anything that writes.
+- **Trust.** An MCP server runs code on your machine and its output goes into the agent's context. A malicious paper abstract could contain instructions for the agent (prompt injection). Only add servers you trust, and keep the permission prompts on for anything that writes.
 - Scopes: `claude mcp add --scope project` writes to `.mcp.json` in the repository, so the whole group shares the server.
 - [Documentation](https://code.claude.com/docs/en/mcp).

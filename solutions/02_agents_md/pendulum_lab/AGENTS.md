@@ -2,9 +2,7 @@
 Determines the gravitational acceleration g by fitting T² = 4π² L / g to pendulum measurements.
 
 ## Commands
-- Run the analysis in this folder with `python run.py`, on Linux, macOS and Windows alike.
-  It runs `analyse.py` with the Python of the workshop's virtual environment (`../../../.venv`),
-  which has the `workshop` package that `analyse.py` imports.
+- Run the analysis in this folder with `python run.py`, on Linux, macOS and Windows alike. It runs `analyse.py` with the Python of the workshop's virtual environment (`../../../.venv`), which has the `workshop` package that `analyse.py` imports.
 
 ## Data
 - `data/pendulum.csv` holds the raw measurements. Don't edit it.
@@ -17,5 +15,4 @@ Determines the gravitational acceleration g by fitting T² = 4π² L / g to pend
 - `results/` is not tracked in Git. Regenerate the results instead of committing them.
 
 ## Plots
-- Use the workshop style: call `workshop.plotting.apply_style()` before plotting,
-  and save with `workshop.plotting.save_fig(fig, name, fig_dir=RESULTS_DIR)`.
+- Use the workshop style: call `workshop.plotting.apply_style()` before plotting, and save with `workshop.plotting.save_fig(fig, name, fig_dir=RESULTS_DIR)`.

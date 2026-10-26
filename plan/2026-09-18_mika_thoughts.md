@@ -1,50 +1,48 @@
 # Preliminary thoughts
-By Mika Mäki on 2026-09-18 before the kickoff meeting.
-This document is in Finnish.
+By Mika Mäki on 2026-09-18 before the kickoff meeting. This document is in Finnish.
 
 
 - Perus chat-käyttö
-  - Esimerkkejä fysiikan tutkijan työssä esiintyvistä kysymyksistä, joihin AI:sta on apua
+    - Esimerkkejä fysiikan tutkijan työssä esiintyvistä kysymyksistä, joihin AI:sta on apua
 - Valjaat (harness)
-  - Antigravity
-  - Claude Code
-  - Codex
-  - Cursor
-  - GitHub Copilot
-  - [OpenCode](https://opencode.ai/)
+    - Antigravity
+    - Claude Code
+    - Codex
+    - Cursor
+    - GitHub Copilot
+    - [OpenCode](https://opencode.ai/)
 - Miten käyttää valjaita tehokkaasti
-  - AGENTS.md (ja CLAUDE.md)
-    - Mitä kannattaa laittaa
-    - Voi myös tehdä automaattisesti
-  - Oikeuksien hallinta: Clauden auto mode vs. settings.json
-  - Git worktree
-    - = Usean samanaikaisen session ajaminen samalle koodikannalle
-  - Skillit
-  - Model Context Protocol (MCP)
-  - Sub-agentit
-  - (Agenttitiimit? (agent teams))
+    - AGENTS.md (ja CLAUDE.md)
+        - Mitä kannattaa laittaa
+        - Voi myös tehdä automaattisesti
+    - Oikeuksien hallinta: Clauden auto mode vs. settings.json
+    - Git worktree
+        - = Usean samanaikaisen session ajaminen samalle koodikannalle
+    - Skillit
+    - Model Context Protocol (MCP)
+    - Sub-agentit
+    - (Agenttitiimit? (agent teams))
 - Ohjelmistoprojektin rakentaminen AI-yhteensopivaksi
-  - Yksikkötestaus
-  - Linttaus
-  - Python: tyyppitarkistus
-  - CI/CD
-  - Paketointi
-    - Repossa olevien asennus- ja käyttöohjeiden on oltava riittävän yksityiskohtaiset,
-      jotta projektin saa käännettyä ja ajettua vain niiden avulla.
-  - Tavoite: AI korjaa omat hallusinointinsa ja muut virheensä ennen kuin esittelee tuotoksensa käyttäjälle.
+    - Yksikkötestaus
+    - Linttaus
+    - Python: tyyppitarkistus
+    - CI/CD
+    - Paketointi
+        - Repossa olevien asennus- ja käyttöohjeiden on oltava riittävän yksityiskohtaiset, jotta projektin saa käännettyä ja ajettua vain niiden avulla.
+    - Tavoite: AI korjaa omat hallusinointinsa ja muut virheensä ennen kuin esittelee tuotoksensa käyttäjälle.
 - Paikallinen AI
-  - Paikallinen vs. pilvi-AI
-  - Saatavilla olevat mallit ja laitteistovaatimukset
-    - Gemma 4
-    - Qwen 3.8
-    - Maininta isommista malleista, esim. Kimi
-  - Mikan setuppi
-    - Open WebUI
-    - LiteLLM
-    - llama.cpp
-  - (Android: Box)
+    - Paikallinen vs. pilvi-AI
+    - Saatavilla olevat mallit ja laitteistovaatimukset
+        - Gemma 4
+        - Qwen 3.8
+        - Maininta isommista malleista, esim. Kimi
+    - Mikan setuppi
+        - Open WebUI
+        - LiteLLM
+        - llama.cpp
+    - (Android: Box)
 - Yleiset AI-agentit
-  - OpenClaw ym.
+    - OpenClaw ym.
 - AI tieteessä
-  - Claude Science
-  - [Zotero MCP](https://github.com/54yyyu/zotero-mcp)
+    - Claude Science
+    - [Zotero MCP](https://github.com/54yyyu/zotero-mcp)

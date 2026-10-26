@@ -1,8 +1,5 @@
 # Exercises
-Each exercise has a `README.md` with the task, suggested prompts and what to look for.
-Use your own words for the prompts: the suggested ones are only there in case you're stuck.
-Reference solutions for the code exercises are in [`../solutions/`](../solutions/) — try before you peek.
-The exercises are written for Claude Code. Using GitHub Copilot, Codex or Antigravity instead? See [the extra guide](./other_agents.md).
+Each exercise has a `README.md` with the task, suggested prompts and what to look for. Use your own words for the prompts: the suggested ones are only there in case you're stuck. Reference solutions for the code exercises are in [`../solutions/`](../solutions/) — try before you peek. The exercises are written for Claude Code. Using GitHub Copilot, Codex or Antigravity instead? See [the extra guide](./other_agents.md).
 
 | # | Exercise | Session | Time | What you practise |
 |---|---|---|---|---|
@@ -19,15 +16,25 @@ The exercises are written for Claude Code. Using GitHub Copilot, Codex or Antigr
 | 10 | [Your own project](./10_your_own_project/) | 2 | 25 min | Making your own code base agent-ready |
 
 ## Before you start
-- **Claude Code starts in *Auto* mode**, where it edits files and runs commands without asking.
-  Exercise 01 shows how to switch to *Manual*, where it asks you first. Use Manual whenever you want to see each step.
-- **Do the exercises in order.** Some build on earlier ones: exercise 07 reviews the code of exercise 04,
-  and the hook of exercise 06 stays active in the later ones.
-- **Start each exercise in a new conversation** with `/clear`, so that the previous one doesn't confuse the agent.
-- **Undoing changes.** Git keeps the original files. `git status` lists what has changed, `git diff` shows how,
-  and `git restore <file>` puts a file back the way it was. To reset all the exercises, run `git restore .` and then
-  `git clean -fd`, which also deletes the new files you created (your virtual environment and settings stay).
+
+### Switch Claude Code to Manual mode for the exercises
+It starts in *Auto* mode, where it edits files and runs commands without asking, so the steps the exercises ask you to look at (which files it reads, which commands it runs, what it changes) fly past before you can see them. In *Manual* mode it asks you before each edit and command, and you can read what it's about to do before you click *Yes*.
+
+- In the VS Code panel: click the mode indicator at the bottom of the prompt box and choose **Manual**.
+- In the terminal (`claude`): press Shift+Tab until the status line says `manual mode on`.
+
+If a new session starts in Auto again, switch again. Go back to Auto later, once you know what to expect and want it to work on its own.
+
+### Do the exercises in order
+Some build on earlier ones: exercise 07 reviews the code of exercise 04, and the hook of exercise 06 stays active in the later ones. Start each exercise in a new conversation with `/clear`, so that the previous one doesn't confuse the agent.
+
+### Undoing changes
+Git keeps the original files. `git status` lists what has changed, `git diff` shows how, and `git restore <file>` puts a file back the way it was. To reset all the exercises, run these two commands; the second one also deletes the new files you created (your virtual environment and settings stay):
+
+```bash
+git restore .
+git clean -fd
+```
 
 ## Running the tests
-The exercise starters are deliberately imperfect, so their tests are not part of the repository's `pytest` run.
-Run the tests of an exercise with e.g. `pytest exercises/01_fix_the_bug`.
+The exercise starters are deliberately imperfect, so their tests are not part of the repository's `pytest` run. Run the tests of an exercise with e.g. `pytest exercises/01_fix_the_bug`.

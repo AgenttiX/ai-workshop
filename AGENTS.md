@@ -1,8 +1,7 @@
 # AGENTS.md
 
 ## Project description
-This repository is for organizing an AI workshop for scientists
-at the Kumpula Campus of the University of Helsinki in autumn 2026.
+This repository is for organizing an AI workshop for scientists at the Kumpula Campus of the University of Helsinki in autumn 2026.
 
 ## Workshop description
 - Participants: BSc, MSc and PhD students and researchers of the Faculty of Science (voluntary participation)
@@ -16,8 +15,7 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - [Mika Mäki](https://github.com/AgenttiX): PhD student in first-order cosmological phase transitions
 
 ## Commands
-- Set up the virtualenv at `./.venv` and check the environment: `python3 -m workshop.check` (Windows: `py -3 -m workshop.check`).
-  It creates the venv and installs `requirements.txt` if needed.
+- Set up the virtualenv at `./.venv` and check the environment: `python3 -m workshop.check` (Windows: `py -3 -m workshop.check`). It creates the venv and installs `requirements.txt` if needed.
 - Run tests: `pytest` (runs `tests/` and `solutions/`; run the tests of an exercise with e.g. `pytest exercises/01_fix_the_bug`)
 - Lint: `ruff check`
 - Type checking: `pyrefly check`
@@ -26,26 +24,19 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 
 ## Project structure
 - `./dev/` contains temporary files (Markdown etc.) that are not tracked in Git.
-- `./figures/` contains the figures of the slides, and the data and Plotly scripts for the plots made by us
-  (requirements in `figures/requirements.txt`). It's a Python package with the shared plotting code in `figures/common.py`,
-  so run the scripts as modules, e.g. `python -m figures.time_horizon.time_horizon`.
-- `./exercises/` contains the exercises for the participants, one directory per exercise with a `README.md`.
-  The starters are deliberately imperfect (e.g. `01_fix_the_bug` has a physics bug and `04_ai_ready` has lint errors),
-  so their tests are not run by the default `pytest`, and `04_ai_ready` is excluded from the linter and type checker.
+- `./figures/` contains the figures of the slides, and the data and Plotly scripts for the plots made by us (requirements in `figures/requirements.txt`). It's a Python package with the shared plotting code in `figures/common.py`, so run the scripts as modules, e.g. `python -m figures.time_horizon.time_horizon`.
+- `./exercises/` contains the exercises for the participants, one directory per exercise with a `README.md`. The starters are deliberately imperfect (e.g. `01_fix_the_bug` has a physics bug and `04_ai_ready` has lint errors), so their tests are not run by the default `pytest`, and `04_ai_ready` is excluded from the linter and type checker.
 - `./plan/` contains documents for planning the workshop.
 - `./poster/` contains the A3 poster (`poster.svg`, Inkscape-compatible); `preview.sh` renders it to `poster/build/`.
-- `./setup/` contains the quick-setup commands of the README for each operating system. These are the source of truth:
-  edit them and run `./setup/sync_readme.py`, not the code blocks in `README.md`. Tested in CI by `.github/workflows/setup.yml`.
+- `./setup/` contains the quick-setup commands of the README for each operating system. These are the source of truth: edit them and run `./setup/sync_readme.py`, not the code blocks in `README.md`. Tested in CI by `.github/workflows/setup.yml`.
 - `./slides.html` is the reveal.js presentation slides. Speaker notes are in `<aside class="notes">` elements.
-- `./solutions/` contains the reference solutions of the exercises, each with a `README.md` explaining what happened.
-  The code is tested in CI.
+- `./solutions/` contains the reference solutions of the exercises, each with a `README.md` explaining what happened. The code is tested in CI.
 - `./themes/` contains custom reveal.js themes for the slides (`_base.css` + one file of variables per theme, see `themes/README.md`).
 - `./tests/` contains the tests of the `workshop` package.
 - `./workshop/` is a small Python package with helpers shared by the exercises (environment check, plotting style, data generation).
 
 ## Participant-facing text
-- The audience ranges from complete beginners (no VS Code, terminal or venv experience) to advanced users.
-  On the slides, define every term at first use, and give commands for Linux (primary), native Windows (PowerShell) and macOS.
+- The audience ranges from complete beginners (no VS Code, terminal or venv experience) to advanced users. On the slides, define every term at first use, and give commands for Linux (primary), native Windows (PowerShell) and macOS.
 
 ## Code style
 - Type hints that work on Python 3.12 and newer everywhere except in the deliberately messy exercise starters.
@@ -57,8 +48,7 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - Type checking: `pyrefly check`
 
 ## Relevant sources
-The repositories below may also be available locally in the same parent directory as this repository.
-If you need them when they're not already available, you may ask the user for permission to `git clone` them there.
+The repositories below may also be available locally in the same parent directory as this repository. If you need them when they're not already available, you may ask the user for permission to `git clone` them there.
 
 - [Hippe's Claude configs](https://github.com/ahippelainen/claude-loadout)
 - [Mika's Claude & local AI server configs](https://github.com/AgenttiX/agx-ai)
@@ -67,7 +57,6 @@ If you need them when they're not already available, you may ask the user for pe
 - [PTPlot](https://github.com/CFT-HY/PTPlot/tree/mika-dev): Mika's research software for plotting first-order cosmological phase transitions
 - [PTtools](https://github.com/CFT-HY/pttools/tree/dev): Mika's research software for modeling first-order cosmological phase transitions
 - Vibe-coded projects
-  - [Bubble simulation](https://github.com/AgenttiX/bubble-simulation):
-    lattice simulation of a first-order phase transition by Mika
-  - [Manifolder](https://github.com/AgenttiX/manifolder): Calabi-Yau manifold plotter by Mika
-  - [vote_for_lunch_online](https://github.com/ahippelainen/vote_for_lunch_online): restaurant voting app by Hippe
+    - [Bubble simulation](https://github.com/AgenttiX/bubble-simulation): lattice simulation of a first-order phase transition by Mika
+    - [Manifolder](https://github.com/AgenttiX/manifolder): Calabi-Yau manifold plotter by Mika
+    - [vote_for_lunch_online](https://github.com/ahippelainen/vote_for_lunch_online): restaurant voting app by Hippe

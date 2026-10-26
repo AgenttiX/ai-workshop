@@ -1,14 +1,9 @@
 /**
  * Shared base of the workshop themes for reveal.js 5.
  *
- * This file is imported by the theme files (paper.css, clay.css, ember.css, latent.css),
- * which only define the colours and fonts as CSS custom properties. Do not link it directly.
+ * This file is imported by the theme files (paper.css, clay.css, ember.css, latent.css), which only define the colours and fonts as CSS custom properties. Do not link it directly.
  *
- * The first part is equivalent to the template of the official reveal.js themes,
- * so a theme can replace e.g. sky.css as such. The second part styles the custom
- * components of slides.html (.callout, .def, .loop, .harness, .prompt-box etc.).
- * Those selectors start with ".reveal .slides" so that they override the inline
- * <style> block of slides.html, which comes after the theme in the cascade.
+ * The first part is equivalent to the template of the official reveal.js themes, so a theme can replace e.g. sky.css as such. The second part styles the custom components of slides.html (.callout, .def, .loop, .harness, .prompt-box etc.). Those selectors start with ".reveal .slides" so that they override the inline <style> block of slides.html, which comes after the theme in the cascade.
  *
  * Theme-specific variables (in addition to the --r-* variables of reveal.js):
  *   --t-accent          primary accent: links, callouts, diagrams
