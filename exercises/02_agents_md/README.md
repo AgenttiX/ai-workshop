@@ -22,5 +22,7 @@ It has no `AGENTS.md`, so an agent working on it has to guess.
 
 ## What to look for
 - `/init` is a starting point, not an answer. The valuable part is what only you know.
+- Claude Code also loads the `CLAUDE.md` files of the folders above the one you started it in, here the workshop's own.
+  That's why the session in `pendulum_lab/` may already know a few things about the workshop.
 - What belongs in `AGENTS.md`: commands, structure, conventions, what *not* to do.
   What doesn't: anything the agent can read from the code itself.

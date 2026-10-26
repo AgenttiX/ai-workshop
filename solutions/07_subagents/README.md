@@ -10,7 +10,8 @@ To copy the file in step 1:
 | Linux, macOS | `mkdir -p .claude/agents` and then `cp exercises/07_subagents/agents/physics-reviewer.md .claude/agents/` |
 | Windows (PowerShell) | `New-Item -ItemType Directory -Force .claude\agents` and then `Copy-Item exercises\07_subagents\agents\physics-reviewer.md .claude\agents\` |
 
-Claude Code notices new files in `.claude/agents/` within a few seconds; no restart is needed
+Claude Code notices new and edited files in `.claude/agents/` within a few seconds, but only if the folder existed
+when the session started. After creating the folder, restart Claude Code once
 ([documentation](https://code.claude.com/docs/en/sub-agents)).
 
 ## What was going on

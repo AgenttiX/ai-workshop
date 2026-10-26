@@ -6,18 +6,31 @@ starts, when the agent wants to stop, and so on. Unlike a skill, the model can't
 1. Look at `hooks/ruff_on_edit.py`. It receives the tool call as JSON on stdin, and if the edited file is Python,
    it runs `ruff check` on it. If ruff finds problems, the hook exits with code 2, which sends its output back to the agent.
 2. Install it as a `PostToolUse` hook for `Edit` and `Write`. The easiest way is your own local settings file
-   `.claude/settings.local.json`, which Claude Code combines with the shared `.claude/settings.json` and which Git ignores:
+   `.claude/settings.local.json`, which Claude Code combines with the shared `.claude/settings.json` and which Git ignores.
+   **First check whether you already have one:** if you answered "Yes, and don't ask again" to a permission prompt
+   in an earlier exercise, Claude Code saved that choice there, and copying the snippet over it would erase it.
    ```bash
    # Linux, macOS
-   cp exercises/06_hook/settings.snippet.json .claude/settings.local.json
+   ls .claude
    ```
    ```powershell
    # Windows (PowerShell)
-   Copy-Item exercises\06_hook\settings.windows.snippet.json .claude\settings.local.json
+   Get-ChildItem .claude
    ```
-   The two snippets differ only in the path of the Python of the virtual environment. (If you already have a
-   `settings.local.json`, copy just its `hooks` block in.) Claude Code reloads settings while it runs;
-   `/hooks` shows the active hooks.
+   - If `settings.local.json` is **not** listed, copy the snippet:
+     ```bash
+     # Linux, macOS
+     cp exercises/06_hook/settings.snippet.json .claude/settings.local.json
+     ```
+     ```powershell
+     # Windows (PowerShell)
+     Copy-Item exercises\06_hook\settings.windows.snippet.json .claude\settings.local.json
+     ```
+   - If it **is** listed, ask Claude to merge the `hooks` block of `exercises/06_hook/settings.snippet.json`
+     (Windows: `settings.windows.snippet.json`) into `.claude/settings.local.json`, keeping everything that's already there.
+
+   The two snippets differ only in the path of the Python of the virtual environment.
+   Claude Code reloads settings while it runs; `/hooks` shows the active hooks.
 3. Test it by asking for deliberately sloppy code:
    > Write a script exercises/06_hook/sloppy.py that imports os, sys and json but uses only one of them.
 

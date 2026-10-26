@@ -45,7 +45,10 @@ A good task tells the agent three things:
 3. **How to check the result:** "run the tests". Without this, the agent may stop after editing and only *claim* that the fix works.
 
 Try it yourself: start a new conversation with `/clear`, undo the fix, and ask only "fix my code".
-Compare what it does.
+Compare what it does. To undo the fix, restore the file to the version in Git:
+```bash
+git restore exercises/01_fix_the_bug/blackbody.py
+```
 </details>
 
 ## 3. Check the change before you accept it

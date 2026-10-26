@@ -17,7 +17,10 @@ that the main agent can delegate to. Use them for parallel work, for specialists
    ```
    Read it: the frontmatter defines the name, when to use it, the tools it may use and the model;
    the body is its system prompt.
-2. Start a new session and ask for a review:
+2. **Restart Claude Code** so that it finds the agent: a running session doesn't notice a `.claude/agents/` folder
+   that didn't exist when it started, and `/clear` isn't enough. In the terminal, quit with `/exit` and start `claude` again;
+   in VS Code, press Ctrl+Shift+P (Cmd+Shift+P on a Mac), run **Developer: Reload Window** and open Claude Code again.
+   Then ask for a review:
    > Use the physics-reviewer agent to review exercises/04_ai_ready/fitting.py (or your solution of exercise 04).
 
    The main agent launches the reviewer, which reads the code and reports back. Note that you only see the report,
