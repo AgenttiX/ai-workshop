@@ -25,11 +25,22 @@ University of Helsinki by
 
 ## Set up your laptop before the workshop
 Please do this at home **before** the workshop. It takes 30–60 minutes, most of it waiting for downloads.
-Every step is explained, so you don't need any previous experience. If you get stuck, see
-[Troubleshooting](#troubleshooting), or paste the error message into any AI chatbot and ask what it means.
-That's a skill we'll be using a lot. You can also email us.
+Every step is explained, so you don't need any previous experience. **If you get stuck, see [Troubleshooting](#troubleshooting), or paste the error message into any AI chatbot and ask what it means. That's a skill we'll be using a lot.** You can also email us.
 
 The instructions are written for **Linux**, **Windows** and **macOS**. Follow the parts for your system.
+Steps 1–9 take you from nothing to a working setup; step 10 (local models) is optional.
+
+### The short version
+If you know how to install programs on your system, this is all you need, installed in any way you like:
+
+1. **Python 3.12 or newer** and **Git**. Git is also needed for installing one of the Python packages.
+2. **VS Code** with the **Claude Code** extension, signed in with a paid Claude plan ([step 1](#step-1-an-account-for-an-ai-provider)).
+3. This repository and its Python packages:
+   clone it with `git clone https://github.com/AgenttiX/ai-workshop.git` and run `python3 -m workshop.check` in it
+   (Windows: `py -3 -m workshop.check`). The command creates a virtual environment in `.venv`,
+   installs the packages of [`requirements.txt`](./requirements.txt) into it and checks your setup.
+
+The rest of this section explains each of these step by step.
 
 <details>
 <summary><b>Already comfortable with the terminal? The quick setup</b></summary>
@@ -150,8 +161,8 @@ If you're a principal investigator of a research group, you can apply for it
 [GitHub Education](https://github.com/education) gives verified students free access to GitHub Copilot
 ([Copilot Student](https://docs.github.com/en/copilot/how-tos/manage-your-account/free-access-with-copilot-student)).
 **Apply with your university email address well before the workshop,
-as the verification and the activation of the benefit can take a few days.** Then, in VS Code, hover over the
-Copilot icon in the Status Bar at the bottom, select **Use AI Features** and sign in with your GitHub account.
+as the verification and the activation of the benefit can take a few days.**
+You'll sign in to Copilot in VS Code in [step 6](#step-6-install-the-ide-extensions).
 The exercises are written for Claude Code, but most of them work with Copilot too: see [doing the exercises with another agent](./exercises/other_agents.md).
 </details>
 
@@ -185,11 +196,23 @@ Once VS Code is installed, you can also use its built-in terminal: menu **Termin
 
 
 ### Step 3: Install Python, Git and VS Code or VSCodium
+You need **one** code editor: VS Code or VSCodium. They are the same editor.
+**VS Code** is Microsoft's build, and **VSCodium** is a fully open-source build of it without Microsoft's telemetry.
+If you're unsure, or if you'll use GitHub Copilot, pick **VS Code**.
+From here on, "VS Code" means whichever of the two you installed. If you chose VSCodium, type `codium` wherever a
+command says `code`.
 
 <details open>
 <summary><b>Linux (Ubuntu or Cubbli)</b></summary>
 
-1. Install Python, its virtual-environment module and Git.
+1. **Cubbli only:** the commands below start with `sudo`, which needs administrator (sudo) rights.
+   On the Cubbli Linux of the University of Helsinki, if you don't have them yet, you may be able to request them with
+   ```bash
+   i-want-sudo-access
+   ```
+   If that doesn't work, see the
+   [sudo instructions on the University of Helsinki wiki](https://wiki.helsinki.fi/xwiki/bin/view/Cubbli/User%20documentation/Administrator%20%28sudo%29%20rights%20in%20Cubbli%20Linux/).
+2. **Python and Git.** Install Python, its virtual-environment module and Git.
    `sudo` runs the command as an administrator and asks for your password.
    Nothing appears on the screen while you type the password; that's normal.
    ```bash
@@ -201,33 +224,21 @@ Once VS Code is installed, you can also use its built-in terminal: menu **Termin
    If not, please update your operating system,
    or install Python with alternative methods such as
    [uv](https://docs.astral.sh/uv/) or [Miniconda](https://www.anaconda.com/download/success?reg=skipped-miniconda).
-   On Fedora, use `sudo dnf install python3.14 git`.
-   If you're using the Cubbli Linux of the University of Helsinki and don't yet have sudo access, you may be able to request it with this command:
+   On Fedora, use `sudo dnf install python3.14 git` instead.
+3. **VS Code.** Install it with
    ```bash
-   i-want-sudo-access
-   ```
-   If that command doesn't work for you, then please see the
-   [sudo instructions on University of Helsinki wiki](https://wiki.helsinki.fi/xwiki/bin/view/Cubbli/User%20documentation/Administrator%20%28sudo%29%20rights%20in%20Cubbli%20Linux/).
-2. Install Visual Studio Code or VSCodium:
-   ```bash
-   # Visual Studio Code
    sudo snap install code --classic
-   # VSCodium
-   sudo snap install codium --classic
    ```
-   Alternatively, download the `.deb` file from [code.visualstudio.com](https://code.visualstudio.com/) or [VSCodium releases](https://github.com/VSCodium/vscodium/releases)
-   and install it with
-   ```bash
-   sudo apt install ~/Downloads/cod*.deb
-   ```
-3. Check that everything works. Each command should print a version number:
+   or, for VSCodium, `sudo snap install codium --classic`. Run only one of the two.
+   If `snap` isn't available, download the `.deb` file from [code.visualstudio.com](https://code.visualstudio.com/)
+   (VSCodium: the `…amd64.deb` file from [VSCodium releases](https://github.com/VSCodium/vscodium/releases))
+   and install it with `sudo apt install ~/Downloads/` followed by the name of the downloaded file.
+4. **Check** that everything works. Each command should print a version number
+   (VSCodium: `codium --version` instead of `code --version`):
    ```bash
    python3 --version
    git --version
-   # Visual Studio Code
    code --version
-   # VSCodium
-   codium --version
    ```
 </details>
 
@@ -245,17 +256,15 @@ Once VS Code is installed, you can also use its built-in terminal: menu **Termin
    The default choices on every screen are fine. Git also installs *Git Bash*, which Claude Code uses to run commands.
 3. **VS Code.** Download the **User Installer** from [code.visualstudio.com](https://code.visualstudio.com/)
    (it doesn't need administrator rights) and keep the option **Add to PATH** ticked.
-   For VSCodium, download the **user installer** (`VSCodiumUserSetup-x64-….exe`) from
+   For VSCodium instead, download the **user installer** (`VSCodiumUserSetup-x64-….exe`) from
    [VSCodium releases](https://github.com/VSCodium/vscodium/releases) and keep the option **Add to PATH** ticked.
 4. **Close all PowerShell windows and open a new one**, so that it finds the new programs.
-   Then check that everything works. Each command should print a version number:
+   Then check that everything works. Each command should print a version number
+   (VSCodium: `codium --version` instead of `code --version`):
    ```powershell
    py -3 --version
    git --version
-   # Visual Studio Code
    code --version
-   # VSCodium
-   codium --version
    ```
    `py` is the Python launcher for Windows; `py -3` means "the newest Python 3 installed".
    Use it instead of `python` until the virtual environment is set up in step 8.
@@ -276,18 +285,16 @@ three programs with `winget install Python.Python.3.14`, `winget install Git.Git
 3. **VS Code.** Download it from [code.visualstudio.com](https://code.visualstudio.com/), open the downloaded file
    and drag Visual Studio Code to Applications. Start VS Code, press Cmd+Shift+P, type
    **Shell Command: Install 'code' command in PATH** and press Enter.
-   For VSCodium, download the `.dmg` file from [VSCodium releases](https://github.com/VSCodium/vscodium/releases)
+   For VSCodium instead, download the `.dmg` file from [VSCodium releases](https://github.com/VSCodium/vscodium/releases)
    (or with Homebrew: `brew install --cask vscodium`), drag VSCodium to Applications, and use the command
    **Shell Command: Install 'codium' command in PATH** in the same way.
 4. **Close the Terminal window and open a new one**, so that it finds the new programs.
-   Then check that everything works. Each command should print a version number, and Python should be 3.12 or newer:
+   Then check that everything works. Each command should print a version number, and Python should be 3.12 or newer
+   (VSCodium: `codium --version` instead of `code --version`):
    ```bash
    python3 --version
    git --version
-   # Visual Studio Code
    code --version
-   # VSCodium
-   codium --version
    ```
 </details>
 
@@ -350,7 +357,6 @@ See the [official quickstart](https://docs.github.com/en/copilot/get-started/qui
 
 ### Step 5: Install a command-line AI harness
 A command-line (CLI) harness runs the AI agent in a terminal.
-This is the primary tool used in this workshop.
 
 <details open>
 <summary><b>Claude Code</b></summary>
@@ -381,6 +387,7 @@ It needs a Copilot plan, e.g. through GitHub Education. See the
 <summary><b>OpenCode</b></summary>
 
 OpenCode Desktop (instructions above) already includes the command-line version, at least on Linux.
+
 - Linux and macOS: `curl -fsSL https://opencode.ai/install | bash`
   (or on macOS with Homebrew: `brew install anomalyco/tap/opencode`)
 - Windows
@@ -394,12 +401,14 @@ See the [official documentation](https://opencode.ai/docs/).
 
 
 ### Step 6: Install the IDE extensions
-Start VS Code or VSCodium and open the **Extensions** view: the icon of four squares on the left, or Ctrl+Shift+X
-(Cmd+Shift+X on a Mac). Search for and install:
+An **extension** (also called a plugin) adds features to VS Code.
+Start VS Code and open the **Extensions** view: the icon of four squares on the left, or Ctrl+Shift+X
+(Cmd+Shift+X on a Mac). Search for and install the two extensions below.
+The links show each extension's page, for VS Code and for VSCodium.
 1. **Python**: for running Python and choosing the virtual environment.
    [VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python),
    [VSCodium](https://open-vsx.org/vscode/item?itemName=ms-python.python)
-2. A plugin for your AI harness
+2. The extension of the AI harness you installed in step 5 (only one is needed):
    - **Claude Code**:
      [VS Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code),
      [VSCodium](https://open-vsx.org/vscode/item?itemName=Anthropic.claude-code)
@@ -412,17 +421,22 @@ Start VS Code or VSCodium and open the **Extensions** view: the icon of four squ
 Claude Code is marked by the **Spark icon**, a small orange star. To open its panel, open any file (e.g. `README.md`) and click
 the Spark icon in the top-right corner of the editor (it appears when a file is open), or click the Spark icon in the Activity Bar on the left.
 
+For GitHub Copilot, hover over the Copilot icon in the Status Bar at the bottom, select **Use AI Features** and
+sign in with your GitHub account.
+
 
 ### Step 7: Download the workshop materials
-In the terminal, go to your home folder and download (*clone*) this repository. A **repository** is a folder
-whose history Git tracks.
+In the terminal, go to your home folder and download (*clone*) this repository. A **repository** is simply a folder whose history Git tracks.
+
 ```bash
 mkdir -p ~/Git
 cd ~/Git
 git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
 ```
+
 On Windows, in PowerShell:
+
 ```powershell
 New-Item -ItemType Directory -Force ~\Git
 cd ~\Git
@@ -433,9 +447,7 @@ This creates the folder `Git/ai-workshop` in your home folder (`~`), and `cd` ("
 
 
 ### Step 8: Create the Python environment and check everything
-A **virtual environment** ("venv") is a folder with its own copy of Python and its own packages, separate from the
-rest of your computer, so that the workshop can't break anything else and vice versa.
-The workshop's check script creates it for you. In the terminal, inside the `~/Git/ai-workshop` folder, run:
+A **virtual environment** ("venv") is a fancy name for a folder with its own copy of Python and its own packages, separate from the rest of your computer, so that the workshop can't break anything else and vice versa. This keeps dependencies on different packages separate between projects. The workshop's check script creates it for you. In the terminal, inside the `~/Git/ai-workshop` folder, run:
 
 | System | Command |
 |---|---|
@@ -454,7 +466,7 @@ Finally, **activate** the virtual environment, i.e. tell the terminal to use its
 | Linux, macOS | `source .venv/bin/activate` |
 | Windows (PowerShell) | `.venv\Scripts\Activate.ps1` |
 
-The start of the prompt changes to `(.venv)`. From now on, `python` means the Python of the workshop.
+The start of the prompt changes to `(.venv)`. From now on, `python` means the Python of the workshops virtual environment.
 On Windows, if PowerShell says that "running scripts is disabled on this system", run this once and try again:
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
@@ -464,19 +476,17 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ### Step 9: Open the workshop in VS Code and say hello to the AI
 1. In VS Code: **File → Open Folder…** and choose the `ai-workshop` folder in the `Git` folder of your home folder.
    If VS Code asks whether you trust the authors of the files, answer yes.
-2. Choose the virtual environment: press Ctrl+Shift+P (Cmd+Shift+P on a Mac), type **Python: Select Interpreter**
-   and pick the one that mentions `.venv`.
+2. Choose the virtual environment: press Ctrl+Shift+P (Cmd+Shift+P on a Mac), type **Python: Select Interpreter** and pick the one that mentions `.venv`. If the bottom-right corner of VS Code already shows `.venv`, you can skip this.
 3. Open a terminal in VS Code (**Terminal → New Terminal**). The prompt should start with `(.venv)`. Run
    ```bash
    python -m workshop.check
    ```
    once more. Everything should be `OK` or `WARN`.
-4. Open your AI plugin. E.g. for Claude Code, click the orange spark icon. Then ask:
+4. Open your AI extension, e.g. for Claude Code, click the orange Spark icon.
+   If it asks you to sign in, use the account of step 1. Then ask:
    > What is this repository about?
 
    It reads the files of the repository and answers. If it does, you're ready. See you at the workshop!
-
----
 
 ### Step 10: Local models (optional)
 Local AI models are a viable alternative to cloud-hosted models.
@@ -542,23 +552,20 @@ When something fails, the error message usually says why. Paste it into any AI c
 | `git`, `code` or `codium` is not recognized / not found | Close and reopen the terminal (or VS Code) after installing. On macOS, see step 3 for the `code` and `codium` commands. |
 | The check says `FAIL` for a package | Run the check again with `--setup` added, e.g. `python3 -m workshop.check --setup`. |
 | The terminal in VS Code doesn't show `(.venv)` | Select the interpreter (step 9), then open a new terminal. Or activate it by hand (step 8). |
-| You can't install programs on a university-managed laptop | Tell us well before the workshop. The Python and VS Code installers above work without administrator rights. |
+| You can't install programs on a university-managed laptop | On Cubbli, request sudo rights with `i-want-sudo-access`. The Python and VS Code installers above work without administrator rights. |
 | `claude` is not found in the terminal | Install the command-line version ([step 5](#step-5-install-a-command-line-ai-harness)), then open a new terminal. Claude Desktop may not add the command, and the VS Code extension doesn't. |
-| `git pull` says your local changes would be overwritten | You have edited files in the exercises. Keep a copy of your work with `git stash`, then `git pull` again; `git stash pop` brings your changes back. |
+| `git pull` says your local changes would be overwritten | You have edited files in the exercises. Keep a copy of your work with `git stash`, then `git pull` again; `git stash pop` brings your changes back. You can also ask your AI agent to do this for you.|
 | Claude Code says that your plan doesn't include it | The free Claude plan doesn't include Claude Code; see [step 1](#step-1-an-account-for-an-ai-provider). |
 
 ---
 
 
 ## Exercises
-The exercises are in [`exercises/`](./exercises/). Each has a `README.md` with the task, the prompts to try and
-explanations for those who want to know more. The solutions, with an explanation of what happened, are in
-[`solutions/`](./solutions/). Try first, then peek.
+The exercises are in [`exercises/`](./exercises/). Each has a `README.md` with the task, the prompts to try and explanations for those who want to know more. The solutions, with an explanation of what happened, are in [`solutions/`](./solutions/). Try first, then peek.
 
 
 ## For the organizers
 - Plan: [`plan/`](./plan/). Coordination: [Mattermost](https://cftgroup.chat/main/channels/ai-workshop).
 - Run the tests: `pytest`. Lint: `ruff check`. Type check: `pyrefly check`.
 - Render the slides to a PDF: `./render.py slides.html` (requires Chromium or Chrome).
-- The poster is in [`poster/`](./poster/): `poster.svg`, previewed with `poster/preview.sh`
-  and exported for print with `inkscape poster.svg --export-type=pdf --export-text-to-path --export-filename=poster.pdf`.
+- The poster is in [`poster/`](./poster/): `poster.svg`, previewed with `poster/preview.sh` and exported for print with `inkscape poster.svg --export-type=pdf --export-text-to-path --export-filename=poster.pdf`.
