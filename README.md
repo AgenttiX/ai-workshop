@@ -175,7 +175,7 @@ You may also use an AI provider of your choice. Some notable ones include:
   - [Provides free agentic access to some models](https://antigravity.google/docs/models)
 - [Mistral](https://mistral.ai/pricing/)
   - Provides limited free agentic access
-  - The European alternative
+  - The European option
 - [OpenAI ChatGPT](https://chatgpt.com/pricing/)
   - Provides limited free agentic access
 

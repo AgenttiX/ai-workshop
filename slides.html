@@ -337,10 +337,10 @@
 		<h2>Practicalities</h2>
 		<ul>
 			<li>12:00&ndash;14:00 foundations, 14:00&ndash;14:30 coffee break, 14:30&ndash;16:30 advanced. Laptops out.</li>
-				<li><strong>No experience needed.</strong> We define every term the first time we use it (orange boxes), and a full glossary follows the basic terms.</li>
+				<li><strong>No experience needed.</strong> We define every term the first time we use it, and a full glossary follows the basic terms.</li>
 			<li>Questions: interrupt us anytime.
 				<strong>There are no stupid questions.</strong> If you're lost, three others are too.</li>
-			<li>It's OK to discuss with the people next to you during the presentation, but do so quietly. Helping each other is encouraged.</li>
+			<li>It's OK to discuss with the people next to you during the presentation, but preferably do so quietly. Helping each other is encouraged.</li>
 			<li>Everything here is practice. Philosophy, ethics and the future of science: the coffee break and afterwards.
 				We'll gladly join.</li>
 			<li>A warning: some of what we show may feel threatening to how we work as scientists.
@@ -387,7 +387,7 @@
 		<h2>What you can do afterwards:</h2>
 		<ol>
 			<li>Understand the main developments of in AI in recent years and the related jargon, as well as why an AI agent working in your files can do far more than a chat window</li>
-			<li>Run Claude Code on a real project</li>
+			<li>Run an AI agent on a real project</li>
 			<li>Use guiding files like an <code>AGENTS.md</code> for your project and manage the context window</li>
 			<li>Extend the harness with skills, hooks, subagents and MCP servers</li>
 			<li>Make your research code "AI-ready" with tests, lint, types and CI, so that the agent catches its own mistakes</li>
@@ -415,9 +415,9 @@
 	<section>
 		<h2>Words we'll use all day</h2>
 		<table class="glossary">
-			<tr><td>Model (LLM)</td><td>The AI itself: a program trained on huge amounts of data to predict what comes next. Claude, GPT and Gemini are models.</td></tr>
+			<tr><td>Model (LLM)</td><td>The AI itself: a program trained on huge amounts of data to predict what comes next. Claude, ChatGPT and Gemini are models.</td></tr>
 			<tr><td>Prompt</td><td>What you write to the model.</td></tr>
-			<tr><td>Token</td><td>The unit a model reads and writes at once. Limits and prices are counted in tokens.</td></tr>
+			<tr><td>Token</td><td>The unit a model reads and writes at once. Limits and prices are counted in tokens. As an approximation, you can think of a token as one word of text.</td></tr>
 			<tr><td>Context window</td><td>Everything the model can "see"/"remember" at once: your messages, its replies, the files it has read. It has a maximum size.</td></tr>
 			<tr><td>Agent</td><td>A model prompted in a specific manner, and can act on its own, like read files and run code.</td></tr>
 			<tr><td>Harness</td><td>A program around the model that makes it an agent: <em>it gives the model tools, manages its context and asks your permission</em>. Claude Code is a harness.</td></tr>
@@ -452,13 +452,13 @@
 		<h2>Glossary 2/3: code and your project</h2>
 		<table class="glossary">
 			<tr><td>Terminal</td><td>A window for typing commands. Also: command line, shell. Windows: PowerShell</td></tr>
-			<tr><td>VS Code</td><td>A code editor. <em>Extensions</em> add features, e.g. Claude Code; Ctrl+Shift+P (Mac: Cmd+Shift+P) finds any command</td></tr>
+			<tr><td>VS Code and VSCodium</td><td>A code editor. <em>Extensions</em> add features, e.g. Claude Code; Ctrl+Shift+P (Mac: Cmd+Shift+P) finds any command</td></tr>
 			<tr><td>Package</td><td>A library of code you install, e.g. NumPy with <code>pip</code></td></tr>
 			<tr><td>Virtual environment</td><td>A folder with its own Python and packages, separate from the rest of the computer</td></tr>
 			<tr><td>Git, repository</td><td>Git records every change to a project folder (a repository) so you can review and undo it. GitHub hosts repositories online</td></tr>
 			<tr><td>Commit, diff</td><td>A commit is a saved snapshot with a message; a diff shows what changed between two versions</td></tr>
 			<tr><td>Markdown, JSON</td><td>Plain-text formats: Markdown for formatted text (<code>AGENTS.md</code>), JSON for structured data (<code>settings.json</code>)</td></tr>
-			<tr><td>Test</td><td>A small program that checks code against a known answer</td></tr>
+			<tr><td>Test</td><td>A small program that checks code against a known answer (or that the code doesn't crash)</td></tr>
 			<tr><td>Linter, type checker</td><td>Programs that check code for common mistakes, messy style and wrong kinds of values</td></tr>
 			<tr><td>CI</td><td>Continuous integration: a server runs the checks on every change you push</td></tr>
 			<tr><td>AGENTS.md, CLAUDE.md</td><td>Standing instructions the agent reads at the start of every session</td></tr>
@@ -478,7 +478,7 @@
 			<tr><td>Inference</td><td>Running a trained model to produce output: what you pay for per token</td></tr>
 			<tr><td>GPU</td><td>The parallel processor that AI is trained and run on</td></tr>
 			<tr><td>Benchmark</td><td>A fixed set of tasks for comparing models</td></tr>
-			<tr><td>Time horizon</td><td>The length of task, in skilled-human working time, that an agent completes with 50&nbsp;% success</td></tr>
+			<tr><td>Time horizon</td><td>The length of task, in skilled-human working time, that an agent completes with e.g. 50&nbsp;% success</td></tr>
 			<tr><td>Rate limit</td><td>How much you may use per hour or week. Agents reach it quickly</td></tr>
 			<tr><td>Auto mode</td><td>A permission mode in which a second model approves the agent's actions instead of you</td></tr>
 		</table>
@@ -512,7 +512,7 @@
 					<li><strong>Jul</strong> GPT-4o mini: $0.15 per million tokens, 99&nbsp;% cheaper than 2022's davinci</li>
 					<li><strong>Sep</strong> o1: reinforcement learning on chains of thought; AIME 12&nbsp;% &rarr; 83&nbsp;%</li>
 					<li><strong>Oct</strong> Nobel prizes: Hopfield &amp; Hinton (physics), Hassabis &amp; Jumper (chemistry)</li>
-					<li><strong>Oct&ndash;Nov</strong> Claude <em>computer use</em>; the Model Context Protocol</li>
+					<li><strong>Oct&ndash;Nov</strong> Claude <em>computer use</em>; the Model Context Protocol (MCP)</li>
 					<li><strong>Dec</strong> o3: 76&ndash;88&nbsp;% on ARC-AGI-1; DeepSeek-V3 trained in 2.8M GPU-hours</li>
 				</ul>
 			</div>
@@ -668,8 +668,8 @@
 				<strong>agents</strong> running for hours or days &mdash; deriving, coding, checking, iterating</li>
 			<li>The same pattern scaled down is what you'll use today: an agent that reads your code, runs your tests
 				and fixes its own errors</li>
-			<li>Closer to home: Claude Code ran whole particle-physics analyses on LEP and CMS open data (Moreno et al., 2026),
-				and Anthropic reports Claude raising the proven share of zeta zeros on the critical line from 41.6&nbsp;% to 67&nbsp;% (Aug 2026)</li>
+			<li>Closer to home: Claude Code ran whole particle-physics analyses on LEP and CMS open data (<a href="https://arxiv.org/abs/2603.20179">Moreno et al., 2026</a>),
+				and Anthropic reports Claude raising the proven share of zeta zeros on the critical line from 41.6&nbsp;% to 67&nbsp;% (<a href="https://www.anthropic.com/research/riemann-zeta">Aug 2026</a>)</li>
 		</ul>
 		<aside class="notes">
 			"Navier–Stokes was not proven by asking a chatbot" — this is the hook from the kickoff meeting.
@@ -725,7 +725,7 @@
 			</div>
 			<p class="prompt-result"><strong>Result:</strong> a correct implementation of the physics of the article,
 				verified manually afterwards line by line. All I had to change were the page numbers of the cited articles, which were off by one.</p>
-			<p class="prompt-result"><strong>Result:</strong> a correct fix for a off-by-one bug that had been in the code for years.</p>
+			<p class="prompt-result"><strong>Result:</strong> a correct fix for an off-by-one bug that had been in the code for years.</p>
 		</div>
 		<aside class="notes">
 			Two prompts from Mika's research work on first-order phase transitions:
@@ -845,15 +845,16 @@
 		<h2>The landscape</h2>
 		<table>
 			<tr><th>Harness</th><th>Provider</th><th>Where it runs</th><th>Notes</th></tr>
-			<tr><td>Claude Code</td><td>Anthropic</td><td>terminal, VS Code, JetBrains, web</td><td>Used today. Skills, hooks, agents, MCP</td></tr>
+			<tr><td>Claude Code</td><td>Anthropic</td><td>terminal, IDE, web</td><td>Used today. Skills, hooks, agents, MCP</td></tr>
 			<tr><td>Codex</td><td>OpenAI</td><td>terminal, IDE, cloud</td><td>Similar concepts</td></tr>
-			<tr><td>GitHub Copilot</td><td>GitHub / Microsoft</td><td>VS Code, cloud</td><td>Free for verified students (Copilot Student plan; premium models only via Auto) &mdash; our backup</td></tr>
+			<tr><td>GitHub Copilot</td><td>GitHub / Microsoft</td><td>terminal, IDE, cloud</td><td></td></tr>
 			<tr><td>Cursor, Antigravity</td><td>Cursor, Google</td><td>own IDE</td><td>IDE-first</td></tr>
+			<tr><td>Vibe</td><td>Mistral</td><td>terminal, IDE, web</td><td>The European option</td></tr>
 			<tr><td>OpenCode</td><td>open source</td><td>terminal</td><td>Any model, incl. local</td></tr>
 			<tr><td>Chat products</td><td>Claude.ai Projects, ChatGPT</td><td>browser</td><td>Good for text; no file access to your machine</td></tr>
 		</table>
 		<p class="callout">
-			Cloud sandboxes exist (Claude Code on the web, Codex cloud), but a harness on <strong>your own machine</strong>,
+			Cloud sandboxes exist (e.g. Claude Code on the web, Codex cloud), but a harness on <strong>your own machine</strong>,
 			with your data and your tools, is more capable. That's what we use.
 		</p>
 		<aside class="notes">
@@ -1122,7 +1123,7 @@
 				<ul style="font-size: 0.8em;">
 					<li>2025 in Epoch AI's list of notable models: US 60, China 33, EU 1</li>
 					<li>Largest training runs Epoch has estimated: US ~10<sup>27</sup>&nbsp;FLOP, China ~3&times;10<sup>25</sup>, EU ~8&times;10<sup>23</sup></li>
-					<li>Europe's entry this week: Mistral Large 4, "Le Chonk" (6 Oct): 1T parameters, 49B active per token, trained on 3800 GPUs in Europe; open weights promised by the end of October</li>
+					<li>Europe's entry this month: Mistral Large 4, "Le Chonk" (6 Oct): 1T parameters, 49B active per token, trained on 3800 GPUs in Europe; open weights promised by the end of October</li>
 				</ul>
 			</div>
 		</div>
@@ -1243,7 +1244,7 @@
 			<figure>
 				<img src="figures/hallucinated_references_arxiv.png" alt="Estimated rate of non-existent references in arXiv papers, 2020 to 2025: about zero until 2024, then rising to about 0.4 %">
 				<figcaption>Non-existent references in arXiv papers, estimated as the excess over the pre-LLM baseline.
-					Z. Zhao et al., arXiv:2605.07723 (2026), Fig. 1a (cropped), CC BY 4.0</figcaption>
+					Z. Zhao et al., <a href="https://arxiv.org/abs/2605.07723">arXiv:2605.07723</a> (2026), Fig. 1a (cropped), CC BY 4.0</figcaption>
 			</figure>
 		</div>
 		<aside class="notes">
@@ -1260,7 +1261,7 @@
 				university's guidelines</li>
 			<li><strong>Prompt injection:</strong> a web page, a PDF, a paper abstract can contain instructions for the agent.
 				Untrusted input + write access = a very bad day</li>
-			<li>Version control (git) everything. An agent on the only copy of your thesis is a gamble</li>
+			<li>Version control (git) everything. An agent on the only copy of critical files (e.g. your thesis) is a gamble</li>
 		</ul>
 	</section>
 	<section>
@@ -1269,7 +1270,7 @@
 			<li><strong>Cost:</strong> subscriptions have usage quotas; agents burn tokens fast. Local models are the free-but-slower fallback</li>
 			<li><strong>Skill atrophy:</strong> "How do I keep understanding the physics when the AI writes the code?"
 				<ul>
-					<li>Let it do the mechanical parts. <em>Read</em> everything before it goes into a paper.</li>
+					<li>Let it do the mechanical parts. <em>Read and understand</em> everything before it goes into a paper.</li>
 					<li>Ask it to explain. Ask it to teach. Make it show the derivation.</li>
 					<li>Decide deliberately what you want to keep doing by hand</li>
 				</ul>
@@ -1318,8 +1319,8 @@
 		<p class="def"><strong>Attack success rate</strong>: how often an agent carries out instructions planted in what it reads (web page, issue, file).
 			An <em>adaptive</em> attacker refines the injection over many tries.</p>
 		<table style="font-size: 0.72em;">
-			<tr><th>Model and attack</th><th>Attack success rate</th></tr>
-			<tr><td>2024 agents, one fixed attack (AgentDojo)</td><td>GPT-4o 48&nbsp;%, Claude 3.5 Sonnet 34&nbsp;%</td></tr>
+			<tr><th>Model and attack</th><th>Attack success rate (lower is better)</th></tr>
+			<tr><td>2024 agents, one fixed attack (<a href="https://github.com/ethz-spylab/agentdojo">AgentDojo</a>)</td><td>GPT-4o 48&nbsp;%, Claude 3.5 Sonnet 34&nbsp;%</td></tr>
 			<tr><td>Claude Opus 5.5 (Sep 2026), 1804 known attacks, best of 15 tries</td><td>1.0&nbsp;%</td></tr>
 			<tr><td>Opus 5.5, attacker trained on the test scenarios: coding</td><td>55&nbsp;% of attempts (all successes on its fallback model); 11&nbsp;% with Anthropic's detectors</td></tr>
 			<tr><td>Opus 5.5, attacker trained on the test scenarios: computer use</td><td>0.07&nbsp;% of attempts</td></tr>
@@ -1424,9 +1425,9 @@
 <section>
 	<section>
 		<h2>Exercise 00: setup check</h2>
-		<p>You set up your laptop at home with the guide in the <strong>README</strong> (the front page of the repository):</p>
+		<p>You have preferably already set up your laptop at home with the guide in the <strong>README</strong> (the front page of the repository):</p>
 		<ol>
-			<li>VS Code with the <em>Python</em> and <em>Claude Code</em> extensions (<em>extension</em> = an add-on to VS Code)</li>
+			<li>IDE (VS Code / VSCodium) with the <em>Python</em> extension, and an AI extension (e.g. <em>Claude Code</em>)</li>
 			<li>Python 3.12 or later and Git</li>
 			<li>The workshop downloaded with <code>git clone</code></li>
 			<li>The check script, which created the <em>virtual environment</em></li>
@@ -1443,7 +1444,7 @@
 		<div class="two-col">
 			<div>
 				<ul>
-					<li>An <strong>Integrated Development Environment</strong> puts the editor, terminal, file browser,
+					<li>An <strong>Integrated Development Environment (IDE)</strong> puts the editor, terminal, file browser,
 						Git, debugger and Jupyter notebooks in one window</li>
 					<li>It <strong>understands the code:</strong> errors underlined as you type, jump to where a function is defined,
 						autocompletion</li>
@@ -1459,7 +1460,7 @@
 					<li>Extensions (<code>Ctrl+Shift+X</code>): <em>Python</em> and <em>Claude Code</em></li>
 					<li><code>Ctrl+Shift+P</code> &rarr; <em>Python: Select Interpreter</em> &rarr; <code>venv</code></li>
 				</ol>
-				<p class="callout"><strong>Vim or Emacs?</strong> Keep them. Claude Code runs in a terminal next to any editor,
+				<p class="callout"><strong>Vim or Emacs?</strong> Keep them. You can run an AI harness in a terminal next to any editor,
 					and both can be extended with all this: language servers for the code understanding
 					(e.g. <code>eglot</code>, <code>nvim-lspconfig</code>) and Claude Code plugins
 					(e.g. <code>claude-code.el</code>, <code>claudecode.nvim</code>).</p>
@@ -1494,14 +1495,14 @@
 					<tr><td>Linux, macOS</td><td><code>source .venv/bin/activate</code></td></tr>
 					<tr><td>Windows</td><td><code>.venv\Scripts\Activate.ps1</code></td></tr>
 				</table>
-				<p class="small">An error you don't understand? Paste it to Claude (or any chatbot) and ask what it means.</p>
+				<p class="small">An error you don't understand? Paste it to any AI chatbot and ask what it means.</p>
 			</div>
 		</div>
 	</section>
 	<section>
 		<h2>Setup check 2/2: Claude Code</h2>
 		<ol>
-			<li>Click the <strong>Claude icon</strong> in VS Code and sign in. A browser window opens</li>
+			<li>Open the AI extension of your IDE: e.g. click the <strong>Claude icon</strong> in VS Code and sign in. A browser window opens</li>
 			<li>Ask: <em>"What is this repository about, and how do I run its tests?"</em></li>
 			<li>Watch what it does: which files does it read? That's the <em>file access</em> that makes it an agent</li>
 		</ol>
@@ -1682,8 +1683,8 @@
 			<li><strong>Exercise 05:</strong> a skill: teach the agent your plot style once</li>
 		</ul>
 		<p class="callout">
-			Start with 01, then pick what interests you; nobody finishes all of them. Use your own words. Read every diff.
-			Stuck? Ask Claude first, then raise a hand.
+			Start with 01, then pick what interests you; you're not expected to finish all of them during the workshop. Use your own words. Read every diff.
+			Stuck? Ask AI first, then raise a hand.
 		</p>
 		<aside class="notes">About 25 minutes, or whatever is left before the recap.
 			Circulate. The common failure: people accept edits without reading. Point it out kindly.</aside>
@@ -1732,7 +1733,10 @@
 	</section>
 	<section>
 		<h2>Skills: instructions loaded when relevant</h2>
-		<p class="def">A <strong>skill</strong> is a folder with a <code>SKILL.md</code> file: instructions (and optionally scripts) that Claude loads only when the task matches the skill's description.</p>
+		<p class="def">
+			A <strong>skill</strong> is a folder with a <code>SKILL.md</code> file:
+			instructions (and optionally scripts) that the agent loads only when the task matches the skill's description.
+		</p>
 		<div class="two-col">
 			<div>
 				<pre><code class="language-markdown" data-trim>
@@ -1763,7 +1767,7 @@ description: The plotting conventions of the
 	</section>
 	<section>
 		<h2>Hooks: deterministic, the model can't skip them</h2>
-		<p class="def">A <strong>hook</strong> is a command that Claude Code runs automatically at a fixed moment, e.g. after every
+		<p class="def">A <strong>hook</strong> is a command that the harness runs automatically at a fixed moment, e.g. after every
 			file edit. It runs every time; the model can't forget or skip it.</p>
 		<div class="two-col">
 			<div>
@@ -1797,7 +1801,7 @@ description: The plotting conventions of the
 	</section>
 	<section>
 		<h2>Subagents: specialists with their own context</h2>
-		<p class="def">A <strong>subagent</strong> is a separate Claude with its own context window and instructions. The main agent hands it a task and gets back a short report.</p>
+		<p class="def">A <strong>subagent</strong> is a separate agent with its own context window and instructions. The main agent hands it a task and gets back a short report.</p>
 		<div class="two-col">
 			<div>
 				<pre><code class="language-markdown" data-trim>
@@ -1841,7 +1845,7 @@ claude mcp add --scope project zotero -- zotero-mcp
 				</code></pre>
 				<p class="small">These are terminal commands. A project-scope server is written to <code>.mcp.json</code>, which the VS Code extension reads too.</p>
 				<p>Then, in a session:</p>
-				<p><em>"Find the abstract of arXiv:1909.10040 and summarize the sound shell model."</em></p>
+				<p><em>"Find the abstract of arXiv:1706.03762 and summarize the transformer architecture."</em></p>
 			</div>
 			<div>
 				<ul>
@@ -1994,7 +1998,7 @@ claude mcp add --scope project zotero -- zotero-mcp
 		<h2>The same call as messages</h2>
 		<div class="two-col">
 			<div>
-				<p class="small">Claude Code &rarr; server</p>
+				<p class="small">AI harness &rarr; MCP server</p>
 				<pre><code class="language-json" data-trim>
 {
   "jsonrpc": "2.0",
@@ -2011,7 +2015,7 @@ claude mcp add --scope project zotero -- zotero-mcp
 				</code></pre>
 			</div>
 			<div>
-				<p class="small">Server &rarr; Claude Code: the tool's output</p>
+				<p class="small">MCP server &rarr; AI harness: the tool's output</p>
 				<pre><code class="language-json" data-trim>
 {
   "success": true,
@@ -2051,11 +2055,11 @@ claude mcp add --scope project zotero -- zotero-mcp
 		</ul>
 		<table>
 			<tr><th>Pillar</th><th>What it is</th><th>What it gives the agent</th></tr>
-			<tr><td>Unit tests (<code>pytest</code>)</td><td>Small programs that check your code against known answers</td><td>"Does the physics still hold?" Literature values, known limits, and today's output saved to catch changes</td></tr>
-			<tr><td>Linting (<code>ruff</code>)</td><td>An automatic check for common mistakes and messy code</td><td>Bug patterns and style problems, in milliseconds</td></tr>
-			<tr><td>Type checking (<code>pyrefly</code>)</td><td>Checks that functions get the kinds of values they expect</td><td>Wrong arguments caught across the whole code base</td></tr>
-			<tr><td>CI (GitHub Actions)</td><td>A server that runs all of the above on every change you push</td><td>The same checks on every change, including the agent's</td></tr>
-			<tr><td>Packaging &amp; README</td><td>Install instructions and a <code>pyproject.toml</code></td><td>It can install and run the project from the instructions alone</td></tr>
+			<tr><td>Unit tests (<code><a href="https://docs.pytest.org/">pytest</a></code>)</td><td>Small programs that check your code against known answers</td><td>"Does the physics still hold?" Literature values, known limits, and today's output saved to catch changes</td></tr>
+			<tr><td>Linting (<code><a href="https://docs.astral.sh/ruff/">ruff</a></code>)</td><td>An automatic check for common mistakes and messy code</td><td>Bug patterns and style problems, in milliseconds</td></tr>
+			<tr><td>Type checking (<code><a href="https://pyrefly.org/">pyrefly</a></code>)</td><td>Checks that functions get the kinds of values they expect</td><td>Wrong arguments caught across the whole code base</td></tr>
+			<tr><td>CI (<a href="https://github.com/features/actions">GitHub Actions</a>)</td><td>A server that runs all of the above on every change you push</td><td>The same checks on every change, including the agent's</td></tr>
+			<tr><td>Packaging &amp; README</td><td>Install instructions and a <code><a href="https://packaging.python.org/en/latest/guides/writing-pyproject-toml/">pyproject.toml</a></code></td><td>It can install and run the project from the instructions alone</td></tr>
 		</table>
 		<aside class="notes">
 			The thesis of this block: tests, lint, types and CI are the agent's senses. A project without them is an agent working blind.
@@ -2130,7 +2134,9 @@ jobs:
 			</div>
 		</div>
 		<p class="small">
-			Full versions in this repository and in <a href="https://github.com/CFT-HY/pttools">PTtools</a>.
+			Full versions in this repository and in PTtools (
+			<code><a href="https://github.com/CFT-HY/pttools/blob/dev/pyproject.toml">pyproject.toml</a></code>,
+			<code><a href="https://github.com/CFT-HY/pttools/blob/dev/.github/workflows/main.yml">main.yml</a></code>).
 			Slides on the why and how: <a href="https://github.com/CFT-HY/unit-testing-ci-cd">unit-testing-ci-cd</a>.
 		</p>
 		<p class="callout">And list the commands in <code>AGENTS.md</code>, so the agent knows to run them.</p>
@@ -2157,7 +2163,7 @@ jobs:
 					<li>First research task: reproduce a figure, check a derivation</li>
 				</ol>
 				<p class="callout">This is what we're here for. Ask us to look at your project with you.
-					And ask Claude to explain anything you don't understand.</p>
+					And ask AI to explain anything you don't understand.</p>
 			</div>
 		</div>
 		<aside class="notes">About 25 minutes, or whatever is left before the final words.</aside>
@@ -2168,7 +2174,7 @@ jobs:
 <section>
 	<section class="divider center-slide">
 		<h1>Showcases</h1>
-		<p>Three complete workflows</p>
+		<p>What is possible today</p>
 		<aside class="notes">Each showcase has a screen recording as a fallback. Keep the time; one question each.</aside>
 	</section>
 	<section>
@@ -2259,21 +2265,20 @@ jobs:
 			<div>
 				<ul>
 					<li><strong>Why:</strong> privacy (the data never leaves your computer), no rate limits, offline, cost. <strong>Price:</strong> capability and speed</li>
-					<li><strong>Hardware reality:</strong> laptop &rarr; small Gemma 4 / Qwen 3.8 variants;
-						workstation GPU (Radeon VII, 16 GB) &rarr; Gemma 4 26B-A4B with llama.cpp;
-						Kimi-class &rarr; a server</li>
-					<li><strong>The stack:</strong> llama.cpp (runs the model) in Docker &rarr; LiteLLM (translates between API formats) &rarr; Open WebUI (a chat interface);
-						Claude Code with <code>ANTHROPIC_BASE_URL</code> pointing at the proxy</li>
+					<li><strong>Hardware reality:</strong> laptop &rarr; small Gemma 4 variants;
+						gaming/workstation GPU &rarr; Gemma 4 26B-A4B, 31B & Qwen3.8-27B with llama.cpp and vLLM;
+						the bigger models are usually mixture-of-experts (MoE) models &rarr; RAM is the limiting factor</li>
+					<li>
+						<strong>The stack:</strong> llama.cpp or vLLM (backend = runs the model) in Docker
+						&rarr; LiteLLM (combines multiple backends to one API endpoint)
+						&rarr; Open WebUI (a chat interface) & OpenCode (a harness)
 					<li>Android: Conduit</li>
 				</ul>
 			</div>
 			<div>
 				<pre><code class="language-bash" data-trim>
-docker compose up -d llama-cpp
-litellm --config litellm/config.yaml --port 4000
-export ANTHROPIC_BASE_URL=http://localhost:4000
-export ANTHROPIC_AUTH_TOKEN=local
-claude
+docker compose up
+opencode
 				</code></pre>
 				<p class="callout">Demo: exercise 01 again, with a local model. Compare time and quality. Fans on.</p>
 			</div>
@@ -2329,7 +2334,7 @@ claude
 				</div>
 			</div>
 		<p class="prompt-result"><strong>Result:</strong> The initial version of this workshop was created with a single prompt.
-			We have improved it quite a bit since, though.
+			We have worked on it quite a bit since, though.
 			You can have a look at the history of the workshop repository for details.</p>
 		<aside class="notes">
 			The prompt of commit 5f00b9a ("Add initial version of the workshop"), one-shotted with Claude Fable 5.1 on 18 Sep 2026.
@@ -2343,12 +2348,9 @@ claude
 		<h2>Resources</h2>
 		<ul>
 			<li>This workshop: <a href="https://github.com/AgenttiX/ai-workshop">github.com/AgenttiX/ai-workshop</a> &mdash; setup guide, slides, exercises, solutions with explanations, configs to steal</li>
-			<li>Claude Code documentation: <a href="https://code.claude.com/docs">code.claude.com/docs</a></li>
-			<li><a href="https://support.claude.com/en/articles/16634237-claude-team-plan-for-scientists">Claude Team plan for scientists</a>:
-				a PI files the application, up to 25 people per application. Talk to your group leader today.</li>
-			<li><a href="https://education.github.com/pack">GitHub Student Developer Pack</a>: Copilot for free; apply early, it takes time</li>
-			<li><a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a>, Mika's <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a> and
-				<a href="https://github.com/CFT-HY/unit-testing-ci-cd">unit testing &amp; CI/CD lecture</a></li>
+			<li>An example <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a></li>
+			<li>Example local AI configs: <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a></li>
+			<li><a href="https://github.com/CFT-HY/unit-testing-ci-cd">A lecture on unit testing &amp; CI/CD</a></li>
 		</ul>
 	</section>
 	<section class="center-slide">

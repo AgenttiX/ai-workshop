@@ -9,10 +9,6 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - When and where: Friday 30 October 2026, Physicum E207, Kumpula campus
 - Structure: 2 h session (12:00–14:00) + 30 min coffee break + 2 h session (14:30–16:30)
 - Language: English
-- Coordination: [Mattermost](https://cftgroup.chat/main/channels/ai-workshop)
-- Exercise platform: Claude Code with Claude Team plan for scientists
-  - Backup option for those without Claude: GitHub Copilot with GitHub Student Developer Pack
-- Primary IDE: Visual Studio Code and VSCodium
 - Programming language for exercises: Python 3.12 or newer
 
 ## Workshop organizers
@@ -49,7 +45,7 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 
 ## Participant-facing text
 - The audience ranges from complete beginners (no VS Code, terminal or venv experience) to advanced users.
-  Define every term at first use, and give commands for Linux (primary), native Windows (PowerShell) and macOS.
+  On the slides, define every term at first use, and give commands for Linux (primary), native Windows (PowerShell) and macOS.
 
 ## Code style
 - Type hints that work on Python 3.12 and newer everywhere except in the deliberately messy exercise starters.
@@ -60,12 +56,9 @@ at the Kumpula Campus of the University of Helsinki in autumn 2026.
 - Lint: `ruff check`
 - Type checking: `pyrefly check`
 
-## General instructions
-- When producing a long response, also output it as a Markdown file in `./dev/`.
-
 ## Relevant sources
 The repositories below may also be available locally in the same parent directory as this repository.
-If you need them, you may `git clone` them there.
+If you need them when they're not already available, you may ask the user for permission to `git clone` them there.
 
 - [Hippe's Claude configs](https://github.com/ahippelainen/claude-loadout)
 - [Mika's Claude & local AI server configs](https://github.com/AgenttiX/agx-ai)

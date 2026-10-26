@@ -13,6 +13,10 @@
       "Bash(ruff format:*)"
     ]
   },
+  "ask": [
+    "Bash(git push:*)",
+    "PowerShell(git push:*)"
+  ],
   "enabledPlugins": {
     "claude-security@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true
