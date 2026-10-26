@@ -235,6 +235,8 @@
 			.reveal .mcp-sequence svg {
 				display: block;
 				height: 680px;
+				/* The arrows and their labels (currentColor) follow the text colour of the theme */
+				color: var(--r-main-color);
 			}
 			.reveal figcaption {
 				font-size: 0.45em;
@@ -1087,12 +1089,14 @@
 		<h2>Parameters, experts, and what fits on your machine</h2>
 		<p class="def"><strong>Parameters</strong>: the learned numbers of the network. <strong>Mixture of experts</strong> (MoE): each layer has many alternative blocks ("experts");
 			a router sends each token to a few. All must be in memory; only the chosen ones compute.</p>
-		<table style="font-size: 0.75em;">
+		<table style="font-size: 0.65em;">
 			<tr><th>Open-weight model</th><th>Total parameters</th><th>Active per token</th><th>Memory needed</th></tr>
 			<tr><td>gpt-oss-20b (MoE, 32 experts)</td><td>20.9&nbsp;B</td><td>3.6&nbsp;B</td><td>"as little as 16&nbsp;GB"</td></tr>
 			<tr><td>gpt-oss-120b (MoE, 128 experts)</td><td>116.8&nbsp;B</td><td>5.1&nbsp;B</td><td>one 80&nbsp;GB GPU</td></tr>
 			<tr><td>Llama&nbsp;3 70B (dense)</td><td>70&nbsp;B</td><td>70&nbsp;B</td><td>~140&nbsp;GB in 16-bit</td></tr>
 			<tr><td>DeepSeek-V3 (MoE)</td><td>671&nbsp;B</td><td>37&nbsp;B</td><td>~670&nbsp;GB in 8-bit: a server</td></tr>
+			<tr><td>Qwen3.8-27B (dense)</td><td>27.8&nbsp;B</td><td>27.8&nbsp;B</td><td>~56&nbsp;GB in 16-bit, ~14&nbsp;GB in 4-bit</td></tr>
+			<tr><td>Qwen3.8-Flash-Next (MoE, 512 experts)</td><td>180&nbsp;B</td><td>6&nbsp;B</td><td>~360&nbsp;GB in 16-bit, ~90&nbsp;GB in 4-bit</td></tr>
 		</table>
 		<ul>
 			<li>Memory &asymp; parameters &times; bits per parameter / 8, plus the KV cache. gpt-oss stores its experts in ~4 bits</li>
@@ -1100,7 +1104,8 @@
 		</ul>
 		<p class="small">gpt-oss model card: OpenAI, <a href="https://arxiv.org/abs/2508.10925">arXiv:2508.10925</a> (2025).
 			DeepSeek-AI, <a href="https://arxiv.org/abs/2412.19437">arXiv:2412.19437</a> (2024). Llama&nbsp;3: <a href="https://arxiv.org/abs/2407.21783">arXiv:2407.21783</a>.
-			Last two memory figures: our estimate.</p>
+			Qwen: model cards of <a href="https://huggingface.co/Qwen/Qwen3.8-27B">Qwen3.8-27B</a> and <a href="https://huggingface.co/Qwen/Qwen3.8-Flash-Next">Qwen3.8-Flash-Next</a> (2026).
+			Memory figures except gpt-oss's and the 16-bit size of Qwen3.8-27B: our estimate.</p>
 		<aside class="notes">
 			gpt-oss (OpenAI, Aug 2025, Apache 2.0): 120b has 36 layers, 128 experts per MoE block, top-4 routing; 20b has 24 layers, 32 experts, top-4.
 			Quote: the MoE weights, "90+% of the total parameter count", are quantized to MXFP4, "4.25 bits per parameter", which "enables the larger model to fit on a single 80GB GPU and the smaller model to run on systems with as little as 16GB memory".
@@ -1109,6 +1114,9 @@
 			The ~670 GB is our estimate (671·10⁹ × 1 byte); the exact size of the released files may differ. Llama 3 70B at 16 bits: our estimate, 70·10⁹ × 2 bytes.
 			The speed claim is a rule of thumb, not a measurement: generating one token needs reading all active weights from memory, so for one user the speed is roughly memory bandwidth / bytes of active weights.
 			Total parameters still set the memory, so a MoE model is cheap to run per token but not small to host.
+			Qwen3.8-27B (Alibaba, 14 Aug 2026, Apache 2.0): a dense vision-language model, 27B in the language model and 27.8B in total with the vision encoder (Hugging Face), 64 layers of Gated DeltaNet and Gated Attention in a 3:1 pattern. Its 16-bit files are 55.6 GB; the 4-bit figure is our estimate (27.8·10⁹ × 0.5 bytes).
+			Qwen3.8-Flash-Next (Alibaba, 2026, Qwen community licence): an "experimental preview of the architecture that will underpin Qwen4". "125B with 6B activated, plus 51B n-gram embedding and 4B MTP", i.e. 180B in total; 512 experts, 10 routed + 1 shared active per token.
+			The n-gram embedding is a lookup table: it costs memory but hardly any compute, and Qwen notes it is "more amenable to offloading" than MoE. Its memory figures are our estimates: 180·10⁹ × 2 bytes and × 0.5 bytes.
 			The closed frontier models don't publish parameter counts; any number you read for them is an outside estimate.
 			Mika's showcase (local models) is the practical version of this slide.
 		</aside>
@@ -1862,7 +1870,7 @@ claude mcp add --scope project zotero -- zotero-mcp
 		<h2>MCP in practice: one real tool call</h2>
 		<div class="mcp-sequence">
 			<svg viewBox="0 0 1700 742" width="100%" role="img" aria-label="Sequence diagram of one MCP tool call from Claude Code to the Inkscape server">
-			<defs><marker id="mcp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker></defs>
+			<defs><marker id="mcp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
 			<rect x="20" y="0" width="340" height="78" rx="12" fill="white" stroke="#d0653b" stroke-width="4"/>
 			<text x="190" y="34" text-anchor="middle" font-size="28" font-weight="700" font-family="Open Sans, sans-serif" fill="#222">Model</text>
 			<text x="190" y="64" text-anchor="middle" font-size="21" font-family="Open Sans, sans-serif" fill="#555">writes text only</text>
@@ -1884,32 +1892,32 @@ claude mcp add --scope project zotero -- zotero-mcp
 			<text x="14" y="282" font-size="19" font-family="Open Sans, sans-serif" fill="#3b8bd0">session start</text>
 			<rect x="4" y="296" width="1692" height="392" rx="10" fill="#3b8bd0" fill-opacity="0.05"/>
 			<text x="14" y="678" font-size="19" font-family="Open Sans, sans-serif" fill="#3b8bd0">one call: 0.53 s</text>
-			<line x1="660" y1="150" x2="1138" y2="150" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="905.0" y="142" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">start: inkscape-mcp --mode stdio</text>
-			<line x1="660" y1="194" x2="1138" y2="194" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="905.0" y="186" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">tools/list</text>
-			<line x1="1150" y1="238" x2="672" y2="238" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="905.0" y="230" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">8 tools + server instructions</text>
-			<line x1="660" y1="282" x2="202" y2="282" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="425.0" y="274" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">tool names, server instructions</text>
-			<line x1="190" y1="326" x2="648" y2="326" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="425.0" y="318" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">ToolSearch: load the schema</text>
-			<line x1="660" y1="370" x2="202" y2="370" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="425.0" y="362" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">schema of inkscape_analysis</text>
-			<line x1="190" y1="414" x2="648" y2="414" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="425.0" y="406" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">inkscape_analysis(dimensions, poster.svg)</text>
+			<line x1="660" y1="150" x2="1138" y2="150" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="142" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">start: inkscape-mcp --mode stdio</text>
+			<line x1="660" y1="194" x2="1138" y2="194" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="186" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">tools/list</text>
+			<line x1="1150" y1="238" x2="672" y2="238" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="230" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">8 tools + server instructions</text>
+			<line x1="660" y1="282" x2="202" y2="282" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="274" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">tool names, server instructions</text>
+			<line x1="190" y1="326" x2="648" y2="326" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="318" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">ToolSearch: load the schema</text>
+			<line x1="660" y1="370" x2="202" y2="370" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="362" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">schema of inkscape_analysis</text>
+			<line x1="190" y1="414" x2="648" y2="414" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="406" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">inkscape_analysis(dimensions, poster.svg)</text>
 			<rect x="550" y="434" width="220" height="34" rx="8" fill="#fff4cc" stroke="#c9a400" stroke-width="2"/>
 			<text x="660" y="458" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">permission check</text>
-			<line x1="660" y1="502" x2="1138" y2="502" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="905.0" y="494" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">tools/call, same arguments</text>
-			<line x1="1150" y1="546" x2="1508" y2="546" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="1335.0" y="538" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">inkscape --query-width</text>
-			<line x1="1520" y1="590" x2="1162" y2="590" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="1335.0" y="582" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">drawing size</text>
-			<line x1="1150" y1="634" x2="672" y2="634" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="905.0" y="626" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">{"page_width": 297, "page_height": 420, …}</text>
-			<line x1="660" y1="678" x2="202" y2="678" stroke="#333" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
-			<text x="425.0" y="670" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="#222">result into the context</text>
+			<line x1="660" y1="502" x2="1138" y2="502" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="494" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">tools/call, same arguments</text>
+			<line x1="1150" y1="546" x2="1508" y2="546" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="1335.0" y="538" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">inkscape --query-width</text>
+			<line x1="1520" y1="590" x2="1162" y2="590" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="1335.0" y="582" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">drawing size</text>
+			<line x1="1150" y1="634" x2="672" y2="634" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="905.0" y="626" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">{"page_width": 297, "page_height": 420, …}</text>
+			<line x1="660" y1="678" x2="202" y2="678" stroke="currentColor" stroke-width="2.5" marker-end="url(#mcp-arrow)"/>
+			<text x="425.0" y="670" text-anchor="middle" font-size="22" font-family="Open Sans, sans-serif" fill="currentColor">result into the context</text>
 			</svg>
 		</div>
 		<p class="small">Measured in this repository: Claude Code asks the Inkscape server for the size of the workshop poster.

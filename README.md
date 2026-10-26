@@ -179,7 +179,17 @@ You may also use an AI provider of your choice. Some notable ones include:
 - [OpenAI ChatGPT](https://chatgpt.com/pricing/)
   - Provides limited free agentic access
 
-One option is to run the AI model locally on your own computer.
+</details>
+
+<details open>
+<summary><b>Local models</b></summary>
+
+Local models are a viable option to cloud-hosted ones.
+The ones that fit on consumer hardware aren't as fast or intelligent as the cloud-hosted frontier models,
+but they are sufficient for many kinds of work.
+For instructions on how to set up local models, please see
+[Step 10: Local models](#step-10-local-models-optional).
+
 </details>
 
 ### Step 2: Open a terminal

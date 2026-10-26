@@ -117,6 +117,11 @@
 	background: var(--t-title-bar, var(--t-accent));
 }
 
+/* No bar on the centered slides (e.g. "Questions so far?"), where it would sit alone at the left edge */
+.reveal .slides section.center-slide > h2:first-child::after {
+	content: none;
+}
+
 /*********************************************
  * OTHER
  *********************************************/
