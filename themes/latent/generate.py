@@ -9,7 +9,8 @@ when printing, which makes the PDF of the slides tens of megabytes. Glows are dr
 and the fade-out is computed into the opacity of each element.
 
 - ``title.svg``: a layered neural network across the title slide, faded out behind the text.
-- ``divider.svg``: the attention weights of one token to the previous tokens, as arcs above a row of tokens.
+- ``divider.svg``: the attention weights of two tokens to the previous tokens, as arcs above a row of tokens,
+  with arrowheads pointing back to the attended tokens.
 - ``corner.svg``: a small neural network for the top-right corner of the content slides.
 
 Usage: ``python3 themes/latent/generate.py`` (only the standard library is needed)
@@ -268,9 +269,25 @@ def divider(rng: random.Random) -> str:
             x_k = centre(i)
             # Quadratic Bézier: the apex is half of the control point height above the tokens
             lift = min(0.55 * abs(x_q - x_k), 520)
+            x_c, y_c = (x_q + x_k) / 2, y_token - lift
+            stroke_width = 1 + 7 * w
+            opacity = 0.08 + 0.6 * w
+            # An arrowhead on the earlier token, along the tangent of the arc there.
+            # The arc ends at the base of the arrowhead, so that its round cap doesn't poke out of the tip.
+            length = 9 + 1.6 * stroke_width
+            dx, dy = x_k - x_c, y_token - y_c
+            norm = math.hypot(dx, dy)
+            ux, uy = dx / norm, dy / norm
+            x_b, y_b = x_k - length * ux, y_token - length * uy
+            half = 0.45 * length
             body.append(
-                f'<path d="M {x_q:.1f} {y_token:.1f} Q {(x_q + x_k) / 2:.1f} {y_token - lift:.1f} '
-                f'{x_k:.1f} {y_token:.1f}" stroke-width="{1 + 7 * w:.2f}" stroke-opacity="{0.08 + 0.6 * w:.3f}"/>'
+                f'<path d="M {x_q:.1f} {y_token:.1f} Q {x_c:.1f} {y_c:.1f} {x_b:.1f} {y_b:.1f}" '
+                f'stroke-width="{stroke_width:.2f}" stroke-opacity="{opacity:.3f}"/>'
+            )
+            body.append(
+                f'<path d="M {x_k:.1f} {y_token:.1f} L {x_b - half * uy:.1f} {y_b + half * ux:.1f} '
+                f'L {x_b + half * uy:.1f} {y_b - half * ux:.1f} z" fill="{colour}" fill-opacity="{opacity:.3f}" '
+                f'stroke="none"/>'
             )
         body.append("</g>")
 
