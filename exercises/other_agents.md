@@ -1,5 +1,5 @@
 # Extra: doing the exercises with another agent
-The exercises are written for Claude Code, the workshop's main tool. Most of them work with any coding agent, for example GitHub Copilot in VS Code (the backup option, see the [setup guide](../README.md)), OpenAI Codex or Google Antigravity. The ideas are the same everywhere; the file names and commands differ. This page says where. It was checked against each vendor's documentation on 11 October 2026; these tools change fast, so follow the links when something doesn't match.
+The exercises are written primarily for Claude Code. Most of them work with any coding agent, for example GitHub Copilot in VS Code (the backup option, see the [setup guide](../README.md)), OpenAI Codex or Google Antigravity. The ideas are the same everywhere; the file names and commands differ. This page says where. It was checked against each vendor's documentation on 11 October 2026; these tools change fast, so follow the links when something doesn't match.
 
 ## Exercise by exercise
 | Exercise | With another agent |

@@ -131,32 +131,48 @@ You can also use other tools of your choice if you prefer. These are simply the 
 
 
 ### Step 1: An account for an AI provider
+Choose an AI provider, and create an account. If you don't already have a paid subscription for one of the providers, then we recommend creating a free account with more than one provider to ensure that you don't hit the free usage limits during the workshop.
+
+Then, in the following steps of these instructions, install either the provider's own client software (aka. harness) or OpenCode, which is compatible with multiple providers. If you choose to use OpenCode, you need to create an API key for your provider, and then input that into OpenCode once you have installed it. (A password that one software uses to access another is called an API key. In this case, the API key is the password that your local AI client/harness uses to access the cloud AI provider.)
 
 <details open>
 <summary><b>Claude</b></summary>
 
-Claude Code needs a paid Claude plan: **Pro, Max or Team**. The free Claude plan doesn't include Claude Code. See [claude.com/pricing](https://claude.com/pricing). [Claude Team plan for scientists](https://support.claude.com/en/articles/16634237-claude-team-plan-for-scientists) is available for research groups. If you're a principal investigator of a research group, you can apply for it [here](https://claude.com/programs/team-plan-for-scientists).
+Claude is the provider that the workshop organizers are the most familiar with, and can therefore provide the most support for.
+
+However, the use of Claude as an AI agent, aka. Claude Code, needs a paid Claude plan: **Pro, Max or Team**. The free Claude plan doesn't include Claude Code. See [claude.com/pricing](https://claude.com/pricing). [Claude Team plan for scientists](https://support.claude.com/en/articles/16634237-claude-team-plan-for-scientists) is available for research groups. If you're a principal investigator of a research group, you can apply for it [here](https://claude.com/programs/team-plan-for-scientists).
+
+With Claude, API access (which is required for OpenCode) is not included in the usage limits of the subscription, but is paid-per-use. You can check from [Claude Console](https://platform.claude.com/settings/billing) whether your plan includes API credits.
 </details>
 
 <details open>
 <summary><b>GitHub Education</b></summary>
 
-[GitHub Education](https://github.com/education) gives verified students free access to GitHub Copilot ([Copilot Student](https://docs.github.com/en/copilot/how-tos/manage-your-account/free-access-with-copilot-student)). **Apply with your university email address well before the workshop, as the verification and the activation of the benefit can take a few days.** You'll sign in to Copilot in VS Code in [step 6](#step-6-install-the-ide-extensions). The exercises are written for Claude Code, but most of them work with Copilot too: see [doing the exercises with another agent](./exercises/other_agents.md).
+[GitHub Education](https://github.com/education) gives verified students and teachers free access to GitHub Copilot ([Copilot Student](https://docs.github.com/en/copilot/how-tos/manage-your-account/free-access-with-copilot-student), [Copilot Pro for teachers](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/enable-copilot/set-up-for-teachers-and-os-maintainers)). **Apply with your university email address well before the workshop, as the verification and the activation of the benefit can take a few days.** You'll sign in to Copilot in VS Code in [step 6](#step-6-install-the-ide-extensions). The exercises are written for Claude Code, but most of them work with Copilot too: see [doing the exercises with another agent](./exercises/other_agents.md).
+</details>
+
+<details open>
+<summary><b>OpenAI ChatGPT</b></summary>
+
+[OpenAI ChatGPT](https://chatgpt.com/pricing/) provides limited free agentic access with their [Codex](https://openai.com/codex/) desktop client. API access requires paid tokens or a subscription. You can create an API key [here](https://platform.openai.com/settings/organization/api-keys).
+</details>
+
+<details open>
+<summary><b>Google Gemini</b></summary>
+
+[Google Gemini](https://gemini.google/subscriptions/) provides limited free agentic access to [some models](https://antigravity.google/docs/models). You can create an API key [here](https://aistudio.google.com/app/api-keys).
+</details>
+
+<details open>
+<summary><b>Mistral</b></summary>
+
+[Mistral](https://mistral.ai/pricing/) is the European option. It provides limited free agentic access. You can create an API key [here](https://admin.mistral.ai/organization/api-keys).
 </details>
 
 <details open>
 <summary><b>A provider of your choice</b></summary>
 
-You may also use an AI provider of your choice. Some notable ones include:
-
-- [Google Gemini](https://gemini.google/subscriptions/)
-    - [Provides free agentic access to some models](https://antigravity.google/docs/models)
-- [Mistral](https://mistral.ai/pricing/)
-    - Provides limited free agentic access
-    - The European option
-- [OpenAI ChatGPT](https://chatgpt.com/pricing/)
-    - Provides limited free agentic access
-
+You can also use an AI provider of your choice. The list above is merely of the ones we have tried.
 </details>
 
 <details open>
@@ -165,6 +181,7 @@ You may also use an AI provider of your choice. Some notable ones include:
 Local models are a viable option to cloud-hosted ones. The ones that fit on consumer hardware aren't as fast or intelligent as the cloud-hosted frontier models, but they are sufficient for many kinds of work. For instructions on how to set up local models, please see [Step 10: Local models](#step-10-local-models-optional).
 
 </details>
+
 
 ### Step 2: Open a terminal
 A **terminal** (also called the command line or shell) is a window where you type commands instead of clicking. Type or paste a command and press Enter to run it. Commands are case-sensitive. Copy them from this page exactly, one line at a time.
@@ -309,9 +326,11 @@ See the [official quickstart](https://docs.github.com/en/copilot/get-started/qui
 <details>
 <summary><b>OpenCode Desktop</b></summary>
 
-[OpenCode](https://opencode.ai/) is an open-source AI harness that works with many model providers. **1.** Download the desktop app for your system from [opencode.ai/download](https://opencode.ai/download) and install it (`.deb` for Ubuntu and Debian, `.rpm` for Fedora). With Homebrew on macOS: `brew install --cask opencode-desktop`.
+[OpenCode](https://opencode.ai/) is an open-source AI harness that works with many model providers.
 
-**2.** Open it and connect a model provider, e.g. your GitHub Copilot account (`/connect`, then **GitHub Copilot**). See the [providers documentation](https://opencode.ai/docs/providers/). Note that a Claude subscription can't be used in OpenCode without some trickery.
+**1.** Download the desktop app for your system from [opencode.ai/download](https://opencode.ai/download) and install it (`.deb` for Ubuntu and Debian, `.rpm` for Fedora). With Homebrew on macOS: `brew install --cask opencode-desktop`.
+
+**2.** Open it and connect a model provider. In the desktop version, click ≡ at top-left corner, go to File &rarr; Settings &rarr; Providers &rarr; Show more providers, and input the API key you have generated for your provider. In command-line version, write `/connect`, and select your provider. For further information, see the [OpenCode providers documentation](https://opencode.ai/docs/providers/).
 
 **3.** Test whether the `opencode` command is now available in your terminal. If not, on Linux, you can make it available with a symbolic link by running this command:
 
@@ -319,6 +338,7 @@ See the [official quickstart](https://docs.github.com/en/copilot/get-started/qui
 ln -s /opt/OpenCode/resources/opencode-cli "${HOME}/.local/bin/opencode"
 ```
 
+On other platforms, you may have to install the `opencode` command-line harness separately.
 </details>
 
 
