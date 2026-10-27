@@ -8,8 +8,7 @@ authors:
   given-names: "Mika"
   orcid: "https://orcid.org/0000-0001-8162-7101"
 title: "Kumpula AI workshop for scientists 2026"
-# version: 1.0.0
+version: 1.0.0
 # doi: 10.1234/name.1234567
-# Todo: set the workshop date here.
-# date-released: 2026-XX-XX
+date-released: 2026-10-28
 url: "https://github.com/AgenttiX/ai-workshop"
