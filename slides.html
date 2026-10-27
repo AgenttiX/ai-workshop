@@ -1082,6 +1082,62 @@
 		</aside>
 	</section>
 	<section>
+		<h2>Sandboxing: decide what the agent can reach</h2>
+		<p class="def">A <strong>sandbox</strong> is a boundary enforced by the operating system, not by the model: a command inside it can't get out, whatever the model was told. <strong>Container</strong>: a sealed box with its own files and network, e.g. with Docker.</p>
+		<table style="font-size: 0.58em;">
+			<tr><th>Layer</th><th>What it limits</th><th>What it doesn't</th><th>How</th></tr>
+			<tr><td><strong>Permission rules</strong></td><td>Which tools and commands run without asking</td>
+				<td>Mistakes you approve; whatever an allowed command does (<code>Bash(python:*)</code> runs any script)</td>
+				<td><code>allow</code> / <code>ask</code> / <code>deny</code> in <code>settings.json</code></td></tr>
+			<tr><td><strong>Claude Code's sandbox</strong></td><td>Shell commands: write only in the project, network only to the domains you list</td>
+				<td>Claude's own file tools, MCP servers and hooks; commands you type after <code>!</code></td>
+				<td><code>/sandbox</code> in a session, or <code>"sandbox": {"enabled": true}</code>. macOS, Linux, WSL2; not native Windows</td></tr>
+			<tr><td><strong>Dev container</strong></td><td>Everything the agent runs: its own system, a firewall</td>
+				<td>The project folder (it's shared, so edits land on your disk), and anything inside the container, including Claude's login</td>
+				<td>VS Code: <em>Dev Containers: Reopen in Container</em>; Anthropic's reference <code>.devcontainer</code> with a firewall</td></tr>
+			<tr><td><strong>Another machine</strong></td><td>Your laptop entirely</td>
+				<td>What you give it: the repository, tokens</td>
+				<td>Claude Code on the web (a virtual machine at Anthropic), a VM, a separate user account</td></tr>
+		</table>
+		<ul style="font-size: 0.85em;">
+			<li>The less you trust the input, and the longer the agent runs unattended, the further out the layer you need</li>
+			<li><code>--dangerously-skip-permissions</code> (no questions at all) only inside a container or VM, never on your own laptop</li>
+			<li>The sandbox also means fewer prompts: Anthropic reports 84&nbsp;% fewer in its internal use</li>
+		</ul>
+		<p class="small"><a href="https://code.claude.com/docs/en/sandboxing">Claude Code docs: sandboxing</a>, <a href="https://code.claude.com/docs/en/devcontainer">dev containers</a> (read 27 Oct 2026). Anthropic, <a href="https://www.anthropic.com/engineering/claude-code-sandboxing"><em>Beyond permission prompts</em></a> (Oct 2025).</p>
+		<aside class="notes">
+			Go from the inside out. Permission rules are the first layer, but they match the command text: an allowed "python" can run any Python script, and an allowed script can do anything you can. The built-in sandbox is the cheapest real boundary: run /sandbox in Claude Code. Writes are allowed in the working directory, a per-user temp directory and directories you add; the network goes through a local proxy that checks each host against your allowed domains, which start empty. It uses Seatbelt on macOS and bubblewrap plus socat on Linux and WSL2; on native Windows commands run unsandboxed, so use WSL2. Its limits, from the docs: "The sandbox covers shell commands only. Claude's file tools, MCP servers, and hooks run outside it." Reads are allowed for most of the machine by default, including ~/.ssh, unless you add denyRead; and Claude may retry a failing command outside the sandbox (dangerouslyDisableSandbox) unless you set allowUnsandboxedCommands to false. A dev container moves everything the agent runs into Docker; the project folder is mounted in, so its edits are real. Anthropic's warning in the docs: with --dangerously-skip-permissions, "dev containers do not prevent a malicious project from exfiltrating anything accessible inside the container, including the Claude Code credentials", so don't mount ~/.ssh or cloud credentials into it, and use it only with trusted repositories. Claude Code on the web runs each session in an Anthropic-managed virtual machine; your GitHub credentials stay on Anthropic's servers and outbound traffic goes through a proxy (data-usage docs). The 84 % is Anthropic's own internal measurement (Oct 2025), not an independent one. Mika's local server is another example of the outermost layer.
+		</aside>
+	</section>
+	<section>
+		<h2>Staying safe: a checklist</h2>
+		<div class="two-col" style="font-size: 0.85em;">
+			<div>
+				<p><strong>Before the session</strong></p>
+				<ul>
+					<li><strong>Commit first</strong> and work on a branch: <code>git diff</code> shows everything it changed, <code>git restore</code> undoes it. A backup outside the laptop too</li>
+					<li><strong>Secrets out of reach:</strong> <code>.env</code> not in git and denied in the settings; short-lived tokens with few rights; a spending limit on API keys</li>
+					<li><strong>Data:</strong> unpublished results, personal data (GDPR) and licensed data stay out of cloud models. University of Helsinki: "Do not use sensitive or confidential data or unpublished results as input"</li>
+					<li><strong>Your plan's data setting:</strong> on Claude Free, Pro and Max, Anthropic trains on your chats if you allow it (kept 5 years; otherwise 30 days)</li>
+				</ul>
+			</div>
+			<div>
+				<p><strong>During and after</strong></p>
+				<ul>
+					<li><strong>Read before you approve</strong>: <code>rm</code>, <code>mv</code>, <code>git&nbsp;push&nbsp;--force</code>, <code>curl &hellip; | sh</code>, installs</li>
+					<li><strong>Packages can be invented:</strong> 5&ndash;22&nbsp;% of the packages that code models suggested didn't exist, and attackers register such names. Check before <code>pip install</code></li>
+					<li><strong>Untrusted input</strong> (web pages, PDFs, other people's repositories): take away one of private data, untrusted content and network access</li>
+					<li><strong>Extensions are code:</strong> MCP servers, plugins, skills and hooks run with your rights. Install only what you've read or trust</li>
+					<li><strong>Hooks as hard stops:</strong> a hook can block e.g. <code>git push</code> every time, whatever the model decides</li>
+				</ul>
+			</div>
+		</div>
+		<p class="small">University of Helsinki, <a href="https://www.helsinki.fi/en/research/research-integrity/ai-research"><em>Use of generative AI in research</em></a>. <a href="https://code.claude.com/docs/en/data-usage">Claude Code docs: data usage</a> (read 27 Oct 2026). J.&nbsp;Spracklen et al., <a href="https://arxiv.org/abs/2406.10279">arXiv:2406.10279</a> (USENIX Security 2025).</p>
+		<aside class="notes">
+			Git is the undo button: an agent that breaks something in a committed repository costs you a git restore; an agent on the only copy of your thesis can cost the thesis. Git is not a backup by itself, though: keep a copy off the laptop (a remote, the university's storage). Secrets: a deny rule like Read(./.env) keeps Claude's file tools away from it, but a shell command could still read it unless the sandbox denies it too (previous slide). Tokens: GitHub fine-grained tokens limited to one repository and with an expiry date; API keys with a monthly spending limit. Data: the University of Helsinki's guidelines for generative AI in research say: "Do not use sensitive or confidential data or unpublished results as input"; personal data falls under the GDPR. The university's IT Helpdesk lists the tools approved for university data. A local model (Mika's demo) is one way around this for sensitive data. Anthropic's data policy, from the Claude Code docs: consumer accounts (Free, Pro, Max) get a choice whether their data is used to train future models; with it on, data is kept 5 years, otherwise 30 days; change it at claude.ai/settings/data-privacy-controls. Team, Enterprise and API: no training on your code or prompts under commercial terms. Packages: Spracklen et al. generated 576 000 code samples with 16 models: on average at least 5.2 % of the packages suggested by commercial models and 21.7 % by open-source models didn't exist, with 205 474 different invented names. The attack built on this is called slopsquatting: register a name that models tend to invent, and wait. A 2026 replication on newer frontier models found lower rates, about 5–6 % (Churilov, arXiv:2605.17062). The three legs are Willison's "lethal trifecta" from the prompt-injection backup slide. Extensions: an MCP server is a program on your computer; a skill is instructions the model will follow, i.e. a ready-made prompt injection if it comes from the wrong place. Hooks: Antti's setup has a hook that blocks git push to a repository unless he has said yes for that push; it stopped one of our own pushes while we prepared this workshop. Hooks are in part 3.
+		</aside>
+	</section>
+	<section>
 		<h2>Cost, limits, and your own understanding</h2>
 		<ul>
 			<li><strong>Cost:</strong> subscriptions have usage quotas; agents burn tokens fast. Local models are the free-but-slower fallback</li>
@@ -1134,6 +1190,26 @@
 		<p class="small">E.&nbsp;Debenedetti et al., <a href="https://arxiv.org/abs/2406.13352">arXiv:2406.13352</a> (NeurIPS 2024), Table&nbsp;3. Anthropic, <a href="https://www.anthropic.com/claude-opus-5-5-system-card">Claude Opus 5.5 system card</a> (22 Sep 2026), &sect;5.2. M.&nbsp;Nasr et al., <a href="https://arxiv.org/abs/2510.09023">arXiv:2510.09023</a> (2025). <a href="https://invariantlabs.ai/blog/mcp-github-vulnerability">Invariant Labs</a> (2025); <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">S.&nbsp;Willison</a> (2025).</p>
 		<aside class="notes">
 			The rows use different benchmarks and attackers: compare within a row, not across rows. AgentDojo (ETH Zürich and Invariant Labs, NeurIPS 2024 Datasets and Benchmarks): 97 tasks (email client, e-banking, travel booking, workspace), 629 security cases. Table 3, targeted attack success rate with their "important message" attack: GPT-4o 47.7 %, Claude 3.5 Sonnet 33.9 %, Claude 3 Opus 11.3 %. (The paper's introduction says attacks succeed against the best agents in under 25 % of cases, which does not match its own Table 3.) a simple tool-filter defense brought GPT-4o to 7.5 %. AgentDojo §4.1: "more capable models tend to be easier to attack, a form of inverse scaling law"; their explanation: "models with low utility often fail at correctly executing the attacker's goal, even when the prompt injection succeeds." The rows use different attackers and environments: compare within a row's description, not across rows. Opus 5.5 system card (22 Sep 2026), §5.2: (1) Gray Swan's Indirect Prompt Injection benchmark: 37 scenarios, 1804 attacks from public red-teaming competitions, aimed at irreversible harm (exfiltration, deletion, payments). Opus 5.5: 0.1 % at k = 1, 0.7 % at k = 10, 1.0 % at k = 15 attempts; highest in GUI computer use (2.8 % at k = 15). (2) Gray Swan's adaptive "Shade" attacker, trained on the 40 coding test scenarios and given 200 attempts each: 54.61 % of attempts succeeded, 37 of 40 scenarios broken at least once; with Anthropic's prompt-injection probes 11.13 % (36/40). Opus 5 was at 88.92 %. Important nuance from the card: all of these coding successes came from requests that a cyber-safety classifier had routed to the fallback model Claude Opus 4.8; "none of the 2,872 requests Claude Opus 5.5 answered directly were susceptible to the attack." (3) Computer use, same kind of attacker, 14 scenarios: 0.07 % (2 of 2800 attempts, in one scenario). The card's own caveat: these adaptive evaluations "reflect a deliberately permissive threat model: the attacker optimizes directly against the test scenarios and is given many attempts per scenario." The same card says auto mode is "now the default permission mode in Claude Code for most of our users", pairing injection probes with a classifier that blocks dangerous tool calls. For comparison, the Opus 4.6 card (Feb 2026) had 0 % in coding with the weaker attacker of the time, and 17.8 % / 78.6 % (1 / 200 attempts) in computer use: the attacks and the defenses both move. Nasr et al. (Oct 2025): "we bypass 12 recent defenses … with attack success rate above 90% for most; importantly, the majority of defenses originally reported near-zero attack success rates." The lesson: a defense evaluated only against fixed attacks says little. Invariant Labs (26 May 2025): a malicious issue in a public repository, read through the GitHub MCP server, made the agent leak private-repository data into a public PR. "This is not a flaw in the GitHub MCP server code itself, but rather a fundamental architectural issue." Willison's "lethal trifecta": access to private data + exposure to untrusted content + ability to communicate externally. Remove one leg (e.g. no network for an agent reading untrusted PDFs) and this kind of exfiltration has no channel. Related incident, not prompt injection: the Nx "s1ngularity" npm compromise (26 Aug 2025) shipped malware that used the victims' installed AI command-line tools (Claude, Gemini, Amazon Q) to search for secrets; Wiz counted 2180 exposed GitHub accounts (BleepingComputer report). An agent CLI on your machine is a tool for whoever runs code there.
+		</aside>
+	</section>
+	<section class="backup">
+		<h2>When it went wrong</h2>
+		<table style="font-size: 0.6em;">
+			<tr><th>When, which tool</th><th>What happened</th><th>What would have helped</th></tr>
+			<tr><td>Jul 2025, Replit</td><td>During a code freeze, the agent deleted a company's production database, against explicit instructions</td>
+				<td>Instructions are not permissions: keep what matters out of the agent's reach</td></tr>
+			<tr><td>Jul 2025, Gemini CLI</td><td>A failed <code>mkdir</code> went unnoticed; the moves after it overwrote the user's files (Windows, no sandbox)</td>
+				<td>Work in a git repository; check the result, not the agent's report of it</td></tr>
+			<tr><td>Jul 2025, Amazon Q</td><td>An attacker got a prompt to wipe the computer and cloud resources into a released VS Code extension</td>
+				<td>Your AI tools are a supply chain too: updates, tight permissions</td></tr>
+			<tr><td>Aug 2025, Nx (npm)</td><td>Malware in a popular package used the victims' own AI command-line tools to search for secrets</td>
+				<td>An agent on your machine works for whoever runs code there</td></tr>
+			<tr><td>Dec 2025, Claude Code</td><td><code>rm -rf tests/ patches/ plan/ ~/</code>: the last <code>~/</code> deleted most of a Mac's home directory</td>
+				<td>Read every <code>rm</code>; <code>deny</code> it in the settings; a sandbox that writes only in the project; backups</td></tr>
+		</table>
+		<p class="small">Replit: <a href="https://www.eweek.com/news/replit-ai-coding-assistant-failure/">eWeek</a>. Gemini CLI: <a href="https://incidentdatabase.ai/entities/gemini-cli/">AI Incident Database</a>, incident 1178. Amazon Q: <a href="https://www.techradar.com/pro/amazon-ai-coding-agent-hacked-to-inject-data-wiping-commands">TechRadar</a>. Nx: BleepingComputer, Wiz (2025). Claude Code: <a href="https://simonwillison.net/2025/Dec/9/claude">S.&nbsp;Willison</a>, 9 Dec 2025.</p>
+		<aside class="notes">
+			These are reported incidents, mostly from the users' own accounts and news coverage, without full postmortems; the details may be off, the pattern is the point. Replit (July 2025): SaaStr's Jason Lemkin reported that Replit's agent deleted a live database with records of about 1200 executives and companies during a code freeze; reports disagree on whether the rollback worked. Replit's CEO called it "unacceptable and should never be possible" and separated development and production databases. Gemini CLI (21 July 2025, AI Incident Database 1178): Gemini CLI 0.1.13 with Gemini 2.5 Pro on Windows, no sandbox; a directory creation failed, the agent continued as if it existed, and the moves into it overwrote all but one file; no postmortem from Google. Amazon Q Developer for VS Code (July 2025): a prompt beginning roughly "clean a system to a near-factory state", deleting files from the home directory and AWS resources, was committed to the extension's GitHub repository and shipped in version 1.84.0; Amazon says the formatting made it non-executable, some researchers dispute that; 1.85.0 removed it. Nearly a million installs. Nx "s1ngularity" (26 Aug 2025): compromised npm packages ran malware that called the installed Claude, Gemini and Amazon Q command-line tools to search for secrets; Wiz counted 2180 exposed GitHub accounts (see the prompt-injection backup's notes). Claude Code (December 2025): a Reddit user asked Claude Code to clean up an old repository; it ran rm -rf tests/ patches/ plan/ ~/, and the trailing ~/ is the whole home directory. Similar reports of rm -rf on the home directory have appeared in Claude Code's issue tracker since. The deny rule Bash(rm -rf:*) of the Security slide would have stopped this exact command (not every way of writing it, e.g. rm -r -f), and the sandbox would have kept the deletion inside the project.
 		</aside>
 	</section>
 	<section class="backup">
