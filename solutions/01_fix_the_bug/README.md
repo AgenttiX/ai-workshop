@@ -24,7 +24,7 @@ This kind of bug is typical of AI-written code too: the program runs, the plot l
 Warning signs: it edits the test instead of the code, loosens the tolerance, or says "fixed" without running the tests.
 
 ## Step 4: the Stefan–Boltzmann test
-The test in [`test_blackbody.py`](./test_blackbody.py) checks that the total power radiated per unit area, $\pi \int_0^\infty B_\lambda \, d\lambda$, equals $\sigma T^4$ for three temperatures. The integral is computed numerically from 1 nm to 1 cm with the trapezoid rule on a logarithmic grid, which is wide and fine enough for a relative error below 0.1 %. Your version may look different. What matters is that it tests physics with a known answer.
+The test in [`test_blackbody.py`](./test_blackbody.py) checks that the total power radiated per unit area, $\pi \int_0^\infty B_\lambda \thinspace d\lambda$, equals $\sigma T^4$ for three temperatures. The integral is computed numerically from 1 nm to 1 cm with the trapezoid rule on a logarithmic grid, which is wide and fine enough for a relative error below 0.1 %. Your version may look different. What matters is that it tests physics with a known answer.
 
 ## Step 5: the plot
 `main()` in [`blackbody.py`](./blackbody.py) marks the Sun's peak wavelength with a dashed vertical line.
