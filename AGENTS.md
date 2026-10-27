@@ -5,7 +5,7 @@ This repository is for organizing an AI workshop for scientists at the Kumpula C
 
 ## Workshop description
 - Participants: BSc, MSc and PhD students and researchers of the Faculty of Science (voluntary participation)
-- When and where: Friday 30 October 2026, Physicum E207, Kumpula campus
+- When and where: Friday 30 October 2026, Chemicum A129, Kumpula campus
 - Structure: 2 h session (12:00–14:00) + 30 min coffee break + 2 h session (14:30–16:30)
 - Language: English
 - Programming language for exercises: Python 3.12 or newer

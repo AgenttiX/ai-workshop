@@ -1,7 +1,7 @@
 # Kumpula AI workshop for scientists 2026
 A hands-on workshop on how AI is actually used in research today: not chat windows, but AI agents that read your files, run your code and check their own work. Organized at the Kumpula campus of the University of Helsinki by [Antti "Hippe" Hippeläinen](https://github.com/ahippelainen) and [Mika Mäki](https://github.com/AgenttiX).
 
-- **When and where:** Friday 30 October 2026, 12:00–16:30 (coffee break 14:00–14:30), Physicum E207, Kumpula campus
+- **When and where:** Friday 30 October 2026, 12:00–16:30 (coffee break 14:00–14:30), Chemicum A129, Kumpula campus
 - **Who:** researchers and students of the Faculty of Science. No experience needed; advanced topics are included too.
 - **Programme:**
     - *12:00 Foundations:* AI in 2026, chat windows vs. AI agents, the caveats, a live demo, hands-on exercises.
