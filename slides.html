@@ -25,7 +25,7 @@
 				margin-left: 8px;
 			}
 			.slides {
-				font-size: 0.9em;
+				font-size: 1em;
 			}
 			.slides h1 {
 				font-size: 2em;
@@ -195,10 +195,17 @@
 			.reveal .slides section h2 {
 				margin-bottom: 0.7em;
 			}
-			/* Text takes the left two thirds, so that the lines stay readable.
+			/* Text takes the left four fifths, so that the lines stay readable.
 			   Tables, code, columns and diagrams keep the full width, and so does a slide with class="wide". */
 			.reveal .slides section:not(.center-slide):not(.wide) > :is(ul, ol, p, .def, .callout) {
-				max-width: 64%;
+				max-width: 82%;
+			}
+			/* Slides too full for the larger text keep the earlier size, and the title stays as large as elsewhere */
+			.reveal .slides section.dense {
+				font-size: 0.9em;
+			}
+			.reveal .slides section.dense > h2 {
+				font-size: calc(var(--r-heading2-size) / 0.9);
 			}
 			/* A box in the bottom-right corner, next to the text column, e.g. for an event */
 			.reveal .slides .corner-box {
@@ -607,7 +614,7 @@
 			This is the plot that answers "is it just hype": it's a measured trend over years. The plot is interactive: hover over a point for its values, drag to zoom, double-click to reset. The tasks are software tasks; the y-axis is the time a human expert needs, not the time the AI needs. Doubling time 129 days (95 % CI 104&ndash;158) from 2023 on, in the Time Horizon 1.1 data. Claude Opus 4.6 ~12 h; Claude Mythos Preview ~17 h but above what the task suite can reliably measure. GPT-5.6 Sol: ~11 h (95 % CI 5&ndash;40 h), but it tried to cheat on some tasks, and METR says the number isn't robust (counting the cheating as success would give &gt; 270 h). Hence the gray marker. The Navier&ndash;Stokes run can't be put on this plot: 88 h of 10 000 agents is wall-clock time, not a task length measured against humans. Update the week before the workshop: new data points to figures/time_horizon/additional_results.yaml, then python -m figures.time_horizon.time_horizon --hide-legend.
 		</aside>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>Models today</h2>
 		<ul>
 			<li><strong>Cloud frontier models:</strong>
@@ -636,7 +643,7 @@
 			<li><strong>Navier&ndash;Stokes, September 2026:</strong> ~10&nbsp;000 cooperating AI agents ran for ~88 hours and produced a 166-page proof, checked in the Lean proof assistant, that the 3D Navier&ndash;Stokes equations can blow up in finite time under a smooth, localized external force. Not yet peer-reviewed; the unforced problem remains open. <span class="small">(OpenAI, <a href="https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf"><em>Finite time blowup for Navier&ndash;Stokes</em></a>, preprint, 8 Sep 2026; <a href="https://github.com/openai/NavierStokesAndEuler">Lean code</a>)</span></li>
 			<li>The pattern in the recent results: not a person asking a chatbot, but <strong>agents</strong> running for hours or days &mdash; deriving, coding, checking, iterating</li>
 			<li>The same pattern scaled down is what you'll use today: an agent that reads your code, runs your tests and fixes its own errors</li>
-			<li>Closer to home: Claude Code ran whole particle-physics analyses on LEP and CMS open data (<a href="https://arxiv.org/abs/2603.20179">Moreno et al., 2026</a>), and Anthropic reports Claude raising the proven share of zeta zeros on the critical line from 41.6&nbsp;% to 67&nbsp;% (<a href="https://www.anthropic.com/research/riemann-zeta">Aug 2026</a>)</li>
+			<li>Closer to home: Claude Code ran whole particle-physics analyses on LEP and CMS open data (<a href="https://arxiv.org/abs/2603.20179">Moreno et al., 2026</a>)</li>
 		</ul>
 		<aside class="notes">
 			"Navier–Stokes was not proven by asking a chatbot" — this is the hook from the kickoff meeting. Facts: an unreleased internal OpenAI model, ~130 billion output tokens; press reports quote OpenAI executives on several million USD of compute. The construction is analytical (a self-similar collapsing vortex + oscillatory pulses), not a neural-network fit. It settles Fefferman's alternatives (C)/(D) of the Clay problem statement, which allow a forcing; per press reports, the Clay institute's review is ongoing and OpenAI won't claim the prize. Context: Buckmaster (NYU) and Alpöge (Anthropic), working with Claude, found forced blow-up solutions in August 2026 (the first Lean-verified on 22 Aug; manuscripts public in September, e.g. arXiv:2609.16470), and there's a priority dispute. Earlier: DeepMind et al., "Discovery of unstable singularities", arXiv:2509.14185 (numerical, 2025). Check the status again the week before the workshop.
@@ -753,7 +760,7 @@
 		<h2>Why file access and context matter</h2>
 		<div class="media">
 			<ul>
-				<li>The model knows <strong>only what's in its context window</strong> (everything it sees at once): no memory between sessions unless the harness provides it</li>
+				<li>The model knows <strong>only what's in its context window</strong>: no memory between sessions unless the harness provides it</li>
 				<li>File access means the context is filled with the <em>truth</em>: your code, your data, the actual error message</li>
 				<li>Context is finite and degrades when full: the harness (and you) decide what goes in
 					<ul>
@@ -770,7 +777,7 @@
 			</figure>
 		</div>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>The landscape</h2>
 		<table>
 			<tr><th>Harness</th><th>Provider</th><th>Where it runs</th><th>Notes</th></tr>
@@ -783,7 +790,7 @@
 			<tr><td>Chat products</td><td>Claude.ai Projects, ChatGPT</td><td>browser</td><td>Good for text; no file access to your machine</td></tr>
 		</table>
 		<p class="callout">
-			Cloud sandboxes exist (e.g. Claude Code on the web, Codex cloud), but a harness on <strong>your own machine</strong>, with your data and your tools, is more capable. That's what we use.
+			Cloud sandboxes exist (Claude Code on the web, Codex cloud), but a harness on <strong>your own machine</strong>, with your data and your tools, is more capable.
 		</p>
 		<aside class="notes">
 			Mention the cloud options first, then say local is better — as agreed in the meeting. Why Claude Code for the exercises: best agentic results in our experience, VS Code integration, the Team plan for scientists, and the concepts transfer to the others.
@@ -843,7 +850,7 @@
 			Each line is the best score of any model released up to that date, as collected by Epoch AI; hover for the model. The year in the legend is when the benchmark came out; some lines start earlier because older models were evaluated afterwards. Settings differ between entries (reasoning effort, tools, sometimes the developer's own report), so read the lines as trends, not exact rankings. MMLU (Hendrycks et al. 2020, arXiv:2009.03300): "57 tasks including elementary mathematics, US history, computer science, law", multiple choice; ~88 % by late 2024, after which Epoch's sources stopped reporting it. Saturated. GPQA (Rein et al., Nov 2023): 448 "Google-proof" questions in biology, physics and chemistry; PhD experts 65 % (74 % excluding mistakes they themselves spotted), skilled non-experts with web access 34 %, GPT-4 39 %. The Diamond subset (198 questions) keeps only questions that both expert validators answered correctly (or where the second one made a clear mistake) and most non-experts got wrong, so expert accuracy on Diamond is high by construction; the 65 % on the slide is the abstract's number for the whole set. Best on Diamond now ~96 % (GPT-6 Astra, Sep 2026). SWE-bench Verified (Aug 2024): 500 real GitHub issues in Python repositories, checked by people. Epoch's own runs stop at 83 % (Claude Opus 4.7, Apr 2026). OpenAI's Feb 2026 post (reported by Decrypt, 24 Feb 2026; the OpenAI page was not readable for us): of 138 tasks its model kept failing, 59.4 % had flawed tests; GPT-5.2, Claude Opus 4.5 and Gemini 3 Flash could reproduce the reference fixes from memory. They moved to SWE-bench Pro. FrontierMath tiers 1–3 (Epoch AI, 2024; the line uses Epoch's revised v2 problem set of June 2026, on which they re-ran older models): best 94 % (GPT-6 Astra; GPT-6.1 Sol in late September in the raw data). Tier 4 is close to saturated too in Epoch's data (GPT-6.1 Sol 100 %, GPT-6 Astra 97.6 %); only the new "Erdős" set is still hard: Astra solved 2 of 68 per Epoch's benchmark page. The lines show the best score so far, so they stay flat after the last measurement. Humanity's Last Exam (Jan 2025): 2500 questions from ~1000 experts, made so that the then-frontier models failed them. 55 % for GPT-6 Astra (source of that number: as listed by Epoch, from the Scale AI leaderboard or the developer; settings unknown). HLE quality: FutureHouse (Jul 2025) found "29 ± 3.7%" of text-only chemistry and biology answers conflicting with the literature; the HLE team's own review (Sep 2025) found ~18 % of a bio/chem subset problematic. CritPt (Sep 2025): 71 research-level challenges written by 50+ physicists from their own unpublished research, with machine-checkable answers. In the paper, GPT-5 (high) scored 5.7 % without tools, 10.6 % with code and 12.6 % with code and web search. The CritPt line is from the Artificial Analysis leaderboard via Epoch, which gives GPT-5 high 12.6 %, exactly the paper's code-and-web number, so the plotted line is very likely tool-augmented (our inference from the match). Message: benchmark numbers are useful for trends, not as proof that a model can do your research. Test it on your own problems.
 		</aside>
 	</section>
-	<section class="backup">
+	<section class="backup dense">
 		<h2>Tokens: what the model actually reads</h2>
 		<p class="def">A <strong>tokenizer</strong> cuts text into pieces from a fixed <strong>vocabulary</strong> (GPT-4o: 200&nbsp;000 pieces, learned from frequent byte sequences) and replaces each piece by its number.</p>
 		<table style="font-size: 0.75em;">
@@ -862,7 +869,7 @@
 			&blank; marks a space: the space belongs to the following word, so " strawberry" and "strawberry" are different tokens. The table was made by running byte-pair encoding with the o200k_base vocabulary (the GPT-4o tokenizer, downloaded from openaipublic.blob.core.windows.net, SHA-256 matching tiktoken's) with our own 30-line script; it reproduces tiktoken's "hello" = 24912, " world" = 2375. Claude and Gemini use their own tokenizers, which are not all public, so the split differs per model; the point is the same. The vocabulary size: o200k_base has 199 998 ordinary tokens, Llama 3 has 128 000. "About 4 characters per token" is the Llama 3 measurement (3.94 on English data); OpenAI's API docs give the same rule of thumb, "1 token is approximately 4 characters or 0.75 words for English text" (developers.openai.com/api/docs/concepts, read 2026-10-07). Petrov et al. compared the token counts of the same text translated into many languages, with the tokenizers of 2023 (we read the abstract only); "up to 15 times" is their extreme case, not Finnish. We did not measure Finnish versus English text with o200k; we expect a factor above 1 (an unmeasured guess), which is why no number for Finnish is on the slide. Letter counting: Fu et al. (Dec 2024) tested several models; errors correlate with how many times a letter repeats, and the authors conclude that the models recognise the letters but fail at counting them ("capable of recognizing the letters but not counting them"). So "tokenization explains it" is the folk explanation, and the evidence suggests it is only part of it. Another example (Kalai et al., arXiv:2509.04664): "How many Ds are in DEEPSEEK? If you know, just say the number" got "2" or "3" from DeepSeek-V3 in ten trials (May 2025); the answer is 1. The long word is "lentokonesuihkuturbiinimoottoriapumekaanikkoaliupseerioppilas", aircraft jet-turbine-engine auxiliary-mechanic NCO student; 23 tokens for 61 letters, against about 15 tokens for 61 characters of typical English with Llama 3's tokenizer (3.94 characters per token; a different tokenizer from the one above). Claude 4.7 and later use a tokenizer that produces ~30 % more tokens for the same text (Claude pricing page).
 		</aside>
 	</section>
-	<section class="backup">
+	<section class="backup dense">
 		<h2>Inside the model: attention and the next token</h2>
 		<p class="def"><strong>Transformer</strong>: the network design of current LLMs. Each token becomes a vector (its <em>embedding</em>); tens to ~100 stacked layers update the vectors. <strong>Self-attention</strong> maps each vector to a query \(q\), a key \(k\) and a value \(v\).</p>
 		\[ \mathrm{Attention}(Q,K,V)=\mathrm{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V, \qquad p(\text{next}=i)=\frac{e^{z_i/T}}{\sum_j e^{z_j/T}} \]
@@ -876,7 +883,7 @@
 			This is the whole forward pass, minus the feed-forward (MLP) part of each layer, which holds most of the parameters. \(Q, K, V\) are the matrices of the queries, keys and values of all tokens; \(d_k\) is their length (128 in Llama 3). The \(\sqrt{d_k}\): Vaswani et al. "suspect that for large values of \(d_k\), the dot products grow large in magnitude, pushing the softmax into regions where it has extremely small gradients". "Earlier tokens": in a generating model, a mask hides the later tokens, so the model can't peek at the answer during training. Many heads run in parallel (Llama 3 70B: 64 query heads), each free to learn a different kind of "what to look at". "~100 layers": Llama 3 has 32 (8B), 80 (70B) and 126 (405B) layers. The closed frontier models don't publish their architecture. Sampling: in practice T is combined with cutting off the unlikely tail (top-p or "nucleus" sampling, Holtzman et al., ICLR 2020, arXiv:1904.09751). Likely question: "so it's just autocomplete?" The training objective is next-token prediction, yes; post-training (next backup slide) and tools are what make it an assistant and an agent. Whether "just predicting the next token" limits what it can do is an open debate; the measured abilities on the task-horizon plot are the evidence we can point to.
 		</aside>
 	</section>
-	<section class="backup">
+	<section class="backup dense">
 		<h2>Why long context is expensive</h2>
 		<p class="def">The <strong>KV cache</strong> holds the keys and values of all earlier tokens in the GPU's memory, so that they aren't recomputed for every new token.</p>
 		\[ \frac{\text{KV memory}}{\text{token}} = 2 \times n_\text{layers} \times n_\text{KV heads} \times d_\text{head} \times 2\,\text{B} \overset{\text{Llama 3 70B}}{=} 2\times 80\times 8\times 128\times 2\,\text{B} = 320\,\text{KiB} \]
@@ -993,23 +1000,6 @@
 			The JSON is abridged (no model name, max_tokens or messages array in step 1) and the comments are not valid JSON; the field names and structure follow the Claude API docs. Docs: "Claude responds with stop_reason: "tool_use" and one or more tool_use blocks. Your code executes the operation and sends back a tool_result." Client tools run in your application; server tools (web search, web fetch, code execution) run on Anthropic's side. "Your code" is the harness: Claude Code, Codex and Copilot implement this kind of loop; the permission prompt you see in Claude Code sits between step 2 and step 3. Other providers' APIs follow the same pattern under the name "function calling" (the Claude docs use both names; we didn't compare the other APIs' field names). Token cost from the pricing page: any request with tools carries a hidden tool-use system prompt (286 tokens on Opus 5.5) plus the tool names, descriptions and schemas; e.g. the computer-use toolset adds about 4500 input tokens, the browser toolset about 6600. Presumably one reason why Claude Code now loads MCP tool definitions on demand ("deferred by default", cost docs). Step 3 is why a long log or a big file read is expensive: its whole text becomes part of the conversation, and is re-sent (from the cache) with every later request. See the "one session, measured" backup. Likely question: "Can the model run code itself?" Not on your machine: it can only ask, and whatever runs there runs with the harness's permissions; hence the security slide. (The provider's server tools, e.g. Anthropic's code execution tool, run in the provider's sandbox.)
 		</aside>
 	</section>
-	<section class="backup">
-		<h2>A big context window is not a big memory</h2>
-		<p class="def"><strong>Context rot</strong>: as the number of tokens in the context grows, the model's accuracy and recall of what is in it degrade. Most current Claude models accept 1M tokens per request (Haiku 4.5: 200k): very roughly 600&ndash;750k words, depending on the tokenizer.</p>
-		<table style="font-size: 0.72em;">
-			<tr><th>Study</th><th>Finding</th></tr>
-			<tr><td>RULER, 2024: 17 models</td><td>Of the models that claim &ge; 32k tokens, only half perform satisfactorily at 32k</td></tr>
-			<tr><td>Chroma, Jul 2025: 18 models (GPT-4.1, Claude 4, Gemini 2.5, &hellip;)</td><td>Performance "grows increasingly unreliable as input length grows", even on simple tasks; worse with similar-looking distractors</td></tr>
-			<tr><td>Epoch AI, Jun 2025: two long-context benchmarks</td><td>The input length at which the best models still reach 80&nbsp;% accuracy grew &gt; 250&times; in nine months</td></tr>
-		</table>
-		<ul>
-			<li>It improves fast, but the advice stands: keep the context relevant. Harnesses <em>compact</em> (summarize) the history, clear old tool output, and hand reading to subagents</li>
-		</ul>
-		<p class="small">C.-P.&nbsp;Hsieh et al., <a href="https://arxiv.org/abs/2404.06654">arXiv:2404.06654</a>. K.&nbsp;Hong, A.&nbsp;Troynikov, J.&nbsp;Huber, <a href="https://www.trychroma.com/research/context-rot"><em>Context rot</em></a> (Chroma, 2025). G.&nbsp;Burnham, T.&nbsp;Adamczewski, <a href="https://epoch.ai/data-insights/context-windows">Epoch AI</a> (2025). Claude docs, <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows"><em>Context windows</em></a>, read 7 Oct 2026.</p>
-		<aside class="notes">
-			The main slide's "lost in the middle" figure (Liu et al.) is the classic version: position matters. This backup adds: length matters, even when the answer is easy to find. Definition from the Claude docs (Oct 2026): "As token count grows, accuracy and recall degrade, a phenomenon known as context rot. This makes curating what's in context just as important as how much space is available." 1M tokens for Fable 5.1, Opus 5.5, Sonnet 5 / 5.5 and others, billed at standard price; ~750k words with the 0.75 words/token rule of thumb (our conversion). RULER (Hsieh et al., Apr 2024): synthetic tasks beyond needle-in-a-haystack; "only half of them can maintain satisfactory performance at the length of 32K" among models claiming 32K or more. Chroma (Jul 2025): controlled experiments varying only the input length: needle–question similarity, distractors, a repeated-words copying task, LongMemEval conversations. "Models do not use their context uniformly." Epoch AI data insight (25 Jun 2025): context windows of the longest models grew ~30× per year since mid-2023; the "80 % accuracy length" on two long-context benchmarks rose more than 250× in 9 months (the benchmarks: Fiction.LiveBench and MRCR). Their data stop in mid-2025; we haven't found a comparable 2026 measurement for the current models, so don't claim the problem is solved. Our measured session (the cost backup) reached 523k tokens of 1M without compaction; that's within the window, but deep into the region where these studies see degradation for older models. What Claude Code does: auto-compaction near the limit, /compact with instructions, /clear for a fresh start; the API offers server-side compaction and clearing old tool results (context editing).
-		</aside>
-	</section>
 </section>
 
 <!-- ============================================================ PART 1B: CAVEATS -->
@@ -1037,7 +1027,7 @@
 			The blackbody exercise later is a hallucination-shaped bug: an exponent of 4 instead of 5. A test catches it in a second.
 		</aside>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>Security and privacy</h2>
 		<div class="two-col">
 			<ul>
@@ -1081,7 +1071,7 @@
 			The example: allow = runs without asking, ask = always asks, deny = never runs. Deny wins over ask and ask over allow. Read(./.env) keeps the agent's file tools away from the API keys in a .env file. The sandbox runs the agent's shell commands in an isolated environment (bubblewrap on Linux, Seatbelt on macOS; not native Windows): they can write only in the project directory and reach only the domains in allowedDomains, here the Python package index and GitHub. A new domain prompts you. Note that the Read and Edit deny rules apply to Claude's own file tools; the sandbox is what restricts the shell commands too.
 		</aside>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>Sandboxing: decide what the agent can reach</h2>
 		<p class="def">A <strong>sandbox</strong> is a boundary enforced by the operating system, not by the model: a command inside it can't get out, whatever the model was told. <strong>Container</strong>: a sealed box with its own files and network, e.g. with Docker.</p>
 		<table style="font-size: 0.58em;">
@@ -1283,12 +1273,6 @@
 				</ul>
 			</div>
 			<div>
-				<p>In VS Code / VSCodium:</p>
-				<ol>
-					<li><em>File &rarr; Open Folder&hellip;</em> &rarr; <code>ai-workshop</code></li>
-					<li>Extensions (<code>Ctrl+Shift+X</code>): <em>Python</em> and <em>Claude Code</em></li>
-					<li><code>Ctrl+Shift+P</code> &rarr; <em>Python: Select Interpreter</em> &rarr; <code>venv</code></li>
-				</ol>
 				<p class="callout"><strong>Vim or Emacs?</strong> Keep them. You can run an AI harness in a terminal next to any editor, and both can be extended with all this: language servers for the code understanding (e.g. <code>eglot</code>, <code>nvim-lspconfig</code>) and Claude Code plugins (e.g. <code>claude-code.el</code>, <code>claudecode.nvim</code>).</p>
 			</div>
 		</div>
@@ -1426,7 +1410,6 @@
 				<h3>3. The permissions</h3>
 				<ul>
 					<li>Starts in auto mode; Shift+Tab (terminal) or the mode indicator (VS Code) switches. Allow-list the safe commands in <code>.claude/settings.json</code></li>
-					<li>Auto mode: a safety classifier approves actions for you. Convenient, but only when working with trusted inputs</li>
 				</ul>
 				<h3>4. The verification</h3>
 				<ul>
@@ -1476,7 +1459,7 @@
 				<li><code>"Bash(pytest:*)"</code> = may run any command starting with <code>pytest</code> without asking you</li>
 				<li><code>.claude/settings.json</code> in the repository (shared with the group) or <code>~/.claude/settings.json</code> (personal)</li>
 				<li>Safe to allow: tests, linters, read-only git. Keep the prompt for: installs, network, deletion, <code>git push</code></li>
-				<li>Modes: auto, the default since v2.1.283 (a classifier approves most actions; trusted inputs only, preferably sandboxed) &rarr; Manual (asks first) &rarr; accept edits &rarr; plan (reads and proposes only). <code>"defaultMode": "default"</code> in the settings starts in Manual</li>
+				<li>Modes: auto (the default) &rarr; Manual &rarr; accept edits &rarr; plan (reads and proposes only). <code>"defaultMode": "default"</code> in the settings starts in Manual</li>
 			</ul>
 			<pre><code class="language-json" data-trim>
 {
@@ -1573,7 +1556,6 @@ description: The plotting conventions of the
 				<ul>
 					<li>The <em>frontmatter</em> (the header between the <code>---</code> lines) names the skill; its <code>description</code> decides <em>when</em> it fires. The body says <em>what</em> to do</li>
 					<li>Unlike <code>AGENTS.md</code>, it costs context only when used</li>
-					<li>Can ship scripts and reference files alongside</li>
 					<li>Invoke explicitly with <code>/plot-style</code></li>
 					<li>Examples from claude-loadout: <code>physics-review</code> (an independent recomputation), <code>lit-sweep</code>, <code>research-autonomous</code></li>
 				</ul>
@@ -1581,9 +1563,9 @@ description: The plotting conventions of the
 			</div>
 		</div>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>Hooks: deterministic, the model can't skip them</h2>
-		<p class="def">A <strong>hook</strong> is a command that the harness runs automatically at a fixed moment, e.g. after every file edit. It runs every time; the model can't forget or skip it.</p>
+		<p class="def">A <strong>hook</strong> is a command that the harness runs automatically at a fixed moment, e.g. after every file edit.</p>
 		<div class="two-col">
 			<div>
 				<pre><code class="language-python" data-trim>
@@ -1603,9 +1585,9 @@ description: The plotting conventions of the
 			<div>
 				<ul>
 					<li>Events: <code>PreToolUse</code>, <code>PostToolUse</code>, <code>Stop</code>, <code>SessionStart</code>, notifications, &hellip;</li>
-					<li>The hook gets the tool call as JSON (structured text) on its standard input; exit code 2 sends its error output back to the agent</li>
+					<li>The hook gets the tool call as JSON on its standard input; exit code 2 sends its error output back to the agent</li>
 					<li>Use for: formatting, linting, secret scanning, notifications, "don't stop until the tests pass"</li>
-					<li>Antti's research setups use hooks for what must never be skipped: pushes only where approved, Mathematica only with a kill timeout, LaTeX checked after every edit (showcase)</li>
+					<li>Antti's setups: pushes only where approved, Mathematica only with a kill timeout, LaTeX checked after every edit</li>
 				</ul>
 				<p class="callout">Demo: ask for sloppy code with unused imports &rarr; the hook complains &rarr; the agent fixes it unasked.</p>
 			</div>
@@ -1614,7 +1596,7 @@ description: The plotting conventions of the
 			The code is a simplified version of exercises/06_hook/hooks/ruff_on_edit.py. Written in Python so that it works on Windows too.
 		</aside>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>Subagents: specialists with their own context</h2>
 		<p class="def">A <strong>subagent</strong> is a separate agent with its own context window and instructions. The main agent hands it a task and gets back a short report.</p>
 		<div class="two-col">
@@ -1658,16 +1640,14 @@ claude mcp add arxiv -- uvx arxiv-mcp-server
 # zotero-mcp must be installed first: see exercise 08
 claude mcp add --scope project zotero -- zotero-mcp
 				</code></pre>
-				<p class="small">These are terminal commands. A project-scope server is written to <code>.mcp.json</code>, which the VS Code extension reads too.</p>
+				<p class="small">These are terminal commands. A project-scope server is written to <code>.mcp.json</code>, shared with the group; the VS Code extension reads it too.</p>
 				<p>Then, in a session:</p>
 				<p><em>"Find the abstract of arXiv:1706.03762 and summarize the transformer architecture."</em></p>
 			</div>
 			<div>
 				<ul>
-					<li>Model Context Protocol: a server exposes tools; the agent decides when to call them</li>
 					<li>Servers exist for arXiv, Zotero, GitHub, databases, Slack, lab instruments, your wiki, &hellip;</li>
 					<li><strong>Trust:</strong> the server runs on your machine and its output enters the context. Prompt injection through a paper abstract is a real thing</li>
-					<li><code>--scope project</code> writes <code>.mcp.json</code>: the whole group shares it</li>
 				</ul>
 			</div>
 		</div>
@@ -1731,18 +1711,18 @@ claude mcp add --scope project zotero -- zotero-mcp
 			Walk through it top to bottom. Host and client: Claude Code is the host, and it keeps one client connection per server. Server: inkscape-mcp is an ordinary Python program (~12,700 lines), installed as one entry in ~/.claude.json: the command that starts it. Transport: stdio, i.e. Claude Code starts the process and they exchange JSON-RPC messages through its stdin and stdout. Remote servers (claude.ai connectors) use HTTP instead. Discovery: tools/list returns 8 tools, each with a name, a description and a JSON Schema of its arguments; the server's instructions go into the system prompt. Deferred loading: only the tool names are in the context at first; the model loads the full schema with ToolSearch when it needs the tool. The call: the model writes the request, Claude Code checks the permissions and sends tools/call. The server reads the page size from the SVG's viewBox and runs "inkscape --query-width" and "--query-height" as subprocesses for the drawing size. 0.53 s in total. The result goes into the context as text, like the output of any other tool. That's also why prompt injection through MCP output works.
 		</aside>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>Beyond the editor: worktrees, headless, CI, plugins</h2>
 		<ul>
 			<li><strong>Git worktree:</strong> a second working copy of the same repository in another folder, on its own branch. Several sessions can then work in parallel without stepping on each other (<code>claude --worktree</code>)</li>
 			<li><strong>Headless:</strong> Claude Code without the interactive window, from a script or a scheduled job: <code>claude -p "summarize the failing tests"</code></li>
-			<li><strong>CI</strong> (continuous integration): a server that runs your checks on every change you push. Claude Code can run there too, e.g. as a GitHub Action that reviews pull requests</li>
+			<li><strong>CI:</strong> Claude Code can run there too, e.g. as a GitHub Action that reviews pull requests</li>
 			<li><strong>Plugin:</strong> skills, agents and hooks bundled so that you install them in one go. A whole configuration can also live in a plain repository with an install script, e.g. <a href="https://github.com/ahippelainen/claude-loadout">claude-loadout</a></li>
 			<li><strong><code>/insights</code></strong> (terminal version): what have I been asking for repeatedly? &rarr; turn it into a skill</li>
 		</ul>
 		<p class="callout">No need to write everything yourself; start from a community loadout and edit it to your taste.</p>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>Make it yours: every upgrade is within reach</h2>
 		<div class="two-col">
 			<div>
@@ -1763,7 +1743,7 @@ claude mcp add --scope project zotero -- zotero-mcp
 				</ul>
 			</div>
 		</div>
-		<p class="callout">If you have an idea how something could be better, every upgrade is within reach: describe it, and have Claude build the tool.</p>
+		<p class="callout">An idea how something could be better? Describe it, and have Claude build the tool.</p>
 		<aside class="notes">
 			Both are my own ideas, built with Claude. The style repository has only a few samples so far (mostly blog writing); the mechanism matters more than the size. The notebook converter is the from-wl mode of the mathematica-notebook skill in claude-loadout.
 		</aside>
@@ -1930,32 +1910,6 @@ jobs:
 		</p>
 		<p class="callout">And list the commands in <code>AGENTS.md</code>, so the agent knows to run them.</p>
 	</section>
-	<section>
-		<h2>Hands-on 2: choose your path</h2>
-		<div class="two-col">
-			<div>
-				<ul>
-					<li><strong>06</strong> A hook: <code>ruff</code> on every edit</li>
-					<li><strong>07</strong> A subagent: the physics reviewer</li>
-					<li><strong>08</strong> MCP: arXiv or Zotero (optional)</li>
-					<li><strong>09</strong> Local models (optional, advanced)</li>
-				</ul>
-			</div>
-			<div>
-				<p><strong>10: your own research project.</strong> The checklist:</p>
-				<ol>
-					<li>Git first; raw data read-only, outside the repo</li>
-					<li><code>/init</code> + what it computes, your conventions, what it must never touch</li>
-					<li>Ask before writing data, installing, or cluster jobs</li>
-					<li>Checks from physics: limits, conservation laws, published values</li>
-					<li>Reproducible: pinned environment, seeds, one script per figure</li>
-					<li>First research task: reproduce a figure, check a derivation</li>
-				</ol>
-				<p class="callout">This is what we're here for. Ask us to look at your project with you. And ask AI to explain anything you don't understand.</p>
-			</div>
-		</div>
-		<aside class="notes">About 25 minutes, or whatever is left before the final words.</aside>
-	</section>
 </section>
 
 <!-- ============================================================ SHOWCASES -->
@@ -2028,20 +1982,6 @@ jobs:
 		</div>
 		<aside class="notes">
 			Measured 2026-10-11 from the repository: program started 5 Oct, checkpoint 9 Oct; main result VER-0008 (tier V2, conditional, computer-assisted): every Weil class is algebraic on every non-split Weil sixfold over Q(sqrt(-3)) with Hermitian determinant -2. Paper: papers/weil-nonsplit (rev 7, 68 pp). Companion 177 pp; lecture notes 806 pp (frozen). Ledgers 29 / 8 / 8 / 3. Files to show, in order: STATE.md, roadmap/roadmap.svg, ledgers/VERIFIED.md (VER-0008), papers/weil-nonsplit/main.pdf (abstract), lecture_notes/main.pdf, the latest digests/ file.
-		</aside>
-	</section>
-	<section>
-		<h2>Physics, live: <em>RhoTowers</em>, steered by voice</h2>
-		<ul>
-			<li><strong>Reproduce</strong> the &rho;-meson towers of the hard-wall (Erlich, Katz, Son, Stephanov 2005) and soft-wall (Karch, Katz, Son, Stephanov 2006) models, deriving the mode equation ourselves</li>
-			<li><strong>Update the potential:</strong> a general dilaton, e.g. &phi;(z) = (cz)<sup>p</sup>; the soft wall is p = 2</li>
-			<li><strong>Fit</strong> all models to the measured &rho; masses; compare the Regge trajectories (m<sup>2</sup> against n)</li>
-			<li><strong>Compute</strong> more, e.g. the &rho; decay constants: which model holds up?</li>
-			<li><strong>Check:</strong> an independent recomputation in a fresh context, and a derivation note</li>
-		</ul>
-		<p class="callout">Watch where I step in: the conventions, the next step, and what gets promoted out of <code>LLM/</code>.</p>
-		<aside class="notes">
-			Dictated live, with my own twist. References: EKSS hep-ph/0501128; KKSS hep-ph/0602229; power-law dilaton arXiv:1701.01398.
 		</aside>
 	</section>
 	<section>
@@ -2121,7 +2061,7 @@ opencode
 			alt="Structure of the agx-ai local AI server" style="display: block; margin: 0 auto; height: 1040px;">
 		<aside class="notes">The structure of the local AI server. Source: github.com/AgenttiX/agx-ai</aside>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>AI optimizing AI: our vLLM patches</h2>
 		<table>
 			<tr><th>Problem found by the agent</th><th>Fix</th><th>Result</th></tr>
@@ -2211,7 +2151,7 @@ opencode
 			None of these attacked real devices outside the test setups.
 		</aside>
 	</section>
-	<section>
+	<section class="dense">
 		<h2>Vulnerabilities found by AI</h2>
 		<p><strong>Remote code execution (RCE):</strong> a bug that lets an attacker run their own code on your server over the network.</p>
 		<div class="two-col">
@@ -2281,6 +2221,32 @@ opencode
 			The prompt of commit 5f00b9a ("Add initial version of the workshop"), one-shotted with Claude Fable 5.1 on 18 Sep 2026.
 		</aside>
 	</section>
+	<section class="dense">
+		<h2>Hands-on 2: choose your path</h2>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li><strong>06</strong> A hook: <code>ruff</code> on every edit</li>
+					<li><strong>07</strong> A subagent: the physics reviewer</li>
+					<li><strong>08</strong> MCP: arXiv or Zotero (optional)</li>
+					<li><strong>09</strong> Local models (optional, advanced)</li>
+				</ul>
+			</div>
+			<div>
+				<p><strong>10: your own research project.</strong> The checklist:</p>
+				<ol>
+					<li>Git first; raw data read-only, outside the repo</li>
+					<li><code>/init</code> + what it computes, your conventions, what it must never touch</li>
+					<li>Ask before writing data, installing, or cluster jobs</li>
+					<li>Checks from physics: limits, conservation laws, published values</li>
+					<li>Reproducible: pinned environment, seeds, one script per figure</li>
+					<li>First research task: reproduce a figure, check a derivation</li>
+				</ol>
+				<p class="callout">This is what we're here for. Ask us to look at your project with you. And ask AI to explain anything you don't understand.</p>
+			</div>
+		</div>
+		<aside class="notes">About 25 minutes, or whatever is left before the final words.</aside>
+	</section>
 </section>
 
 <!-- ============================================================ WRAP-UP -->
@@ -2296,7 +2262,14 @@ opencode
 	</section>
 	<section class="center-slide">
 		<h1>Thank you!</h1>
-		<p>Feedback: <span class="todo">QR code / link to the form</span></p>
+		<div class="two-col" style="grid-template-columns: auto auto; justify-content: center; align-items: center; gap: 4em;">
+			<figure>
+				<!-- A backing in the slide colour keeps the background graphic out of the quiet zone of the code -->
+				<img class="bare" src="figures/qrcode_feedback.png" alt="QR code of the feedback form" style="height: 360px; padding: 30px; background: var(--r-background-color); image-rendering: pixelated;">
+				<figcaption style="font-size: 1em; color: inherit; text-align: center;">Feedback, please</figcaption>
+			</figure>
+			<img class="bare" src="figures/meme.png" alt="Meme: &quot;Why are runes always ancient, why'd we stop making new runes?&quot; &quot;Brother, we made runes so complex that sand started thinking&quot;, over a rune stone and a chip micrograph" style="height: 520px; margin: 0;">
+		</div>
 		<p>Stay and argue with us about the future of science.</p>
 	</section>
 </section>
