@@ -26,3 +26,5 @@ poster/build/
 poster/.venv/
 # Downloaded data, e.g. figures/epoch_open_closed_gap/benchmark_data.zip
 *.zip
+# Model files downloaded in exercise 09
+exercises/09_local_models/models/

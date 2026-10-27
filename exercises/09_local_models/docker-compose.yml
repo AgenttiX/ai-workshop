@@ -1,5 +1,4 @@
-# llama.cpp server with a GGUF model. Edit the model path and, for GPU acceleration,
-# pick the image variant for your hardware (see https://github.com/ggml-org/llama.cpp/blob/master/docs/docker.md).
+# llama.cpp server with a GGUF model from models/model.gguf. For GPU acceleration, pick the image variant for your hardware (see https://github.com/ggml-org/llama.cpp/blob/master/docs/docker.md).
 # Mika's ROCm variant for the Radeon VII is in https://github.com/AgenttiX/agx-ai/blob/main/llama-cpp/docker-compose.yml
 services:
   llama-cpp:
@@ -9,10 +8,16 @@ services:
       "--model", "/models/model.gguf",
       "--gpu-layers", "all",
       "--host", "0.0.0.0",
-      "--port", "8080"
+      "--port", "8080",
+      # Without this, the server reserves memory for the model's maximum context (262 144 tokens for Qwen3.5).
+      "--ctx-size", "32768",
+      # Qwen3.5's own template stops with an error when Claude Code sends a second system message.
+      "--chat-template-file", "/templates/qwen35-claude-code.jinja",
+      # Thinking tokens are written at the same slow speed as the answer.
+      "--chat-template-kwargs", "{\"enable_thinking\": false}"
     ]
     ports:
       - "8080:8080"
     volumes:
-      - ~/.lmstudio/models:/models
-    restart: unless-stopped
+      - ./models:/models
+      - ./qwen35-claude-code.jinja:/templates/qwen35-claude-code.jinja:ro
