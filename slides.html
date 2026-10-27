@@ -1991,6 +1991,47 @@ opencode
 		<p class="small">Configs in <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a>; instructions in exercise 09.</p>
 	</section>
 	<section>
+		<h2>Under the hood: Claude Code with a local model</h2>
+		<img src="figures/local_models/local_models.svg" alt="Flow chart: you type a task; Claude Code sends the whole conversation as a request to a model server on the same computer (LM Studio on port 1234 or llama-server on port 8080), where a chat template turns the messages into one string, the llama.cpp engine computes the reply from the weights and KV cache in RAM, and the reply comes back as text or a tool call, which Claude Code runs on your files and sends the result back. Optional: LiteLLM translates between API formats. In the cloud, the same request goes to api.anthropic.com." style="display: block; margin: 0 auto; height: 820px;">
+		<aside class="notes">
+			Go through it from left to right. You type a task. Claude Code is the harness: it builds one request out of its instructions (the system prompt), the list of tools it offers the model, your messages and all earlier tool results, and sends the whole thing every turn. Our measurement with Claude Code 2.1.285 and a fresh configuration in this repository: 22 147 tokens before the model has written anything. The request goes over HTTP, the same protocol a browser uses, but to localhost, i.e. this computer. The model server is either LM Studio (a desktop app) or llama-server (the server of llama.cpp, here in Docker); both have llama.cpp inside. The chat template is a small program stored in the model file: the model knows no messages, only one long string with markers such as &lt;|im_start|&gt;user. The inference engine reads the whole prompt in one go (prefill) and then writes the reply one token at a time (decode); each new token needs essentially all the weights read from RAM again. The weights are the model: 9 billion numbers, about 5 bits each on average in this 4-bit file, 5.7 GB. The KV cache is the model's working memory of the context, 32 KiB per token for this model. The reply is either text or a tool call: structured text that asks for, e.g., Bash with pytest. Claude Code runs it on your files (with your permission), appends the output to the conversation and sends everything again. That loop is the agent. LiteLLM is a translator between Anthropic's API format, which Claude Code speaks, and OpenAI's, which most servers speak; LM Studio (0.4.1 and later) and llama-server speak Anthropic's too, so the exercise doesn't need it. In the cloud nothing changes except the address: ANTHROPIC_BASE_URL points Claude Code at the local server instead of api.anthropic.com.
+		</aside>
+	</section>
+	<section>
+		<h2>Why local models misbehave, in numbers</h2>
+		<p class="def"><strong>Prefill</strong>: the model reads the whole prompt. <strong>Decode</strong>: it writes the reply, one token at a time. <strong>KV cache</strong>: the stored keys and values of all earlier tokens, the model's memory of the context.</p>
+		<table style="font-size: 0.58em;">
+			<tr><th>Symptom</th><th>Cause</th><th>The numbers, on our laptop</th><th>Fix</th></tr>
+			<tr><td>Minutes before the first word</td><td>Prefill of Claude Code's long prompt</td>
+				<td>\(t = N_\text{prompt}/r_\text{prefill} = 22\,147 / (24\,\text{s}^{-1}) \approx 15\) min</td>
+				<td>A GPU, or a short prompt: <code>claude --bare</code> sends ~1&nbsp;300 tokens (29&nbsp;s)</td></tr>
+			<tr><td>A few words per second</td><td>Each token reads all the weights from RAM</td>
+				<td>\(r_\text{decode} \approx B/M\): \(r \times M\) = 32, 25, 27&nbsp;GB/s for the 2B, 4B, 9B models: the same \(B\)</td>
+				<td>A smaller or MoE model, or GPU memory (RTX&nbsp;3090: 936&nbsp;GB/s)</td></tr>
+			<tr><td>Out of memory at start</td><td>KV cache sized for the model's maximum context</td>
+				<td>\(2 \times 8 \times 4 \times 256 \times 2\,\text{B} = 32\,\text{KiB}\) per token &times; 262&nbsp;144 = 8&nbsp;GiB</td>
+				<td>Set the context length: 64k tokens &rarr; 2&nbsp;GiB</td></tr>
+			<tr><td>Error 500: "System message must be at the beginning"</td><td>A strict chat template; Claude Code sends a second system message</td>
+				<td>No math: a rule in the template's code</td>
+				<td>Replace that one line of the template</td></tr>
+			<tr><td>A long silence, then an empty answer</td><td>Thinking tokens are decoded too</td>
+				<td>\(300 / (6\,\text{s}^{-1}) \approx 50\)&nbsp;s, measured 53&nbsp;s, with no text left</td>
+				<td>Turn thinking off</td></tr>
+			<tr><td>Loses its way, claims success</td><td>Errors compound over many tool calls</td>
+				<td>Toy model: all \(n\) steps right with probability \(p^n\); \(0.95^{20} \approx 0.36\)</td>
+				<td>One task, the exact test command; check the result yourself</td></tr>
+		</table>
+		<p class="small">Our measurements, 27 Oct 2026: Qwen3.5 2B/4B/9B (Q4_K_M) in llama.cpp and LM Studio on a laptop CPU (Intel i5-1145G7, 16&nbsp;GB), Claude Code 2.1.285. Architecture: <a href="https://huggingface.co/Qwen/Qwen3.5-9B">Qwen3.5-9B</a> model card. Template issue: <a href="https://github.com/ggml-org/llama.cpp/issues/27367">llama.cpp #27367</a>.</p>
+		<aside class="notes">
+			Row 1: we measured 24 tokens/s of prefill on Claude Code's real 22k-token prompt with the 9B model on the CPU (12 288 tokens in 503 s; we stopped at 55 %, so the 15 min is extrapolated). Shorter prompts went faster, 54&ndash;80 tokens/s for 750&ndash;1 300 tokens: attention work grows with the length. Compute estimate: about 2 &times; parameters FLOP per token, 2 &times; 9&middot;10&#8313; &times; 22 000 &asymp; 4&middot;10&sup1;&#8308; FLOP, so the laptop ran at about 0.4 TFLOP/s. For a GPU, see Mika's measurement on the vLLM slide: 582 tokens/s on a 96k prompt. <code>--bare</code> leaves out most tools, CLAUDE.md and the memory; the answer came after 29 s.
+			Row 2: B is the memory bandwidth, M the bytes read per token, roughly the size of the model file (a MoE model reads only its active experts, which is why it decodes faster than its size suggests). Measured decode speeds: 24.7, 9.0 and 4.7 tokens/s for files of 1.28, 2.74 and 5.68 GB. Their products agree to within about 25 %, as the formula says; the file size slightly overestimates M, since the input embedding table is looked up, not read whole. RTX 3090: 936 GB/s, Radeon VII: 1024 GB/s, about 35 times the laptop: our estimate from the formula, if the model fits in the GPU's memory.
+			Row 3: the formula of the KV-cache backup slide. Qwen3.5-9B is a hybrid: only 8 of its 32 layers use full attention (the others are Gated DeltaNet layers with a fixed-size state), with 4 key/value heads of size 256, stored in 16 bits. llama-server reserves the model's maximum context, 262 144 tokens, unless told otherwise. Measured: the container used 11.0 GiB at 262k and 4.1 GiB at 32k, i.e. 31.6 KiB per extra token, against the predicted 32 KiB. LM Studio has the opposite default: 8 192 tokens, and Claude Code refuses to start with "Prompt is too long".
+			Row 4: Claude Code 2.1.285 puts a system message (today's date) after your first message; the Qwen3.5 template stops with an exception if a system message is not first. It happened in LM Studio and llama-server alike, and the template of LM Studio's own lmstudio-community upload has the same rule. The fix renders that message as a system turn instead.
+			Row 5: Qwen3.5 thinks before answering by default. At 6 tokens/s, 300 tokens of thinking took 53 s, and the 300-token limit of our test request ran out before any answer.
+			Row 6: a toy model with independent errors, not a measurement: real errors are correlated, and an agent can notice and fix its own mistakes. The point is that a small difference in reliability per step becomes a large one over a long task.
+		</aside>
+	</section>
+	<section>
 		<h2>How far behind are the open-weight models?</h2>
 		<iframe data-src="figures/epoch_open_closed_gap/epoch_open_closed_gap.html" title="Epoch Capabilities Index of the best closed-weight model, the best open-weight model and the best open-weight model that fits on a 32 GB GPU, January 2023 to September 2026: each line trails the one above it"
 			style="display: block; margin: 0 auto; width: 1500px; height: 760px; border: 0;"></iframe>
