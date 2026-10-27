@@ -1039,13 +1039,47 @@
 	</section>
 	<section>
 		<h2>Security and privacy</h2>
-		<ul>
-			<li>An agent with shell access is <strong>a user on your machine</strong>. It can delete, upload, install.</li>
-			<li>Permission modes: Claude Code now starts in <em>auto mode</em> (a safety classifier approves actions); <em>Manual</em> asks before everything; an allow-list lets the safe commands through. Know what each one allows. Auto mode only for work on trusted material, preferably sandboxed</li>
-			<li>Never paste secrets, tokens or personal data into a prompt (unless the model is fully on your own machine). Check your provider's data policy and the university's guidelines</li>
-			<li><strong>Prompt injection:</strong> a web page, a PDF, a paper abstract can contain instructions for the agent. Untrusted input + write access = a very bad day</li>
-			<li>Version control (git) everything. An agent on the only copy of critical files (e.g. your thesis) is a gamble</li>
-		</ul>
+		<div class="two-col">
+			<ul>
+				<li>An agent with shell access is <strong>a user on your machine</strong>: it can delete, upload, install</li>
+				<li>Permission modes: <em>auto</em>, the default (a safety classifier approves actions), only for trusted material, preferably sandboxed; <em>Manual</em> asks before everything. Rules in <code>settings.json</code> &rarr;</li>
+				<li>No secrets, tokens or personal data in prompts (unless the model runs on your machine). Check your provider's data policy and the university's guidelines</li>
+				<li><strong>Prompt injection:</strong> a web page, a PDF, a paper abstract can contain instructions for the agent. Untrusted input + write access = a very bad day</li>
+				<li>Version control (git) everything. An agent on the only copy of your thesis is a gamble</li>
+			</ul>
+			<pre><code class="language-json" data-trim style="max-height: none;">
+{
+  "permissions": {
+    "allow": [
+      "Bash(pytest:*)",
+      "Bash(git diff:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(pip install:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(~/.ssh/**)",
+      "Bash(rm -rf:*)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "network": {
+      "allowedDomains": [
+        "pypi.org",
+        "files.pythonhosted.org",
+        "github.com"
+      ]
+    }
+  }
+}
+			</code></pre>
+		</div>
+		<aside class="notes">
+			The example: allow = runs without asking, ask = always asks, deny = never runs. Deny wins over ask and ask over allow. Read(./.env) keeps the agent's file tools away from the API keys in a .env file. The sandbox runs the agent's shell commands in an isolated environment (bubblewrap on Linux, Seatbelt on macOS; not native Windows): they can write only in the project directory and reach only the domains in allowedDomains, here the Python package index and GitHub. A new domain prompts you. Note that the Read and Edit deny rules apply to Claude's own file tools; the sandbox is what restricts the shell commands too.
+		</aside>
 	</section>
 	<section>
 		<h2>Cost, limits, and your own understanding</h2>
