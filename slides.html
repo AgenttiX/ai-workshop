@@ -200,6 +200,19 @@
 			.reveal .slides section:not(.center-slide):not(.wide) > :is(ul, ol, p, .def, .callout) {
 				max-width: 64%;
 			}
+			/* A box in the bottom-right corner, next to the text column, e.g. for an event */
+			.reveal .slides .corner-box {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				width: 30%;
+				padding: 0.4em 0.7em;
+				font-size: 0.6em;
+				line-height: 1.35;
+			}
+			.reveal .slides .corner-box p {
+				margin: 0.2em 0;
+			}
 			/* A slide with a figure: <div class="media"><div>text</div><figure>…</figure></div> */
 			.reveal .media {
 				display: grid;
@@ -2053,7 +2066,7 @@ opencode
 		<div class="two-col">
 			<div>
 				<ul>
-					<li><strong>PHP2Shell</strong> (Oct 2026): memory bugs in every PHP since 5.4, which runs <b>~70 % of websites.</b>
+					<li><strong>PHP2Shell</strong> (Oct 2026): memory bugs in every PHP since 5.4, which runs <b>~70 % of websites</b>.
 						Found with GPT-5.6 Sol and Gemini 4 Argon. Attacks began before the patch</li>
 					<li><strong>Brotli</strong> (Oct 2026): a bug in a decompressor bundled in <strong>Node.js</strong>, Bun, Python and Envoy.
 						Found by OpenAI's agents while red-teaming</li>
@@ -2071,6 +2084,11 @@ opencode
 		<p class="small">Anthropic, <a href="https://www.anthropic.com/research/zero-days"><em>Evaluating and mitigating the growing risk of LLM-discovered 0-days</em></a> (Feb 2026);
 			Wiz, <a href="https://www.wiz.io/blog/php2shell-php-rce"><em>PHP2Shell</em></a> (CVE-2026-109618, CVE-2026-109619) and
 			<a href="https://www.wiz.io/blog/cve-2026-111497-brotli-rce-node-js"><em>Broccoli2shell</em></a> (CVE-2026-111497), Oct 2026</p>
+		<div class="def corner-box">
+			<p><strong>Event:</strong> <a href="https://luma.com/7qjkikxw"><em>What Just Happened in AI, and What Can We Do?</em></a></p>
+			<p>Thu 5 Nov, 17:30, Aalto Design Factory, Espoo. Talks on the technical and policy sides of AI safety, then discussions.
+				Free, with food; registration required. By Tutke (Center for Safe AI Development)</p>
+		</div>
 		<aside class="notes">
 			The same capability helps both sides: the defenders found these first, but the time from disclosure to exploitation is now days or less.
 			Opus 4.6 (Feb 2026): over 500 validated high-severity vulnerabilities in open-source projects such as GhostScript, OpenSC and CGIF,
