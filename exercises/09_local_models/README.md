@@ -161,6 +161,9 @@ Stop the server, which keeps the model in memory:
 - **LM Studio:** `lms server stop` and `lms unload --all`, or quit the app.
 - **llama-server:** `docker compose down` in this folder.
 
+## Stuck? Ask the cloud model
+Open another terminal without the variables, start `claude` in the workshop folder and give it the exact error message, e.g. *"In exercise 09, Claude Code says `API Error: 500 … System message must be at the beginning`. What does it mean and how do I fix it?"* It can run the checks of the solution, read the server's log and look up the documentation for you.
+
 ## If something goes wrong
 | Symptom | Likely cause | What to do |
 |---|---|---|
