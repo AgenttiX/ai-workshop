@@ -1958,6 +1958,139 @@ opencode
 		<aside class="notes">The structure of the local AI server. Source: github.com/AgenttiX/agx-ai</aside>
 	</section>
 	<section>
+		<h2>AI optimizing AI: our vLLM patches</h2>
+		<table>
+			<tr><th>Problem found by the agent</th><th>Fix</th><th>Result</th></tr>
+			<tr><td>Speculative decoding (a small draft head guesses tokens ahead) slowed down with long contexts</td>
+				<td>Use the split-context attention kernel for its batches too</td><td>23.7 &rarr; 64.0 tokens/s at 32k tokens of context</td></tr>
+			<tr><td>Long prompts slow on RTX 30xx GPUs</td><td>Kernel block sizes tuned for this GPU generation</td><td>395 &rarr; 582 tokens/s for a 96k prompt</td></tr>
+			<tr><td>Mixture-of-experts layers computed on the CPU in FP32</td><td>A new int8 kernel with AVX2 vector instructions</td><td>2.3&times; per CPU core; RAM bandwidth is the limit</td></tr>
+			<tr><td>No FP8 support on older GPUs</td><td>Convert FP8 to FP16 with bit operations, exactly</td><td>2.8&times; the context on an 8 GB GPU (with a smaller output layer)</td></tr>
+			<tr><td>Saved conversations never reloaded from RAM</td><td>Fix an off-by-one-chunk bug in the cache lookup</td><td>29 s &rarr; 2.2 s to resume a 27k-token conversation</td></tr>
+			<tr><td>Model did not start on a Radeon VII (2.4 GB of wasted scratch memory)</td><td>Split the largest matrices into chunks</td><td>Starts; the other layers keep their speed</td></tr>
+		</table>
+		<p class="callout">All written by Claude Opus 5.5 in Claude Code, each measured and checked for answer quality.
+			The measurements also caught the failures: the first FP8 version was 25&times; slower.</p>
+		<p class="small">Patches and measurements: <a href="https://github.com/AgenttiX/agx-ai">github.com/AgenttiX/agx-ai</a> (October 2026)</p>
+		<aside class="notes">
+			vLLM is an inference engine: the software that runs a model on a GPU (the backend on the local-models slide).
+			The patches are vllm/vllm.patch, vllm-radeon-vii/vllm-gfx906.patch and vllm-rtx3090-flash-next/cpu-moe.patch.
+			They were developed in this repository, not taken from other projects
+			(the HyperQwen and pth-flash-attn parts of agx-ai are imported and are not on this slide).
+			The human part: choosing what to optimize, the hardware and the measurement rules. The agent profiled, wrote the kernels,
+			ran the benchmarks and documented the failed attempts too.
+			Row 1: Qwen3.8-27B with MTP (multi-token prediction) on an RTX 3090 with an int8 KV cache. Without the patch, the verification batches of the
+			speculative decoding ran one program per KV head over the whole context. 58.6 &rarr; 83.5 t/s at 6.4k tokens.
+			The long-context retrieval answers (88 questions at 17k and 61k tokens) were identical to the unpatched version.
+			Row 2: on sm_86 (Ampere), head size 256: 64 query rows per block and a KV tile of 16 instead of 16 and 32. Tested block sizes 16&ndash;128.
+			Row 3: Qwen3.8-Flash-Next with its cold experts on a Threadripper 3970X: each token's activations quantized to int8 in groups of 32,
+			summed exactly in int32 with vpmaddubsw/vpmaddwd. 70.5 &rarr; 47.9 ms per decode step with 8 threads.
+			Relative error of an expert's output ~1 %, not measurable in the quality test.
+			On the 8 GB RTX 3070, the whole configuration around it gave 24.6 instead of 15.4 t/s in chat.
+			Row 4: Triton has no FP8 e4m3 type before sm_89. The sign, exponent and mantissa bits shifted into their FP16 positions give the value times 2^-8,
+			so multiplying by 256 restores it, subnormals included. 15.9 ms per layer for a 2048-token chunk (BF16 cache: 14.6 ms);
+			the first version with int32 operations took 363 ms. Context 20480 &rarr; 57344 tokens, together with an int4 lm_head.
+			Row 5: Gemma 4 with MTP and native CPU KV offloading: the drafter's KV group drops one trailing chunk, but the sliding-window groups stored
+			only the window ending one chunk later, so no window was ever complete and nothing was loaded. Same greedy answer after the fix.
+			Row 6: the exllama GPTQ GEMM allocated a K &times; N fp16 scratch buffer on every call, 2.4 GiB for Qwen's lm_head, so the model ran out of memory at startup.
+			A first version that chunked every matrix above 64 MiB dropped generation from 43.5 to 26.1 t/s;
+			the final one chunks only the lm_heads, to the size of the largest buffer another layer needs anyway.
+			Other patches of the same kind: exact-size pinned host memory (PyTorch rounds up to the next power of two: a 47.6 GiB table took 64 GiB),
+			and image and video input with the vision tower on the CPU.
+		</aside>
+	</section>
+	<section>
+		<h2>The flip side: models that copy themselves</h2>
+		<p><strong>Self-replication:</strong> an agent copies its model to another machine, starts it there, and the copy does the same.
+			A model that fits on a gaming GPU can also run on hardware that nobody is watching.</p>
+		<div class="two-col">
+			<div>
+				<p><strong>Anthropic (Oct 2026), lab only:</strong> small open-weight models on smart TVs and other Internet of Things (IoT) devices</p>
+				<ul>
+					<li>A 9B model got inference (running a model) working on 8 of 9 hardware types</li>
+					<li>Gemma 4 26B-A4B on 15 Android TV boxes (~$55 each): 0.39 tokens/s</li>
+					<li>GLM-5.2 spread over a test network by itself: 8/8 nodes in 4 of 5 trials</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+					<li><strong>Earlier:</strong> copies on one server (Pan et al. 2024); most RepliBench tasks (UK AISI 2025);
+						a worm (self-spreading malware) running on stolen compute (Guan et al. 2026)</li>
+					<li><strong>Why it matters:</strong> no provider to cut it off; slow (days per copy) but hard to stop</li>
+					<li><strong>Defence:</strong> no default passwords, updates, network monitoring</li>
+				</ul>
+			</div>
+		</div>
+		<p class="small">W. Zhou &amp; D. Freeman, <a href="https://www.anthropic.com/research/self-replicating-ai"><em>AI models may be capable of self-replicating without access to a datacenter</em></a> (Anthropic, Oct 2026);
+			X. Pan et al., <a href="https://arxiv.org/abs/2412.12140">arXiv:2412.12140</a>;
+			S. Black et al. (RepliBench), <a href="https://arxiv.org/abs/2504.18565">arXiv:2504.18565</a>;
+			J. Guan et al., <a href="https://arxiv.org/abs/2606.03811">arXiv:2606.03811</a></p>
+		<aside class="notes">
+			Everything that makes local models attractive (they run anywhere, nobody can switch them off) also makes them a security risk.
+			Anthropic's Frontier Red Team split replication into four steps: find devices on the network, get in and deliver the payload,
+			set up inference, spread further. They studied mainly the inference setup, on unfamiliar hardware: Jetson Nanos, Macs, RTX 4090s, smart TVs.
+			The break-in step was simplified: the test devices had an open Android debug port (ADB) with no authentication.
+			Their harness restarts the agent with a fresh context that inherits the notes of the previous attempt;
+			with the notes, the success rate of Qwen3.5-9B rose from 45 % in the first generation to 61&ndash;84 % later.
+			Advice from a frontier model (Opus 4.8) did not help the small models significantly.
+			A 9B replication takes over 1&ndash;2 days, so the spread would be slow but persistent.
+			If small models improve at their historical rate of the Epoch Capabilities Index, they reach GLM-5.2's level by the end of 2026.
+			Scale estimate: on a botnet (a network of hijacked devices) of 2 million devices, the size of the Kimwolf botnet, about 133 000 replicas,
+			but at most about 40 H100s worth of inference in total. The network signature is multi-gigabyte transfers between devices,
+			which internet service providers can detect.
+			Pan et al. (Fudan, Dec 2024): Llama 3.1 70B and Qwen 2.5 72B in an agent scaffold made a working copy of themselves on the same machine
+			in 50 % and 90 % of trials, when told to. Their "red line" framing is stronger than the evidence; treat it as a capability demo.
+			RepliBench (UK AI Security Institute, Apr 2025): 86 tasks on obtaining compute, exfiltrating weights, replicating and persisting.
+			Claude 3.7 Sonnet passed most task families; the models failed at know-your-customer checks and robust persistent deployments.
+			Guan et al. (Toronto, Jun 2026): a worm that runs open-weight models on the compromised Linux, Windows and IoT machines
+			and plans a tailored attack for each target. Service refusals and rate limits of the commercial providers don't apply to it.
+			None of these attacked real devices outside the test setups.
+		</aside>
+	</section>
+	<section>
+		<h2>Vulnerabilities found by AI</h2>
+		<p><strong>Remote code execution (RCE):</strong> a bug that lets an attacker run their own code on your server over the network.</p>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li><strong>PHP2Shell</strong> (Oct 2026): memory bugs in every PHP since 5.4, which runs <b>~70 % of websites.</b>
+						Found with GPT-5.6 Sol and Gemini 4 Argon. Attacks began before the patch</li>
+					<li><strong>Brotli</strong> (Oct 2026): a bug in a decompressor bundled in <strong>Node.js</strong>, Bun, Python and Envoy.
+						Found by OpenAI's agents while red-teaming</li>
+				</ul>
+			</div>
+			<div>
+				<ul>
+					<li>Claude Opus 4.6: 500+ high-severity bugs in well-tested open-source code (Feb 2026)</li>
+					<li>Claude Mythos Preview: thousands, in every major OS and browser (Apr 2026)</li>
+				</ul>
+			</div>
+		</div>
+		<p class="callout">For self-replication: the break-in was the step the Anthropic experiment simplified away.
+			An agent that finds its own holes needs no known weakness &mdash; every unpatched server is a possible host.</p>
+		<p class="small">Anthropic, <a href="https://www.anthropic.com/research/zero-days"><em>Evaluating and mitigating the growing risk of LLM-discovered 0-days</em></a> (Feb 2026);
+			Wiz, <a href="https://www.wiz.io/blog/php2shell-php-rce"><em>PHP2Shell</em></a> (CVE-2026-109618, CVE-2026-109619) and
+			<a href="https://www.wiz.io/blog/cve-2026-111497-brotli-rce-node-js"><em>Broccoli2shell</em></a> (CVE-2026-111497), Oct 2026</p>
+		<aside class="notes">
+			The same capability helps both sides: the defenders found these first, but the time from disclosure to exploitation is now days or less.
+			Opus 4.6 (Feb 2026): over 500 validated high-severity vulnerabilities in open-source projects such as GhostScript, OpenSC and CGIF,
+			without special tooling, in code that had had millions of CPU hours of fuzzing. Some bugs were decades old.
+			Mythos Preview (Apr 2026) was not released publicly; Anthropic gave access to selected partners in Project Glasswing.
+			PHP2Shell: use-after-free bugs in PHP 5.4&ndash;8.5, giving RCE on WordPress, Drupal and Joomla without logging in.
+			Found in August 2026 by Wiz Research and independently by Ryan Austin (Calif) with GPT-5.6 Sol.
+			The affected code had been known as a problem area for years but was considered too hard to exploit; the frontier models lowered that barrier.
+			Every PHP version since 5.4 (2012) is affected by at least one of the bugs. Reported to PHP on 24 Aug; the news leaked on 20 Oct;
+			patches and disclosure on 21 Oct. Amazon saw exploitation attempts from 17 Oct, four days before the disclosure.
+			Brotli: an out-of-bounds write in the decoder, triggered by specially crafted compressed data. Reported by Khai Tran and Sylvie Mayer of OpenAI Codex Security, found during a red-teaming exercise of OpenAI's own research environment,
+			announced on 23&ndash;24 Oct. CVSS 9.8. The root cause had been fixed in the Brotli source in February without anyone knowing it was a security bug,
+			so the fix had not reached the software that bundles Brotli. Fixed in Brotli 1.0.10, 1.1.1 and 1.2.1 and Node.js 22.23.4, 24.22.1 and 26.12.1.
+			Link to the previous slide: Anthropic's experiment used devices with an open, unauthenticated Android debug port,
+			and Guan et al.'s worm used known vulnerabilities of corporate networks. An agent that finds new holes on each target
+			would not be stopped by patching one of them.
+			Practical message: update your software, including the PHP and Node.js on your own servers and research group web pages.
+		</aside>
+	</section>
+	<section>
 		<h2>This workshop</h2>
 			<div class="prompt-cc">
 				<div class="cc-header">
