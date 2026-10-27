@@ -1,4 +1,4 @@
-# Exercise 09: Local models (15 min, optional, advanced)
+# Exercise 09: Local models (30 min, optional, advanced)
 The harness is separate from the model. Claude Code can talk to any server that speaks the Anthropic Messages API, and two programs that run open-weight models on your own computer do: [LM Studio](https://lmstudio.ai/) (a desktop app) and llama-server of [llama.cpp](https://github.com/ggml-org/llama.cpp) (a command-line server, here run in Docker).
 
 Why: privacy (the data never leaves the machine), no rate limits, offline use, cost. What you give up: capability and speed. A model that fits on a laptop is roughly where the cloud models were 1–2 years ago, and on a laptop without a dedicated GPU it's slow.
@@ -56,11 +56,11 @@ lms ls
 `lms ls` lists the models on your computer. The name in the first column is the one you use below. (You can also download models in the app: the magnifying glass on the left.)
 
 ### A2. Fix the chat template
-The chat template of Qwen3.5 stops with the error `System message must be at the beginning`, because Claude Code sends a second system message later in the conversation. Change one line:
+The chat template of Qwen3.5 stops with the error `System message must be at the beginning`, because Claude Code sends a second system message later in the conversation. Change one line, **in the settings of the model you will load in A3**: each model has its own template, so fixing another one (e.g. the 2B when you load the 4B) changes nothing.
 
-1. In LM Studio, click **My Models** (the folder icon on the left) and then the **gear icon** next to the model.
-2. Find **Prompt Template**. It shows the template as text (Jinja).
-3. Find this line:
+1. In LM Studio, click **Library**, and under my models click the **gear icon** next to the model you will load (e.g. `qwen3.5-4b`).
+2. Go to the subsection **Load** and at the middle of the Advanced section find **Chat Template**. It shows the template as text (Jinja).
+3. Find this line around halfway through the Chat Template:
 
    ```jinja
    {{- raise_exception('System message must be at the beginning.') }}
@@ -73,11 +73,12 @@ The chat template of Qwen3.5 stops with the error `System message must be at the
    ```
 
    The model now reads the second system message as one, instead of stopping.
+4. Save. The template is read when the model is loaded, so if the model is already loaded, unload it (`lms unload --all`) and load it again in A3.
 
-The fixed template is also in this folder: [`qwen35-claude-code.jinja`](qwen35-claude-code.jinja).
+The fixed template is also in this folder: [`qwen35-claude-code.jinja`](qwen35-claude-code.jinja), which you should be able to copy directly into the template.
 
 ### A3. Load the model and start the server
-LM Studio's default context length (8 192 tokens) is too small for Claude Code. Load the model with 32 768 tokens and start the server (replace `qwen3.5-4b` with the name from `lms ls`):
+LM Studio's default context length (8 192 tokens) is too small for Claude Code. Load the model with for example 32768 tokens and start the server (replace `qwen3.5-4b` with the name from `lms ls`):
 
 ```bash
 lms load qwen3.5-4b -c 32768
