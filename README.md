@@ -16,7 +16,7 @@ A hands-on workshop on how AI is actually used in research today: not chat windo
 ---
 
 ## Set up your laptop before the workshop
-Please do this at home **before** the workshop. It takes 30–60 minutes, most of it waiting for downloads. Every step is explained, so you don't need any previous experience. **If you get stuck, see [Troubleshooting](#troubleshooting), or paste the error message into any AI chatbot and ask what it means. That's a skill we'll be using a lot.** You can also email us.
+Please do this at home **before** the workshop. It takes 30–60 minutes, most of it waiting for downloads. Every step is explained, so you don't need any previous experience. **If you get stuck, see [Troubleshooting](#troubleshooting), or paste the error message into any AI chatbot and ask what it means. That's a skill we'll be using a lot.** You can also email us. **It's important that you download the software beforehand, as Wi-Fi will be congested during the workshop due to the number of participants.**
 
 The instructions are written for **Linux**, **Windows** and **macOS**. Follow the parts for your system. Steps 1–9 take you from nothing to a working setup; step 10 (local models) is optional.
 
@@ -25,7 +25,7 @@ If you know how to install programs on your system, this is all you need, instal
 
 **1.** **Python 3.12 or newer** and **Git**. Git is also needed for installing one of the Python packages.
 
-**2.** **VS Code** with the **Claude Code** extension, signed in with a paid Claude plan ([step 1](#step-1-an-account-for-an-ai-provider)).
+**2.** **VS Code** with the **Claude Code** extension, signed in with a paid Claude plan ([step 1](#step-1-an-account-for-an-ai-provider)). Or alternatively, an IDE, AI harness and AI provider of your choice, including the free options.
 
 **3.** This repository and its Python packages. In a terminal, run:
 
@@ -142,7 +142,7 @@ Claude is the provider that the workshop organizers are the most familiar with, 
 
 However, the use of Claude as an AI agent, aka. Claude Code, needs a paid Claude plan: **Pro, Max or Team**. The free Claude plan doesn't include Claude Code. See [claude.com/pricing](https://claude.com/pricing). [Claude Team plan for scientists](https://support.claude.com/en/articles/16634237-claude-team-plan-for-scientists) is available for research groups. If you're a principal investigator of a research group, you can apply for it [here](https://claude.com/programs/team-plan-for-scientists).
 
-With Claude, API access (which is required for OpenCode) is not included in the usage limits of the subscription, but is paid-per-use. You can check from [Claude Console](https://platform.claude.com/settings/billing) whether your plan includes API credits.
+With Claude, API access (which is required for using a third-party harness such as OpenCode) is not included in the usage limits of the subscription, but is paid-per-use. You can check from [Claude Console](https://platform.claude.com/settings/billing) whether your plan includes API credits.
 </details>
 
 <details open>
@@ -160,13 +160,13 @@ With Claude, API access (which is required for OpenCode) is not included in the 
 <details open>
 <summary><b>Google Gemini</b></summary>
 
-[Google Gemini](https://gemini.google/subscriptions/) provides limited free agentic access to [some models](https://antigravity.google/docs/models). You can create an API key [here](https://aistudio.google.com/app/api-keys).
+[Google Gemini](https://gemini.google/subscriptions/) provides limited free agentic access to [some models](https://antigravity.google/docs/models). It can be used with Google's own Antigravity IDE, Antigravity CLI or editor plugins (including VS Code), all of which are available [here](https://antigravity.google/docs/ide/extensions/vscode). You can create an API key [here](https://aistudio.google.com/app/api-keys).
 </details>
 
 <details open>
 <summary><b>Mistral</b></summary>
 
-[Mistral](https://mistral.ai/pricing/) is the European option. It provides limited free agentic access. You can create an API key [here](https://admin.mistral.ai/organization/api-keys).
+[Mistral](https://mistral.ai/pricing/) is the European option. It provides limited free agentic access. You can download their Vibe CLI and VS Code extension [here](https://chat.mistral.ai/code/extensions). You can create an API key [here](https://admin.mistral.ai/organization/api-keys).
 </details>
 
 <details open>
@@ -324,7 +324,13 @@ See the [official quickstart](https://docs.github.com/en/copilot/get-started/qui
 </details>
 
 <details>
-<summary><b>OpenCode Desktop</b></summary>
+<summary><b>ChatGPT Codex</b></summary>
+
+OpenAI's ChatGPT Codex is available for download [here](https://chatgpt.com/codex/).
+</details>
+
+<details>
+<summary><b>OpenCode Desktop: for both cloud & local models</b></summary>
 
 [OpenCode](https://opencode.ai/) is an open-source AI harness that works with many model providers.
 
@@ -339,6 +345,19 @@ ln -s /opt/OpenCode/resources/opencode-cli "${HOME}/.local/bin/opencode"
 ```
 
 On other platforms, you may have to install the `opencode` command-line harness separately.
+</details>
+
+<details>
+<summary><b>LM Studio & Bionic: local models</b></summary>
+
+Download and run the LM Studio installer [here](https://lmstudio.ai/download).
+On Ubuntu and Cubbli, you can run the .deb installer with:
+```bash
+sudo apt install ./LM-Studio*.deb
+```
+LM Studio is compatible with both their own Bionic harness and OpenCode. If you choose to use Bionic, download it from the same downloads page as LM Studio.
+
+You will also need to download an LLM model. For this, see [step 10](#step-10-local-models-optional).
 </details>
 
 
@@ -366,9 +385,27 @@ Check with `copilot --version`. Start it with `copilot`; on the first start, log
 </details>
 
 <details>
-<summary><b>OpenCode</b></summary>
+<summary><b>ChatGPT Codex</b></summary>
 
-OpenCode Desktop (instructions above) already includes the command-line version, at least on Linux.
+- Linux and macOS: `curl -fsSL https://chatgpt.com/codex/install.sh | sh`
+- macOS with Homebrew: `brew install --cask codex`
+- Windows: `powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"`
+Official documentation is available [here](https://learn.chatgpt.com/docs/codex/cli).
+</details>
+
+<details>
+<summary><b>Mistral Vibe CLI</b></summary>
+
+- Linux and macOS: `curl -LsSf https://mistral.ai/vibe/install.sh | bash`
+- Windows
+  - First install [`uv`](https://docs.astral.sh/uv/), e.g. with: `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"`
+  - Then install Vibe CLI with uv: `uv tool install mistral-vibe`
+</details>
+
+<details>
+<summary><b>OpenCode: for both cloud & local models</b></summary>
+
+OpenCode Desktop (instructions above) already includes the command-line version, at least on Linux. If it's not already available with the instructions above, then you can install it manually:
 
 - Linux and macOS: `curl -fsSL https://opencode.ai/install | bash` (or on macOS with Homebrew: `brew install anomalyco/tap/opencode`)
 - Windows
@@ -386,21 +423,26 @@ An **extension** (also called a plugin) adds features to VS Code. Start VS Code 
 1. **Python**: for running Python and choosing the virtual environment. [VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python), [VSCodium](https://open-vsx.org/vscode/item?itemName=ms-python.python)
 2. The extension of the AI harness you installed in step 5 (only one is needed):
     - **Claude Code**: [VS Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code), [VSCodium](https://open-vsx.org/vscode/item?itemName=Anthropic.claude-code)
+      - Once installed, Claude Code is marked by the **Spark icon**, a small orange star. To open its panel, open any file (e.g. `README.md`) and click the Spark icon in the top-right corner of the editor (it appears when a file is open), or click the Spark icon in the Activity Bar on the left.
     - **GitHub Copilot Chat**: [VS Code](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat)
-    - **opencode**: [VS Code](https://marketplace.visualstudio.com/items?itemName=sst-dev.opencode), [VSCodium](https://open-vsx.org/vscode/item?itemName=sst-dev.opencode)
-
-Claude Code is marked by the **Spark icon**, a small orange star. To open its panel, open any file (e.g. `README.md`) and click the Spark icon in the top-right corner of the editor (it appears when a file is open), or click the Spark icon in the Activity Bar on the left.
-
-For GitHub Copilot, hover over the Copilot icon in the Status Bar at the bottom, select **Use AI Features** and sign in with your GitHub account.
+      - Once installed, hover over the Copilot icon in the Status Bar at the bottom, select **Use AI Features** and sign in with your GitHub account.
+    - **ChatGPT Codex**: [VS Code](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt), [VSCodium](https://open-vsx.org/extension/openai/chatgpt)
+    - **Google Antigravity**: [VS Code](https://marketplace.visualstudio.com/items?itemName=Google.google-antigravity), [VSCodium](https://open-vsx.org/extension/Google/google-antigravity)
+    - **Mistral Vibe**: [VS Code](https://marketplace.visualstudio.com/items?itemName=mistralai.mistral-vibe-code), [VSCodium](https://open-vsx.org/extension/mistralai/mistral-vibe-code)
+    - **OpenCode**: [VS Code](https://marketplace.visualstudio.com/items?itemName=sst-dev.opencode), [VSCodium](https://open-vsx.org/vscode/item?itemName=sst-dev.opencode)
 
 
 ### Step 7: Download the workshop materials
 In the terminal, go to your home folder and download (*clone*) this repository. A **repository** is simply a folder whose history Git tracks.
 
 ```bash
+# Create a directory for Git repositories under your home directory (abbreviated by ~)
 mkdir -p ~/Git
+# Go to the newly created directory
 cd ~/Git
+# Clone the workshop materials
 git clone https://github.com/AgenttiX/ai-workshop.git
+# Go to the workshop directory
 cd ai-workshop
 ```
 
@@ -413,8 +455,6 @@ git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
 ```
 
-This creates the folder `Git/ai-workshop` in your home folder (`~`), and `cd` ("change directory") moves the terminal into it.
-
 
 ### Step 8: Create the Python environment and check everything
 A **virtual environment** ("venv") is a fancy name for a folder with its own copy of Python and its own packages, separate from the rest of your computer, so that the workshop can't break anything else and vice versa. This keeps dependencies on different packages separate between projects. The workshop's check script creates it for you. In the terminal, inside the `~/Git/ai-workshop` folder, run:
@@ -424,7 +464,7 @@ A **virtual environment** ("venv") is a fancy name for a folder with its own cop
 | Linux, macOS | `python3 -m workshop.check` |
 | Windows | `py -3 -m workshop.check` |
 
-It asks whether to create the virtual environment. Press Enter to answer yes. It then installs the packages the exercises need (this takes several minutes) and checks your setup. It should end with **"All required checks passed. You're ready for the workshop!"** Lines marked `WARN` are fine: they're optional.
+It asks whether to create the virtual environment. Press Enter to answer yes. It then installs the packages the exercises need (this may take a few minutes) and checks your setup. It should end with **"All required checks passed. You're ready for the workshop!"** Lines marked `WARN` are fine: they're optional.
 
 Finally, **activate** the virtual environment, i.e. tell the terminal to use its Python:
 
@@ -453,28 +493,58 @@ python -m workshop.check
 
 once more. Everything should be `OK` or `WARN`.
 
-**4.** Open your AI extension, e.g. for Claude Code, click the orange Spark icon. If it asks you to sign in, use the account of step 1. Then ask:
+**4.** Open your AI extension. E.g. for Claude Code, click the orange Spark icon. If it asks you to sign in, use the account of [step 1](#step-1-an-account-for-an-ai-provider). Then ask:
 
 > What is this repository about?
 
 It reads the files of the repository and answers. If it does, you're ready. See you at the workshop!
 
 ### Step 10: Local models (optional)
-Local AI models are a viable alternative to cloud-hosted models. They are not as capable as frontier-level cloud models, but they are sufficient for many kinds of useful work. As long as you have enough free memory (RAM or VRAM), you can run a useful AI agent even on a laptop without any internet access. **The setup instructions below are provided already in this readme before the workshop, as downloading the multi-gigabyte LLM models can take several hours.**
-
-As an example of recent local LLMs, the memory requirements for Google's Gemma 4 QAT are available [here](https://ai.google.dev/gemma/docs/core#gemma-4-inference-memory-requirements). For most use, 4-bit quantization is sufficient. The E2B and E4B versions are useful for testing, but for actual work the versions from 12B onwards are preferred. If you have enough memory, the 26B A4B is preferable over the 12B, since the former is significantly faster due to its mixture-of-experts (MoE) architecture despite its larger size. In model names, B refers to how many billions of parameters it has, which determines the memory use. E refers to an effective number of parameters. A means how many parameters are activated during the generation of each output token, which determines the output speed (tokens/s). For example, the Gemma 4 26B A4B has 26 billion parameters, of which 4 billion are activated when generating each output token.
-
-Therefore, for testing you should have at least 3 GB of free memory (RAM or VRAM), and for multipurpose work at least 7 GB, preferably 16 GB. On Linux, you can check your free RAM with `free -h`, and free VRAM with `nvtop` or `nvidia-smi`, if you have them installed. On Windows, you can check these in Task Manager.
+Local AI models are a viable alternative to cloud-hosted models. The ones that fit on consumer hardware are not as capable as frontier-level cloud models, but they are sufficient for many kinds of useful work. As long as you have enough free system memory (RAM) or GPU memory (VRAM), you can run a useful AI agent even on a laptop without any internet access. **The setup instructions below are provided already in this readme before the workshop, as downloading a multi-gigabyte LLM model can take several hours.**
 
 There are several backends for running LLMs locally. These can be connected to any compatible client or harness, such as OpenCode or [Open WebUI](https://openwebui.com/).
 
-**One of the easiest ways to get started with local LLMs is [LM Studio](https://lmstudio.ai/)**, as it bundles the LLM backend, chat interface and agent harness in one package. You can just download it, select an LLM that fits on your computer, and get started.
+<details open>
+<summary><b>LM Studio</b></summary>
 
-However, LM Studio is not very optimized, and with other backends it's possible to fit much larger models and run them much faster on the same hardware. Perhaps the most popular LLM backend for consumer hardware is [llama.cpp](https://llama.app/), as it works on a variety of platforms and is capable of splitting an LLM between a GPU and a CPU, if the LLM doesn't fit entirely in the VRAM of the GPU. This is known as CPU offloading. This way, even a GPU with 4 GB of VRAM can be highly useful. An example laptop config for llama.cpp is available [here](https://github.com/AgenttiX/agx-ai/tree/main/llama-cpp-agx-l14).
+**One of the easiest ways to get started with local LLMs is [LM Studio](https://lmstudio.ai/)**, as it bundles the LLM backend, chat interface and agent harness in one package. You can just download it, select an LLM that fits on your computer, and get started. See the [step 2](#step-4-install-an-ai-desktop-client-optional-but-useful) for the installation instructions.
 
-The highest performance is often achieved with [vLLM](https://vllm.ai/). However, it often requires more memory than llama.cpp for the same models, and its support for CPU offloading is more limited. It also requires extensive configuration for optimal performance, and has limited support of model formats.
+Once you have installed LM Studio, select *Model Search* from the menu on the left. Then, select a model that fits on your computer. If you have a GPU, prefer models for which LM Studio says *Full GPU Offload Possible*.
 
-For advanced users interested in local models, our recommendation is to install llama.cpp in a Docker container if on Linux, and natively if on Windows. (Docker has some overhead on Windows. For macOS, we haven't tested.) Once you have llama.cpp working, you can start experimenting with vLLM. Both of these provide an OpenAI-compatible HTTP endpoint, to which you can connect your client or harness of choice. An example OpenCode config is available [here](https://github.com/AgenttiX/agx-ai/blob/main/opencode/opencode.jsonc).
+However, LM Studio is not very optimized, and with other backends it's possible to fit much larger models and run them much faster on the same hardware. For this, please see the llama.cpp and vLLM instructions below.
+
+</details>
+
+<details>
+<summary><b>llama.cpp</b></summary>
+
+[llama.cpp](https://llama.app/) is perhaps the most popular LLM backend for consumer hardware, as it works on a variety of platforms and is capable of splitting an LLM between a GPU and a CPU, if the LLM doesn't fit entirely in the VRAM of the GPU. This is known as CPU offloading. This way, even a GPU with 4 GB of VRAM can be highly useful. Some example configurations:
+- [Laptop with integrated GPU only](https://github.com/AgenttiX/agx-ai/blob/main/llama-cpp-l14/preset.ini)
+- [Laptop with NVIDIA GPU (4 GB VRAM)](https://github.com/AgenttiX/agx-ai/blob/main/llama-cpp-t550/preset.ini)
+- [NVIDIA RTX 3070](https://github.com/AgenttiX/agx-ai/blob/main/llama-cpp-rtx3070/preset.ini)
+
+On Linux, installing llama.cpp in Docker keeps it nicely contained. On Windows it's preferred to install natively, since on Windows, Docker and WSL have significant overhead for RAM use and accessing the filesystem.
+</details>
+
+<details>
+<summary><b>vLLM</b></summary>
+
+The highest performance is often achieved with [vLLM](https://vllm.ai/). However, it often requires more memory than llama.cpp for the same models, and its support for CPU offloading is limited. It also requires extensive configuration for optimal performance, and has limited support of model formats.
+</details>
+
+<details open>
+<summary><b>Selecting a local LLM model</b></summary>
+
+The optimal choice of a local LLM model depends on the amount of system memory (RAM) and GPU memory (VRAM) available on the computer, as the model must be loaded entirely in RAM+VRAM to work efficiently. Below are some examples of openly available (=open-weight) LLM models suitable for various hardware. The RAM and VRAM numbers are for the memory that is free after your operating system and other programs. On Linux, you can check your free RAM with `free -h`, and free VRAM with `nvtop` or `nvidia-smi`, if you have them installed. On Windows, you can check these in Task Manager.
+- GPU, >= 16 GB: Qwen 3.8-27B, [Gemma 4 26B A4B QAT](https://huggingface.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF), [Gemma 4 31B QAT](https://huggingface.co/unsloth/gemma-4-31B-it-qat-GGUF)
+- GPU/CPU, >= 16 GB total (VRAM+RAM): [Gemma 4 26B A4B QAT](https://huggingface.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF) (e.g. 8 GB GPU + 8 GB CPU)
+- GPU/CPU, >= 8 GB total (VRAM+RAM): [Gemma 4 12B QAT](https://huggingface.co/unsloth/gemma-4-12B-it-qat-GGUF)
+- GPU/CPU, >= 6 GB total (VRAM+RAM): [Gemma 4 E4B QAT](https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF)
+- GPU/CPU, >= 4 GB total (VRAM+RAM): [Gemma 4 E2B QAT](https://huggingface.co/unsloth/gemma-4-E2B-it-qat-GGUF)
+
+Further information on Google's Gemma 4 series is available in its [official documentation](https://ai.google.dev/gemma/docs/core). For most use, 4-bit quantization is a good trade-off between size and quality. The E2B and E4B versions are useful for testing and as generic assistants, but for actual work the versions from 12B onwards are preferred. If you have enough memory, the 26B A4B is preferable over the smaller variants, since the former is significantly faster due to its mixture-of-experts (MoE) architecture despite its larger size. In model names, B refers to how many billions of parameters it has, which determines the memory use. E refers to an effective number of parameters. A means how many parameters are activated during the generation of each output token, which determines the output speed (tokens/s). For example, the Gemma 4 26B A4B has 26 billion parameters, of which 4 billion are activated when generating each output token.
+</details>
+
 
 ---
 
