@@ -38,7 +38,6 @@ X_MAX = datetime.date(2027, 4, 1)
 
 COLOR_SOTA = "#2e7d32"
 COLOR_OTHER = "#a5d6a7"
-COLOR_NOT_ROBUST = "#888888"
 
 #: Display names of the models in METR's data file, shown when hovering over a point.
 #: The models of additional_results.yaml have their names in the file.
@@ -248,7 +247,7 @@ def make_figure(results: list[Result], doubling_time: float, intercept: float, s
     :param doubling_time: doubling time of the trend (days)
     :param intercept: base-2 logarithm of the trend at day 0 (minutes)
     :param show_legend: whether to show the legend.
-        Without it, the trend line is labeled directly, and the gray color marks the non-robust results.
+        Without it, the trend line is labeled directly, and the diamonds mark the non-robust results.
     :return: the figure
     """
     fig = go.Figure()
@@ -309,14 +308,16 @@ def make_figure(results: list[Result], doubling_time: float, intercept: float, s
 
     fig.add_trace(scatter([r for r in results if r.robust and r.is_sota], "State of the art at release", COLOR_SOTA))
     fig.add_trace(scatter([r for r in results if r.robust and not r.is_sota], "Other models", COLOR_OTHER))
-    fig.add_trace(
-        scatter(
-            [r for r in results if not r.robust],
-            "Not a robust measurement (METR)",
-            COLOR_NOT_ROBUST,
-            symbol="diamond",
+    # The non-robust results are diamonds in the same colors, with a single legend entry
+    for is_sota, color in ((True, COLOR_SOTA), (False, COLOR_OTHER)):
+        fig.add_trace(
+            scatter(
+                [r for r in results if not r.robust and r.is_sota == is_sota],
+                "Not a robust measurement (METR)",
+                color,
+                symbol="diamond",
+            ).update(legendgroup="not_robust", showlegend=not is_sota)
         )
-    )
 
     for result in results:
         if not result.label:
@@ -330,7 +331,7 @@ def make_figure(results: list[Result], doubling_time: float, intercept: float, s
             xanchor=xanchor,
             xshift=xshift,
             yshift=yshift,
-            font={"size": FONT_SIZE - 4, "color": COLOR_NOT_ROBUST if not result.robust else COLOR_TEXT},
+            font={"size": FONT_SIZE - 4, "color": COLOR_TEXT},
             bgcolor="rgba(255, 255, 255, 0.7)",
         )
 

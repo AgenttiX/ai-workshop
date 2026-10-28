@@ -5,6 +5,8 @@ results:
     name: GPT-5.6 Sol
     benchmark_name: METR-Horizon-v1.1
     metrics:
+      # Below Claude Mythos Preview (early) of 2026-04-07
+      is_sota: false
       p50_horizon_length:
         # "If we follow our standard methodology of marking cheating attempts as failures, we arrive at a
         # 50%-Time Horizon point estimate of around 11.3hrs (95% CI: 5hrs - 40hrs)."
