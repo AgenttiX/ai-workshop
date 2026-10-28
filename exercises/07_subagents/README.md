@@ -22,8 +22,10 @@ Copy-Item exercises\07_subagents\agents\physics-reviewer.md .claude\agents\
 
 Read it: the frontmatter defines the name, when to use it, the tools it may use and the model; the body is its system prompt.
 
+(With OpenCode, copy `exercises/07_subagents/agents/opencode/physics-reviewer.md` instead, to `.opencode/agents/` after `mkdir -p .opencode/agents`. The frontmatter is the same idea with OpenCode's fields: `mode: subagent` and `permissions` rules instead of the `tools` list, and no `model` line — the agent inherits the main agent's model.)
+
 ### 2. Restart Claude Code and ask for a review
-Restart Claude Code so that it finds the agent: a running session doesn't notice a `.claude/agents/` folder that didn't exist when it started, and `/clear` isn't enough. In the terminal, quit Claude Code and start it again with these two commands, one at a time:
+Restart Claude Code so that it finds the agent: a running session doesn't notice a `.claude/agents/` folder that didn't exist when it started, and `/clear` isn't enough. (OpenCode doesn't need this: it rereads agent files and configuration after a save; `/reload` forces it.) In the terminal, quit Claude Code and start it again with these two commands, one at a time:
 
 ```text
 /exit

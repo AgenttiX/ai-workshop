@@ -33,7 +33,7 @@ In Claude Code, type these two commands, one at a time:
 /clear
 ```
 
-`/reload-skills` is needed once, because `.claude/skills/` didn't exist when the session started, and `/clear` starts a new conversation. Then ask for a plot without mentioning the style:
+`/reload-skills` is needed once, because `.claude/skills/` didn't exist when the session started, and `/clear` starts a new conversation. (With OpenCode neither command is needed: it reads `.claude/skills/` as a compatibility source and rereads skills from the files after a save — run `/reload` if in doubt — and a new session is `/new`.) Then ask for a plot without mentioning the style:
 
 > Plot the period of a pendulum as a function of its length from 0.1 m to 2 m and save the figure.
 

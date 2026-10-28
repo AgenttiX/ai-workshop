@@ -6,6 +6,8 @@ The [Model Context Protocol](https://modelcontextprotocol.io/) is a standard for
 ### 1. List the configured servers
 Run `claude mcp list` in the terminal (or type `/mcp` inside a session).
 
+(With OpenCode: `opencode mcp list`, or `/mcps` inside a session — it shows the connection state.)
+
 ### 2. Add an arXiv server
 The exact command depends on the server; here we use the [arxiv-mcp-server](https://github.com/blazickjp/arxiv-mcp-server) package. Check its README for the current install command before you run the one below, as these change.
 
@@ -28,6 +30,8 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 ```bash
 claude mcp add arxiv -- uvx arxiv-mcp-server
 ```
+
+(With OpenCode: `opencode mcp add arxiv -- uvx arxiv-mcp-server`. Project scope is the default; add `--global` to make it personal instead. The stored config lives in `opencode.json(c)`, whose `mcp.servers` section you can also edit by hand.)
 
 ### 3. Use it
 Start a session and ask:

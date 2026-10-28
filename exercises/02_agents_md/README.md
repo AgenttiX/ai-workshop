@@ -13,6 +13,8 @@ claude
 
 In Claude Code, type `/init`. It reads the project and writes a draft `CLAUDE.md`.
 
+(With OpenCode there is no `/init`: instead, ask the agent to "write a draft AGENTS.md for this project". OpenCode reads `AGENTS.md` natively, so in step 5 you skip the rename and the `CLAUDE.md` shim.)
+
 You can also run `/init` in the Claude Code extension of VS Code. The extension works in the folder that is open in VS Code, so first open `pendulum_lab` in a new window: **File → New Window**, then **File → Open Folder…** and choose `exercises/02_agents_md/pendulum_lab` in the workshop folder. Then open Claude Code in that window and type `/init`.
 
 ### 2. Read the draft critically
@@ -35,7 +37,9 @@ Start a new session (`/clear`) and ask
 A good `AGENTS.md` makes the answer correct without any file reads beyond it.
 
 ### 5. Rename it to AGENTS.md
-Rename `CLAUDE.md` to `AGENTS.md` (in the VS Code Explorer: right-click the file → **Rename**), then create a new file `CLAUDE.md` containing only the line `@AGENTS.md`, like the root of this repository does. `AGENTS.md` is the tool-agnostic convention that other coding agents read too. Recent versions of Claude Code read `AGENTS.md` directly; the `@AGENTS.md` line imports it into `CLAUDE.md`, so that it works in every version.
+Rename `CLAUDE.md` to `AGENTS.md` (in the VS Code Explorer: right-click the file → **Rename**), then create a new file `CLAUDE.md` containing only the line `@AGENTS.md`, like the root of this repository does. `AGENTS.md` is the tool-agnostic convention that other coding agents (Copilot, Codex, OpenCode, Antigravity) read directly. Recent versions of Claude Code read `AGENTS.md` directly too; the `@AGENTS.md` line imports it into `CLAUDE.md`, so that it works in every version.
+
+(If you started with OpenCode you already wrote `AGENTS.md` and need none of this.)
 
 ## What to look for
 - `/init` is a starting point, not an answer. The valuable part is what only you know.

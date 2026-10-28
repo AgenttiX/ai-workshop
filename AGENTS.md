@@ -25,7 +25,7 @@ This repository is for organizing an AI workshop for scientists at the Kumpula C
 ## Project structure
 - `./dev/` contains temporary files (Markdown etc.) that are not tracked in Git.
 - `./figures/` contains the figures of the slides, and the data and Plotly scripts for the plots made by us (requirements in `figures/requirements.txt`). It's a Python package with the shared plotting code in `figures/common.py`, so run the scripts as modules, e.g. `python -m figures.time_horizon.time_horizon`.
-- `./exercises/` contains the exercises for the participants, one directory per exercise with a `README.md`. The starters are deliberately imperfect (e.g. `01_fix_the_bug` has a physics bug and `04_ai_ready` has lint errors), so their tests are not run by the default `pytest`, and `04_ai_ready` is excluded from the linter and type checker.
+- `./exercises/` contains the exercises for the participants, one directory per exercise with a `README.md`. The starters are deliberately imperfect (e.g. `01_fix_the_bug` has a physics bug and `04_ai_ready` has lint errors), so their tests are not run by the default `pytest`, and `04_ai_ready` is excluded from the linter and type checker. OpenCode variants of the exercise assets live in `exercises/06_hook/opencode_ruff_on_edit/` and `exercises/07_subagents/agents/opencode/`; see `exercises/other_agents.md`.
 - `./plan/` contains documents for planning the workshop.
 - `./poster/` contains the A3 poster (`poster.svg`, Inkscape-compatible); `preview.sh` renders it to `poster/build/`.
 - `./setup/` contains the quick-setup commands of the README for each operating system. These are the source of truth: edit them and run `./setup/sync_readme.py`, not the code blocks in `README.md`. Tested in CI by `.github/workflows/setup.yml`.
@@ -34,6 +34,9 @@ This repository is for organizing an AI workshop for scientists at the Kumpula C
 - `./themes/` contains custom reveal.js themes for the slides (`_base.css` + one file of variables per theme, see `themes/README.md`).
 - `./tests/` contains the tests of the `workshop` package.
 - `./workshop/` is a small Python package with helpers shared by the exercises (environment check, plotting style, data generation).
+
+## Codewide configuration
+- `opencode.jsonc` at the repository root is the OpenCode counterpart of `.claude/settings.json`: the permission rules mirror the allow-list established for Claude Code. Keep both in sync when one changes.
 
 ## Participant-facing text
 - The audience ranges from complete beginners (no VS Code, terminal or venv experience) to advanced users. When editing the slides, define every term at first use, and give commands for Linux (primary), native Windows (PowerShell) and macOS.

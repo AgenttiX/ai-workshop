@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // OpenCode's project configuration, the counterpart of .claude/settings.json.
+  // The rules are checked in order and the last match wins: the routine commands
+  // of the exercises run without a prompt, every other shell command asks first,
+  // and pushes are never silently allowed.
+  "permissions": [
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "git status *", "effect": "allow" },
+    { "action": "shell", "resource": "git log *", "effect": "allow" },
+    { "action": "shell", "resource": "git diff *", "effect": "allow" },
+    { "action": "shell", "resource": "pytest *", "effect": "allow" },
+    { "action": "shell", "resource": "python -m pytest *", "effect": "allow" },
+    { "action": "shell", "resource": "ruff check *", "effect": "allow" },
+    { "action": "shell", "resource": "ruff format *", "effect": "allow" },
+    { "action": "shell", "resource": "pyrefly check *", "effect": "allow" },
+    { "action": "shell", "resource": "python -m workshop.check", "effect": "allow" },
+    { "action": "shell", "resource": "git push *", "effect": "ask" }
+  ],
+  // Claude Code's Manual mode also asks before it edits a file. OpenCode instead
+  // shows every change as a diff and lets you undo with /undo, but if you want the
+  // same prompt-per-edit behaviour, uncomment this:
+  // { "action": "edit", "resource": "*", "effect": "ask" }
+}

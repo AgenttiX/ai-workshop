@@ -25,6 +25,8 @@ Open the Claude Code panel (the Spark icon in the top-right corner of the editor
 
 **Before you type anything, switch to *Manual* mode.** Claude Code starts in *Auto* mode, where it acts without asking. Click the mode indicator at the bottom of the prompt box and choose **Manual** (in the terminal: press Shift+Tab until the status line says `manual mode on`). Then it asks you before editing a file or running a command.
 
+(With OpenCode, the [`opencode.jsonc`](../../opencode.jsonc) of this repository already provides the Manual-style prompts; to plan before editing, switch to the `plan` agent with `/agents`.)
+
 Now describe the problem. Try to use your own words. If you're stuck, copy this:
 
 > The test in exercises/01_fix_the_bug fails. Find the bug, fix it and run the tests to check that they pass.
@@ -88,8 +90,8 @@ A window with the spectra opens (close it to finish), and the figure is saved to
 > Mark the peak wavelength of the Sun (5778 K) in the plot.
 
 ## Useful while you work
-- `/context` shows what is currently in Claude's context window, i.e. everything it "knows" in this conversation.
-- `/clear` starts a new conversation with an empty context.
+- `/context` shows what is currently in Claude's context window, i.e. everything it "knows" in this conversation. (OpenCode: this isn't its own command; the context is visible in the session view.)
+- `/clear` starts a new conversation with an empty context. (OpenCode: `/new`)
 
 ## Finished or stuck?
 The solution and an explanation of what happened are in [`solutions/01_fix_the_bug/`](../../solutions/01_fix_the_bug/). Try on your own first. You can run the tests of the solution with `pytest solutions/01_fix_the_bug`.

@@ -1,5 +1,5 @@
 # Exercises
-Each exercise has a `README.md` with the task, suggested prompts and what to look for. Use your own words for the prompts: the suggested ones are only there in case you're stuck. Reference solutions for the code exercises are in [`../solutions/`](../solutions/) — try before you peek. The exercises are written for Claude Code. Using GitHub Copilot, Codex or Antigravity instead? See [the extra guide](./other_agents.md).
+Each exercise has a `README.md` with the task, suggested prompts and what to look for. Use your own words for the prompts: the suggested ones are only there in case you're stuck. Reference solutions for the code exercises are in [`../solutions/`](../solutions/) — try before you peek. The exercises are written primarily for Claude Code, but they work with other coding agents too. Using [OpenCode](./other_agents.md#opencode), GitHub Copilot, Codex or Antigravity instead? See [the extra guide](./other_agents.md).
 
 | # | Exercise | Session | Time | What you practise |
 |---|---|---|---|---|
@@ -24,6 +24,9 @@ It starts in *Auto* mode, where it edits files and runs commands without asking,
 - In the terminal (`claude`): press Shift+Tab until the status line says `manual mode on`.
 
 If a new session starts in Auto again, switch again. Go back to Auto later, once you know what to expect and want it to work on its own.
+
+### With OpenCode instead
+OpenCode has no Auto/Manual switch. By default it runs the same commands as Claude Code's Auto mode, but this repository ships an [`opencode.jsonc`](../opencode.jsonc) permission list that makes it behave like Manual mode for the exercises: the routine commands (`pytest`, `ruff check`, `git status`…) run without a prompt, and anything else asks first. To see a plan before anything is edited, run `/agents` and switch to the `plan` agent. And there is no `/clear`: run `/new` to start a fresh conversation (`/undo` reverts the latest change, which replaces the `git restore` undo for work not yet committed).
 
 ### Do the exercises in order
 Some build on earlier ones: exercise 07 reviews the code of exercise 04, and the hook of exercise 06 stays active in the later ones. Start each exercise in a new conversation with `/clear`, so that the previous one doesn't confuse the agent.

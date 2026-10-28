@@ -14,6 +14,8 @@ Everything marked `FAIL` has to be fixed. `WARN` is fine for `code`/`codium` if 
 ## 3. Start Claude Code
 Start Claude Code (the Spark icon in VS Code, or `claude` in the terminal) and log in.
 
+Using [OpenCode](../other_agents.md#opencode) instead: start `opencode` in the terminal and log in, then continue with step 4. It reads `AGENTS.md` and `README.md` the same way.
+
 ## 4. Ask about the repository
 Ask it:
 

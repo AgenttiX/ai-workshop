@@ -24,7 +24,7 @@ The slides *Under the hood* and *Why local models misbehave, in numbers* explain
 - **Disk:** the model file, and about 1 GB for LM Studio or 1.2 GB for the llama.cpp Docker image.
 - **Speed:** without a dedicated GPU, plain `claude` is too slow for this exercise: on our laptop, the model read its 22 000-token prompt at about 24 tokens per second, which makes about 15 minutes before the first answer. That's why the commands below use `claude --bare`, which leaves out most of the tools, `CLAUDE.md` and the memory, so that the prompt is about 1 300 tokens.
 
-Pick **route A** (LM Studio, easier) or **route B** (llama.cpp in Docker, more control). Both end with the same step 3.
+Pick **route A** (LM Studio, easier) or **route B** (llama.cpp in Docker, more control). Both end with the same step 3. OpenCode users do the same routes and then replace step 3 with [With OpenCode instead](#with-opencode-instead).
 
 ## Route A: LM Studio
 ### A1. Install LM Studio and get a model
@@ -145,6 +145,47 @@ What they do:
 - `ANTHROPIC_MODEL`: which model to ask for.
 - `CLAUDE_CODE_MAX_CONTEXT_TOKENS`: the context length of the server, so that Claude Code summarizes the conversation before it overflows.
 - `CLAUDE_CODE_ATTRIBUTION_HEADER=0`: Claude Code otherwise adds a line that changes with every request. The server can reuse the work it did for an unchanged beginning of the conversation, and that line would make it read everything again.
+
+## With OpenCode instead
+OpenCode never sends requests to a single vendor URL through environment variables: models are *providers* in `opencode.json(c)`, selected with `/models`. Instead of the step 3 environment block, create (or merge into) your global configuration at `~/.config/opencode/opencode.json` — avoid a second file next to an existing one, since both `opencode.json` and `opencode.jsonc` in the same directory conflict. OpenCode rereads the file after every save, so no restart is needed.
+
+**Route A (LM Studio)** — OpenCode finds LM Studio models on its own at the port `lms server start` opened; to fix the context length at 32 768 tokens, list one model, named exactly as `lms ls` shows it:
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "lmstudio": {
+      "settings": { "baseURL": "http://localhost:1234/v1" },
+      "models": {
+        "qwen": {
+          "modelID": "qwen/qwen3.5-4b", // the name from `lms ls`
+          "limit": { "context": 32768 }
+        }
+      }
+    }
+  }
+}
+```
+
+**Route B (llama-server)** — llama-server already speaks the OpenAI request format, so OpenCode talks to it through its `openai-compatible` runtime package, like Claude Code through LiteLLM — except the LiteLLM hop goes away:
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "llamacpp": {
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": { "baseURL": "http://localhost:8080/v1" },
+      "models": {
+        "qwen3.5-4b": { "limit": { "context": 32768 } } // llama-server serves one model and ignores the name
+      }
+    }
+  }
+}
+```
+
+Then run `opencode`, press **Ctrl+X M** (or `/models`), and select `lmstudio/qwen` or `llamacpp/qwen3.5-4b`. There is no `--bare` and no need for it: OpenCode's prompt is already lean, and if the model is slow without a GPU, the smaller Qwen3.5-2B is the remedy to try first. OpenCode may not need the chat-template fix of A2, because its instructions go out inside one system prompt; if the server still answers `System message must be at the beginning`, apply A2. Switching back: comment out the `providers` block.
 
 ## 4. Compare
 Do exercise 01 again with the local model, e.g. *"Fix the bug in exercises/01_fix_the_bug. Check with `pytest exercises/01_fix_the_bug`."* Compare with the cloud model: time, quality, how many tries it needs. Watch the server (LM Studio's developer logs or `docker logs -f llama-cpp`) while it works.
