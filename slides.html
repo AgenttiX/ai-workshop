@@ -357,9 +357,9 @@
 		<h2>Practicalities</h2>
 		<ul>
 			<li>12:00&ndash;14:00 foundations, 14:00&ndash;14:30 coffee break, 14:30&ndash;16:30 advanced. Laptops out.</li>
-				<li><strong>No experience needed.</strong> We define every term the first time we use it, and a full glossary follows the basic terms.</li>
+				<li><strong>No experience needed.</strong> The exercises proceed gradually from the basics to the advanced use cases.</li>
 			<li>Questions: interrupt us anytime. <strong>There are no stupid questions.</strong> If you're lost, three others are too.</li>
-			<li>It's OK to discuss with the people next to you during the presentation, but preferably do so quietly. Helping each other is encouraged.</li>
+			<li>It's OK to discuss with the people next to you during the presentation, but preferably not too loud. Helping each other is encouraged.</li>
 			<li>Everything here is practice. Philosophy, ethics and the future of science: the coffee break and afterwards. We'll gladly join.</li>
 			<li>A warning: some of what we show may feel threatening to how we work as scientists. That's a legitimate reaction, so let's talk about it.</li>
 			<li>Materials: <a href="https://github.com/AgenttiX/ai-workshop">github.com/AgenttiX/ai-workshop</a></li>
@@ -399,7 +399,7 @@
 		</aside>
 	</section>
 	<section>
-		<h2>What you can do afterwards:</h2>
+		<h2>After this workshop, you'll be able to:</h2>
 		<ol>
 			<li>Understand the main developments of in AI in recent years and the related jargon, as well as why an AI agent working in your files can do far more than a chat window</li>
 			<li>Run an AI agent on a real project</li>
@@ -414,8 +414,8 @@
 		<ul>
 			<li>We learned to use these tools on our own, <strong>mostly by asking Claude and other models along the way</strong>: "What does this error mean?", "What is a virtual environment?", "How do I do this in VS Code?"</li>
 			<li>That is the mindset shift: a patient explanation of almost anything is now one question away, at your level, as many times as you need it</li>
-			<li>Today: <strong>when in doubt, ask AI</strong> (Claude) first, then us. No question is too basic for it</li>
-			<li>The usual rule still applies: check what matters. It can be wrong, and we'll show you how to catch that</li>
+			<li>Today: <strong>when in doubt, ask AI</strong> first, then us. No question is too basic</li>
+			<li>The usual rule still applies: check the outputs that matter. They can be wrong, and we'll show you how to catch that</li>
 		</ul>
 		<p class="callout">
 			Stuck? Try: <em>"I'm new to this. Explain what just happened and what I should do next."</em>
@@ -427,11 +427,12 @@
 	<section>
 		<h2>Words we'll use all day</h2>
 		<table class="glossary" style="font-size: 1em !important;">
-			<tr><td>Agent</td><td>A model that acts on its own: it reads files, runs commands, checks the results and repeats.</td></tr>
-			<tr><td>Harness</td><td>A program around the model that makes it an agent: <em>it gives the model tools, manages its context and asks your permission</em>. Claude Code is a harness.</td></tr>
+			<tr><td>Model</td><td>A large language model (LLM). A neural network that is trained on vast amounts of data to generate text based on its inputs.</td></tr>
+			<tr><td>Harness</td><td>A program around the model that makes it capable of interacting with the world: <em>it gives the model tools, manages its context and asks your permission</em>. Claude Code is a harness.</td></tr>
+			<tr><td>Agent</td><td>Model + harness = agent. A model that acts on its own: it reads files, runs commands, checks the results and repeats.</td></tr>
 			<tr><td>Tool call</td><td>One action of the agent, e.g. "read this file" or "run this command".</td></tr>
 			<tr><td>Context window</td><td>Everything the model sees at once: your messages, its replies, the files it has read. It has a maximum size.</td></tr>
-			<tr><td>Git, repository</td><td>Git records every change to a project folder, a <em>repository</em>, so that you can review and undo it.</td></tr>
+			<tr><td>Git, repository</td><td>Git records every change to a project folder, a <em>repository</em>, so that you can review and undo them.</td></tr>
 		</table>
 		<aside class="notes">
 			Don't read the table aloud. Say: these five words come up constantly; the rest we define when they appear, in the orange boxes, and the three glossary slides that follow are for reference, not for presenting.
@@ -548,7 +549,7 @@
 				<h3>2026: agents doing research</h3>
 				<ul>
 					<li><strong>Feb</strong> Opus 4.6: 1M context, agent teams; task horizon ~12&nbsp;h</li>
-					<li><strong>Feb</strong> GPT-5.2 conjectures a formula for gluon amplitudes (arXiv:2602.12176)</li>
+					<li><strong>Feb</strong> GPT-5.2 conjectures a formula for gluon amplitudes (<a href="https://arxiv.org/abs/2602.12176">arXiv:2602.12176</a>)</li>
 					<li><strong>Apr</strong> Anthropic withholds Mythos Preview over the zero-days it found</li>
 					<li><strong>May</strong> An OpenAI model disproves Erdős's unit-distance conjecture</li>
 					<li><strong>Jul</strong> Agents in a cyber evaluation break into Hugging Face</li>
@@ -607,7 +608,7 @@
 		</ul>
 		<p class="small">Our plot of METR's data: <a href="https://metr.org/time-horizons/">time horizons</a> (May 2026), <a href="https://metr.org/blog/2026-06-26-gpt-5-6-sol/">GPT-5.6 Sol</a> (June 2026). T. Kwa et al., <a href="https://arxiv.org/abs/2503.14499"><em>Measuring AI ability to complete long tasks</em></a>, arXiv:2503.14499.</p>
 		<aside class="notes">
-			This is the plot that answers "is it just hype": it's a measured trend over years. The plot is interactive: hover over a point for its values, drag to zoom, double-click to reset. The tasks are software tasks; the y-axis is the time a human expert needs, not the time the AI needs. Doubling time 129 days (95 % CI 104&ndash;158) from 2023 on, in the Time Horizon 1.1 data. Claude Opus 4.6 ~12 h; Claude Mythos Preview ~17 h but above what the task suite can reliably measure. GPT-5.6 Sol: ~11 h (95 % CI 5&ndash;40 h), but it tried to cheat on some tasks, and METR says the number isn't robust (counting the cheating as success would give &gt; 270 h). Hence the gray marker. The Navier&ndash;Stokes run can't be put on this plot: 88 h of 10 000 agents is wall-clock time, not a task length measured against humans. Update the week before the workshop: new data points to figures/time_horizon/additional_results.yaml, then python -m figures.time_horizon.time_horizon --hide-legend.
+			This is the plot that answers "is it just hype": it's a measured trend over years. The plot is interactive: hover over a point for its values, drag to zoom, double-click to reset. The tasks are software tasks; the y-axis is the time a human expert needs, not the time the AI needs. Doubling time 129 days (95 % CI 104&ndash;158) from 2023 on, in the Time Horizon 1.1 data. Claude Opus 4.6 ~12 h; Claude Mythos Preview ~17 h but above what the task suite can reliably measure. GPT-5.6 Sol: ~11 h (95 % CI 5&ndash;40 h), but it tried to cheat on some tasks, and METR says the number isn't robust (counting the cheating as success would give &gt; 270 h). Hence the diamond marker, in light green because it is below Claude Mythos Preview, so not the state of the art. The Navier&ndash;Stokes run can't be put on this plot: 88 h of 10 000 agents is wall-clock time, not a task length measured against humans. Update the week before the workshop: new data points to figures/time_horizon/additional_results.yaml, then python -m figures.time_horizon.time_horizon --hide-legend.
 		</aside>
 	</section>
 	<section class="dense">
@@ -650,11 +651,11 @@
 		<div class="two-col prompts">
 			<div class="prompt-cc">
 				<div class="cc-header">
-					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> PTPlot</span>
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> phd-research</span>
 					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
 				</div>
 				<div class="cc-box">
-					<p>Please implement the double-broken power law from arXiv:2403.03723 (DOI:10.1088/1475-7516/2024/10/020) in PTPlot as <code>ptplot.science.spectrum.dbpl2024.PowerSpectrumDBPL2024</code>. Rename the existing <code>PowerSpectrumDBPL</code> as <code>PowerSpectrumDBPL2021</code>. If the article is not already in <code>./literature/</code>, download it there, and read its LaTeX source from there.</p>
+					<p>Please implement the double-broken power law from arXiv:2403.03723 (DOI:10.1088/1475-7516/2024/10/020) as <code>science.spectrum.dbpl2024.PowerSpectrumDBPL2024</code>. Rename the existing <code>PowerSpectrumDBPL</code> as <code>PowerSpectrumDBPL2021</code>. If the article is not already in <code>./literature/</code>, download it there, and read its LaTeX source from there.</p>
 					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
 				</div>
 				<div class="cc-footer">
@@ -663,11 +664,11 @@
 			</div>
 			<div class="prompt-cc">
 				<div class="cc-header">
-					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> pttools</span>
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> phd-research</span>
 					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
 				</div>
 				<div class="cc-box">
-					<p>I have received a bug report that PTtools seems to produce a dip in the temperature profile at the bubble wall using the values below. Please investigate this and if there is still a bug, please fix it.</p>
+					<p>I have received a bug report that the code seems to produce a dip in the temperature profile at the bubble wall using the values below. Please investigate this and if there is still a bug, please fix it.</p>
 					<p>alpha_n = 0.068<br>
 					a_s = 11.582548/0.84<br>
 					a_b = 11.582548<br>
@@ -684,7 +685,7 @@
 			<p class="prompt-result"><strong>Result:</strong> a correct fix for an off-by-one bug that had been in the code for years.</p>
 		</div>
 		<aside class="notes">
-			Two prompts from Mika's research work on first-order phase transitions: adding a spectrum model from a paper to PTPlot, and investigating a bug report in PTtools.
+			Two prompts from Mika's research work on first-order phase transitions.
 		</aside>
 	</section>
 	<section>
@@ -695,7 +696,7 @@
 					<svg class="cc-mascot" viewBox="0 0 11 5" fill="#d97757" shape-rendering="crispEdges"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="8" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/></svg>
 				</div>
 				<div class="cc-box">
-					<p>Please investigate how <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> is inserted properly into the Sound Shell Model equations. Is the current PTtools implementation such as <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> correct? What <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> appear in the GW power spectrum when inserting <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> into the Sound Shell Model? Investigate this and related questions autonomously until 4:45 AM (local UTC+3 time), and document your findings in <code>./notes/</code>. Please create a Markdown report with step-by-step LaTeX equations in <code>./notes/</code>. You may create commits in this <code>phd-research</code> repository, but not in any other repository. You may edit the local copy of the PTtools repository.</p>
+					<p>Please investigate how <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> is inserted properly into the <span class="redacted">xxxxxx xxxxxx xxxxxx</span> equations. Is the current implementation such as <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> correct? What <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx xxxxxx</span> appear in the GW power spectrum when inserting <span class="redacted">xxxxxx xxxxxx xxxxxx xxxxxx</span> into the <span class="redacted">xxxxxx xxxxxx xxxxxx</span>? Investigate this and related questions autonomously until 4:45 AM (local UTC+3 time), and document your findings in <code>./notes/</code>. Please create a Markdown report with step-by-step LaTeX equations in <code>./notes/</code>. You may create commits in this <code>phd-research</code> repository, but not in any other repository. You may edit the local copy of the PTtools repository.</p>
 					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
 				</div>
 				<div class="cc-footer">
@@ -703,7 +704,7 @@
 				</div>
 			</div>
 		<p class="prompt-result"><strong>Result:</strong> when I woke up, there was a 14-page report and a Monte Carlo simulation code with new results that, after a more thorough investigation, are likely to become a scientific article. (The 4:45 AM time limit is due to my 5 AM weekly usage limit reset.)</p>
-		<p class="prompt-result"><strong>Conclusions:</strong> The prompts are rather simple. It's the configuration in the repositories that matters. (AGENTS.md, repository structure, data sources, skills & scripts, linting, unit tests)</p>
+		<p class="prompt-result"><strong>Conclusions:</strong> The prompts are rather simple. <b>It's the configuration in the repositories that matters.</b> (AGENTS.md, repository structure, data sources, skills & scripts, linting, unit tests)</p>
 		<aside class="notes">
 			A prompt from Mika's PhD research, left to run autonomously overnight. The redacted parts are unpublished research.
 		</aside>
@@ -777,11 +778,11 @@
 		<h2>The landscape</h2>
 		<table>
 			<tr><th>Harness</th><th>Provider</th><th>Where it runs</th><th>Notes</th></tr>
-			<tr><td>Claude Code</td><td>Anthropic</td><td>terminal, IDE, web</td><td>Used today. Skills, hooks, agents, MCP</td></tr>
+			<tr><td>Claude Code</td><td>Anthropic</td><td>terminal, IDE, cloud</td><td>Used today. Skills, hooks, agents, MCP</td></tr>
 			<tr><td>Codex</td><td>OpenAI</td><td>terminal, IDE, cloud</td><td>Similar concepts</td></tr>
 			<tr><td>GitHub Copilot</td><td>GitHub / Microsoft</td><td>terminal, IDE, cloud</td><td></td></tr>
 			<tr><td>Cursor, Antigravity</td><td>Cursor, Google</td><td>own IDE</td><td>IDE-first</td></tr>
-			<tr><td>Vibe</td><td>Mistral</td><td>terminal, IDE, web</td><td>The European option</td></tr>
+			<tr><td>Vibe</td><td>Mistral</td><td>terminal, IDE, cloud</td><td>The European option</td></tr>
 			<tr><td>OpenCode</td><td>open source</td><td>terminal</td><td>Any model, incl. local</td></tr>
 			<tr><td>Chat products</td><td>Claude.ai Projects, ChatGPT</td><td>browser</td><td>Good for text; no file access to your machine</td></tr>
 		</table>
@@ -1982,29 +1983,45 @@ jobs:
 	</section>
 	<section>
 		<h2>Mika: local models</h2>
-		<div class="two-col">
-			<div>
+		<ul>
+			<li>
+				<strong>Why:</strong>
 				<ul>
-					<li><strong>Why:</strong> privacy (the data never leaves your computer), no rate limits, offline, cost. <strong>Price:</strong> capability and speed</li>
-					<li><strong>Hardware reality:</strong> laptop &rarr; small Gemma 4 variants; gaming/workstation GPU &rarr; Gemma 4 26B-A4B, 31B & Qwen3.8-27B with llama.cpp and vLLM; the bigger models are usually mixture-of-experts (MoE) models &rarr; RAM is the limiting factor</li>
-					<li>
-						<strong>The stack:</strong> llama.cpp or vLLM (backend = runs the model) in Docker &rarr; LiteLLM (combines multiple backends to one API endpoint) &rarr; Open WebUI (a chat interface) & OpenCode (a harness)
-					<li>Android: Conduit</li>
+					<li>Privacy: the data never leaves your computer. A must for confidential work, can even be a legal requirement.</li>
+					<li>Cost: use of existing hardware in personal use, no subscription needed. In enterprise use, cheaper than cloud per token if running continuously.</li>
 				</ul>
-			</div>
-			<div>
-				<pre><code class="language-bash" data-trim>
-docker compose up
-opencode
-				</code></pre>
-				<p class="callout">Demo: exercise 01 again, with a local model. Compare time and quality. Fans on.</p>
-			</div>
-		</div>
-		<p class="small">Configs in <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a>; instructions in exercise 09.</p>
+			</li>
+			<li><strong>Drawbacks:</strong> capability and speed</li>
+			<li>Mixture-of-experts (MoE) architectures reduce compute requirements<br>&rarr; offloading from CPU to GPU</li>
+			<li>
+				<strong>Limiting factor</strong>: the model must fit in RAM/VRAM
+				<ul>
+					<li>Quantization helps in this: 16-bit &rarr; 4-bit, 0.25x memory requirement</li>
+				</ul>
+			</li>
+			<li><strong>Hardware reality:</strong>
+				<ul>
+					<li>Laptop: general-purpose assistant</li>
+					<li>Gaming/workstation GPU: agentic coding & other work</li>
+					<li>High-end server: frontier-class models</li>
+				</ul>
+			</li>
+			<!--
+			<li><strong>The stack:</strong>
+				<ul>
+					<li>Backend: llama.cpp or vLLM</li>
+					<li>Proxy: LiteLLM (combines multiple backends to one API endpoint)</li>
+					<li>Client: Open WebUI (a chat interface) & OpenCode (a harness)</li>
+					<li>Tools: Open Terminal, GPT researcher, MCP servers</li>
+				</ul>
+			<li>Android: <a href="https://github.com/cogwheel0/conduit">Conduit</a> client, <a href="https://github.com/jegly/Box">Box</a> server</li>
+			-->
+		</ul>
+		<p class="small">Configs in <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a>; instructions in README.md and exercise 09.</p>
 	</section>
 	<section>
-		<h2>Under the hood: Claude Code with a local model</h2>
-		<img src="figures/local_models/local_models.svg" alt="Flow chart: you type a task; Claude Code sends the whole conversation as a request to a model server on the same computer (LM Studio on port 1234 or llama-server on port 8080), where a chat template turns the messages into one string, the llama.cpp engine computes the reply from the weights and KV cache in RAM, and the reply comes back as text or a tool call, which Claude Code runs on your files and sends the result back. Optional: LiteLLM translates between API formats. In the cloud, the same request goes to api.anthropic.com." style="display: block; margin: 0 auto; height: 820px;">
+		<h2>Under the hood: Agents with a local model</h2>
+		<img src="figures/local_models/local_models.svg" alt="Flow chart: you type a task; the harness (e.g. OpenCode) sends the whole conversation as a request to a model server on the same computer (LM Studio on port 1234, llama-server on port 9931 or vLLM on port 8000), where a chat template turns the messages into one string, the inference engine (llama.cpp or vLLM) computes the reply from the weights and KV cache in RAM, and the reply comes back as text or a tool call, which the harness runs on your files and sends the result back. Optional: LiteLLM translates between API formats and combines several model servers into one endpoint. A harness works the same way with cloud and local models." style="display: block; margin: 0 auto; height: 820px;">
 		<aside class="notes">
 			Go through it from left to right. You type a task. Claude Code is the harness: it builds one request out of its instructions (the system prompt), the list of tools it offers the model, your messages and all earlier tool results, and sends the whole thing every turn. Our measurement with Claude Code 2.1.285 and a fresh configuration in this repository: 22 147 tokens before the model has written anything. The request goes over HTTP, the same protocol a browser uses, but to localhost, i.e. this computer. The model server is either LM Studio (a desktop app) or llama-server (the server of llama.cpp, here in Docker); both have llama.cpp inside. The chat template is a small program stored in the model file: the model knows no messages, only one long string with markers such as &lt;|im_start|&gt;user. The inference engine reads the whole prompt in one go (prefill) and then writes the reply one token at a time (decode); each new token needs essentially all the weights read from RAM again. The weights are the model: 9 billion numbers, about 5 bits each on average in this 4-bit file, 5.7 GB. The KV cache is the model's working memory of the context, 32 KiB per token for this model. The reply is either text or a tool call: structured text that asks for, e.g., Bash with pytest. Claude Code runs it on your files (with your permission), appends the output to the conversation and sends everything again. That loop is the agent. LiteLLM is a translator between Anthropic's API format, which Claude Code speaks, and OpenAI's, which most servers speak; LM Studio (0.4.1 and later) and llama-server speak Anthropic's too, so the exercise doesn't need it. In the cloud nothing changes except the address: ANTHROPIC_BASE_URL points Claude Code at the local server instead of api.anthropic.com.
 		</aside>
@@ -2261,10 +2278,10 @@ opencode
 		<div class="two-col" style="grid-template-columns: auto auto; justify-content: center; align-items: center; gap: 4em;">
 			<figure>
 				<!-- A backing in the slide colour keeps the background graphic out of the quiet zone of the code -->
-				<img class="bare" src="figures/qrcode_feedback.png" alt="QR code of the feedback form" style="height: 360px; padding: 30px; background: var(--r-background-color); image-rendering: pixelated;">
+				<a href="https://elomake.helsinki.fi/lomakkeet/142129/lomake.html"><img class="bare" src="figures/qrcode_feedback.png" alt="QR code of the feedback form" style="height: 360px; padding: 30px; background: var(--r-background-color); image-rendering: pixelated;"></a>
 				<figcaption style="font-size: 1em; color: inherit; text-align: center;">Feedback, please</figcaption>
 			</figure>
-			<img class="bare" src="figures/meme.png" alt="Meme: &quot;Why are runes always ancient, why'd we stop making new runes?&quot; &quot;Brother, we made runes so complex that sand started thinking&quot;, over a rune stone and a chip micrograph" style="height: 520px; margin: 0;">
+			<a href="https://www.reddit.com/r/BrandNewSentence/comments/1wgya3y/we_made_runes_so_complex_that_sand_started/" style="border-bottom: none;"><img class="bare" src="figures/meme.png" alt="Meme: &quot;Why are runes always ancient, why'd we stop making new runes?&quot; &quot;Brother, we made runes so complex that sand started thinking&quot;, over a rune stone and a chip micrograph" style="height: 520px; margin: 0;"></a>
 		</div>
 		<p>Stay and argue with us about the future of science.</p>
 	</section>
