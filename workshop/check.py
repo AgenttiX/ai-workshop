@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Check that the environment of the workshop is set up correctly, and set it up if it isn't.
 
 Run in the root directory of the repository::
