@@ -6,7 +6,7 @@ Open this repository in VS Code and activate the virtual environment in the term
 ## 2. Run the environment check
 
 ```bash
-python -m workshop.check
+python3 -m workshop.check
 ```
 
 Everything marked `FAIL` has to be fixed. `WARN` is fine for `code`/`codium` if VS Code is not on your PATH.

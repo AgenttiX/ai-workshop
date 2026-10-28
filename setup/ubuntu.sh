@@ -20,4 +20,4 @@ cd ai-workshop
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python -m workshop.check
+python3 -m workshop.check

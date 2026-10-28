@@ -16,4 +16,4 @@ py -3.14 -m venv .venv
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-python -m workshop.check
+python3 -m workshop.check

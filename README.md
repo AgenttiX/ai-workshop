@@ -69,7 +69,7 @@ cd ai-workshop
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python -m workshop.check
+python3 -m workshop.check
 ```
 
 **macOS** with [Homebrew](https://brew.sh/). Run the *"Next steps"* that the Homebrew installer prints at the end.
@@ -92,7 +92,7 @@ cd ai-workshop
 python3.14 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python -m workshop.check
+python3 -m workshop.check
 ```
 
 **Windows 11** in PowerShell
@@ -116,7 +116,7 @@ py -3.14 -m venv .venv
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-python -m workshop.check
+python3 -m workshop.check
 ```
 
 </details>
@@ -495,7 +495,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 **3.** Open a terminal in VS Code (**Terminal → New Terminal**). The prompt should start with `(.venv)`. Run
 
 ```bash
-python -m workshop.check
+python3 -m workshop.check
 ```
 
 once more. Everything should be `OK` or `WARN`.
