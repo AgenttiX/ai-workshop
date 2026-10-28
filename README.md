@@ -310,7 +310,8 @@ sudo apt update
 sudo apt install claude-desktop
 ```
 
-On Fedora and other Linux distributions, the desktop app isn't available yet: use a command-line tool of [step 5](#step-5-install-a-command-line-ai-harness).
+On Arch Linux based Linux distributions, you can install the desktop app from AUR as [claude-desktop](https://aur.archlinux.org/packages/claude-desktop).
+On other Linux distributions, the desktop app isn't available yet: use a command-line tool of [step 5](#step-5-install-a-command-line-ai-harness).
 
 Start **Claude** from your applications. Sign in with the account of [step 1](#step-1-an-account-for-an-ai-provider).
 </details>
@@ -542,13 +543,13 @@ The highest performance is often achieved with [vLLM](https://vllm.ai/). However
 <summary><b>Selecting a local LLM model</b></summary>
 
 The optimal choice of a local LLM model depends on the amount of system memory (RAM) and GPU memory (VRAM) available on the computer, as the model must be loaded entirely in RAM+VRAM to work efficiently. Below are some examples of openly available (=open-weight) LLM models suitable for various hardware. The RAM and VRAM numbers are for the memory that is free after your operating system and other programs. On Linux, you can check your free RAM with `free -h`, and free VRAM with `nvtop` or `nvidia-smi`, if you have them installed. On Windows, you can check these in Task Manager.
-- GPU, >= 16 GB: Qwen 3.8-27B, [Gemma 4 26B A4B QAT](https://huggingface.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF), [Gemma 4 31B QAT](https://huggingface.co/unsloth/gemma-4-31B-it-qat-GGUF)
+- GPU, >= 16 GB: [Qwen3.8-27B](https://huggingface.co/unsloth/Qwen3.8-27B-GGUF), [Gemma 4 26B A4B QAT](https://huggingface.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF), [Gemma 4 31B QAT](https://huggingface.co/unsloth/gemma-4-31B-it-qat-GGUF)
 - GPU/CPU, >= 16 GB total (VRAM+RAM): [Gemma 4 26B A4B QAT](https://huggingface.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF) (e.g. 8 GB GPU + 8 GB CPU)
 - GPU/CPU, >= 8 GB total (VRAM+RAM): [Gemma 4 12B QAT](https://huggingface.co/unsloth/gemma-4-12B-it-qat-GGUF)
 - GPU/CPU, >= 6 GB total (VRAM+RAM): [Gemma 4 E4B QAT](https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF)
 - GPU/CPU, >= 4 GB total (VRAM+RAM): [Gemma 4 E2B QAT](https://huggingface.co/unsloth/gemma-4-E2B-it-qat-GGUF)
 
-Further information on Google's Gemma 4 series is available in its [official documentation](https://ai.google.dev/gemma/docs/core). For most use, 4-bit quantization is a good trade-off between size and quality. The E2B and E4B versions are useful for testing and as generic assistants, but for actual work the versions from 12B onwards are preferred. If you have enough memory, the 26B A4B is preferable over the smaller variants, since the former is significantly faster due to its mixture-of-experts (MoE) architecture despite its larger size. In model names, B refers to how many billions of parameters it has, which determines the memory use. E refers to an effective number of parameters. A means how many parameters are activated during the generation of each output token, which determines the output speed (tokens/s). For example, the Gemma 4 26B A4B has 26 billion parameters, of which 4 billion are activated when generating each output token.
+Further information on Google's Gemma 4 series is available in its [official documentation](https://ai.google.dev/gemma/docs/core). For most use, 4-bit quantization is a good trade-off between size and quality. The E2B and E4B versions are useful for testing and as generic assistants, but for actual work the versions from 12B onwards are preferred. If you have enough memory, the 26B A4B is preferable over the smaller variants, since it's significantly faster due to its mixture-of-experts (MoE) architecture despite its larger size. In model names, B refers to how many billions of parameters it has, which determines the memory use. E refers to an effective number of parameters. A means how many parameters are activated during the generation of each output token, which determines the output speed (tokens/s). For example, Gemma 4 26B A4B has 26 billion parameters, of which 4 billion are activated when generating each output token.
 </details>
 
 
