@@ -36,7 +36,7 @@ This repository is for organizing an AI workshop for scientists at the Kumpula C
 - `./workshop/` is a small Python package with helpers shared by the exercises (environment check, plotting style, data generation).
 
 ## Participant-facing text
-- The audience ranges from complete beginners (no VS Code, terminal or venv experience) to advanced users. On the slides, define every term at first use, and give commands for Linux (primary), native Windows (PowerShell) and macOS.
+- The audience ranges from complete beginners (no VS Code, terminal or venv experience) to advanced users. When editing the slides, define every term at first use, and give commands for Linux (primary), native Windows (PowerShell) and macOS.
 
 ## Code style
 - Type hints that work on Python 3.12 and newer everywhere except in the deliberately messy exercise starters.
@@ -46,17 +46,3 @@ This repository is for organizing an AI workshop for scientists at the Kumpula C
 - Run Python tests: `pytest`
 - Lint: `ruff check`
 - Type checking: `pyrefly check`
-
-## Relevant sources
-The repositories below may also be available locally in the same parent directory as this repository. If you need them when they're not already available, you may ask the user for permission to `git clone` them there.
-
-- [Hippe's Claude configs](https://github.com/ahippelainen/claude-loadout)
-- [Mika's Claude & local AI server configs](https://github.com/AgenttiX/agx-ai)
-- [Mika's lecture on unit testing & CI/CD for scientific Python](https://github.com/CFT-HY/unit-testing-ci-cd): created with reveal.js
-- [Mika's PhD presentations](https://github.com/AgenttiX/phd-presentations): created with reveal.js
-- [PTPlot](https://github.com/CFT-HY/PTPlot/tree/mika-dev): Mika's research software for plotting first-order cosmological phase transitions
-- [PTtools](https://github.com/CFT-HY/pttools/tree/dev): Mika's research software for modeling first-order cosmological phase transitions
-- Vibe-coded projects
-    - [Bubble simulation](https://github.com/AgenttiX/bubble-simulation): lattice simulation of a first-order phase transition by Mika
-    - [Manifolder](https://github.com/AgenttiX/manifolder): Calabi-Yau manifold plotter by Mika
-    - [vote_for_lunch_online](https://github.com/ahippelainen/vote_for_lunch_online): restaurant voting app by Hippe

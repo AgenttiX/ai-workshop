@@ -571,10 +571,3 @@ When something fails, the error message usually says why. Paste it into any AI c
 
 ## Exercises
 The exercises are in [`exercises/`](./exercises/). Each has a `README.md` with the task, the prompts to try and explanations for those who want to know more. The solutions, with an explanation of what happened, are in [`solutions/`](./solutions/). Try first, then peek.
-
-
-## For the organizers
-- Plan: [`plan/`](./plan/). Coordination: [Mattermost](https://cftgroup.chat/main/channels/ai-workshop).
-- Run the tests: `pytest`. Lint: `ruff check`. Type check: `pyrefly check`.
-- Render the slides to a PDF: `./render.py slides.html` (requires Chromium or Chrome).
-- The poster is in [`poster/`](./poster/): `poster.svg`, previewed with `poster/preview.sh` and exported for print with `inkscape poster.svg --export-type=pdf --export-text-to-path --export-filename=poster.pdf`.
