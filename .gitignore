@@ -18,6 +18,7 @@ venv
 /fig/
 exercises/**/fig/
 exercises/**/results/
+figures/local_models/*.png
 solutions/**/fig/
 solutions/**/results/
 # Poster previews and the Firefox profile used to render them

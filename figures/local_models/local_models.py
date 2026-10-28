@@ -1,4 +1,4 @@
-"""Flow chart of Claude Code with a local model, as a self-contained 1600x800 SVG.
+"""Flow chart of an agent harness with a local model, as a self-contained 1600x800 SVG.
 
 The white background lets it sit on any slide theme. The style follows Antti's research flow charts
 (``research-physics.svg``, ``research-math.svg``): the same palette, cards and arrows.
@@ -21,19 +21,14 @@ MONO = "'JetBrains Mono', 'DejaVu Sans Mono', monospace"
 INK = "#1f2933"
 MUTED = "#52606d"
 LINE = "#52606d"
-CLAUDE = "#d97757"
 #: Fill and stroke of each kind of box
 PALETTE = {
     "you": ("#fdf3ea", "#e0a36f"),
-    "claude": ("#eef4fb", "#7b9cc4"),
+    "harness": ("#eef4fb", "#7b9cc4"),
     "check": ("#f3eefb", "#9b85c9"),
     "yours": ("#f1f7ee", "#8fb67f"),
     "machine": ("#f4f5f7", "#9aa5b1"),
 }
-
-#: The Claude Code mascot as drawn in the slides' prompt boxes: (x, y) cells of an 11x5 grid
-MASCOT = [(x, 0) for x in range(1, 10)] + [(1, 1), (2, 1), (4, 1), (5, 1), (6, 1), (8, 1), (9, 1)] \
-    + [(x, 2) for x in range(11)] + [(x, 3) for x in range(1, 10)] + [(1, 4), (3, 4), (7, 4), (9, 4)]
 
 
 class Svg:
@@ -75,10 +70,7 @@ class Svg:
         """Add a box with a bold title and body lines; a line starting with a backtick is set in monospace."""
         self.box(x, y, w, h, kind, dash=dash)
         tx = x + 18
-        if icon == "claude":
-            self.mascot(x + 18, y + 16, 3.2)
-            tx = x + 18 + 11 * 3.2 + 12
-        elif icon == "you":
+        if icon == "you":
             self.person(x + 34, y + 30)
             tx = x + 62
         self.text(tx, y + 34, title, title_size, 700)
@@ -87,12 +79,6 @@ class Svg:
             mono = line.startswith("`")
             self.text(x + 18, yy, line.strip("`"), size - 1 if mono else size, color=INK if mono else MUTED, mono=mono)
             yy += size * 1.35
-
-    def mascot(self, x: float, y: float, cell: float) -> None:
-        """Add the Claude Code mascot with its top left corner at (x, y)."""
-        cells = "".join(f'<rect x="{x + cx * cell:g}" y="{y + cy * cell:g}" width="{cell:g}" height="{cell:g}"/>'
-                        for cx, cy in MASCOT)
-        self.add(f'<g fill="{CLAUDE}" shape-rendering="crispEdges">{cells}</g>')
 
     def person(self, cx: float, cy: float) -> None:
         """Add a person icon centered at (cx, cy)."""
@@ -117,64 +103,62 @@ class Svg:
 
 
 def local_models() -> Svg:
-    """Draw the chain from Claude Code through the model server to the weights, and the tool loop."""
-    s = Svg("Claude Code with a local model: Claude Code sends the conversation over HTTP to a model server "
+    """Draw the chain from the harness through the model server to the weights, and the tool loop."""
+    s = Svg("An agent harness with a local model: the harness sends the conversation over HTTP to a model server "
             "on the same computer, "
-            "where a chat template turns it into one string, llama.cpp computes the next tokens from the weights, "
-            "and the reply comes back as text or a tool call that Claude Code runs")
+            "where a chat template turns it into one string, the inference engine computes the next tokens "
+            "from the weights, and the reply comes back as text or a tool call that the harness runs")
 
     s.box(30, 30, 1540, 560, "machine", dash=True)
     s.text(52, 66, "Your computer", 24, 700)
 
-    s.card(60, 100, 230, 110, "you", "You", ["type a task"], icon="you")
+    s.card(60, 100, 230, 110, "you", "You", ["Type a task"], icon="you")
     s.arrow([(290, 155), (360, 155)])
 
-    s.card(360, 90, 440, 200, "claude", "Claude Code: the harness", [
-        "sends the whole conversation, every turn:",
+    s.card(360, 90, 440, 200, "harness", "Harness (e.g. OpenCode)", [
+        "Sends the whole conversation, every turn:",
         "instructions, tool list, your messages,",
         "earlier tool results",
-        "`first turn: ~22 000 tokens",
-    ], icon="claude")
-    s.card(360, 380, 440, 180, "claude", "Runs the tools on your files", [
+    ])
+    s.card(360, 380, 440, 180, "harness", "Runs the tools on your files", [
         "`Bash  Read  Edit  Write  …",
-        "the model only writes text;",
-        "Claude Code does the acting,",
+        "The model only writes text;",
+        "the harness does the acting,",
         "with your permission",
     ])
     s.arrow([(540, 290), (540, 380)], "tool call", 528, 342, anchor="end")
     s.arrow([(620, 380), (620, 290)], "result", 632, 342, anchor="start")
 
     s.box(940, 60, 610, 510, "check")
-    s.text(962, 96, "Model server: LM Studio, or llama-server", 22, 700)
-    s.text(962, 124, "port 1234 (LM Studio) or 8080 (llama-server)", 18, color=MUTED)
+    s.text(962, 96, "Model server: LM Studio / llama-server / vLLM", 22, 700)
+    s.text(962, 124, "Port 1234 (LM Studio), 9931 (llama-server) or 8000 (vLLM)", 18, color=MUTED)
     s.arrow([(800, 165), (940, 165)], "request", 870, 153)
     s.arrow([(940, 240), (800, 240)], "reply:", 870, 268)
     s.text(870, 290, "text or tool call", 17, color=MUTED, anchor="middle", italic=True)
 
     s.card(965, 140, 560, 110, "yours", "Chat template", [
-        "messages → one string with markers:",
+        "Messages → one string with markers:",
         "`<|im_start|>user …<|im_end|>",
     ])
     s.arrow([(1245, 250), (1245, 275)])
-    s.card(965, 275, 560, 140, "yours", "Inference engine: llama.cpp", [
-        "prefill: reads the whole prompt at once",
-        "decode: writes one token at a time,",
+    s.card(965, 275, 560, 140, "yours", "Inference engine: llama.cpp / vLLM", [
+        "Prefill: reads the whole prompt at once",
+        "Decode: writes one token at a time,",
         "each one reads all the weights again",
     ])
     s.arrow([(1245, 415), (1245, 440)])
     s.card(965, 440, 560, 110, "yours", "Weights + KV cache, in RAM", [
-        "`Qwen3.5-9B-Q4_K_M.gguf  5.7 GB",
-        "KV cache: the context, 32 KiB per token",
+        "`gemma-4-26B-A4B-it-qat-UD-Q4_K_XL.gguf  14.2 GB",
+        "KV cache: the context, 20 KiB per token",
     ])
 
-    s.card(30, 620, 760, 150, "machine", "Optional: LiteLLM, a translator", [
-        "converts Anthropic's API format (Claude Code)",
-        "to OpenAI's, for servers that speak only that;",
-        "LM Studio and llama-server speak both",
+    s.card(30, 620, 760, 150, "machine", "Optional: LiteLLM, a translator+proxy", [
+        "Converts between API formats, e.g. Anthropic vs. OpenAI,",
+        "and combines multiple model servers to one API endpoint",
     ], dash=True)
     s.card(810, 620, 760, 150, "you", "In the cloud: the same chain, far away", [
-        "by default, Claude Code sends the same request",
-        "to api.anthropic.com; this variable changes the address:",
+        "A harness works the same way with cloud and local models,",
+        "and can be pointed to either:",
         "`ANTHROPIC_BASE_URL=http://localhost:1234",
     ])
     return s
