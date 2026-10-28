@@ -10,8 +10,8 @@ name = "kumpula-ai-workshop"
 version = "1.0.0"
 description = "Kumpula AI workshop for scientists 2026: slides and exercises"
 readme = "README.md"
-# license = "TODO"
-# license-files = ["LICENSE"]
+license = "MIT"
+license-files = ["LICENSE"]
 keywords = [
     "agent",
     "AI",
