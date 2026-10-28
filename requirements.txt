@@ -7,7 +7,8 @@ pytest == 9.2.0
 pytest-cov == 7.1.0
 # Only for type checking figures/ with the rest of the repository (pyrefly check)
 PyYAML == 6.0.3
-# Replace this with the next PTtools release (the one after 0.10.0) once it's available.
+# Todo for organizers: replace this with the next PTtools release (the one after 0.10.0) once it's available.
+# Note for participants: If you have any issues installing PTtools, just comment out its line below.
 pttools-gw[performance] @ git+https://github.com/CFT-HY/pttools.git@9a88b305bb8a90c0fb3de166ca7e63d53cb0b69f
 ruff == 0.17.3
 scipy == 1.18.1

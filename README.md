@@ -455,6 +455,8 @@ git clone https://github.com/AgenttiX/ai-workshop.git
 cd ai-workshop
 ```
 
+If you're new to Git and would like to know more, please feel free to have a look at [this simple tutorial](https://rogerdudler.github.io/git-guide/).
+
 
 ### Step 8: Create the Python environment and check everything
 A **virtual environment** ("venv") is a fancy name for a folder with its own copy of Python and its own packages, separate from the rest of your computer, so that the workshop can't break anything else and vice versa. This keeps dependencies on different packages separate between projects. The workshop's check script creates it for you. In the terminal, inside the `~/Git/ai-workshop` folder, run:
