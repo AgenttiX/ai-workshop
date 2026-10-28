@@ -214,11 +214,15 @@
 				bottom: 0;
 				width: 30%;
 				padding: 0.4em 0.7em;
-				font-size: 0.6em;
+				font-size: 0.8em;
 				line-height: 1.35;
 			}
 			.reveal .slides .corner-box p {
 				margin: 0.2em 0;
+			}
+			/* Keep the callout and references at the bottom of the slide clear of the corner box */
+			.reveal .slides section:has(> .corner-box) > :is(.callout, .small) {
+				margin-right: calc(30% + 2em);
 			}
 			/* A slide with a figure: <div class="media"><div>text</div><figure>…</figure></div> */
 			.reveal .media {
