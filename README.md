@@ -102,6 +102,10 @@ python -m workshop.check
 winget install Python.Python.3.14 Git.Git Microsoft.VisualStudioCode Anthropic.Claude
 # The command-line Claude Code. Claude Desktop doesn't always install it.
 irm https://claude.ai/install.ps1 | iex
+# The installer puts claude.exe in ~\.local\bin but doesn't add that folder to PATH
+$bin = "$env:USERPROFILE\.local\bin"
+$userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if (";$userPath;" -notlike "*;$bin;*") { [Environment]::SetEnvironmentVariable("Path", "$userPath;$bin", "User") }
 
 # Close and reopen PowerShell, then:
 New-Item -ItemType Directory -Force ~\Git
@@ -564,7 +568,7 @@ When something fails, the error message usually says why. Paste it into any AI c
 | The check says `FAIL` for a package | Run the check again with `--setup` added, e.g. `python3 -m workshop.check --setup`. |
 | The terminal in VS Code doesn't show `(.venv)` | Select the interpreter (step 9), then open a new terminal. Or activate it by hand (step 8). |
 | You can't install programs on a university-managed laptop | On Cubbli, request sudo rights with `i-want-sudo-access`. The Python and VS Code installers above work without administrator rights. |
-| `claude` is not found in the terminal | Install the command-line version ([step 5](#step-5-install-a-command-line-ai-harness)), then open a new terminal. Claude Desktop may not add the command, and the VS Code extension doesn't. |
+| `claude` is not found in the terminal | Install the command-line version ([step 5](#step-5-install-a-command-line-ai-harness)), then open a new terminal. Claude Desktop may not add the command, and the VS Code extension doesn't. On Windows, the installer doesn't add its folder to PATH: run <br>`[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$env:USERPROFILE\.local\bin", "User")`<br>in PowerShell and open a new one. |
 | `git pull` says your local changes would be overwritten | You have edited files in the exercises. Run these three commands one at a time: <br>`git stash` (puts your changes aside)<br>`git pull`<br>`git stash pop` (brings your changes back)<br> You can also ask your AI agent to do this for you.|
 | Claude Code says that your plan doesn't include it | The free Claude plan doesn't include Claude Code; see [step 1](#step-1-an-account-for-an-ai-provider). |
 
