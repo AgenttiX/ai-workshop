@@ -1836,10 +1836,218 @@ claude mcp add --scope project zotero -- zotero-mcp
 			<tr><td>Linting (<code><a href="https://docs.astral.sh/ruff/">ruff</a></code>)</td><td>An automatic check for common mistakes and messy code</td><td>Bug patterns and style problems, in milliseconds</td></tr>
 			<tr><td>Type checking (<code><a href="https://pyrefly.org/">pyrefly</a></code>)</td><td>Checks that functions get the kinds of values they expect</td><td>Wrong arguments caught across the whole code base</td></tr>
 			<tr><td>CI (<a href="https://github.com/features/actions">GitHub Actions</a>)</td><td>A server that runs all of the above on every change you push</td><td>The same checks on every change, including the agent's</td></tr>
+			<tr><td>Pre-commit hooks (<code><a href="https://github.com/j178/prek">prek</a></code>)</td><td>Runs checks, e.g. linting, on your computer before every commit</td><td>A commit that fails the checks is refused, so broken code doesn't enter the history</td></tr>
 			<tr><td>Packaging &amp; README</td><td>Install instructions and a <code><a href="https://packaging.python.org/en/latest/guides/writing-pyproject-toml/">pyproject.toml</a></code></td><td>It can install and run the project from the instructions alone</td></tr>
 		</table>
 		<aside class="notes">
 			The thesis of this block: tests, lint, types and CI are the agent's senses. A project without them is an agent working blind.
+		</aside>
+	</section>
+	<section class="dense">
+		<h2>Unit tests: checks that run themselves</h2>
+		<p class="def">A <strong>unit test</strong> is a small, fast, automated check that <em>one</em> piece of code (usually one function) does what you expect it to do.</p>
+		<div class="two-col">
+			<div>
+				<p><code>test_fitting.py</code></p>
+				<pre><code class="language-python" data-trim style="max-height: none;">
+import numpy as np
+import pytest
+
+import fitting
+
+
+def test_exact_line_is_recovered():
+    x = np.linspace(0, 10, 11)  # Arrange
+    y = 3 * x - 2
+    slope, intercept, _, _ = fitting.weighted_linear_fit(x, y)  # Act
+    assert slope == pytest.approx(3)  # Assert
+    assert intercept == pytest.approx(-2)
+
+
+def test_chi_squared_of_a_perfect_fit_is_zero():
+    x = np.array([1.0, 2.0, 3.0])
+    assert fitting.chi_squared(x, 2 * x + 1, np.ones(3), 2, 1) == 0
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li><strong>Small</strong>: tests one behaviour, so a failure tells you <em>where</em> it broke</li>
+					<li><strong>Fast</strong>: milliseconds, so you (and the agent) run them after every change</li>
+					<li><strong>Deterministic</strong>: fails for a reason, not by chance (fix the random seed)</li>
+					<li><strong>Arrange, act, assert</strong>: set up the input, call the function, check the result</li>
+					<li><code><a href="https://docs.pytest.org/">pytest</a></code> runs every <code>test_*</code> function in every <code>test_*.py</code> file: just type <code>pytest</code></li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">
+			From the unit testing &amp; CI/CD lecture, condensed. pytest also runs old unittest.TestCase classes, so no need to rewrite existing tests.
+			The examples are from solutions/04_ai_ready/test_fitting.py.
+		</aside>
+	</section>
+	<section>
+		<h2>What to test in research code</h2>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li><strong>Known answers</strong>: analytic solutions, literature values, limiting cases (\(v \ll c\), \(T \to 0\), a perfect fit has \(\chi^2 = 0\))</li>
+					<li><strong>Physics as invariants</strong>: conservation of energy, positivity of \(T\), \(p\) and probabilities, symmetries. These survive refactoring.</li>
+					<li><strong>Regression tests</strong>: save today's output to a file, commit it, and check that tomorrow's output still matches. The easiest start for an existing code.</li>
+					<li><strong>Plots</strong>: often it's enough that the code runs without errors</li>
+				</ul>
+			</div>
+			<div>
+				<p>Floating-point numbers are never exactly equal, so compare with a tolerance:</p>
+				<pre><code class="language-python" data-trim>
+assert g == pytest.approx(9.81, rel=1e-3)
+np.testing.assert_allclose(actual, expected, rtol=1e-8)
+				</code></pre>
+				<p class="callout">An agent can make the tests pass by changing the <em>tests</em>, e.g. by loosening a tolerance or deleting an assertion. Read the changes (diff) of the tests, and specify in AGENTS.md the conditions under which changes in the tests are allowed.</p>
+			</div>
+		</div>
+		<aside class="notes">
+			Machine epsilon for float64 is ~1e-16; a reasonable rtol for physics is often 1e-10 ... 1e-6, depending on the algorithm.
+			Famous cautionary tales from the lecture, if there's time: Miller &amp; Chang 2006 (five retracted protein structures from a sign flip), Reinhart &amp; Rogoff / Herndon et al. 2013 (spreadsheet dropped rows), the Imperial COVID simulation 2020 (results depended on the compiler).
+		</aside>
+	</section>
+	<section>
+		<h2>Linting: <code>ruff check</code></h2>
+		<p class="def">A <strong>linter</strong> reads your code without running it and reports bug patterns and messy code. <code><a href="https://docs.astral.sh/ruff/">ruff</a></code> checks a whole Python project in seconds.</p>
+		<div class="two-col" style="grid-template-columns: auto 1fr; gap: 1.2em;">
+			<div>
+				<pre style="font-size: 0.8em;"><code class="language-text" data-trim style="max-height: none;">
+$ ruff check fitting.py
+F401 [*] `os` imported but unused
+ --> fitting.py:2:8
+  |
+2 | import os
+  |        ^^
+
+B006 Do not use mutable data structures for argument defaults
+ --> fitting.py:6:50
+  |
+6 | def weighted_linear_fit(x, y, sigma=None, result={}):
+  |                                                  ^^
+help: Replace with `None`; initialize within function
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>Each finding has a code (<code>B006</code>), a line, and often a suggested fix: exactly what an agent needs to fix it</li>
+					<li><code>B006</code> is a real bug: the same <code>{}</code> is shared by every call, so results leak from one fit to the next</li>
+					<li><code>ruff check --fix</code> applies the safe fixes automatically, and <code>ruff format</code> formats the code</li>
+					<li>Choose the rule sets in <code>pyproject.toml</code>; start small and add more</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">Real output on exercises/04_ai_ready/fitting.py (with rule sets B, E, F; shortened).</aside>
+	</section>
+	<section class="dense">
+		<h2>Type checking: <code>pyrefly check</code></h2>
+		<p class="def"><strong>Type hints</strong> declare what kind of value a function takes and returns. A <strong>type checker</strong> such as <code><a href="https://pyrefly.org/">pyrefly</a></code> (or mypy) checks every call against them, across the whole project, without running the code.</p>
+		<div class="two-col" style="grid-template-columns: auto 1fr; gap: 1.2em;">
+			<div>
+				<pre style="font-size: 0.8em;"><code class="language-python" data-trim>
+import numpy as np
+
+
+def kinetic_energy(mass: float, velocity: np.ndarray) -> np.ndarray:
+    return 0.5 * mass * velocity**2
+
+
+mass = input("Mass in kg: ")
+energy = kinetic_energy(mass, np.array([1.0, 2.0]))
+				</code></pre>
+				<pre style="font-size: 0.8em;"><code class="language-text" data-trim>
+$ pyrefly check
+ERROR Argument `str` is not assignable to parameter `mass`
+with type `float` in function `kinetic_energy` [bad-argument-type]
+ --> energy.py:9:25
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li>Python itself ignores the hints: this code crashes only when it gets that far, maybe after an hour of computing</li>
+					<li>When an agent changes a function, the type checker finds every call it forgot to update</li>
+					<li>Adding hints to old code is a good, easily checked task for an agent</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">The output is real (pyrefly, shortened). input() returns a str; the fix is float(input(...)).</aside>
+	</section>
+	<section class="dense">
+		<h2>CI: the checks run on every git commit</h2>
+		<p class="def"><strong>Continuous integration (CI)</strong>: a server runs your tests and checks every time you push changes to Git, and tells you if something broke. (<strong>CD</strong>, continuous deployment, then publishes e.g. a release with a DOI.)</p>
+		<div class="two-col">
+			<div>
+				<ul>
+					<li><strong>Not just your laptop</strong>: a clean machine installs your code from scratch. If it works there, you've avoided the classical "it works on my machine".</li>
+					<li><strong>Linux, Windows and macOS</strong>: testing in different environments, in parallel</li>
+					<li><strong>Silent drift</strong>: a library or even an OS update can change the results. A scheduled weekly run notices it before your paper does.
+						<!--
+						<ul>
+							<li>Example: in Windows 10 version 2004, the <code>fmod</code> operation left the CPU registers in an invalid state and broke NumPy (<a href="https://github.com/numpy/numpy/issues/16744">numpy#16744</a>)</li>
+						</ul>
+						-->
+					</li>
+				</ul>
+			</div>
+			<div>
+				<p><a href="https://github.com/features/actions">GitHub Actions</a>: a YAML file in <code>.github/workflows/</code></p>
+				<ul>
+					<li><strong>Triggers</strong> (<code>on:</code>): push, pull request, schedule, manual</li>
+					<li><strong>Jobs</strong>: each on a fresh virtual machine, in parallel</li>
+					<li><strong>Steps</strong>: either a ready-made action (<code>uses:</code>) or a shell command (<code>run:</code>)</li>
+				</ul>
+				<p class="callout">CI checks the agent's work even if you forgot to ask it to run the tests. The agent can read the failures with <code>gh run view --log-failed</code>.</p>
+			</div>
+		</div>
+		<aside class="notes">
+			Free for public repositories on GitHub; private repositories get a monthly quota of minutes. The full workflow is on the "Steal this configuration" backup slide.
+			The workflow file is also a tested install recipe. PTtools runs CI on Linux, macOS and Windows on every push; that's how a Numba update breaking ARM macOS was caught.
+		</aside>
+	</section>
+	<section class="dense">
+		<h2>Packaging: installable from the instructions alone</h2>
+		<p class="def">A <strong>package</strong> is code that <code>pip</code> can install, with its dependencies. <code><a href="https://packaging.python.org/en/latest/guides/writing-pyproject-toml/">pyproject.toml</a></code> describes it: the name, the dependencies and the settings of the tools.</p>
+		<div class="two-col">
+			<div>
+				<pre><code class="language-toml" data-trim>
+[build-system]
+requires = ["setuptools >= 80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "my-analysis"
+version = "0.1.0"
+requires-python = ">= 3.12"
+dependencies = ["numpy >= 2.4", "scipy >= 1.17"]
+
+[project.optional-dependencies]
+dev = ["pyrefly", "pytest", "ruff"]
+				</code></pre>
+				<p>Install it into the active virtual environment:</p>
+				<pre><code class="language-bash" data-trim>
+pip install -e ".[dev]"
+				</code></pre>
+			</div>
+			<div>
+				<ul>
+					<li><code>-e</code> (editable): your changes take effect without reinstalling</li>
+					<li>Then <code>import my_analysis</code> works from any folder, including the tests: no more <code>sys.path</code> hacks</li>
+					<li><code>requirements.txt</code> with exact versions (<code>numpy==2.4.1</code>) reproduces the environment of a paper</li>
+					<li>
+						<strong>README</strong>: what the code does, how to install it, how to run it and its tests
+						<ul>
+							<li>If a new student can set it up from the README alone, so can an agent</li>
+							<li><code>AGENTS.md</code>: the same commands, for the agent</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">
+			A virtual environment (venv) was introduced in the setup: python3 -m venv .venv, then source .venv/bin/activate (Linux/macOS) or .venv\Scripts\Activate.ps1 (Windows PowerShell).
+			On Windows, py -3 -m pip works if pip is not on the PATH.
 		</aside>
 	</section>
 	<section>
@@ -1871,7 +2079,7 @@ def chi_squared(x, y, sigma, slope, intercept):
 			</div>
 		</div>
 	</section>
-	<section>
+	<section class="backup">
 		<h2>Steal this configuration</h2>
 		<div class="two-col">
 			<div>
@@ -1914,6 +2122,57 @@ jobs:
 			Full versions in this repository and in PTtools (<code><a href="https://github.com/CFT-HY/pttools/blob/dev/pyproject.toml">pyproject.toml</a></code>, <code><a href="https://github.com/CFT-HY/pttools/blob/dev/.github/workflows/main.yml">main.yml</a></code>). Slides on the why and how: <a href="https://github.com/CFT-HY/unit-testing-ci-cd">unit-testing-ci-cd</a>.
 		</p>
 		<p class="callout">And list the commands in <code>AGENTS.md</code>, so the agent knows to run them.</p>
+	</section>
+	<section class="backup dense">
+		<h2>Pre-commit hooks: checks before every commit</h2>
+		<p class="def">A <strong>Git hook</strong> is a script that Git runs at a fixed moment. A <strong>pre-commit hook</strong> runs before every commit, and if it fails, the commit is refused. <code><a href="https://github.com/j178/prek">prek</a></code> (a faster drop-in replacement for <a href="https://pre-commit.com/">pre-commit</a>) manages them from one file.</p>
+		<div class="two-col">
+			<div>
+				<p><code>prek.toml</code></p>
+				<pre><code class="language-toml" data-trim style="max-height: none;">
+[[repos]]
+repo = "builtin"
+hooks = [
+    {id = "trailing-whitespace"}, {id = "end-of-file-fixer"},
+    {id = "check-added-large-files"}, {id = "check-toml"},
+]
+
+[[repos]]
+repo = "local"
+[[repos.hooks]]
+id = "ruff-check"
+name = "ruff check"
+entry = "ruff check"
+language = "system"
+pass_filenames = false
+always_run = true
+				</code></pre>
+			</div>
+			<div>
+				<p>Install once per clone, with the virtual environment active:</p>
+				<pre><code class="language-bash" data-trim>
+pip install prek
+prek install
+				</code></pre>
+				<pre><code class="language-text" data-trim>
+$ git commit -m "Add fit"
+check for added large files.....Passed
+ruff check......................Failed
+  F401 [*] `os` imported but unused
+				</code></pre>
+				<ul>
+					<li>The agent's commits go through the same hooks: it reads the failure and fixes it</li>
+					<li>Add <code>pyrefly check</code> the same way as <code>ruff check</code></li>
+					<li><code>git commit --no-verify</code> skips the hooks: forbid it in <code>AGENTS.md</code>. CI is the backstop.</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">
+			Based on prek.toml of PTtools, which also runs pyrefly coverage check, checks JSON, YAML and shebangs, and runs the read-only hooks in parallel with priorities. PTtools runs the tools with "uv run"; here they run from the active venv. Tested with prek 0.5.7.
+			Git hooks vs. the Claude Code hooks of part 3: Claude Code hooks run on the agent's tool calls, e.g. after every file edit; Git hooks run on every commit, by anyone, from any editor or agent. check-added-large-files (default 500 kB) keeps accidental data files and plots out of the repository.
+			Fixers such as end-of-file-fixer change the files and fail the commit: git add the changes and commit again.
+			prek also reads an existing .pre-commit-config.yaml, so switching from pre-commit needs no changes. "prek run --all-files" runs the hooks without committing.
+		</aside>
 	</section>
 </section>
 
