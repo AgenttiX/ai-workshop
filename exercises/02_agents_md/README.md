@@ -3,7 +3,7 @@
 
 ## Task
 
-### 1. Let Claude write a draft
+### 1. Let your AI agent write a draft
 Open a Claude Code session *in `exercises/02_agents_md/pendulum_lab/`*. In the terminal, from the repository folder, run (the same in PowerShell):
 
 ```bash

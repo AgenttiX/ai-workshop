@@ -1,5 +1,9 @@
 # Exercise 09: Local models (30 min, optional, advanced)
-The harness is separate from the model. Claude Code can talk to any server that speaks the Anthropic Messages API, and two programs that run open-weight models on your own computer do: [LM Studio](https://lmstudio.ai/) (a desktop app) and llama-server of [llama.cpp](https://github.com/ggml-org/llama.cpp) (a command-line server, here run in Docker).
+The harness is separate from the model.
+For local models, it's preferable to use a harness designed for use with them, such as OpenCode,
+but many cloud-first harnesses such as Claude Code can also talk to any local server that speaks a compatible API.
+
+Claude Code can talk to any server that speaks the Anthropic Messages API, and two programs that run open-weight models on your own computer do: [LM Studio](https://lmstudio.ai/) (a desktop app) and llama-server of [llama.cpp](https://github.com/ggml-org/llama.cpp) (a command-line server, here run in Docker).
 
 Why: privacy (the data never leaves the machine), no rate limits, offline use, cost. What you give up: capability and speed. A model that fits on a laptop is roughly where the cloud models were 1–2 years ago, and on a laptop without a dedicated GPU it's slow.
 
@@ -20,42 +24,23 @@ You → Claude Code ──request (JSON over HTTP)──→ model server on your
 The slides *Under the hood* and *Why local models misbehave, in numbers* explain each part and its problems in more detail.
 
 ## Before you start
-- **Memory:** a model needs about its file size in RAM (or GPU memory), plus the context. The examples here use **Qwen3.5-4B** (2.7 GB). With 8 GB of RAM, take Qwen3.5-2B (1.3 GB); with a GPU with 12 GB or more, Qwen3.5-9B (5.7 GB).
+- **Memory:** a model needs about its file size in RAM (or GPU memory, aka. VRAM), plus the context. The examples here use **Qwen3.5-4B** (2.7 GB). With 8 GB of RAM, take Qwen3.5-2B (1.3 GB); with a GPU with 12 GB or more, Qwen3.5-9B (5.7 GB).
 - **Disk:** the model file, and about 1 GB for LM Studio or 1.2 GB for the llama.cpp Docker image.
 - **Speed:** without a dedicated GPU, plain `claude` is too slow for this exercise: on our laptop, the model read its 22 000-token prompt at about 24 tokens per second, which makes about 15 minutes before the first answer. That's why the commands below use `claude --bare`, which leaves out most of the tools, `CLAUDE.md` and the memory, so that the prompt is about 1 300 tokens.
 
 Pick **route A** (LM Studio, easier) or **route B** (llama.cpp in Docker, more control). Both end with the same step 3. OpenCode users do the same routes and then replace step 3 with [With OpenCode instead](#with-opencode-instead).
 
-## Route A: LM Studio
-### A1. Install LM Studio and get a model
-Download LM Studio from <https://lmstudio.ai/download>, install it and start it once.
+## With Claude Code
+For OpenCode, please see the next section.
 
-- **Windows, macOS:** run the installer.
-- **Linux:** the download is an `.AppImage`. Make it executable and start it:
+### Route A: LM Studio
+#### A1. Install LM Studio and get a model
+Download and install LM Studio from <https://lmstudio.ai/download>, and then download a model that fits on your computer.
+For more detailed installation instructions,
+please see [step 10: local models the repository readme](../../README.md#step-10-local-models-optional).
 
-  ```bash
-  chmod +x ~/Downloads/LM-Studio-*.AppImage
-  ~/Downloads/LM-Studio-*.AppImage
-  ```
 
-  If nothing happens (e.g. on Ubuntu 24.04 and newer), start it with `--no-sandbox` at the end. This turns off the security sandbox of the app's window for this run.
-
-LM Studio comes with a command-line tool, `lms`. Open a terminal and make `lms` available in it:
-
-| Linux, macOS | Windows (PowerShell) |
-|---|---|
-| `alias lms=~/.lmstudio/bin/lms` | `Set-Alias lms "$env:USERPROFILE\.lmstudio\bin\lms.exe"` |
-
-Download the model and check its name:
-
-```bash
-lms get qwen/qwen3.5-4b
-lms ls
-```
-
-`lms ls` lists the models on your computer. The name in the first column is the one you use below. (You can also download models in the app: the magnifying glass on the left.)
-
-### A2. Fix the chat template
+#### A2. Fix the chat template
 The chat template of Qwen3.5 stops with the error `System message must be at the beginning`, because Claude Code sends a second system message later in the conversation. Change one line, **in the settings of the model you will load in A3**: each model has its own template, so fixing another one (e.g. the 2B when you load the 4B) changes nothing.
 
 1. In LM Studio, click **Library**, and under my models click the **gear icon** next to the model you will load (e.g. `qwen3.5-4b`).
@@ -87,10 +72,10 @@ lms server start
 
 Check that it answers: open <http://localhost:1234/v1/models> in a browser. You can also chat with the model in the app first, to see how fast it is. Continue with [step 3](#3-point-claude-code-at-the-server), with port **1234**.
 
-## Route B: llama.cpp in Docker
+### Route B: llama.cpp in Docker
 [Docker](https://docs.docker.com/get-started/get-docker/) runs a program together with everything it needs as a sealed box, a *container*. [`docker-compose.yml`](docker-compose.yml) is the recipe for this one: which program to run (the llama-server image), which folder of your computer to show inside it (`models/`), and which port to open (8080). It also sets the context length, the fixed chat template ([`qwen35-claude-code.jinja`](qwen35-claude-code.jinja)) and turns off Qwen's thinking, which would otherwise be written at the same slow speed as the answer.
 
-### B1. Install Docker and get a model
+#### B1. Install Docker and get a model
 Install Docker: Docker Engine on Linux, Docker Desktop on Windows and macOS. Then go to this folder and download the model as `models/model.gguf`:
 
 | Linux, macOS | Windows (PowerShell) |
@@ -101,7 +86,7 @@ Install Docker: Docker Engine on Linux, Docker Desktop on Windows and macOS. The
 
 For the 2B or 9B model, change both `4B`s in the address to `2B` or `9B`.
 
-### B2. Start the server
+#### B2. Start the server
 In the same folder:
 
 ```bash
@@ -113,7 +98,7 @@ docker logs -f llama-cpp
 
 Open <http://localhost:8080> in a browser: llama-server has its own chat page. Continue with step 3, with port **8080**.
 
-## 3. Point Claude Code at the server
+### 3. Point Claude Code at the server
 Open **a new terminal** and go to the workshop folder. The settings apply only in this terminal, so start `claude` in the same one. Use port 1234 for LM Studio and 8080 for llama-server, and for LM Studio the model name from `lms ls` (llama-server serves one model and ignores the name).
 
 **Linux and macOS:**
@@ -146,7 +131,7 @@ What they do:
 - `CLAUDE_CODE_MAX_CONTEXT_TOKENS`: the context length of the server, so that Claude Code summarizes the conversation before it overflows.
 - `CLAUDE_CODE_ATTRIBUTION_HEADER=0`: Claude Code otherwise adds a line that changes with every request. The server can reuse the work it did for an unchanged beginning of the conversation, and that line would make it read everything again.
 
-## With OpenCode instead
+## With OpenCode
 OpenCode never sends requests to a single vendor URL through environment variables: models are *providers* in `opencode.json(c)`, selected with `/models`. Instead of the step 3 environment block, create (or merge into) your global configuration at `~/.config/opencode/opencode.json` — avoid a second file next to an existing one, since both `opencode.json` and `opencode.jsonc` in the same directory conflict. OpenCode rereads the file after every save, so no restart is needed.
 
 **Route A (LM Studio)** — OpenCode finds LM Studio models on its own at the port `lms server start` opened; to fix the context length at 32 768 tokens, list one model, named exactly as `lms ls` shows it:
@@ -168,7 +153,7 @@ OpenCode never sends requests to a single vendor URL through environment variabl
 }
 ```
 
-**Route B (llama-server)** — llama-server already speaks the OpenAI request format, so OpenCode talks to it through its `openai-compatible` runtime package, like Claude Code through LiteLLM — except the LiteLLM hop goes away:
+**Route B (llama-server)** — llama-server already speaks the OpenAI request format (API), so OpenCode talks to it through its `openai-compatible` runtime package. For Claude Code to use the OpenAI API, it would need a LiteLLM proxy in the middle.
 
 ```jsonc
 {
@@ -185,18 +170,19 @@ OpenCode never sends requests to a single vendor URL through environment variabl
 }
 ```
 
-Then run `opencode`, press **Ctrl+X M** (or `/models`), and select `lmstudio/qwen` or `llamacpp/qwen3.5-4b`. There is no `--bare` and no need for it: OpenCode's prompt is already lean, and if the model is slow without a GPU, the smaller Qwen3.5-2B is the remedy to try first. OpenCode may not need the chat-template fix of A2, because its instructions go out inside one system prompt; if the server still answers `System message must be at the beginning`, apply A2. Switching back: comment out the `providers` block.
+Then run `opencode`, press **Ctrl+X M** (or `/models`), and select your model, e.g. `lmstudio/qwen` or `llamacpp/qwen3.5-4b`. There is no `--bare` and no need for it: OpenCode's prompt is already lean, and if the model is slow without a GPU, the smaller Qwen3.5-2B is the remedy to try first. OpenCode may not need the chat-template fix of A2, because its instructions go out inside one system prompt; if the server still answers `System message must be at the beginning`, apply A2. Switching back: comment out the `providers` block.
 
 ## 4. Compare
 Do exercise 01 again with the local model, e.g. *"Fix the bug in exercises/01_fix_the_bug. Check with `pytest exercises/01_fix_the_bug`."* Compare with the cloud model: time, quality, how many tries it needs. Watch the server (LM Studio's developer logs or `docker logs -f llama-cpp`) while it works.
 
-## Switching back
+## Switching Claude Code back to cloud models
 The variables live only in that terminal: close it, or remove them:
 
 | Linux, macOS | Windows (PowerShell) |
 |---|---|
 | `unset ANTHROPIC_BASE_URL ANTHROPIC_API_KEY ANTHROPIC_MODEL CLAUDE_CODE_MAX_CONTEXT_TOKENS CLAUDE_CODE_ATTRIBUTION_HEADER` | `Remove-Item Env:ANTHROPIC_BASE_URL, Env:ANTHROPIC_API_KEY, Env:ANTHROPIC_MODEL, Env:CLAUDE_CODE_MAX_CONTEXT_TOKENS, Env:CLAUDE_CODE_ATTRIBUTION_HEADER` |
 
+## Stopping the local model server
 Stop the server, which keeps the model in memory:
 
 - **LM Studio:** `lms server stop` and `lms unload --all`, or quit the app.
@@ -217,6 +203,6 @@ Open another terminal without the variables, start `claude` in the workshop fold
 ## Notes
 - **With a GPU**, plain `claude` (without `--bare`) gives the model all of Claude Code's tools. Raise the context to 65 536 tokens (`-c 65536`, `--ctx-size` in `docker-compose.yml` and `CLAUDE_CODE_MAX_CONTEXT_TOKENS`), because the first request alone is about 22 000 tokens. Plain `claude` may ask once whether to use the API key: answer yes.
 - **LiteLLM** ([`litellm/config.yaml`](litellm/config.yaml)) is a translator between Anthropic's API format and OpenAI's. Neither route needs it, but a server that speaks only OpenAI's format does: Claude Code → LiteLLM → server.
-- **Other models** have other chat templates. We tested the Qwen3.5 models; with another model, the template may not need the fix, or may need a different one.
-- **Memory rule of thumb:** a 4-bit model file is about 0.6 GB per billion parameters. A mixture-of-experts model such as Gemma 4 26B-A4B needs memory for all its 26B parameters but computes with about 4B per token, so it runs faster than its size suggests.
-- Mika's full stack (llama.cpp on a Radeon VII, LiteLLM, Open WebUI, OpenCode) is in [agx-ai](https://github.com/AgenttiX/agx-ai). The biggest open models (Kimi, DeepSeek, Qwen-Max class) need a server; for those, a hosted API is the realistic option.
+- **Other models** have other chat templates. For Claude Code, we tested the Qwen3.5 models; with another model, the template may not need the fix, or may need a different one.
+- **Memory rule of thumb:** a 4-bit model file is about 0.6 GB per billion parameters. A mixture-of-experts model such as Gemma 4 26B A4B needs memory for all its 26B parameters but computes with about 4B per token, so it runs faster than its size suggests.
+- Mika's full stack (llama.cpp, vLLM, LiteLLM, Open WebUI, OpenCode) is in [agx-ai](https://github.com/AgenttiX/agx-ai). The biggest open models (Kimi, DeepSeek, Qwen-Max class) need a server; for those, a hosted API is the realistic option.

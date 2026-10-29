@@ -1,5 +1,5 @@
 # Exercise 01: Fix the bug (10 min)
-**You will practise:** giving Claude Code a task, and checking its work before you accept it.
+**You will practise:** giving a task to an AI agent, and checking its work before you accept it.
 
 `blackbody.py` computes how much light a hot object emits at each wavelength (Planck's law). `test_blackbody.py` is a *test*: a small program that checks the code against a known fact, Wien's displacement law, which says that the Sun's spectrum peaks at about 500 nm. The test fails, so the code has a bug. Your job is to get Claude to find and fix it, and to make sure the fix is right.
 
@@ -20,7 +20,7 @@ The last line should say `1 failed` in red.
 A test is a function that runs your code and checks the result against something you know to be true, here that the peak wavelength times the temperature equals Wien's constant $b = 2.898 \times 10^{-3}$ m K. `pytest` finds all the files called `test_*.py`, runs the test functions in them and reports which ones fail. Tests matter even more with AI: they are how the agent (and you) can *check* that code is correct instead of just believing it.
 </details>
 
-## 2. Give Claude the task
+## 2. Give your AI agent the task
 Open the Claude Code panel (the Spark icon in the top-right corner of the editor when a file is open, or in the Activity Bar on the left).
 
 **Before you type anything, switch to *Manual* mode.** Claude Code starts in *Auto* mode, where it acts without asking. Click the mode indicator at the bottom of the prompt box and choose **Manual** (in the terminal: press Shift+Tab until the status line says `manual mode on`). Then it asks you before editing a file or running a command.

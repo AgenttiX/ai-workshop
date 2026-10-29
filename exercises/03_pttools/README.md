@@ -4,11 +4,11 @@
 ## Task
 
 ### 1. Implement the spectrum
-`spectrum.py` has a stub `compute_spectrum()` and `test_spectrum.py` tests it. Ask Claude Code to implement it:
+`spectrum.py` has a stub `compute_spectrum()` and `test_spectrum.py` tests it. Ask your agent to implement it:
 
 > Implement compute_spectrum() in exercises/03_pttools/spectrum.py with PTtools (installed in .venv). Use the bag model, an exponential nucleation type and the given r_star. Read the PTtools source and examples to find the right API before writing code. Then run pytest exercises/03_pttools.
 
-The first run takes 1–3 minutes, as PTtools compiles its numerical code with Numba. If Claude's command times out, ask it to run the tests again. The NumbaLSODA and TBB messages printed on import are harmless.
+The first run takes 1–3 minutes, as PTtools compiles its numerical code with Numba. If the agent's command times out, ask it to run the tests again. The NumbaLSODA and TBB messages printed on import are harmless.
 
 ### 2. Plot it
 Then ask it to implement `plot_spectra()` for several wall velocities, e.g. 0.4, 0.6 and 0.8, and run the script.
