@@ -23,7 +23,7 @@ The instructions are written for **Linux**, **Windows** and **macOS**. Follow th
 ### The short version
 If you know how to install programs on your system, this is all you need, installed in any way you like:
 
-**1.** **Python 3.12 or newer** and **Git**. Git is also needed for installing one of the Python packages.
+**1.** **Python 3.12, 3.13 or 3.14** and **Git**. Git is also needed for installing one of the Python packages. (All of the required Python packages are not yet available for Python 3.15.)
 
 **2.** **VS Code** with the **Claude Code** extension, signed in with a paid Claude plan ([step 1](#step-1-an-account-for-an-ai-provider)). Or alternatively, an IDE, AI harness and AI provider of your choice, including the free options.
 
@@ -126,7 +126,7 @@ python3 -m workshop.check
 | What | Which | Why |
 |---|---|---|
 | Code editor | **VS Code or VSCodium** | A program for writing and running code. It has a built-in terminal and extensions, e.g. for Python. |
-| Programming language | **Python 3.12 or later** | The programming language of the exercises. The instructions below default to Python 3.14 where applicable. |
+| Programming language | **Python 3.12, 3.13 or 3.14** | The programming language of the exercises. The instructions below default to Python 3.14 where applicable. All of the required packages are not yet available for Python 3.15. |
 | Version control | **Git** | It records every change to your files so that you can see and undo them. It's also how you download the workshop materials. |
 | AI harness | **Claude Code, GitHub Copilot or OpenCode** | A harness is a program that enables an AI agent to interact with your computer and files. |
 | Account | **A paid Claude plan, GitHub Education, or an AI provider of your choice** | Claude Code needs Claude Pro, Max or Team. The free plan doesn't include Claude Code. Students and researchers can use GitHub Copilot through GitHub Education instead. See [step 1](#step-1-an-account-for-an-ai-provider). |
