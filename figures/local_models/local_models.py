@@ -157,8 +157,8 @@ def local_models() -> Svg:
         "and combines multiple model servers to one API endpoint",
     ], dash=True)
     s.card(810, 620, 760, 150, "you", "In the cloud: the same chain, far away", [
-        "A harness works the same way with cloud and local models,",
-        "and can be pointed to either:",
+        "A harness works the same way with cloud and local models.",
+        "E.g. Claude Code can be pointed to a local model server with:",
         "`ANTHROPIC_BASE_URL=http://localhost:1234",
     ])
     return s

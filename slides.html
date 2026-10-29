@@ -93,6 +93,11 @@
 				margin-left: auto;
 				height: 1.8em;
 			}
+			.reveal .prompt-cc span.cc-mascot img {
+				height: 100%;
+				margin: 0 0 0 0.3em;
+				vertical-align: middle;
+			}
 			.prompt-cc .cc-box {
 				flex: 1;
 				display: flex;
@@ -121,6 +126,18 @@
 				color: #e8e6dc;
 			}
 			.prompt-cc .cc-footer .cc-light {
+				color: #e8e6dc;
+			}
+			/* An answer option below a prompt, like the suggestions of Claude Code */
+			.cc-option {
+				display: inline-block;
+				margin-top: 0.8em;
+				background: #262624;
+				border: 1px solid #3d3d3a;
+				border-radius: 0.7em;
+				padding: 0.4em 0.9em;
+				font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+				font-size: 0.6em;
 				color: #e8e6dc;
 			}
 			.two-col.prompts {
@@ -1983,7 +2000,7 @@ jobs:
 				</ul>
 			</li>
 			<li><strong>Drawbacks:</strong> capability and speed</li>
-			<li>Mixture-of-experts (MoE) architectures reduce compute requirements<br>&rarr; the experts can be offloaded from the GPU to the CPU's RAM</li>
+			<li>Mixture-of-experts (MoE) architectures reduce compute requirements<br>&rarr; The experts can be offloaded from the GPU to the CPU's RAM</li>
 			<li>
 				<strong>Limiting factor</strong>: the model must fit in RAM/VRAM
 				<ul>
@@ -2011,13 +2028,91 @@ jobs:
 		<p class="small">Configs in <a href="https://github.com/AgenttiX/agx-ai">agx-ai</a>; instructions in README.md and exercise 09.</p>
 	</section>
 	<section>
+		<h2>Local demo</h2>
+		<div class="prompt-cc">
+				<div class="cc-header">
+					<span class="cc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 3l7 18 2.5-7.5L21 11z"/></svg> local-ai-demo</span>
+					<span class="cc-mascot"><img class="bare" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Qwen_logo.svg" alt="Qwen"> <img class="bare" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Gemma_icon.png" alt="Gemma"></span>
+				</div>
+				<div class="cc-box">
+					<p>I'd like to create a cool demo on what local AI agents can build. Please suggest ideas.</p>
+					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
+				</div>
+				<div class="cc-footer">
+					<span class="cc-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg> <span>Auto</span> <span class="cc-model">Qwen3.8-27B</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/></svg>
+				</div>
+			</div>
+		<div class="cc-option">3-agent game studio (Recommended)</div>
+		<p class="small">Repository: <a href="https://github.com/AgenttiX/local-ai-demo">github.com/AgenttiX/local-ai-demo</a></p>
+	</section>
+	<section class="dense">
+		<h2>Retrieval-augmented generation (RAG): asking your papers</h2>
+		<div class="two-col" style="grid-template-columns: 1fr 1.1fr; gap: 1.5em;">
+			<div>
+				<p><strong>RAG</strong>: the model answers from text that a search program found in your documents, not from memory alone. It brings in knowledge of your field that the model never learned, and fewer <strong>hallucinations</strong> (confident made-up answers), as each claim cites a source.</p>
+				<ol>
+					<li><strong>Index:</strong> split the PDFs into chunks; an <strong>embedding model</strong> turns each chunk into a vector of numbers, close for similar meanings</li>
+					<li><strong>Retrieve:</strong> embed the question, take the nearest chunks</li>
+					<li><strong>Summarise:</strong> the LLM rates and summarises each chunk as evidence</li>
+					<li><strong>Answer:</strong> from the evidence only, citing the pages</li>
+				</ol>
+			</div>
+			<div>
+				<pre><code class="language-python" data-trim style="max-height: none;">
+from paperqa import Settings, ask
+
+llm = "openai/Qwen/Qwen3.8-27B"  # local server
+settings = Settings(
+    llm=llm, summary_llm=llm,
+    embedding="openai/Qwen/Qwen3-Embedding-4B",
+    temperature=0.0,
+    parsing={"multimodal": False},  # text only
+    agent={"index": {
+        "paper_directory": "literature/pdf",
+        "manifest_file": "manifest.csv",  # titles, DOIs
+    }},
+)
+ask("What are the parameters that define the "
+    "gravitational wave spectrum of a "
+    "first-order phase transition?",
+    settings=settings)
+				</code></pre>
+				<p class="small">PaperQA2: M.&nbsp;D.&nbsp;Skarlinski et al. (FutureHouse), <em>Language agents achieve superhuman synthesis of scientific knowledge</em>, <a href="https://arxiv.org/abs/2409.13740">arXiv:2409.13740</a> (2024). Code: <a href="https://github.com/Future-House/paper-qa">github.com/Future-House/paper-qa</a></p>
+			</div>
+		</div>
+		<aside class="notes">
+			RAG = retrieval-augmented generation. The point for scientists: the answer comes with page citations into your own PDFs, so it can be checked, and with a local model unpublished or confidential papers never leave the machine.
+			Mika's setup: PaperQA2 over 75 papers, with Qwen3.8-27B and Qwen3-Embedding-4B on his own GPUs, so nothing leaves the machine.
+			The code is simplified from phd_code/tools/paperqa_ask.py in Mika's phd-research repository. The real version also passes the server URL and API key to LiteLLM (paper-qa reaches the models through LiteLLM's openai/&lt;name&gt; provider, i.e. any OpenAI-compatible server: vLLM or llama-server), sets a 900 s timeout and reasoning effort "low" for Qwen3.8, and uses the "fake" agent type, because paper-qa's ToolSelector agent crashed with the local model. The manifest, written by Mika's arXiv fetcher, gives paper-qa the title, DOI, authors and year of each PDF, so indexing needs no LLM call per paper. Metadata lookups (Crossref, Semantic Scholar) are off: the unauthenticated Semantic Scholar API answered 429 Too Many Requests during a full index build.
+			Chunks: paper-qa's default 5000 characters, about 1100 tokens of running text but up to about 3500 tokens for reference lists and tables; this overflowed a 4096-token embedding context with several parallel slots, hence one slot.
+			Speed, Mika's measurements on two RTX A4000 GPUs: with vLLM, Qwen3.8-27B answers in about 45 s at reasoning effort low (27 s with thinking off), llama.cpp about 95 s; rebuilding the index with Qwen3-Embedding-4B takes about 6 min with vLLM (2 min with the smaller Qwen3-Embedding-0.6B, which was the default until 29 Oct 2026) and 12 min with llama.cpp. One question makes about 40 LLM requests (38 measured on 21 Sep 2026): one evidence summary per retrieved chunk, then the answer.
+			When not to use RAG: an agent like Claude Code with a 1M-token context can read a whole paper (20&ndash;50k tokens) once it knows which one, and grep finds exact symbols and equation names better than embeddings do. RAG is for "which of my papers say something about X?", across many papers.
+		</aside>
+	</section>
+	<section>
+		<h2>How far behind are the open-weight models?</h2>
+		<iframe data-src="figures/epoch_open_closed_gap/epoch_open_closed_gap.html" title="Epoch Capabilities Index of the best closed-weight model, the best open-weight model and the best open-weight model that fits on a 32 GB GPU, January 2023 to September 2026: each line trails the one above it"
+			style="display: block; margin: 0 auto; width: 1500px; height: 760px; border: 0;"></iframe>
+		<p class="small">Our plot of <a href="https://epoch.ai/benchmarks">Epoch AI's ECI data</a> (October 2026, CC BY 4.0), after J. Edwards &amp; L. Emberson, <a href="https://epoch.ai/data-insights/open-closed-eci-gap"><em>Open models lag state-of-the-art closed models by 4 months</em></a> (May 2026)</p>
+		<aside class="notes">
+			The plot is interactive: hover over a point for its values, drag to zoom, double-click to reset. Each line shows the best model so far of its group on the Epoch Capabilities Index, which combines many benchmarks into one score. Epoch (May 2026): since January 2026 the best open-weight models have trailed the best closed ones by about 4 months on average, about 6 months if the open model must score strictly higher. These are the best open models, which need a server. The purple line is ours: open-weight models with at most 40 B parameters, which fit on a 32 GB GPU when quantized to 4 bits. They are about a year behind: Qwen3.8-27B (Aug 2026, 149.4) is level with GPT-5 (Aug 2025, 150.0), and Gemma 4 31B (Apr 2026, 142.7) is between o1 (Dec 2024, 141.9) and Gemini 2.5 Pro (Mar 2025, 144.2). In the newer data, the best open model Kimi K3 (Jul 2026, 157.4) is between GPT-5.3 Codex (Feb 2026, 156.8) and GPT-5.4 Pro (Mar 2026, 158.9): about 5 months behind. The ECI is refitted when Epoch adds data, so the scores differ slightly (about &plusmn;1) from those in Epoch's article.
+		</aside>
+	</section>
+	<section>
+		<h2 style="margin-bottom: 0.2em;">Structure of a local AI setup</h2>
+		<img src="https://raw.githubusercontent.com/AgenttiX/agx-ai/main/structure/agx-ai-structure.svg"
+			alt="Structure of the agx-ai local AI server" style="display: block; margin: 0 auto; height: 830px;">
+		<p class="small" style="text-align: center;">Behind the scenes, the cloud providers run the same building blocks, but on thousands of high-end GPUs.</p>
+		<aside class="notes">The structure of the local AI server. Source: github.com/AgenttiX/agx-ai</aside>
+	</section>
+	<section>
 		<h2>Under the hood: Agents with a local model</h2>
 		<img src="figures/local_models/local_models.svg" alt="Flow chart: you type a task; the harness (e.g. OpenCode) sends the whole conversation as a request to a model server on the same computer (LM Studio on port 1234, llama-server on port 9931 or vLLM on port 8000), where a chat template turns the messages into one string, the inference engine (llama.cpp or vLLM) computes the reply from the weights and KV cache in RAM, and the reply comes back as text or a tool call, which the harness runs on your files and sends the result back. Optional: LiteLLM translates between API formats and combines several model servers into one endpoint. A harness works the same way with cloud and local models." style="display: block; margin: 0 auto; height: 820px;">
 		<aside class="notes">
 			Go through it from left to right. You type a task. Claude Code is the harness: it builds one request out of its instructions (the system prompt), the list of tools it offers the model, your messages and all earlier tool results, and sends the whole thing every turn. Our measurement with Claude Code 2.1.285 and a fresh configuration in this repository: 22 147 tokens before the model has written anything. The request goes over HTTP, the same protocol a browser uses, but to localhost, i.e. this computer. The model server is either LM Studio (a desktop app) or llama-server (the server of llama.cpp, here in Docker); both have llama.cpp inside. The chat template is a small program stored in the model file: the model knows no messages, only one long string with markers such as &lt;|im_start|&gt;user. The inference engine reads the whole prompt in one go (prefill) and then writes the reply one token at a time (decode); each new token needs essentially all the weights read from RAM again. The weights are the model: 9 billion numbers, about 5 bits each on average in this 4-bit file, 5.7 GB. The KV cache is the model's working memory of the context, 32 KiB per token for this model. The reply is either text or a tool call: structured text that asks for, e.g., Bash with pytest. Claude Code runs it on your files (with your permission), appends the output to the conversation and sends everything again. That loop is the agent. LiteLLM is a translator between Anthropic's API format, which Claude Code speaks, and OpenAI's, which most servers speak; LM Studio (0.4.1 and later) and llama-server speak Anthropic's too, so the exercise doesn't need it. In the cloud nothing changes except the address: ANTHROPIC_BASE_URL points Claude Code at the local server instead of api.anthropic.com.
 		</aside>
 	</section>
-	<section>
+	<section class="backup">
 		<h2>Why local models misbehave, in numbers</h2>
 		<p class="def"><strong>Prefill</strong>: the model reads the whole prompt. <strong>Decode</strong>: it writes the reply, one token at a time. <strong>KV cache</strong>: the stored keys and values of all earlier tokens, the model's memory of the context.</p>
 		<table style="font-size: 0.58em;">
@@ -2051,20 +2146,6 @@ jobs:
 			Row 6: a toy model with independent errors, not a measurement: real errors are correlated, and an agent can notice and fix its own mistakes. The point is that a small difference in reliability per step becomes a large one over a long task.
 		</aside>
 	</section>
-	<section>
-		<h2>How far behind are the open-weight models?</h2>
-		<iframe data-src="figures/epoch_open_closed_gap/epoch_open_closed_gap.html" title="Epoch Capabilities Index of the best closed-weight model, the best open-weight model and the best open-weight model that fits on a 32 GB GPU, January 2023 to September 2026: each line trails the one above it"
-			style="display: block; margin: 0 auto; width: 1500px; height: 760px; border: 0;"></iframe>
-		<p class="small">Our plot of <a href="https://epoch.ai/benchmarks">Epoch AI's ECI data</a> (October 2026, CC BY 4.0), after J. Edwards &amp; L. Emberson, <a href="https://epoch.ai/data-insights/open-closed-eci-gap"><em>Open models lag state-of-the-art closed models by 4 months</em></a> (May 2026)</p>
-		<aside class="notes">
-			The plot is interactive: hover over a point for its values, drag to zoom, double-click to reset. Each line shows the best model so far of its group on the Epoch Capabilities Index, which combines many benchmarks into one score. Epoch (May 2026): since January 2026 the best open-weight models have trailed the best closed ones by about 4 months on average, about 6 months if the open model must score strictly higher. These are the best open models, which need a server. The purple line is ours: open-weight models with at most 40 B parameters, which fit on a 32 GB GPU when quantized to 4 bits. They are about a year behind: Qwen3.8-27B (Aug 2026, 149.4) is level with GPT-5 (Aug 2025, 150.0), and Gemma 4 31B (Apr 2026, 142.7) is between o1 (Dec 2024, 141.9) and Gemini 2.5 Pro (Mar 2025, 144.2). In the newer data, the best open model Kimi K3 (Jul 2026, 157.4) is between GPT-5.3 Codex (Feb 2026, 156.8) and GPT-5.4 Pro (Mar 2026, 158.9): about 5 months behind. The ECI is refitted when Epoch adds data, so the scores differ slightly (about &plusmn;1) from those in Epoch's article.
-		</aside>
-	</section>
-	<section>
-		<img src="https://raw.githubusercontent.com/AgenttiX/agx-ai/main/structure/agx-ai-structure.svg"
-			alt="Structure of the agx-ai local AI server" style="display: block; margin: 0 auto; height: 1040px;">
-		<aside class="notes">The structure of the local AI server. Source: github.com/AgenttiX/agx-ai</aside>
-	</section>
 	<section class="dense">
 		<h2>AI optimizing AI: our vLLM patches</h2>
 		<table>
@@ -2075,11 +2156,11 @@ jobs:
 			<tr><td>Mixture-of-experts layers computed on the CPU in FP32</td><td>A new int8 kernel with AVX2 vector instructions</td><td>2.3&times; per CPU core; RAM bandwidth is the limit</td></tr>
 			<tr><td>No FP8 support on older GPUs</td><td>Convert FP8 to FP16 with bit operations, exactly</td><td>2.8&times; the context on an 8 GB GPU (with a smaller output layer)</td></tr>
 			<tr><td>Saved conversations never reloaded from RAM</td><td>Fix an off-by-one-chunk bug in the cache lookup</td><td>29 s &rarr; 2.2 s to resume a 27k-token conversation</td></tr>
-			<tr><td>Model did not start on a Radeon VII (2.4 GB of wasted scratch memory)</td><td>Split the largest matrices into chunks</td><td>Starts; the other layers keep their speed</td></tr>
+			<tr><td>Model did not start on the GPU due to 2.4 GB of wasted scratch memory</td><td>Split the largest matrices into chunks</td><td>Starts; the other layers keep their speed</td></tr>
 		</table>
-		<p class="callout">All written by Claude Opus 5.5 in Claude Code, each measured and checked for answer quality.
+		<p class="callout">All written by Claude Opus 5.5 in Claude Code <b>with very little human input</b>, each measured and checked for answer quality.
 			The measurements also caught the failures: the first FP8 version was 25&times; slower.</p>
-		<p class="small">Patches and measurements: <a href="https://github.com/AgenttiX/agx-ai">github.com/AgenttiX/agx-ai</a> (October 2026)</p>
+		<p class="small">Patches and measurements: <a href="https://github.com/AgenttiX/agx-ai">github.com/AgenttiX/agx-ai</a></p>
 		<aside class="notes">
 			vLLM is an inference engine: the software that runs a model on a GPU (the backend on the local-models slide).
 			The patches are vllm/vllm.patch, vllm-radeon-vii/vllm-gfx906.patch and vllm-rtx3090-flash-next/cpu-moe.patch.
@@ -2213,7 +2294,7 @@ jobs:
 				<div class="cc-box">
 					<p>Please review all the documents in <code>./plan/</code> and based on them, create a more detailed plan for the workshop in English in <code>./plan/2026-09-19_ai_plan.md</code>. Include time estimates for each topic. Include both examples that the organizers can run during the presentation, and examples that the workshop participants can practice with. Use reveal.js speaker view notes, where useful.</p>
 					<p>Once you have a plan for the structure of the workshop, create a draft of the presentation in <code>./slides.html</code>. Set up a Python project in the repository for the examples using best practices. Use the existing virtualenv at <code>./venv</code>. You may add packages in <code>requirements.txt</code> as needed.</p>
-					<p>You may ask for additional input from me (Mika) as needed. You may also create additional documents and launch sub-agents as needed.</p>
+					<p>You may ask for additional input from me as needed. You may also create additional documents and launch sub-agents as needed.</p>
 					<svg class="cc-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>
 				</div>
 				<div class="cc-footer">

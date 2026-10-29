@@ -11,7 +11,7 @@ pyrefly check exercises/04_ai_ready/fitting.py
 ## Task
 
 ### 1. Ask for AI-ready code
-Ask Claude Code to make the module AI-ready:
+Ask your AI agent to make the module AI-ready:
 
 > Add type hints, docstrings and unit tests to exercises/04_ai_ready/fitting.py. Then run ruff check, pyrefly check and pytest on it and fix everything they report. Repeat until all are clean. Put the tests in exercises/04_ai_ready/test_fitting.py.
 

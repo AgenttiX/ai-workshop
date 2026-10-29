@@ -53,7 +53,7 @@
 <text x="48" y="711.3" font-size="18" font-weight="400" fill="#52606d" text-anchor="start" xml:space="preserve">and combines multiple model servers to one API endpoint</text>
 <rect x="810" y="620" width="760" height="150" rx="16" fill="#fdf3ea" stroke="#e0a36f" stroke-width="2"/>
 <text x="828" y="654" font-size="21" font-weight="700" fill="#1f2933" text-anchor="start" xml:space="preserve">In the cloud: the same chain, far away</text>
-<text x="828" y="687" font-size="18" font-weight="400" fill="#52606d" text-anchor="start" xml:space="preserve">A harness works the same way with cloud and local models,</text>
-<text x="828" y="711.3" font-size="18" font-weight="400" fill="#52606d" text-anchor="start" xml:space="preserve">and can be pointed to either:</text>
+<text x="828" y="687" font-size="18" font-weight="400" fill="#52606d" text-anchor="start" xml:space="preserve">A harness works the same way with cloud and local models.</text>
+<text x="828" y="711.3" font-size="18" font-weight="400" fill="#52606d" text-anchor="start" xml:space="preserve">E.g. Claude Code can be pointed to a local model server with:</text>
 <text x="828" y="735.6" font-size="17" font-weight="400" fill="#1f2933" text-anchor="start" xml:space="preserve" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace">ANTHROPIC_BASE_URL=http://localhost:1234</text>
 </svg>
