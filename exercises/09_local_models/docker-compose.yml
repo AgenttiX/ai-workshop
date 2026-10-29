@@ -1,10 +1,15 @@
-# llama.cpp server with a GGUF model from models/model.gguf. For GPU acceleration, pick the image variant for your hardware (see https://github.com/ggml-org/llama.cpp/blob/master/docs/docker.md).
-# Mika's ROCm variant for the Radeon VII is in https://github.com/AgenttiX/agx-ai/blob/main/llama-cpp/docker-compose.yml
+# llama.cpp server with a GGUF model from models/model.gguf.
+# For GPU acceleration, pick the image variant for your hardware
+# (see https://github.com/ggml-org/llama.cpp/blob/master/docs/docker.md).
+# You can find template configurations for various hardware here:
+# https://github.com/AgenttiX/agx-ai
+
 services:
   llama-cpp:
     image: ghcr.io/ggml-org/llama.cpp:server
     container_name: llama-cpp
     command: [
+      # Change this according to the file name of the downloaded model
       "--model", "/models/model.gguf",
       "--gpu-layers", "all",
       "--host", "0.0.0.0",
@@ -19,5 +24,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
+      # Change the first path to the path of the downloaded model
       - ./models:/models
+      # For use with Claude Code
       - ./qwen35-claude-code.jinja:/templates/qwen35-claude-code.jinja:ro

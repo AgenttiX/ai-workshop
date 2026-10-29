@@ -356,10 +356,18 @@ On other platforms, you may have to install the `opencode` command-line harness 
 <summary><b>LM Studio & Bionic: local models</b></summary>
 
 Download and run the LM Studio installer [here](https://lmstudio.ai/download).
-On Ubuntu and Cubbli, you can run the .deb installer with:
+On Ubuntu, Cubbli and other Debian-based Linux distributions, you can run the .deb installer with:
 ```bash
 sudo apt install ./LM-Studio*.deb
 ```
+
+On other Linux distributions, you can download the AppImage, and then run it with:
+  ```bash
+  chmod +x ~/Downloads/LM-Studio-*.AppImage
+  ~/Downloads/LM-Studio-*.AppImage
+  ```
+  If nothing happens (e.g. on Ubuntu 24.04 and newer), start it with `--no-sandbox` at the end. This turns off the security sandbox of the app's window for this run.
+
 LM Studio is compatible with both their own Bionic harness and OpenCode. If you choose to use Bionic, download it from the same downloads page as LM Studio.
 
 You will also need to download an LLM model. For this, see [step 10](#step-10-local-models-optional).
@@ -514,9 +522,25 @@ There are several backends for running LLMs locally. These can be connected to a
 <details open>
 <summary><b>LM Studio</b></summary>
 
-**One of the easiest ways to get started with local LLMs is [LM Studio](https://lmstudio.ai/)**, as it bundles the LLM backend, chat interface and agent harness in one package. You can just download it, select an LLM that fits on your computer, and get started. See the [step 2](#step-4-install-an-ai-desktop-client-optional-but-useful) for the installation instructions.
+**One of the easiest ways to get started with local LLMs is [LM Studio](https://lmstudio.ai/)**, as it bundles the LLM backend, chat interface and agent harness in one package. You can just download it, select an LLM that fits on your computer, and get started. See the [step 4](#step-4-install-an-ai-desktop-client-optional-but-useful) for the installation instructions.
 
 Once you have installed LM Studio, select *Model Search* from the menu on the left. Then, select a model that fits on your computer. If you have a GPU, prefer models for which LM Studio says *Full GPU Offload Possible*.
+Alternatively, you can use a command-line tool, `lms`. If the command `lms` is not available in your terminal after installing LM Studio, you can run this command:
+
+| Linux, macOS | Windows (PowerShell) |
+|---|---|
+| `alias lms=~/.lmstudio/bin/lms` | `Set-Alias lms "$env:USERPROFILE\.lmstudio\bin\lms.exe"` |
+
+Note that this command makes `lms` available only in the current terminal session. For another terminal session, just run the command again. For permanence, add it in the configuration file of your terminal such as `.bashrc` or `.zshrc`.
+
+For example, the model referred to in exercise 10:
+
+```bash
+lms get qwen/qwen3.5-4b
+lms ls
+```
+
+`lms ls` lists the models on your computer. The name in the first column is the one you use below.
 
 However, LM Studio is not very optimized, and with other backends it's possible to fit much larger models and run them much faster on the same hardware. For this, please see the llama.cpp and vLLM instructions below.
 
@@ -536,7 +560,9 @@ On Linux, installing llama.cpp in Docker keeps it nicely contained. On Windows i
 <details>
 <summary><b>vLLM</b></summary>
 
-The highest performance is often achieved with [vLLM](https://vllm.ai/). However, it often requires more memory than llama.cpp for the same models, and its support for CPU offloading is limited. It also requires extensive configuration for optimal performance, and has limited support of model formats.
+The highest performance is often achieved with [vLLM](https://vllm.ai/). However, it often requires more memory than llama.cpp for the same models, and its support for CPU offloading is limited. It also requires extensive configuration for optimal performance, and has limited support of model formats. Some example configurations:
+- [NVIDIA RTX 3070](https://github.com/AgenttiX/agx-ai/tree/main/vllm-rtx3070)
+- [NVIDIA RTX 3090](https://github.com/AgenttiX/agx-ai/tree/main/vllm-rtx3090-hyperqwen)
 </details>
 
 <details open>
@@ -549,7 +575,7 @@ The optimal choice of a local LLM model depends on the amount of system memory (
 - GPU/CPU, >= 6 GB total (VRAM+RAM): [Gemma 4 E4B QAT](https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF)
 - GPU/CPU, >= 4 GB total (VRAM+RAM): [Gemma 4 E2B QAT](https://huggingface.co/unsloth/gemma-4-E2B-it-qat-GGUF)
 
-Further information on Google's Gemma 4 series is available in its [official documentation](https://ai.google.dev/gemma/docs/core). For most use, 4-bit quantization is a good trade-off between size and quality. The E2B and E4B versions are useful for testing and as generic assistants, but for actual work the versions from 12B onwards are preferred. If you have enough memory, the 26B A4B is preferable over the smaller variants, since it's significantly faster due to its mixture-of-experts (MoE) architecture despite its larger size. In model names, B refers to how many billions of parameters it has, which determines the memory use. E refers to an effective number of parameters. A means how many parameters are activated during the generation of each output token, which determines the output speed (tokens/s). For example, Gemma 4 26B A4B has 26 billion parameters, of which 4 billion are activated when generating each output token.
+Further information on Google's Gemma 4 series is available in its [official documentation](https://ai.google.dev/gemma/docs/core). For most use, 4-bit quantization is a good trade-off between size and quality. Prefer the QAT versions over the non-QAT versions, as the QAT versions use less memory. The E2B and E4B versions are useful for testing and as generic assistants, but for actual work the versions from 12B onwards are preferred. If you have enough memory, the 26B A4B is preferable over the smaller variants, since it's significantly faster due to its mixture-of-experts (MoE) architecture despite its larger size. In model names, B refers to how many billions of parameters it has, which determines the memory use. E refers to an effective number of parameters. A means how many parameters are activated during the generation of each output token, which determines the output speed (tokens/s). For example, Gemma 4 26B A4B has 26 billion parameters, of which 4 billion are activated when generating each output token.
 </details>
 
 
