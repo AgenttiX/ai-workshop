@@ -15,8 +15,9 @@
     { "action": "shell", "resource": "ruff format *", "effect": "allow" },
     { "action": "shell", "resource": "pyrefly check *", "effect": "allow" },
     { "action": "shell", "resource": "python -m workshop.check", "effect": "allow" },
-    { "action": "shell", "resource": "git push *", "effect": "ask" }
-  ],
+    { "action": "shell", "resource": "git push *", "effect": "ask" },
+    { "action": "read", "resource":  "solutions/**", "effect": "ask" }
+  ]
   // Claude Code's Manual mode also asks before it edits a file. OpenCode instead
   // shows every change as a diff and lets you undo with /undo, but if you want the
   // same prompt-per-edit behaviour, uncomment this:
