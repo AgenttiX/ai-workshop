@@ -1,4 +1,6 @@
 # Kumpula AI workshop for scientists 2026
+[![Slides](https://img.shields.io/badge/Slides-agx.fi%2Fai--workshop-0b7285?style=for-the-badge)](https://agx.fi/ai-workshop)
+
 A hands-on workshop on how AI is actually used in research today: not chat windows, but AI agents that read your files, run your code and check their own work. Organized at the Kumpula campus of the University of Helsinki by [Antti "Hippe" Hippeläinen](https://github.com/ahippelainen) and [Mika Mäki](https://github.com/AgenttiX).
 
 - **When and where:** Friday 30 October 2026, 12:00–16:30 (coffee break 14:00–14:30), Chemicum A129, Kumpula campus
@@ -9,7 +11,7 @@ A hands-on workshop on how AI is actually used in research today: not chat windo
 - **Language:** English.
 - **Bring your laptop**, set up as described below.
 - **Contact:** antti.hippelainen@helsinki.fi, mika.x.maki@helsinki.fi, joonas.nattila@helsinki.fi
-- Slides: [`slides.html`](./slides.html) (download it to your computer and then open it in a browser; press `S` for the speaker notes, `F` for full screen)
+- Slides: [agx.fi/ai-workshop](https://agx.fi/ai-workshop) (or download [`slides.html`](./slides.html) to your computer and open it in a browser). Press `S` for the speaker notes, `F` for full screen.
 
 **Contents:** [Setup](#set-up-your-laptop-before-the-workshop) · [Troubleshooting](#troubleshooting) · [Exercises](#exercises)
 
