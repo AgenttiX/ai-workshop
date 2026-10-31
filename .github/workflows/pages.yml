@@ -1,0 +1,57 @@
+# Publishes the slides at https://agx.fi/ai-workshop with GitHub Pages.
+# agx.fi is the custom domain of the user site agenttix.github.io,
+# so the project site of this repository is served under /ai-workshop.
+name: Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - slides.html
+      - figures/**
+      - themes/**
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+# Don't cancel a deployment that is in progress, but skip the queued ones in between.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+      - name: Collect the site
+        # The slides become index.html, and the figures and themes keep their paths,
+        # since slides.html refers to them relatively. The scripts and data that generate the figures are left out.
+        run: |
+          mkdir _site
+          cp slides.html _site/index.html
+          rsync -a --prune-empty-dirs \
+            --include='*/' \
+            --include='*.html' --include='*.css' \
+            --include='*.svg' --include='*.png' --include='*.jpeg' --include='*.jpg' --include='*.gif' \
+            --exclude='*' \
+            figures themes _site/
+          find _site -type f | sort
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v5
+  deploy:
+    needs: build
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
