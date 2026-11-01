@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "kumpula-ai-workshop"
 version = "1.0.0"
-description = "Kumpula AI workshop for scientists 2026: slides and exercises"
+description = "Kumpula AI workshop for scientists 2026"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -24,9 +24,18 @@ authors = [
     {name = "Antti Hippeläinen", email = "antti.hippelainen@helsinki.fi"},
     {name = "Mika Mäki", email = "mika.x.maki@helsinki.fi"}
 ]
+maintainers = [
+    {name = "Antti Hippeläinen", email = "antti.hippelainen@helsinki.fi"},
+    {name = "Mika Mäki", email = "mika.x.maki@helsinki.fi"}
+]
 classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: GPU",
+    "Framework :: Matplotlib",
+    "Intended Audience :: Developers",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
+    "Natural Language :: English",
     "Operating System :: MacOS",
     "Operating System :: OS Independent",
     "Operating System :: POSIX :: Linux",
@@ -36,7 +45,11 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Version Control",
     "Typing :: Typed"
 ]
 # The exact versions used in the workshop are pinned in requirements.txt.
@@ -57,14 +70,9 @@ dev = [
 ]
 
 [project.urls]
-Repository = "https://github.com/AgenttiX/ai-workshop"
-
-[tool.setuptools.packages.find]
-include = ["workshop*"]
-
-[tool.coverage.run]
-branch = true
-source = ["solutions", "workshop"]
+homepage = "https://agx.fi/ai-workshop"
+issues = "https://github.com/AgenttiX/ai-workshop/issues"
+repository = "https://github.com/AgenttiX/ai-workshop"
 
 [tool.coverage.report]
 exclude_lines = [
@@ -73,6 +81,10 @@ exclude_lines = [
     "if __name__ == .__main__.:"
 ]
 show_missing = true
+
+[tool.coverage.run]
+branch = true
+source = ["solutions", "workshop"]
 
 [tool.pyrefly]
 project-includes = [
@@ -179,3 +191,6 @@ extend-ignore-names = ["B", "L", "T", "g", "h", "k_B"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "pep257"
+
+[tool.setuptools.packages.find]
+include = ["workshop*"]
